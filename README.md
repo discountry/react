@@ -34,6 +34,13 @@
 
 ### 依赖
 
+首先克隆本仓库到你的电脑本地：
+
+```sh
+$ git clone https://github.com/discountry/react.git
+$ cd react/
+```
+
 在使用jkeyll之前，我们需要先安装好ruby
 
  - [Ruby](http://www.ruby-lang.org/) (version >= 1.8.7)
@@ -50,13 +57,6 @@ $ npm install
 如果你收到国内糟糕的网络环境影响，请将ruby源切换至国内镜像[ruby-china](http://gems.ruby-china.org/).
 
 ### 构建文档
-
-首先克隆本仓库到你的电脑本地：
-
-```sh
-$ git clone https://github.com/discountry/react.git
-$ cd react/
-```
 
 先跑一下 `grunt` 确保项目依被构建。
 
