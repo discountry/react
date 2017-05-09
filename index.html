@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>React - 用于构筑用户界面的 JavaScript 框架</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="React - 用于构筑用户界面的 JavaScript 框架">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://facebook.github.io/react/">
+  <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
+  <meta property="og:description" content="A JavaScript library for building user interfaces">
+  <meta property="fb:app_id" content="623268441017527">
+
+  <link rel="shortcut icon" href="/react/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="React" href="https://facebook.github.io/react/feed.xml">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/1/docsearch.min.css" />
+  <link rel="stylesheet" href="/react/css/syntax.css">
+  <link rel="stylesheet" href="/react/css/codemirror.css">
+  <link rel="stylesheet" href="/react/css/react.css">
+
+  <script src="//use.typekit.net/vqa1hcx.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+
+  <!--[if lte IE 8]>
+  <script src="https://unpkg.com/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://unpkg.com/es5-shim@4.5.9/es5-shim.min.js"></script>
+  <script src="https://unpkg.com/es5-shim@4.5.9/es5-sham.min.js"></script>
+  <![endif]-->
+  <script src="https://unpkg.com/docsearch.js@1.5.0/dist/cdn/docsearch.min.js"></script>
+  <script src="https://unpkg.com/codemirror@5.15.2"></script>
+  <script src="https://unpkg.com/codemirror@5.15.2/mode/javascript/javascript.js"></script>
+  <script src="https://unpkg.com/codemirror@5.15.2/mode/xml/xml.js"></script>
+  <script src="https://unpkg.com/codemirror@5.15.2/mode/jsx/jsx.js"></script>
+  <script src="https://unpkg.com/react/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom/dist/react-dom.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="/react/js/live_editor.js"></script>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="nav-main">
+  <div class="wrap">
+    <a class="nav-home" href="/react/">
+      <img class="nav-logo" src="/react/img/logo.svg" width="36" height="36">
+      React
+    </a>
+    <div class="nav-lists">
+      <ul class="nav-site nav-site-internal">
+        <li><a href="/react/docs/hello-world.html">文档</a></li>
+        <li><a href="/react/tutorial/tutorial.html">教程</a></li>
+        <li><a href="/react/community/support.html">社区</a></li>
+        <li><a href="/react/blog/">博客</a></li>
+        <li class="nav-site-search">
+          <input id="algolia-doc-search" type="text" placeholder="搜索文档..." />
+        </li>
+      </ul>
+      <ul class="nav-site nav-site-external">
+        <li><a href="https://github.com/facebook/react">GitHub</a></li>
+        <li><a href="https://github.com/facebook/react/releases">v15.5.4</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    
+  <div class="hero">
+  <div class="wrap">
+    <div class="text"><strong>React</strong></div>
+    <div class="minitext">
+      用于构筑用户界面的 JavaScript 框架
+    </div>
+
+    <div class="buttons-unit">
+      <a href="/react/docs/hello-world.html" class="button">快速开始</a>
+      <a href="/react/tutorial/tutorial.html" class="button">入门教程</a>
+    </div>
+  </div>
+</div>
+
+
+
+<section class="content wrap">
+  <section class="light home-section">
+  <div class="marketing-row">
+    <div class="marketing-col">
+      <h3>声明式</h3>
+      <p>React 可以非常轻松地创建用户交互界面。为你应用的每一个状态设计简洁的视图，在数据改变时 React 也可以高效地更新渲染界面。</p>
+      <p>以声明式编写UI，可以让你的代码更加可靠，且方便调试。</p>
+    </div>
+    <div class="marketing-col">
+      <h3>组件化</h3>
+      <p>创建好拥有各自状态的组件，再由组件构成更加复杂的界面。</p>
+      <p>无需再用模版代码，通过使用JavaScript编写的组件你可以更好地传递数据，将应用状态和DOM拆分开来。</p>
+    </div>
+    <div class="marketing-col">
+      <h3>一次学习，随处编写</h3>
+      <p>无论你现在正在使用什么技术栈，你都可以随时引入 React 开发新特性。</p>
+      <p>React 也可以用作开发原生应用的框架 <a href="https://facebook.github.io/react-native/">React Native</a>.</p>
+    </div>
+  </div>
+</section>
+
+<p><hr class="home-divider" />
+<section class="home-section">
+  <div id="examples">
+    <div class="example">
+      <h3>组件</h3>
+      <p>
+        React components implement a <code>render()</code> method that takes input data and
+        returns what to display. This example uses an XML-like syntax called
+        JSX. Input data that is passed into the component can be accessed by
+        <code>render()</code> via <code>this.props</code>.
+      </p>
+      <p>
+        <strong>JSX is optional and not required to use React.</strong> Try
+        clicking on &quot;Compiled JS&quot; to see the raw JavaScript code produced by
+        the JSX compiler.
+      </p>
+      <div id="helloExample"></div>
+    </div>
+    <div class="example">
+      <h3>有状态组件</h3>
+      <p>
+        In addition to taking input data (accessed via <code>this.props</code>), a
+        component can maintain internal state data (accessed via <code>this.state</code>).
+        When a component&#39;s state data changes, the rendered markup will be
+        updated by re-invoking <code>render()</code>.
+      </p>
+      <div id="timerExample"></div>
+    </div>
+    <div class="example">
+      <h3>应用</h3>
+      <p>
+        Using <code>props</code> and <code>state</code>, we can put together a small Todo application.
+        This example uses <code>state</code> to track the current list of items as well as
+        the text that the user has entered. Although event handlers appear to be
+        rendered inline, they will be collected and implemented using event
+        delegation.
+      </p>
+      <div id="todoExample"></div>
+    </div>
+    <div class="example">
+      <h3>在组件中使用第三方库</h3>
+      <p>
+        React is flexible and provides hooks that allow you to interface with
+        other libraries and frameworks. This example uses <strong>remarkable</strong>, an
+        external Markdown library, to convert the textarea&#39;s value in real time.
+      </p>
+      <div id="markdownExample"></div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/remarkable@1.7.1/dist/remarkable.min.js"></script>
+  <script src="/react/js/examples/hello.js"></script>
+  <script src="/react/js/examples/timer.js"></script>
+  <script src="/react/js/examples/todo.js"></script>
+  <script src="/react/js/examples/markdown.js"></script>
+</section>
+<hr class="home-divider" />
+<section class="home-bottom-section">
+  <div class="buttons-unit">
+    <a href="docs/hello-world.html" class="button">Get Started</a>
+    <a href="tutorial/tutorial.html" class="button">Take the Tutorial</a>
+  </div>
+</section></p>
+
+</section>
+
+
+    <footer class="nav-footer">
+  <section class="sitemap">
+    <a href="/react/" class="nav-home">
+    </a>
+    <div>
+      <h5><a href="/react/docs/">文档</a></h5>
+      <a href="/react/docs/hello-world.html">快速开始</a>
+      <a href="/react/docs/thinking-in-react.html">React 理念</a>
+      <a href="/react/tutorial/tutorial.html">上手教程</a>
+      <a href="/react/docs/jsx-in-depth.html">高级指引</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">社区</a></h5>
+      <a href="http://stackoverflow.com/questions/tagged/reactjs" target="_blank">Stack Overflow</a>
+      <a href="https://discuss.reactjs.org/" target="_blank">论坛</a>
+      <a href="https://discord.gg/0ZcbPKXt5bZjGY5n" target="_blank">Reactiflux Chat</a>
+      <a href="https://www.facebook.com/react" target="_blank">Facebook</a>
+      <a href="https://twitter.com/reactjs" target="_blank">Twitter</a>
+    </div>
+    <div>
+      <h5><a href="/react/community/support.html">资源</a></h5>
+      <a href="/react/community/conferences.html">讨论会</a>
+      <a href="/react/community/videos.html">视频</a>
+      <a href="https://github.com/facebook/react/wiki/Examples" target="_blank">示例</a>
+      <a href="https://github.com/facebook/react/wiki/Complementary-Tools" target="_blank">开发工具</a>
+    </div>
+    <div>
+      <h5>更多</h5>
+      <a href="/react/blog/">博客</a>
+      <a href="https://github.com/facebook/react" target="_blank">GitHub</a>
+      <a href="http://facebook.github.io/react-native/" target="_blank">React Native</a>
+      <a href="/react/acknowledgements.html">致谢</a>
+    </div>
+  </section>
+  <a href="https://code.facebook.com/projects/" target="_blank" class="fbOpenSource">
+    <img src="/react/img/oss_logo.png" alt="Facebook Open Source" width="170" height="45"/>
+  </a>
+  <section class="copyright">
+    Copyright © 2017 Facebook Inc. 由从零学习前端开发翻译组翻译。
+  </section>
+</footer>
+
+  </div>
+
+  <div id="fb-root"></div>
+  <script src="/react/js/anchor-links.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-41298772-1', 'facebook.github.io');
+    ga('send', 'pageview');
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    docsearch({
+      apiKey: '36221914cce388c46d0420343e0bb32e',
+      indexName: 'react',
+      inputSelector: '#algolia-doc-search'
+    });
+  </script>
+</body>
+</html>
