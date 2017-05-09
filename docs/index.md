@@ -1,25 +1,25 @@
 ---
 layout: hero
-title: A JavaScript library for building user interfaces
+title: 用于构筑用户界面的 JavaScript 框架
 id: home
 ---
 
 <section class="light home-section">
   <div class="marketing-row">
     <div class="marketing-col">
-      <h3>Declarative</h3>
-      <p>React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.</p>
-      <p>Declarative views make your code more predictable and easier to debug.</p>
+      <h3>声明式</h3>
+      <p>React 可以非常轻松地创建用户交互界面。为你应用的每一个状态设计简洁的视图，在数据改变时 React 也可以高效地更新渲染界面。</p>
+      <p>以声明式编写UI，可以让你的代码更加可靠，且方便调试。</p>
     </div>
     <div class="marketing-col">
-      <h3>Component-Based</h3>
-      <p>Build encapsulated components that manage their own state, then compose them to make complex UIs.</p>
-      <p>Since component logic is written in JavaScript instead of templates, you can easily pass rich data through your app and keep state out of the DOM.</p>
+      <h3>组件化</h3>
+      <p>创建好拥有各自状态的组件，再由组件构成更加复杂的界面。</p>
+      <p>无需再用模版代码，通过使用JavaScript编写的组件你可以更好地传递数据，将应用状态和DOM拆分开来。</p>
     </div>
     <div class="marketing-col">
-      <h3>Learn Once, Write Anywhere</h3>
-      <p>We don't make assumptions about the rest of your technology stack, so you can develop new features in React without rewriting existing code.</p>
-      <p>React can also render on the server using Node and power mobile apps using <a href="https://facebook.github.io/react-native/">React Native</a>.</p>
+      <h3>一次学习，随处编写</h3>
+      <p>无论你现在正在使用什么技术栈，你都可以随时引入 React 开发新特性。</p>
+      <p>React 也可以用作开发原生应用的框架 <a href="https://facebook.github.io/react-native/">React Native</a>.</p>
     </div>
   </div>
 </section>
@@ -27,7 +27,7 @@ id: home
 <section class="home-section">
   <div id="examples">
     <div class="example">
-      <h3>A Simple Component</h3>
+      <h3>组件</h3>
       <p>
         React components implement a `render()` method that takes input data and
         returns what to display. This example uses an XML-like syntax called
@@ -42,7 +42,7 @@ id: home
       <div id="helloExample"></div>
     </div>
     <div class="example">
-      <h3>A Stateful Component</h3>
+      <h3>有状态组件</h3>
       <p>
         In addition to taking input data (accessed via `this.props`), a
         component can maintain internal state data (accessed via `this.state`).
@@ -52,7 +52,7 @@ id: home
       <div id="timerExample"></div>
     </div>
     <div class="example">
-      <h3>An Application</h3>
+      <h3>应用</h3>
       <p>
         Using `props` and `state`, we can put together a small Todo application.
         This example uses `state` to track the current list of items as well as
@@ -63,7 +63,7 @@ id: home
       <div id="todoExample"></div>
     </div>
     <div class="example">
-      <h3>A Component Using External Plugins</h3>
+      <h3>在组件中使用第三方库</h3>
       <p>
         React is flexible and provides hooks that allow you to interface with
         other libraries and frameworks. This example uses **remarkable**, an
