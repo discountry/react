@@ -65,7 +65,7 @@ $ npm install
 使用 Jekyll 在本地运行站点 (默认端口路由为： `http://localhost:4000`):
 
 ```sh
-$ cd docs/
+$ cd react/docs
 $ bundle exec rake
 $ bundle exec jekyll serve -w
 $ open http://localhost:4000/react/index.html
