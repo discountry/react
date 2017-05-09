@@ -12,11 +12,11 @@
 
 ### 加入翻译组
 
-我们使用 Github issue 管理项目进度。翻译组成员无需直接提出issue，注册完成github和trello之后，可以使用第三方工具gitlo进行协作。
-
 如果你有充足的时间，良好的英文水平，能够流利阅读英文文档，且对前端框架比较了解，欢迎你加入我们的翻译组，请用微信扫码入群：
 
 ![1494351758.png](https://ooo.0o0.ooo/2017/05/10/5911ffa548fc1.png)
+
+我们使用 Github issue 管理项目进度。翻译组成员无需直接提出issue，注册完成github和trello之后，可以使用第三方工具gitlo进行协作。
 
 点击[邀请链接](http://gitlo.co/invite/github/discountry/discountry/react)加入翻译组，根据提示连接你的github及trello账号。
 
