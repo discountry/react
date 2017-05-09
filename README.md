@@ -40,7 +40,6 @@
 
 ```sh
 $ git clone https://github.com/discountry/react.git
-$ cd react/
 ```
 
 在使用jkeyll之前，我们需要先安装好ruby
@@ -60,7 +59,7 @@ $ npm install
 
 ### 构建文档
 
-先跑一下 `grunt` 确保项目依被构建。
+先跑一下 `grunt` 确保项目已被构建。
 
 使用 Jekyll 在本地运行站点 (默认端口路由为： `http://localhost:4000`):
 
