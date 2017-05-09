@@ -22,6 +22,8 @@
 
 在微信群公告内获取trello项目的邀请链接，以获取编辑看板的权限。
 
+[项目trello地址](https://trello.com/b/JD2S3HeP/react-docs-cn)
+
 ### 认领翻译
 
 ![trello-tasks.png](https://ooo.0o0.ooo/2017/05/10/5911faefad615.png)
