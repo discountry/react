@@ -74,7 +74,7 @@ $ open http://localhost:4000/react/index.html
 
 ### 生成文档
 
-通过如下命令，我们可以和react存放的统一路径下名为 `react-gh-pages` 文件夹中的文档。
+通过如下命令，我们可以在和react存放的统一路径下名为 `react-gh-pages` 的文件夹中生成文档。
 
 ```sh
 $ bundle exec rake release
