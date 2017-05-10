@@ -36,10 +36,12 @@
 
 ### 依赖
 
-首先克隆本仓库到你的电脑本地：
+首先点击右上角的 `fork` 按钮拷贝本项目到你的github账号下
+
+克隆你fork的仓库到电脑本地：
 
 ```sh
-$ git clone https://github.com/discountry/react.git
+$ git clone https://github.com/[YourGithubUserName]/react.git
 ```
 
 在使用jkeyll之前，我们需要先安装好ruby
