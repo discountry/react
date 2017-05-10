@@ -29,45 +29,33 @@ id: home
     <div class="example">
       <h3>组件</h3>
       <p>
-        React components implement a `render()` method that takes input data and
-        returns what to display. This example uses an XML-like syntax called
-        JSX. Input data that is passed into the component can be accessed by
-        `render()` via `this.props`.
+        React 组件使用一个名为 `render()` 的方法， 接收数据作为输入，输出页面中对应展示的内容。 下面这个示例中类似XML的写法被称为JSX. 输入的数据通过 `this.props` 传入 `render()` 方法。
       </p>
       <p>
-        <strong>JSX is optional and not required to use React.</strong> Try
-        clicking on "Compiled JS" to see the raw JavaScript code produced by
-        the JSX compiler.
+        <strong>使用React时，你也可以不使用JSX语法扩展</strong> 你可以试着点击 "Compiled JS" 查看 JSX 被编译之后的代码。
       </p>
       <div id="helloExample"></div>
     </div>
     <div class="example">
       <h3>有状态组件</h3>
       <p>
-        In addition to taking input data (accessed via `this.props`), a
-        component can maintain internal state data (accessed via `this.state`).
-        When a component's state data changes, the rendered markup will be
-        updated by re-invoking `render()`.
+        除了使用外部传入的数据以外 (通过 `this.props` 访问传入数据), 组件还可以拥有其内部的状态数据 (通过 `this.state` 访问状态数据)。
+        当组件的状态数据改变时， 组件会调用 `render()` 方法重新渲染。
       </p>
       <div id="timerExample"></div>
     </div>
     <div class="example">
       <h3>应用</h3>
       <p>
-        Using `props` and `state`, we can put together a small Todo application.
-        This example uses `state` to track the current list of items as well as
-        the text that the user has entered. Although event handlers appear to be
-        rendered inline, they will be collected and implemented using event
-        delegation.
+        使用 `props` 和 `state`, 我们可以创建一个简易的 Todo 应用。
+        下面这个示例中，我们使用 `state` 来保存现有的待办事项列表及用户的输入。 与此同时，我们也使用了内联的方法添加了事件处理函数，它们将通过事件代理被收集和调用。
       </p>
       <div id="todoExample"></div>
     </div>
     <div class="example">
       <h3>在组件中使用第三方库</h3>
       <p>
-        React is flexible and provides hooks that allow you to interface with
-        other libraries and frameworks. This example uses **remarkable**, an
-        external Markdown library, to convert the textarea's value in real time.
+        React 的使用非常灵活，并且提供了可以调用其他第三方框架或库的接口。下面这个示例就使用了一个用来渲染markdown语法，名为 [**remarkable**](https://github.com/jonschlinkert/remarkable) 的库。
       </p>
       <div id="markdownExample"></div>
     </div>
@@ -81,7 +69,7 @@ id: home
 <hr class="home-divider" />
 <section class="home-bottom-section">
   <div class="buttons-unit">
-    <a href="docs/hello-world.html" class="button">Get Started</a>
-    <a href="tutorial/tutorial.html" class="button">Take the Tutorial</a>
+    <a href="docs/hello-world.html" class="button">快速开始</a>
+    <a href="tutorial/tutorial.html" class="button">入门教程</a>
   </div>
 </section>

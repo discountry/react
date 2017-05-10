@@ -1,18 +1,18 @@
 ---
 id: introducing-jsx
-title: Introducing JSX
+title: JSX 简介
 permalink: docs/introducing-jsx.html
 prev: hello-world.html
 next: rendering-elements.html
 ---
 
-Consider this variable declaration:
+我们来观察一下声明的这个变量：
 
 ```js
 const element = <h1>Hello, world!</h1>;
 ```
 
-This funny tag syntax is neither a string nor HTML.
+这种看起来可能有些奇怪的标签语法既不是字符串也不是HTML.
 
 It is called JSX, and it is a syntax extension to JavaScript. We recommend using it with React to describe what the UI should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript.
 

@@ -36,10 +36,12 @@
 
 ### 依赖
 
-首先克隆本仓库到你的电脑本地：
+首先点击右上角的 `fork` 按钮拷贝本项目到你的github账号下
+
+克隆你fork的仓库到电脑本地：
 
 ```sh
-$ git clone https://github.com/discountry/react.git
+$ git clone https://github.com/[YourGithubUserName]/react.git
 ```
 
 在使用jkeyll之前，我们需要先安装好ruby
@@ -72,7 +74,7 @@ $ open http://localhost:4000/react/index.html
 
 ### 生成文档
 
-通过如下命令，我们可以和react存放的统一路径下名为 `react-gh-pages` 文件夹中的文档。
+通过如下命令，我们可以在和react存放的统一路径下名为 `react-gh-pages` 的文件夹中生成文档。
 
 ```sh
 $ bundle exec rake release
