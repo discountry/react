@@ -1,0 +1,5 @@
+usage: browser-unpack
+
+  Write a browser bundle to STDIN.
+  Outputs a JSON array in the module-deps format.
+
