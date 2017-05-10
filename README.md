@@ -68,7 +68,7 @@ $ npm install
 ```sh
 $ cd react/docs
 $ bundle exec rake
-$ bundle exec jekyll serve -w
+$ bundle exec jekyll serve -w -L
 $ open http://localhost:4000/react/index.html
 ```
 
