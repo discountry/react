@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Installation - React</title>
+  <title>安装 - React</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Installation - React">
+  <meta property="og:title" content="安装 - React">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facebook.github.io/react/docs/installation.html">
   <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
@@ -74,7 +74,7 @@
   <div class="inner-content">
     <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/installation.md" target="_blank">Edit on GitHub</a>
     <h1>
-      Installation
+      安装
     </h1>
     <div class="subHeader"></div>
 
@@ -84,7 +84,7 @@
   }
 </style>
 
-<p>React is flexible and can be used in a variety of projects. You can create new apps with it, but you can also gradually introduce it into an existing codebase without doing a rewrite.</p>
+<p>React 可被灵活地运用在各种项目中。你可以用它创建新的应用程序，也可以逐渐地将其加入到现有的代码库中而无需重写。</p>
 
 <div class="toggler">
   <style>
@@ -152,97 +152,97 @@
   <script>
     document.querySelector('.toggler').parentElement.className += ' display-target-fiddle';
   </script>
-  <span>Which of these options best describes what you want to do?</span>
+  <span>下一步你想做什么？</span>
   <br />
   <br />
    <ul role="tablist" >
       <li id="fiddle" class="button-fiddle" aria-selected="false" role="tab" tabindex="0" aria-controls="fiddletab"
           onclick="display('target', 'fiddle')" onkeyup="keyToggle(event, 'fiddle', 'existingapp', 'newapp')">
-        Try React
+        尝试 React
       </li>
       <li id="newapp" class="button-newapp" aria-selected="false" role="tab" tabindex="-1" aria-controls="newapptab"
           onclick="display('target', 'newapp')" onkeyup="keyToggle(event, 'newapp', 'fiddle', 'existingapp')">
-        Create a New App
+        创建新应用
       </li>
       <li id="existingapp" class="button-existingapp" aria-selected="false" role="tab" tabindex="-1" aria-controls="existingapptab"
           onclick="display('target', 'existingapp')" onkeyup="keyToggle(event, 'existingapp', 'newapp', 'fiddle')">
-        Add React to an Existing App
+        添加 React 到现有应用
       </li>
     </ul>
 </div>
 
 <p><block id="fiddletab" role="tabpanel" class="fiddle"  /></p>
 
-<h2>Trying Out React</h2>
+<h2>尝试 React</h2>
 
-<p>If you&#39;re just interested in playing around with React, you can use CodePen. Try starting from <a href="http://codepen.io/gaearon/pen/rrpgNB?editors=0010">this Hello World example code</a>. You don&#39;t need to install anything; you can just modify the code and see if it works.</p>
+<p>如果你只是想简单尝试下 React，可以使用 CodePen。 首先尝试这个 <a href="http://codepen.io/gaearon/pen/rrpgNB?editors=0010">Hello World 示例代码</a>。你不需要安装任何东西，还能简单修改下代码使其生效。</p>
 
-<p>If you prefer to use your own text editor, you can also <a href="/react/downloads/single-file-example.html" download="hello.html">download this HTML file</a>, edit it, and open it from the local filesystem in your browser. It does a slow runtime code transformation, so don&#39;t use it in production.</p>
+<p>如果你喜欢使用自己的文本编辑器，你还可以 <a href="/react/downloads/single-file-example.html" download="hello.html">下载此 HTML 文件</a> 进行编辑, 然后在本地浏览器中打开。它会执行缓慢的运行时代码转换，所以不要在生产环境中使用。</p>
 
-<p>If you want to use it for a full application, there are two popular ways to get started with React: using Create React App, or adding it to an existing application.</p>
+<p>如果你想在一个完整的项目中使用 React，一般有两种方式：创建 React 应用或添加 React 到现有应用。</p>
 
 <p><block id="newapptab" role="tabpanel" class="newapp" /></p>
 
-<h2>Creating a New Application</h2>
+<h2>创建新应用</h2>
 
-<p><a href="http://github.com/facebookincubator/create-react-app">Create React App</a> is the best way to start building a new React single page application. It sets up your development environment so that you can use the latest JavaScript features, provides a nice developer experience, and optimizes your app for production.</p>
+<p><a href="http://github.com/facebookincubator/create-react-app">Create React App</a> 是开始构建新的 React 单页面应用的最佳途径。 它可以帮你配置开发环境，以便你可以使用最新的 JavaScript 特性，还能提供很棒的开发体验，并为生产环境优化你的应用</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">npm install -g create-react-app
 create-react-app my-app
 
 <span class="nb">cd </span>my-app
 npm start
 </code></pre></div>
-<p>Create React App doesn&#39;t handle backend logic or databases; it just creates a frontend build pipeline, so you can use it with any backend you want. It uses build tools like Babel and webpack under the hood, but works with zero configuration.</p>
+<p>Create React App 并不处理后端逻辑和数据库，它只会创建一个前端的构建管道，所以可以和任何后端搭配使用。它可以使用 Babel 和 Webpack 这样的配置工具，也可以零配置使用。</p>
 
-<p>When you&#39;re ready to deploy to production, running <code>npm run build</code> will create an optimized build of your app in the <code>build</code> folder. You can learn more about Create React App <a href="https://github.com/facebookincubator/create-react-app#create-react-app-">from its README</a> and the <a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#table-of-contents">User Guide</a>.</p>
+<p>当你准备好将其部署到生产环境中时，运行 <code>npm run build</code>  将会在 <code>build</code> 文件夹中创建一个优化好的应用。你可以从 <a href="https://github.com/facebookincubator/create-react-app#create-react-app-">README</a> 和 <a href="https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#table-of-contents">用户指南</a> 中了解更多信息。</p>
 
 <p><block id="existingapptab" role="tabpanel" class="existingapp" /></p>
 
-<h2>Adding React to an Existing Application</h2>
+<h2>添加 React 到现有应用</h2>
 
-<p>You don&#39;t need to rewrite your app to start using React.</p>
+<p>你不需要为了使用 React 重写你的应用。</p>
 
-<p>We recommend adding React to a small part of your application, such as an individual widget, so you can see if it works well for your use case.</p>
+<p>我们建议你将 React 添加到应用的一小部分中，比如单个小部件，以便你看它是否适用于你的情况。</p>
 
-<p>While React <a href="/react/docs/react-without-es6.html">can be used</a> without a build pipeline, we recommend setting it up so you can be more productive. A modern build pipeline typically consists of:</p>
+<p>虽然 React <a href="/react/docs/react-without-es6.html">可以在没有构建管道的情况下使用</a> ，但是为了更高效我是还建议你使用它，现代的构建管道通常包括:</p>
 
 <ul>
-<li>A <strong>package manager</strong>, such as <a href="https://yarnpkg.com/">Yarn</a> or <a href="https://www.npmjs.com/">npm</a>. It lets you take advantage of a vast ecosystem of third-party packages, and easily install or update them.</li>
-<li>A <strong>bundler</strong>, such as <a href="https://webpack.js.org/">webpack</a> or <a href="http://browserify.org/">Browserify</a>. It lets you write modular code and bundle it together into small packages to optimize load time.</li>
-<li>A <strong>compiler</strong> such as <a href="http://babeljs.io/">Babel</a>. It lets you write modern JavaScript code that still works in older browsers.</li>
+<li><strong>包管理器</strong>，比如 <a href="https://yarnpkg.com/">Yarn</a> 或 <a href="https://www.npmjs.com/">npm</a>。它可以让你使用庞大的第三方软件包生态系统，还能很方便的安装或升级。</li>
+<li><strong>构建器</strong>，比如 <a href="https://webpack.js.org/">webpack</a> 或 <a href="http://browserify.org/">Browserify</a>。它允许你编写模块化代码并且压缩文件以优化加载时间。</li>
+<li><strong>编译器</strong> 比如 <a href="http://babeljs.io/">Babel</a>。它可以让包含新特性的代码运行在旧版浏览器上。</li>
 </ul>
 
-<h3>Installing React</h3>
+<h3>安装</h3>
 
 <blockquote>
 <p><strong>Note:</strong></p>
 
-<p>Once installed, we strongly recommend setting up a <a href="/react/docs/optimizing-performance.html#use-the-production-build">production build process</a> to ensure you&#39;re using the fast version of React in production.</p>
+<p>一旦安装 React，我们强烈建议你将它配置为<a href="/react/docs/optimizing-performance.html#use-the-production-build">生产构建程序</a> ，以确保你在生产环境中使用最新版本的 React。</p>
 </blockquote>
 
-<p>We recommend using <a href="https://yarnpkg.com/">Yarn</a> or <a href="https://www.npmjs.com/">npm</a> for managing front-end dependencies. If you&#39;re new to package managers, the <a href="https://yarnpkg.com/en/docs/getting-started">Yarn documentation</a> is a good place to get started.</p>
+<p>我们建议使用 <a href="https://yarnpkg.com/">Yarn</a> 或 <a href="https://www.npmjs.com/">npm</a> 来管理前端的依赖关系, 如果你还未使用过包管理器，阅读 <a href="https://yarnpkg.com/en/docs/getting-started">Yarn 文档</a> 以快速入门。 </p>
 
-<p>To install React with Yarn, run:</p>
+<p>使用 Yarn 安装 React：</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">yarn init
 yarn add react react-dom
 </code></pre></div>
-<p>To install React with npm, run:</p>
+<p>使用 npm 安装 React：</p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash">npm init
 npm install --save react react-dom
 </code></pre></div>
-<p>Both Yarn and npm download packages from the <a href="http://npmjs.com/">npm registry</a>.</p>
+<p>Yarn 和 npm 都会从 <a href="http://npmjs.com/">npm 仓库</a> 下载软件包。</p>
 
-<h3>Enabling ES6 and JSX</h3>
+<h3>使用 ES6 和 JSX</h3>
 
-<p>We recommend using React with <a href="http://babeljs.io/">Babel</a> to let you use ES6 and JSX in your JavaScript code. ES6 is a set of modern JavaScript features that make development easier, and JSX is an extension to the JavaScript language that works nicely with React.</p>
+<p>我们推荐使用 <a href="http://babeljs.io/">Babel</a> 以便你在 JavaScript 中使用 ES6 和 JSX，ES6 拥有一系列 JavaScript 新特性的标准，能使你的开发更简单。JSX 是与 React 搭配使用的 JavaScript 语言的扩展。</p>
 
-<p>The <a href="https://babeljs.io/docs/setup/">Babel setup instructions</a> explain how to configure Babel in many different build environments. Make sure you install <a href="http://babeljs.io/docs/plugins/preset-react/#basic-setup-with-the-cli-"><code>babel-preset-react</code></a> and <a href="http://babeljs.io/docs/plugins/preset-es2015/#basic-setup-with-the-cli-"><code>babel-preset-es2015</code></a> and enable them in your <a href="http://babeljs.io/docs/usage/babelrc/"><code>.babelrc</code> configuration</a>, and you&#39;re good to go.</p>
+<p><a href="https://babeljs.io/docs/setup/">Babel 安装说明</a> 说明了如何在多种不同的环境中配置 Babel，确保你已经安装了<a href="http://babeljs.io/docs/plugins/preset-react/#basic-setup-with-the-cli-"><code>babel-preset-react</code></a> 和 <a href="http://babeljs.io/docs/plugins/preset-es2015/#basic-setup-with-the-cli-"><code>babel-preset-es2015</code></a> 并且在 <a href="http://babeljs.io/docs/usage/babelrc/"><code>.babelrc</code> configuration</a> 配置文件中启用它们, 到这里就准备就绪了。</p>
 
-<h3>Hello World with ES6 and JSX</h3>
+<h3>在 Hello Wrorld 中使用 ES6 的 JSX</h3>
 
-<p>We recommend using a bundler like <a href="https://webpack.js.org/">webpack</a> or <a href="http://browserify.org/">Browserify</a> so you can write modular code and bundle it together into small packages to optimize load time.</p>
+<p>我们建议你使用像 <a href="https://webpack.js.org/">webpack</a> 或 <a href="http://browserify.org/">Browserify</a> 这样的构建工具，以便于编写模块代码并将其压缩，优化加载时间。</p>
 
-<p>The smallest React example looks like this:</p>
+<p>下面是最基本的 React 示例：</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 <span class="kr">import</span> <span class="nx">ReactDOM</span> <span class="nx">from</span> <span class="s1">&#39;react-dom&#39;</span><span class="p">;</span>
 
@@ -251,42 +251,42 @@ npm install --save react react-dom
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p>This code renders into a DOM element with the id of <code>root</code> so you need <code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code> somewhere in your HTML file.</p>
+<p>这段代码会将其渲染入一个 ID 为 <code>root</code> 的 DOM 元素，所以在你的 HTML 文件中需要有 <code>&lt;div id=&quot;root&quot;&gt;&lt;/block&gt;div&gt;</code>。</p>
 
-<p>Similarly, you can render a React component inside a DOM element somewhere inside your existing app written with any other JavaScript UI library.</p>
+<p>类似以上，你可以在任何由其他 JavaScript UI 库编辑的现有应用中，将 React 渲染进一个 DOM 元素。</p>
 
-<p><a href="/react/docs/integrating-with-other-libraries.html#integrating-with-other-view-libraries">Learn more about integrating React with existing code.</a></p>
+<p><a href="/react/docs/integrating-with-other-libraries.html#integrating-with-other-view-libraries">了解有关将 React 与现有代码集成的更多信息。</a></p>
 
-<h3>Development and Production Versions</h3>
+<h3>开发和生产版本</h3>
 
-<p>By default, React includes many helpful warnings. These warnings are very useful in development.</p>
+<p>默认情况下，React 会包含很多有用的警告，这些警告在开发中非常有用。</p>
 
-<p><strong>However, they make the development version of React larger and slower so you should use the production version when you deploy the app.</strong></p>
+<p><strong>然而，这些警告使开发版本的 React 体积过大并且运行过慢，所以你应该在部署应用时使用生产版本</strong></p>
 
-<p>Learn <a href="/react/docs/optimizing-performance.html#use-the-production-build">how to tell if your website is serving the right version of React</a>, and how to configure the production build process most efficiently:</p>
+<p>了解<a href="/react/docs/optimizing-performance.html#use-the-production-build">如何判断你的网页是否运行了合适的 React 版本</a>, 以及如何有效的配置生产构建程序：</p>
 
 <ul>
-<li><a href="/react/docs/optimizing-performance.html#create-react-app">Creating a Production Build with Create React App</a></li>
-<li><a href="/react/docs/optimizing-performance.html#single-file-builds">Creating a Production Build with Single-File Builds</a></li>
-<li><a href="/react/docs/optimizing-performance.html#brunch">Creating a Production Build with Brunch</a></li>
-<li><a href="/react/docs/optimizing-performance.html#browserify">Creating a Production Build with Browserify</a></li>
-<li><a href="/react/docs/optimizing-performance.html#rollup">Creating a Production Build with Rollup</a></li>
-<li><a href="/react/docs/optimizing-performance.html#webpack">Creating a Production Build with Webpack</a></li>
+<li><a href="/react/docs/optimizing-performance.html#create-react-app">使用 Create React App 构建应用</a></li>
+<li><a href="/react/docs/optimizing-performance.html#single-file-builds">使用独立文件构建应用</a></li>
+<li><a href="/react/docs/optimizing-performance.html#brunch">使用 Brunch 构建应用</a></li>
+<li><a href="/react/docs/optimizing-performance.html#browserify">使用 Browserify 构建应用</a></li>
+<li><a href="/react/docs/optimizing-performance.html#rollup">使用 Rollup 构建应用</a></li>
+<li><a href="/react/docs/optimizing-performance.html#webpack">使用 Webpack 构建应用</a></li>
 </ul>
 
-<h3>Using a CDN</h3>
+<h3>使用 CDN</h3>
 
-<p>If you don&#39;t want to use npm to manage client packages, the <code>react</code> and <code>react-dom</code> npm packages also provide single-file distributions in <code>dist</code> folders, which are hosted on a CDN:</p>
+<p>如果你不想使用 npm 来管理软件包，&#39;react&#39; 和 &#39;react-dom&#39; npm 软件包同样提供了托管在 CDN 上的独立文件。</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://unpkg.com/react@15/dist/react.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://unpkg.com/react-dom@15/dist/react-dom.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div>
-<p>The versions above are only meant for development, and are not suitable for production. Minified and optimized production versions of React are available at:</p>
+<p>以上版本仅用于开发，不适合生产。压缩优化的生产版本如下：</p>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://unpkg.com/react@15/dist/react.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;https://unpkg.com/react-dom@15/dist/react-dom.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </code></pre></div>
-<p>To load a specific version of <code>react</code> and <code>react-dom</code>, replace <code>15</code> with the version number.</p>
+<p>如果想要加载指定版本的 <code>react</code> 和 <code>react-dom</code>，用版本号替换 15。</p>
 
-<p>If you use Bower, React is available via the <code>react</code> package.</p>
+<p>如果你在使用 Bower，可以通过 <code>react</code> 包来使用 React。</p>
 
 <script>
 /**
