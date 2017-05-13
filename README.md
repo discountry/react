@@ -126,3 +126,5 @@ $ git push origin gh-pages
 ### 申请合并
 
 完成你所选部分的翻译之后，可以在 [Pull requests](https://github.com/discountry/react/pulls) 页面发起新的 Pull requests 请求合并你的翻译至本仓库中。
+
+**P.S.** 提交代码请提交jekyll项目当中的markdown源码文件，不要提交生成的静态页面。
