@@ -68,6 +68,8 @@ $ rvm install 2.4
 $ rvm use 2.4
 ```
 
+确认无误后：
+
 ```sh
 $ cd react/docs
 $ bundle install # Might need sudo.
