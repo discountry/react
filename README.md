@@ -78,6 +78,11 @@ $ npm install
 
 如果你受到国内糟糕的网络环境影响，请将ruby源切换至国内镜像[ruby-china](http://gems.ruby-china.org/).
 
+```sh
+$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+$ bundle config mirror.https://rubygems.org https://gems.ruby-china.org
+```
+
 ### 构建文档
 
 先跑一下 `grunt` 确保项目已被构建。
