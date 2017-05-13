@@ -5,7 +5,7 @@ $textColorLight: lighten($textColor, 20%);
 
 html {
   font-family: $helvetica;
-  font-family: proxima-nova, $helvetica;
+  font-family: source-han-sans-simplified-c, $helvetica;
   color: $textColor;
   line-height: 1.28;
 }
