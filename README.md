@@ -86,6 +86,8 @@ $ open http://localhost:4000/react/index.html
 $ bundle exec rake release
 ```
 
+生成文档操作可能会遇到ssl错误，请根据[SSL CERTIFICATE UPDATES](http://guides.rubygems.org/ssl-certificate-update/#installing-using-update-packages)进行操作。
+
 ### 发布文档
 
 切换至本项目的 `gh-pages` 分支下，复制 `react-gh-pages` 文件夹中的所有内容，提交并同步至项目中。
