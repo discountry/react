@@ -6,9 +6,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Conditional Rendering - React</title>
+  <title>条件渲染 - React</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:title" content="Conditional Rendering - React">
+  <meta property="og:title" content="条件渲染 - React">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://facebook.github.io/react/docs/conditional-rendering.html">
   <meta property="og:image" content="https://facebook.github.io/react/img/logo_og.png">
@@ -74,15 +74,15 @@
   <div class="inner-content">
     <a class="edit-page-link" href="https://github.com/facebook/react/tree/master/docs/docs/conditional-rendering.md" target="_blank">Edit on GitHub</a>
     <h1>
-      Conditional Rendering
+      条件渲染
     </h1>
     <div class="subHeader"></div>
 
-    <p>In React, you can create distinct components that encapsulate behavior you need. Then, you can render only some of them, depending on the state of your application.</p>
+    <p>在 React 中，你可以创建不同的组件来封装各种你需要的行为。然后还可以根据应用的状态变化只渲染其中的一部分。</p>
 
-<p>Conditional rendering in React works the same way conditions work in JavaScript. Use JavaScript operators like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else"><code>if</code></a> or the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">conditional operator</a> to create elements representing the current state, and let React update the UI to match them.</p>
+<p>React 中的条件渲染和 JavaScript 中的一致，使用 JavaScript 操作符 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else"><code>if</code></a> 或<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">条件运算符</a>来创建表示当前状态的元素，然后让 React 根据它们来更新 UI。</p>
 
-<p>Consider these two components:</p>
+<p>先来看两个组件:</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">UserGreeting</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Welcome</span> <span class="nx">back</span><span class="o">!&lt;</span><span class="err">/h1&gt;;</span>
 <span class="p">}</span>
@@ -91,7 +91,7 @@
   <span class="k">return</span> <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Please</span> <span class="nx">sign</span> <span class="nx">up</span><span class="p">.</span><span class="o">&lt;</span><span class="err">/h1&gt;;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>We&#39;ll create a <code>Greeting</code> component that displays either of these components depending on whether a user is logged in:</p>
+<p>我们将创建一个 <code>Greeting</code> 组件，它会根据用户是否登录来显示其中之一：</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Greeting</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
 <span class="hll">  <span class="k">if</span> <span class="p">(</span><span class="nx">isLoggedIn</span><span class="p">)</span> <span class="p">{</span>
@@ -106,15 +106,15 @@
 </span><span class="hll">  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 </span><span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/ZpVxNq?editors=0011">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/ZpVxNq?editors=0011">在 CodePen 上尝试。</a></p>
 
-<p>This example renders a different greeting depending on the value of <code>isLoggedIn</code> prop.</p>
+<p>此示例根据 <code>isLoggedIn</code> 的值渲染将不同的问候语。</p>
 
-<h3>Element Variables</h3>
+<h3>元素变量</h3>
 
-<p>You can use variables to store elements. This can help you conditionally render a part of the component while the rest of the output doesn&#39;t change.</p>
+<p>你可以使用变量来储存元素。它可以帮助你有条件的渲染组件的一部分，而输出的其他部分不会更改。</p>
 
-<p>Consider these two new components representing Logout and Login buttons:</p>
+<p>再来看两个新组件分别代表注销和登录：</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">LoginButton</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="p">(</span>
     <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">onClick</span><span class="p">}</span><span class="o">&gt;</span>
@@ -131,9 +131,9 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>In the example below, we will create a <a href="/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class">stateful component</a> called <code>LoginControl</code>.</p>
+<p>在下面的例子中，我们将要创建一个名为 <code>LoginControl</code> 的<a href="/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class">有状态的组件</a>。</p>
 
-<p>It will render either <code>&lt;LoginButton /&gt;</code> or <code>&lt;LogoutButton /&gt;</code> depending on its current state. It will also render a <code>&lt;Greeting /&gt;</code> from the previous example:</p>
+<p>它会根据当前的状态来渲染 <code>&lt;LoginButton /&gt;</code> 或 <code>&lt;BogoutButton&gt;</code>，它也将渲染前面例子中的 <code>&lt;Greeting /&gt;</code>。</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">LoginControl</span> <span class="kr">extends</span> <span class="nx">React</span><span class="p">.</span><span class="nx">Component</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">props</span><span class="p">);</span>
@@ -174,13 +174,13 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/QKzAgB?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/QKzAgB?editors=0010">在 CodePen 上尝试</a></p>
 
-<p>While declaring a variable and using an <code>if</code> statement is a fine way to conditionally render a component, sometimes you might want to use a shorter syntax. There are a few ways to inline conditions in JSX, explained below.</p>
+<p>声明变量并使用 <code>if</code> 语句是条件渲染组件的不错的方式，但有时你也想使用更简洁的语法，在 JSX 中有如下几种方法。</p>
 
-<h3>Inline If with Logical &amp;&amp; Operator</h3>
+<h3>与运算符 &amp;&amp;</h3>
 
-<p>You may <a href="/react/docs/introducing-jsx.html#embedding-expressions-in-jsx">embed any expressions in JSX</a> by wrapping them in curly braces. This includes the JavaScript logical <code>&amp;&amp;</code> operator. It can be handy for conditionally including an element:</p>
+<p>你可以通过用花括号包裹代码<a href="/react/docs/introducing-jsx.html#embedding-expressions-in-jsx">在 JSX 中嵌入任何表达式</a> ，也包括 JavaScript 的逻辑与 &amp;&amp;，它可以方便地条件渲染一个元素。</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Mailbox</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">unreadMessages</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">unreadMessages</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -201,17 +201,17 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/ozJddz?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/ozJddz?editors=0010">在 CodePen 上尝试</a></p>
 
-<p>It works because in JavaScript, <code>true &amp;&amp; expression</code> always evaluates to <code>expression</code>, and <code>false &amp;&amp; expression</code> always evaluates to <code>false</code>.</p>
+<p>之所以能这样做，是因为在 JavaScript 中，<code>true &amp;&amp; expression</code> 总是返回 <code>expression</code>，而 <code>false &amp;&amp; expression</code> 总是返回 <code>false</code>。</p>
 
-<p>Therefore, if the condition is <code>true</code>, the element right after <code>&amp;&amp;</code> will appear in the output. If it is <code>false</code>, React will ignore and skip it.</p>
+<p>因此，如果条件是 <code>true</code>，<code>&amp;&amp;</code> 右侧的元素就会被渲染，如果是 <code>false</code>，React 会忽略并跳过它。</p>
 
-<h3>Inline If-Else with Conditional Operator</h3>
+<h3>三目运算符</h3>
 
-<p>Another method for conditionally rendering elements inline is to use the JavaScript conditional operator <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator"><code>condition ? true : false</code></a>.</p>
+<p>条件渲染的另一种方法是使用 JavaScript 的条件运算符 <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator"><code>condition ? true : false</code></a>。</p>
 
-<p>In the example below, we use it to conditionally render a small block of text.</p>
+<p>在下面的例子中，我们用它来有条件的渲染一小段文本。</p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -221,7 +221,7 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>It can also be used for larger expressions although it is less obvious what&#39;s going on:</p>
+<p>同样它也可以用在较大的表达式中，虽然不太直观：</p>
 <div class="highlight"><pre><code class="language-js" data-lang="js"><span class="nx">render</span><span class="p">()</span> <span class="p">{</span>
   <span class="kr">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">;</span>
   <span class="k">return</span> <span class="p">(</span>
@@ -235,13 +235,13 @@
   <span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Just like in JavaScript, it is up to you to choose an appropriate style based on what you and your team consider more readable. Also remember that whenever conditions become too complex, it might be a good time to <a href="/react/docs/components-and-props.html#extracting-components">extract a component</a>.</p>
+<p>像在 JavaScript 中一样，你可以根据团队的习惯选择更易读的方式。还要记住如果条件变得过于复杂，可能就是<a href="/react/docs/components-and-props.html#extracting-components">提取组件</a>的好时机了。</p>
 
-<h3>Preventing Component from Rendering</h3>
+<h3>阻止组件渲染</h3>
 
-<p>In rare cases you might want a component to hide itself even though it was rendered by another component. To do this return <code>null</code> instead of its render output.</p>
+<p>在极少数情况下，你可能希望隐藏组件，即使它被其他组件渲染。让 <code>render</code> 方法返回 <code>null</code> 而不是它的渲染结果即可实现。</p>
 
-<p>In the example below, the <code>&lt;WarningBanner /&gt;</code> is rendered depending on the value of the prop called <code>warn</code>. If the value of the prop is <code>false</code>, then the component does not render:</p>
+<p>在下面的例子中，<code>&lt;WarningBanner /&gt;</code> 根据属性 <code>warn</code> 的值条件渲染。如果 <code>warn</code> 的值是 <code>false</code>，则组件不会渲染： </p>
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">WarningBanner</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
 <span class="hll">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">props</span><span class="p">.</span><span class="nx">warn</span><span class="p">)</span> <span class="p">{</span>
 </span><span class="hll">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
@@ -284,9 +284,9 @@
   <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
 <span class="p">);</span>
 </code></pre></div>
-<p><a href="https://codepen.io/gaearon/pen/Xjoqwm?editors=0010">Try it on CodePen.</a></p>
+<p><a href="https://codepen.io/gaearon/pen/Xjoqwm?editors=0010">在 CodePen 上尝试。</a></p>
 
-<p>Returning <code>null</code> from a component&#39;s <code>render</code> method does not affect the firing of the component&#39;s lifecycle methods. For instance, <code>componentWillUpdate</code> and <code>componentDidUpdate</code> will still be called.</p>
+<p>组件的 <code>render</code> 方法返回 <code>null</code> 并不会影响该组件生命周期方法的回调。例如，<code>componentWillUpdate</code> 和 <code>componentDidUpdate</code> 依然可以被调用。</p>
 
 
     <div class="docs-prevnext">
