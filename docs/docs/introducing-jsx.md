@@ -14,7 +14,7 @@ const element = <h1>Hello, world!</h1>;
 
 这种看起来可能有些奇怪的标签语法既不是字符串也不是HTML.
 
-It is called JSX, and it is a syntax extension to JavaScript. We recommend using it with React to describe what the UI should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript.
+它被称为 JSX, 一种 JavaScript 的语法扩展。 We recommend using it with React to describe what the UI should look like. JSX may remind you of a template language, but it comes with the full power of JavaScript.
 
 JSX produces React "elements". We will explore rendering them to the DOM in the [next section](/react/docs/rendering-elements.html). Below, you can find the basics of JSX necessary to get you started.
 

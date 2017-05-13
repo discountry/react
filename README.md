@@ -46,7 +46,7 @@ $ git clone https://github.com/[YourGithubUserName]/react.git
 
 在使用jkeyll之前，我们需要先安装好ruby
 
- - [Ruby](http://www.ruby-lang.org/) (version >= 1.8.7)
+ - [Ruby](http://www.ruby-lang.org/) (version >= 2.4)
  - [RubyGems](http://rubygems.org/) (version >= 1.3.7)
  - [Bundler](http://gembundler.com/) (使用 `gem install bundler`)
 
@@ -55,6 +55,17 @@ $ git clone https://github.com/[YourGithubUserName]/react.git
 ```sh
 # 如果网络无法正常连接，你可能需要自备梯子，在命令行开启代理
 $ sudo gem update --system
+```
+
+请确认自己安装的ruby版本在v2.4以上，否则也可能遇到ssl错误：
+
+```sh
+$ ruby -v
+# ruby 2.4.0p0 (2016-12-24 revision 57164)
+# 如果你需要升级你的 ruby 版本，请使用 [rvm](https://rvm.io/)
+$ \curl -sSL https://get.rvm.io | bash -s stable
+$ rvm install 2.4
+$ rvm use 2.4
 ```
 
 ```sh
