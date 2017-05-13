@@ -1,17 +1,17 @@
 ---
 id: conditional-rendering
-title: Conditional Rendering
+title: 条件渲染
 permalink: docs/conditional-rendering.html
 prev: handling-events.html
 next: lists-and-keys.html
 redirect_from: "tips/false-in-jsx.html"
 ---
 
-In React, you can create distinct components that encapsulate behavior you need. Then, you can render only some of them, depending on the state of your application.
+在 React 中，你可以创建不同的组件来封装各种你需要的行为。然后还可以根据应用的状态变化只渲染其中的一部分。
 
-Conditional rendering in React works the same way conditions work in JavaScript. Use JavaScript operators like [`if`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) or the [conditional operator](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) to create elements representing the current state, and let React update the UI to match them.
+React 中的条件渲染和 JavaScript 中的一致，使用 JavaScript 操作符 [`if`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else) 或[条件运算符](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)来创建表示当前状态的元素，然后让 React 根据它们来更新 UI。
 
-Consider these two components:
+先来看两个组件:
 
 ```js
 function UserGreeting(props) {
@@ -23,7 +23,7 @@ function GuestGreeting(props) {
 }
 ```
 
-We'll create a `Greeting` component that displays either of these components depending on whether a user is logged in:
+我们将创建一个 `Greeting` 组件，它会根据用户是否登录来显示其中之一：
 
 ```javascript{3-7,11,12}
 function Greeting(props) {
@@ -41,15 +41,15 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/ZpVxNq?editors=0011)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/ZpVxNq?editors=0011)
 
-This example renders a different greeting depending on the value of `isLoggedIn` prop.
+此示例根据 `isLoggedIn` 的值渲染将不同的问候语。
 
-### Element Variables
+### 元素变量
 
-You can use variables to store elements. This can help you conditionally render a part of the component while the rest of the output doesn't change.
+你可以使用变量来储存元素。它可以帮助你有条件的渲染组件的一部分，而输出的其他部分不会更改。
 
-Consider these two new components representing Logout and Login buttons:
+再来看两个新组件分别代表注销和登录：
 
 ```js
 function LoginButton(props) {
@@ -68,10 +68,9 @@ function LogoutButton(props) {
   );
 }
 ```
+在下面的例子中，我们将要创建一个名为 `LoginControl` 的[有状态的组件](/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class)。
 
-In the example below, we will create a [stateful component](/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class) called `LoginControl`.
-
-It will render either `<LoginButton />` or `<LogoutButton />` depending on its current state. It will also render a `<Greeting />` from the previous example:
+它会根据当前的状态来渲染 `<LoginButton />` 或 `<BogoutButton>`，它也将渲染前面例子中的 `<Greeting />`。
 
 ```javascript{20-25,29,30}
 class LoginControl extends React.Component {
@@ -115,13 +114,12 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/QKzAgB?editors=0010)
+[在 CodePen 上尝试](https://codepen.io/gaearon/pen/QKzAgB?editors=0010)
 
-While declaring a variable and using an `if` statement is a fine way to conditionally render a component, sometimes you might want to use a shorter syntax. There are a few ways to inline conditions in JSX, explained below.
+声明变量并使用 `if` 语句是条件渲染组件的不错的方式，但有时你也想使用更简洁的语法，在 JSX 中有如下几种方法。
 
-### Inline If with Logical && Operator
-
-You may [embed any expressions in JSX](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx) by wrapping them in curly braces. This includes the JavaScript logical `&&` operator. It can be handy for conditionally including an element:
+### 与运算符 && 
+你可以通过用花括号包裹代码[在 JSX 中嵌入任何表达式](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx) ，也包括 JavaScript 的逻辑与 &&，它可以方便地条件渲染一个元素。
 
 ```js{6-10}
 function Mailbox(props) {
@@ -145,17 +143,17 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/ozJddz?editors=0010)
+[在 CodePen 上尝试](https://codepen.io/gaearon/pen/ozJddz?editors=0010)
 
-It works because in JavaScript, `true && expression` always evaluates to `expression`, and `false && expression` always evaluates to `false`.
+之所以能这样做，是因为在 JavaScript 中，`true && expression` 总是返回 `expression`，而 `false && expression` 总是返回 `false`。
 
-Therefore, if the condition is `true`, the element right after `&&` will appear in the output. If it is `false`, React will ignore and skip it.
+因此，如果条件是 `true`，`&&` 右侧的元素就会被渲染，如果是 `false`，React 会忽略并跳过它。
 
-### Inline If-Else with Conditional Operator
+### 三目运算符
 
-Another method for conditionally rendering elements inline is to use the JavaScript conditional operator [`condition ? true : false`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator).
+条件渲染的另一种方法是使用 JavaScript 的条件运算符 [`condition ? true : false`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)。
 
-In the example below, we use it to conditionally render a small block of text.
+在下面的例子中，我们用它来有条件的渲染一小段文本。
 
 ```javascript{5}
 render() {
@@ -168,7 +166,7 @@ render() {
 }
 ```
 
-It can also be used for larger expressions although it is less obvious what's going on:
+同样它也可以用在较大的表达式中，虽然不太直观：
 
 ```js{5,7,9}
 render() {
@@ -185,13 +183,13 @@ render() {
 }
 ```
 
-Just like in JavaScript, it is up to you to choose an appropriate style based on what you and your team consider more readable. Also remember that whenever conditions become too complex, it might be a good time to [extract a component](/react/docs/components-and-props.html#extracting-components).
+像在 JavaScript 中一样，你可以根据团队的习惯选择更易读的方式。还要记住如果条件变得过于复杂，可能就是[提取组件](/react/docs/components-and-props.html#extracting-components)的好时机了。
 
-### Preventing Component from Rendering
+### 阻止组件渲染
 
-In rare cases you might want a component to hide itself even though it was rendered by another component. To do this return `null` instead of its render output.
+在极少数情况下，你可能希望隐藏组件，即使它被其他组件渲染。让 `render` 方法返回 `null` 而不是它的渲染结果即可实现。
 
-In the example below, the `<WarningBanner />` is rendered depending on the value of the prop called `warn`. If the value of the prop is `false`, then the component does not render:
+在下面的例子中，`<WarningBanner />` 根据属性 `warn` 的值条件渲染。如果 `warn` 的值是 `false`，则组件不会渲染： 
 
 ```javascript{2-4,29}
 function WarningBanner(props) {
@@ -237,6 +235,6 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/Xjoqwm?editors=0010)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/Xjoqwm?editors=0010)
 
-Returning `null` from a component's `render` method does not affect the firing of the component's lifecycle methods. For instance, `componentWillUpdate` and `componentDidUpdate` will still be called.
+组件的 `render` 方法返回 `null` 并不会影响该组件生命周期方法的回调。例如，`componentWillUpdate` 和 `componentDidUpdate` 依然可以被调用。
