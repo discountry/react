@@ -50,6 +50,12 @@ $ git clone https://github.com/[YourGithubUserName]/react.git
  - [RubyGems](http://rubygems.org/) (version >= 1.3.7)
  - [Bundler](http://gembundler.com/) (使用 `gem install bundler`)
 
+在运行后面的命令之前，你可能需要更新本地的gem，否则可能会遇到ssl错误：
+
+```sh
+# 如果网络无法正常连接，你可能需要自备梯子，在命令行开启代理
+$ sudo gem update --system
+```
 
 ```sh
 $ cd react/docs
