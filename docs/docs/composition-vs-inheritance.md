@@ -1,21 +1,21 @@
 ---
 id: composition-vs-inheritance
-title: Composition vs Inheritance
+title: 组合 vs 继承
 permalink: docs/composition-vs-inheritance.html
 redirect_from: "docs/multiple-components.html"
 prev: lifting-state-up.html
 next: thinking-in-react.html
 ---
 
-React has a powerful composition model, and we recommend using composition instead of inheritance to reuse code between components.
+React 具有强大的组合模型，我们建议使用组合而不是继承来复用组件之间的代码。
 
-In this section, we will consider a few problems where developers new to React often reach for inheritance, and show how we can solve them with composition.
+在本节中，我们将围绕几个 React 新手经常使用继承解决的问题，我们将展示如果用组合来解决它们。
 
-## Containment
+## 约束性
 
-Some components don't know their children ahead of time. This is especially common for components like `Sidebar` or `Dialog` that represent generic "boxes".
+一些组件不能提前知道它们的子组件是什么。这对于 `Sidebar` 或 `Dialog` 这类通用容器尤其常见。
 
-We recommend that such components use the special `children` prop to pass children elements directly into their output:
+我们建议这些组件使用 `children` 属性将子元素直接传递到输出。
 
 ```js{4}
 function FancyBorder(props) {
@@ -27,7 +27,7 @@ function FancyBorder(props) {
 }
 ```
 
-This lets other components pass arbitrary children to them by nesting the JSX:
+这样做还允许其他组件通过嵌套 JSX 来传递子组件。
 
 ```js{4-9}
 function WelcomeDialog() {
@@ -44,11 +44,11 @@ function WelcomeDialog() {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/ozqNOV?editors=0010)
+[在 CodePen 上尝试。](http://codepen.io/gaearon/pen/ozqNOV?editors=0010)
 
-Anything inside the `<FancyBorder>` JSX tag gets passed into the `FancyBorder` component as a `children` prop. Since `FancyBorder` renders `{props.children}` inside a `<div>`, the passed elements appear in the final output.
+`<FancyBorder>` JSX 标签内的任何内容都将通过 `children` 属性传入 `FancyBorder`。由于 `FancyBorder` 在一个 `<div>` 内渲染了 `{props.children}`，所以被传递的所有元素都会出现在最终输出中。
 
-While this is less common, sometimes you might need multiple "holes" in a component. In such cases you may come up with your own convention instead of using `children`:
+虽然不太常见，但有时你可能需要在组件中有多个入口，这种情况下你可以使用自己约定的属性而不是 `children`：
 
 ```js{5,8,18,21}
 function SplitPane(props) {
@@ -77,15 +77,15 @@ function App() {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/gwZOJp?editors=0010)
+[在 CodePen 上尝试。](http://codepen.io/gaearon/pen/gwZOJp?editors=0010)
 
-React elements like `<Contacts />` and `<Chat />` are just objects, so you can pass them as props like any other data.
+类似 `<Contacts />` 和 `<Chat />` 这样的 React 元素都是对象，所以你可以像任何其他元素一样传递它们。
 
-## Specialization
+## 专一性
 
-Sometimes we think about components as being "special cases" of other components. For example, we might say that a `WelcomeDialog` is a special case of `Dialog`.
+有时我们认为组件是其他组件的特殊情况。例如，我们会说 `WelcomeDialog` 是 `Dialog` 的特殊情况。
 
-In React, this is also achieved by composition, where a more "specific" component renders a more "generic" one and configures it with props:
+在 React 中，这也是通过组合来实现的，通过配置属性用较特殊的组件来渲染较通用的组件。
 
 ```js{5,8,16-18}
 function Dialog(props) {
@@ -110,9 +110,9 @@ function WelcomeDialog() {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/kkEaOZ?editors=0010)
+[在 CodePen 上尝试](http://codepen.io/gaearon/pen/kkEaOZ?editors=0010)
 
-Composition works equally well for components defined as classes:
+组合对于定义为类的组件同样适用：
 
 ```js{10,27-31}
 function Dialog(props) {
@@ -160,12 +160,12 @@ class SignUpDialog extends React.Component {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/gwZbYa?editors=0010)
+[在 CodePen 上尝试。](http://codepen.io/gaearon/pen/gwZbYa?editors=0010)
 
-## So What About Inheritance?
+## 那么继承呢？
 
-At Facebook, we use React in thousands of components, and we haven't found any use cases where we would recommend creating component inheritance hierarchies.
+在 Facebook 网站上，我们的 React 使用了数以千计的组件，然而却还未发现任何需要推荐你使用继承的情况。
 
-Props and composition give you all the flexibility you need to customize a component's look and behavior in an explicit and safe way. Remember that components may accept arbitrary props, including primitive values, React elements, or functions.
+属性和组合为你提供了以清晰和安全的方式自定义组件的样式和行为所需的所有灵活性。请记住，组件可以接受任意元素，包括基本数据类型、React 元素或函数。
 
-If you want to reuse non-UI functionality between components, we suggest extracting it into a separate JavaScript module. The components may import it and use that function, object, or a class, without extending it.
+如果要在组件之间复用 UI 无关的功能，我们建议将其提取到单独的 JavaScript 模块中。这样可以在不对组件进行扩展的前提下导入并使用该函数、对象或类。
