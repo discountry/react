@@ -91,7 +91,7 @@ ReactDOM.render(
 );
 ```
 
-[在 CodePen 上尝试](http://codepen.io/gaearon/pen/xEmzGg?editors=0010)
+[在 CodePen 上试试。](http://codepen.io/gaearon/pen/xEmzGg?editors=0010)
 
 你必须谨慎对待 JSX 回调函数中的 `this`，类的方法默认是不会[绑定](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Function/bind) `this` 的。如果你忘记绑定 `this.handleClick` 并把它传入 `onClick`, 当你调用这个函数的时候 `this` 的值会是 `undefined`。
 

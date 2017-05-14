@@ -192,7 +192,7 @@ ReactDOM.render(
 );
 ```
 
-这段代码会将其渲染入一个 ID 为 `root` 的 DOM 元素，所以在你的 HTML 文件中需要有 `<div id="root"></block>div>`。
+这段代码会将其渲染入一个 ID 为 `root` 的 DOM 元素，所以在你的 HTML 文件中需要有 `<div id="root"></div>`。
 
 类似以上，你可以在任何由其他 JavaScript UI 库编辑的现有应用中，将 React 渲染进一个 DOM 元素。
 

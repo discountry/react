@@ -41,7 +41,7 @@ ReactDOM.render(
 );
 ```
 
-[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/ZpVxNq?editors=0011)
+[在 CodePen 上试试。](https://codepen.io/gaearon/pen/ZpVxNq?editors=0011)
 
 此示例根据 `isLoggedIn` 的值渲染将不同的问候语。
 
@@ -68,6 +68,7 @@ function LogoutButton(props) {
   );
 }
 ```
+
 在下面的例子中，我们将要创建一个名为 `LoginControl` 的[有状态的组件](/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class)。
 
 它会根据当前的状态来渲染 `<LoginButton />` 或 `<BogoutButton>`，它也将渲染前面例子中的 `<Greeting />`。
@@ -114,7 +115,7 @@ ReactDOM.render(
 );
 ```
 
-[在 CodePen 上尝试](https://codepen.io/gaearon/pen/QKzAgB?editors=0010)
+[在 CodePen 上试试。](https://codepen.io/gaearon/pen/QKzAgB?editors=0010)
 
 声明变量并使用 `if` 语句是条件渲染组件的不错的方式，但有时你也想使用更简洁的语法，在 JSX 中有如下几种方法。
 
@@ -143,7 +144,7 @@ ReactDOM.render(
 );
 ```
 
-[在 CodePen 上尝试](https://codepen.io/gaearon/pen/ozJddz?editors=0010)
+[在 CodePen 上试试。](https://codepen.io/gaearon/pen/ozJddz?editors=0010)
 
 之所以能这样做，是因为在 JavaScript 中，`true && expression` 总是返回 `expression`，而 `false && expression` 总是返回 `false`。
 
@@ -235,6 +236,6 @@ ReactDOM.render(
 );
 ```
 
-[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/Xjoqwm?editors=0010)
+[在 CodePen 上试试。](https://codepen.io/gaearon/pen/Xjoqwm?editors=0010)
 
 组件的 `render` 方法返回 `null` 并不会影响该组件生命周期方法的回调。例如，`componentWillUpdate` 和 `componentDidUpdate` 依然可以被调用。
