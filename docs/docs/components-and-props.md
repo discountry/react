@@ -78,7 +78,7 @@ ReactDOM.render(
 
 我们来回顾一下在这个例子中发生了什么：
 
-1. 我们对`<Welcome name =“Sara”/>`元素调用了`ReactDOM.render()`方法。
+1. 我们对`<Welcome name = "Sara"/>`元素调用了`ReactDOM.render()`方法。
 2. React将`{name: 'Sara'}`作为props传入并调用`Welcome`组件。
 3. `Welcome`组件将`<h1>Hello, Sara</h1>`元素作为结果返回。
 4. React DOM将DOM更新为`<h1>Hello, Sara</h1>`。
