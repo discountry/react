@@ -15,6 +15,7 @@ redirect_from:
 prev: rendering-elements.html
 next: state-and-lifecycle.html
 ---
+
 组件可以将UI切分成一些的独立的、可复用的部件，这样你就只需专注于构建每一个单独的部件。
 
 组件从概念上看就像是函数，它可以接收任意的输入值（称之为“props”），并返回一个需要在页面上展示的React元素。
@@ -28,6 +29,7 @@ function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
 ```
+
 该函数是一个有效的React组件，它接收一个单一的“props”对象并返回了一个React元素。我们之所以称这种类型的组件为函数定义组件，是因为从字面上来看，它就是一个JavaScript函数。
 
 你也可以使用 [ES6 class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 来定义一个组件:
