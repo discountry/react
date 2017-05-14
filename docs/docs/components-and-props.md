@@ -15,9 +15,9 @@ redirect_from:
 prev: rendering-elements.html
 next: state-and-lifecycle.html
 ---
-组件可以将UI分割成一些不同的部分，这些部分各自都是独立的、可复用的。
+组件可以将UI切分成一些的独立的、可复用的部件，这样你就只需专注于构建每一个单独的部件。
 
-组件从概念上看就像是函数，它可以接收任意参数（称它为“props”），然后返回一个需要在页面上展示的React元素。
+组件从概念上看就像是函数，它可以接收任意的输入值（称之为“props”），并返回一个需要在页面上展示的React元素。
 
 ## 函数定义/类定义组件
 
@@ -39,25 +39,26 @@ class Welcome extends React.Component {
   }
 }
 ```
+
 上面两个组件在React中是相同的。
 
 我们将在[下一节](/react/docs/state-and-lifecycle.html)讨论类的一些额外特性。在那之前，我们都将使用较为简洁的函数定义组件。
 
 ## 组件渲染
 
-在前面，我们遇到的React元素都只表示DOM标签：
+在前面，我们遇到的React元素都只是DOM标签：
 
 ```js
 const element = <div />;
 ```
 
-然而，React元素也可以表示用户自定义的组件：
+然而，React元素也可以是用户自定义的组件：
 
 ```js
 const element = <Welcome name="Sara" />;
 ```
 
-当React遇到表示用户自定义组件的元素时，它将JSX属性作为单个对象传递给该组件,这个对象称之为“props”。
+当React遇到的元素是用户自定义的组件，它会将JSX属性作为单个对象传递给该组件,这个对象称之为“props”。
 
 例如,这段代码会在页面上渲染出"Hello,Sara":
 
@@ -78,19 +79,19 @@ ReactDOM.render(
 我们来回顾一下在这个例子中发生了什么：
 
 1. 我们对`<Welcome name =“Sara”/>`元素调用了`ReactDOM.render()`方法。
-2. React将`{name: 'Sara'}`作为props传入`Welcome`组件。
+2. React将`{name: 'Sara'}`作为props传入并调用`Welcome`组件。
 3. `Welcome`组件将`<h1>Hello, Sara</h1>`元素作为结果返回。
 4. React DOM将DOM更新为`<h1>Hello, Sara</h1>`。
 
 >**警告:**
 >
->组件名称必须以大写字母开头
+>组件名称必须以大写字母开头。
 >
->例如，`<div />`表示一个DOM标签，但`<Welcome />`表示一个组件及可使用的范围
+>例如，`<div />`表示一个DOM标签，但`<Welcome />`表示一个组件并限定了它的可用范围。
 
 ## 组合组件
 
-组件可以在它的输出中引用其它组件，这就可以让我们用相同的组件，来抽象任意细节。在React应用中，按钮、表单、对话框、屏幕等，这些通常都被表示为组件。
+组件可以在它的输出中引用其它组件，这就可以让我们用同一组件来抽象出任意层次的细节。在React应用中，按钮、表单、对话框、整个屏幕的内容等，这些通常都被表示为组件。
 
 例如，我们可以创建一个`App`组件，用来多次渲染`Welcome`组件：
 
@@ -117,9 +118,7 @@ ReactDOM.render(
 
 [在CodePen上试一试](http://codepen.io/gaearon/pen/KgQKPr?editors=0010)
 
-通常，新的React应用程序的顶部有一个App组件。但是，如果将React集成到现有应用程序中，则可以使用像Button这样的小组件从自下而上开始，并逐渐运行到视图层次结构的顶部。
-
-Typically, new React apps have a single `App` component at the very top. However, if you integrate React into an existing app, you might start bottom-up with a small component like `Button` and gradually work your way to the top of the view hierarchy.
+通常，一个新的React应用程序的顶部是一个`App`组件。但是，如果要将React集成到现有应用程序中，则可以从下而上使用像`Button`这样的小组件作为开始，并逐渐运用到视图层的顶部。
 
 >**警告:**
 >
@@ -127,7 +126,7 @@ Typically, new React apps have a single `App` component at the very top. However
 
 ## 提取组件
 
-你可以将组件分割为更小的组件，这没什么好担心的。
+你可以将组件切分为更小的组件，这没什么好担心的。
 
 例如，来看看这个`Comment`组件：
 
@@ -157,9 +156,9 @@ function Comment(props) {
 
 [在CodePen上试一试](http://codepen.io/gaearon/pen/VKQwEo?editors=0010)
 
-这个组件接收`author`(对象)、`text`(字符串)、以及`date`(date对象)作为props, 用来描述一个社交媒体网站上的评论。
+这个组件接收`author`(对象)、`text`(字符串)、以及`date`(Date对象)作为props, 用来描述一个社交媒体网站上的评论。
 
-这个组件由于嵌套的原因，变得难以被修改，可复用的部分也难以被复用。所以让我们来从这个组件中提取出一些小组件。
+这个组件由于嵌套，变得难以被修改，可复用的部分也难以被复用。所以让我们从这个组件中提取出一些小组件。
 
 首先，我们来提取`Avatar`组件：
 
@@ -174,9 +173,9 @@ function Avatar(props) {
 }
 ```
 
-`Avatar`作为`Comment`的内部组件，不需要知道什么时候会被渲染。因此我们将`author`改为一个更通用的名字`user`。
+`Avatar`作为`Comment`的内部组件，不需要知道是否被渲染。因此我们将`author`改为一个更通用的名字`user`。
 
-我们建议从组件自身的角度来命名props，而不是使用组件的上下文。
+我们建议从组件自身的角度来命名props，而不是根据使用组件的上下文命名。
 
 现在我们可以对`Comment`组件做一些小小的调整：
 
@@ -239,7 +238,7 @@ function Comment(props) {
 
 ## Props的只读性
 
-无论是使用[函数或是类](#函数定义/类定义组件)来声明一个组件，它决不能修改它自己的props。来看这个`sum`函数：
+无论是使用[函数或是类](#functional-and-class-components)来声明一个组件，它决不能修改它自己的props。来看这个`sum`函数：
 
 ```js
 function sum(a, b) {
@@ -247,9 +246,9 @@ function sum(a, b) {
 }
 ```
 
-类似于上面的这种函数称为[“纯函数”](https://en.wikipedia.org/wiki/Pure_function)，它没有改变它自己的输入值，当传入相同的值，总是会返回相同的结果。
+类似于上面的这种函数称为[“纯函数”](https://en.wikipedia.org/wiki/Pure_function)，它没有改变它自己的输入值，当传入的值相同时，总是会返回相同的结果。
 
-与之相对的是非纯函数，它会改变它的输入值。
+与之相对的是非纯函数，它会改变它自身的输入值：
 
 ```js
 function withdraw(account, amount) {
