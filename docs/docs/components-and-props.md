@@ -80,7 +80,7 @@ ReactDOM.render(
 
 我们来回顾一下在这个例子中发生了什么：
 
-1. 我们对`<Welcome name = "Sara"/>`元素调用了`ReactDOM.render()`方法。
+1. 我们对`<Welcome name="Sara" />`元素调用了`ReactDOM.render()`方法。
 2. React将`{name: 'Sara'}`作为props传入并调用`Welcome`组件。
 3. `Welcome`组件将`<h1>Hello, Sara</h1>`元素作为结果返回。
 4. React DOM将DOM更新为`<h1>Hello, Sara</h1>`。
@@ -124,7 +124,7 @@ ReactDOM.render(
 
 >**警告:**
 >
->组件的返回值只能有一个根元素。这也是我们要用一个`<div />`来包裹所有`<Welcome />`元素的原因。
+>组件的返回值只能有一个根元素。这也是我们要用一个`<div>`来包裹所有`<Welcome />`元素的原因。
 
 ## 提取组件
 
@@ -216,6 +216,7 @@ function UserInfo(props) {
   );
 }
 ```
+
 这可以让我们进一步简化`Comment`组件：
 
 ```js{4}
