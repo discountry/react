@@ -1,6 +1,6 @@
 ---
 id: components-and-props
-title: Components and Props
+title: 组件 & Props
 permalink: docs/components-and-props.html
 redirect_from:
   - "docs/reusable-components.html"
@@ -16,13 +16,13 @@ prev: rendering-elements.html
 next: state-and-lifecycle.html
 ---
 
-Components let you split the UI into independent, reusable pieces, and think about each piece in isolation.
+组件可以将UI切分成一些的独立的、可复用的部件，这样你就只需专注于构建每一个单独的部件。
 
-Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called "props") and return React elements describing what should appear on the screen.
+组件从概念上看就像是函数，它可以接收任意的输入值（称之为“props”），并返回一个需要在页面上展示的React元素。
 
-## Functional and Class Components
+## 函数定义/类定义组件
 
-The simplest way to define a component is to write a JavaScript function:
+定义一个组件最简单的方式是使用JavaScript函数：
 
 ```js
 function Welcome(props) {
@@ -30,9 +30,9 @@ function Welcome(props) {
 }
 ```
 
-This function is a valid React component because it accepts a single "props" object argument with data and returns a React element. We call such components "functional" because they are literally JavaScript functions.
+该函数是一个有效的React组件，它接收一个单一的“props”对象并返回了一个React元素。我们之所以称这种类型的组件为函数定义组件，是因为从字面上来看，它就是一个JavaScript函数。
 
-You can also use an [ES6 class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) to define a component:
+你也可以使用 [ES6 class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 来定义一个组件:
 
 ```js
 class Welcome extends React.Component {
@@ -42,27 +42,27 @@ class Welcome extends React.Component {
 }
 ```
 
-The above two components are equivalent from React's point of view.
+上面两个组件在React中是相同的。
 
-Classes have some additional features that we will discuss in the [next sections](/react/docs/state-and-lifecycle.html). Until then, we will use functional components for their conciseness.
+我们将在[下一节](/react/docs/state-and-lifecycle.html)讨论类的一些额外特性。在那之前，我们都将使用较为简洁的函数定义组件。
 
-## Rendering a Component
+## 组件渲染
 
-Previously, we only encountered React elements that represent DOM tags:
+在前面，我们遇到的React元素都只是DOM标签：
 
 ```js
 const element = <div />;
 ```
 
-However, elements can also represent user-defined components:
+然而，React元素也可以是用户自定义的组件：
 
 ```js
 const element = <Welcome name="Sara" />;
 ```
 
-When React sees an element representing a user-defined component, it passes JSX attributes to this component as a single object. We call this object "props".
+当React遇到的元素是用户自定义的组件，它会将JSX属性作为单个对象传递给该组件,这个对象称之为“props”。
 
-For example, this code renders "Hello, Sara" on the page:
+例如,这段代码会在页面上渲染出"Hello,Sara":
 
 ```js{1,5}
 function Welcome(props) {
@@ -76,26 +76,26 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/YGYmEG?editors=0010)
+[在CodePen上试一试](http://codepen.io/gaearon/pen/YGYmEG?editors=0010)
 
-Let's recap what happens in this example:
+我们来回顾一下在这个例子中发生了什么：
 
-1. We call `ReactDOM.render()` with the `<Welcome name="Sara" />` element.
-2. React calls the `Welcome` component with `{name: 'Sara'}` as the props.
-3. Our `Welcome` component returns a `<h1>Hello, Sara</h1>` element as the result.
-4. React DOM efficiently updates the DOM to match `<h1>Hello, Sara</h1>`.
+1. 我们对`<Welcome name="Sara" />`元素调用了`ReactDOM.render()`方法。
+2. React将`{name: 'Sara'}`作为props传入并调用`Welcome`组件。
+3. `Welcome`组件将`<h1>Hello, Sara</h1>`元素作为结果返回。
+4. React DOM将DOM更新为`<h1>Hello, Sara</h1>`。
 
->**Caveat:**
+>**警告:**
 >
->Always start component names with a capital letter.
+>组件名称必须以大写字母开头。
 >
->For example, `<div />` represents a DOM tag, but `<Welcome />` represents a component and requires `Welcome` to be in scope.
+>例如，`<div />`表示一个DOM标签，但`<Welcome />`表示一个组件并限定了它的可用范围。
 
-## Composing Components
+## 组合组件
 
-Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail. A button, a form, a dialog, a screen: in React apps, all those are commonly expressed as components.
+组件可以在它的输出中引用其它组件，这就可以让我们用同一组件来抽象出任意层次的细节。在React应用中，按钮、表单、对话框、整个屏幕的内容等，这些通常都被表示为组件。
 
-For example, we can create an `App` component that renders `Welcome` many times:
+例如，我们可以创建一个`App`组件，用来多次渲染`Welcome`组件：
 
 ```js{8-10}
 function Welcome(props) {
@@ -118,19 +118,19 @@ ReactDOM.render(
 );
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/KgQKPr?editors=0010)
+[在CodePen上试一试](http://codepen.io/gaearon/pen/KgQKPr?editors=0010)
 
-Typically, new React apps have a single `App` component at the very top. However, if you integrate React into an existing app, you might start bottom-up with a small component like `Button` and gradually work your way to the top of the view hierarchy.
+通常，一个新的React应用程序的顶部是一个`App`组件。但是，如果要将React集成到现有应用程序中，则可以从下而上使用像`Button`这样的小组件作为开始，并逐渐运用到视图层的顶部。
 
->**Caveat:**
+>**警告:**
 >
->Components must return a single root element. This is why we added a `<div>` to contain all the `<Welcome />` elements.
+>组件的返回值只能有一个根元素。这也是我们要用一个`<div>`来包裹所有`<Welcome />`元素的原因。
 
-## Extracting Components
+## 提取组件
 
-Don't be afraid to split components into smaller components.
+你可以将组件切分为更小的组件，这没什么好担心的。
 
-For example, consider this `Comment` component:
+例如，来看看这个`Comment`组件：
 
 ```js
 function Comment(props) {
@@ -156,13 +156,13 @@ function Comment(props) {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/VKQwEo?editors=0010)
+[在CodePen上试一试](http://codepen.io/gaearon/pen/VKQwEo?editors=0010)
 
-It accepts `author` (an object), `text` (a string), and `date` (a date) as props, and describes a comment on a social media website.
+这个组件接收`author`(对象)、`text`(字符串)、以及`date`(Date对象)作为props, 用来描述一个社交媒体网站上的评论。
 
-This component can be tricky to change because of all the nesting, and it is also hard to reuse individual parts of it. Let's extract a few components from it.
+这个组件由于嵌套，变得难以被修改，可复用的部分也难以被复用。所以让我们从这个组件中提取出一些小组件。
 
-First, we will extract `Avatar`:
+首先，我们来提取`Avatar`组件：
 
 ```js{3-6}
 function Avatar(props) {
@@ -175,11 +175,11 @@ function Avatar(props) {
 }
 ```
 
-The `Avatar` doesn't need to know that it is being rendered inside a `Comment`. This is why we have given its prop a more generic name: `user` rather than `author`.
+`Avatar`作为`Comment`的内部组件，不需要知道是否被渲染。因此我们将`author`改为一个更通用的名字`user`。
 
-We recommend naming props from the component's own point of view rather than the context in which it is being used.
+我们建议从组件自身的角度来命名props，而不是根据使用组件的上下文命名。
 
-We can now simplify `Comment` a tiny bit:
+现在我们可以对`Comment`组件做一些小小的调整：
 
 ```js{5}
 function Comment(props) {
@@ -202,7 +202,7 @@ function Comment(props) {
 }
 ```
 
-Next, we will extract a `UserInfo` component that renders an `Avatar` next to user's name:
+接下里，我们要提取一个`UserInfo`组件，用来渲染`Avatat`旁边的用户名：
 
 ```js{3-8}
 function UserInfo(props) {
@@ -217,7 +217,7 @@ function UserInfo(props) {
 }
 ```
 
-This lets us simplify `Comment` even further:
+这可以让我们进一步简化`Comment`组件：
 
 ```js{4}
 function Comment(props) {
@@ -235,13 +235,13 @@ function Comment(props) {
 }
 ```
 
-[Try it on CodePen.](http://codepen.io/gaearon/pen/rrJNJY?editors=0010)
+[在CodePen上试一试](http://codepen.io/gaearon/pen/rrJNJY?editors=0010)
 
-Extracting components might seem like grunt work at first, but having a palette of reusable components pays off in larger apps. A good rule of thumb is that if a part of your UI is used several times (`Button`, `Panel`, `Avatar`), or is complex enough on its own (`App`, `FeedStory`, `Comment`), it is a good candidate to be a reusable component.
+提取组件一开始看起来像是一项单调乏味的工作，但是在大型应用中，构建可复用的组件完全是值得的。当你的UI中有一部分重复使用了好几次（比如，`Button`、`Panel`、`Avatar`），或者其自身就足够复杂（比如，`App`、`FeedStory`、`Comment`），类似这些都是抽象成一个可复用组件的绝佳选择，这也是一个比较好的做法。
 
-## Props are Read-Only
+## Props的只读性
 
-Whether you declare a component [as a function or a class](#functional-and-class-components), it must never modify its own props. Consider this `sum` function:
+无论是使用[函数或是类](#functional-and-class-components)来声明一个组件，它决不能修改它自己的props。来看这个`sum`函数：
 
 ```js
 function sum(a, b) {
@@ -249,9 +249,9 @@ function sum(a, b) {
 }
 ```
 
-Such functions are called ["pure"](https://en.wikipedia.org/wiki/Pure_function) because they do not attempt to change their inputs, and always return the same result for the same inputs.
+类似于上面的这种函数称为[“纯函数”](https://en.wikipedia.org/wiki/Pure_function)，它没有改变它自己的输入值，当传入的值相同时，总是会返回相同的结果。
 
-In contrast, this function is impure because it changes its own input:
+与之相对的是非纯函数，它会改变它自身的输入值：
 
 ```js
 function withdraw(account, amount) {
@@ -259,8 +259,8 @@ function withdraw(account, amount) {
 }
 ```
 
-React is pretty flexible but it has a single strict rule:
+React是非常灵活的，但它也有一个严格的规则：
 
-**All React components must act like pure functions with respect to their props.**
+**所有的React组件必须像纯函数那样使用它们的props。**
 
-Of course, application UIs are dynamic and change over time. In the [next section](/react/docs/state-and-lifecycle.html), we will introduce a new concept of "state". State allows React components to change their output over time in response to user actions, network responses, and anything else, without violating this rule.
+当然，应用的界面是随时间动态变化的，我们将在[下一节](/react/docs/state-and-lifecycle.html)介绍一种称为“state”的新概念，State可以在不违反上述规则的情况下，根据用户操作、网络响应、或者其他状态变化，使组件动态的响应并改变组件的输出。
