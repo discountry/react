@@ -8,6 +8,14 @@ paginate_path: /blog/page:num/
 paginate: 5
 timezone: America/Los_Angeles
 highlighter: pygments
+
+relative_source: ../react/
+destination: ../discountry.github.io/
+
+username: discountry
+repo: react
+branch: gh-pages
+
 defaults:
 - scope:
     path: ''
