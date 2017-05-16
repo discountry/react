@@ -1,4 +1,6 @@
 language: ruby
+rvm:
+  - 2.2
 install:
 - cd docs/ && bundle install
 script: cd docs/ && bundle exec rake site:deploy --quiet
