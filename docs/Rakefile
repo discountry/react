@@ -16,6 +16,7 @@ if REPO == "#{USERNAME}.github.io"
 else
   SOURCE_BRANCH = "master"
   DESTINATION_BRANCH = "gh-pages"
+end
 
 #############################################################################
 #
