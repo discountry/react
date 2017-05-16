@@ -1,4 +1,4 @@
-# React 中文文档翻译计划
+# React 中文文档翻译计划 [![Build Status](https://travis-ci.org/discountry/react.svg?branch=master)](https://travis-ci.org/discountry/react)
 
 我们使用 [Jekyll](http://jekyllrb.com/) 静态站点生成器，使用 ([mostly](http://zpao.com/posts/adding-line-highlights-to-markdown-code-fences/)) 处理 Markdown, 文档部署在 [GitHub Pages](http://pages.github.com/).
 
