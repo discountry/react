@@ -1,4 +1,4 @@
- ---
+---
 id: lifting-state-up
 title: 状态提升
 permalink: docs/lifting-state-up.html
