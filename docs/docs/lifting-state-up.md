@@ -62,7 +62,7 @@ class Calculator extends React.Component {
 
 现在我们有了一个新的需求，在提供摄氏度输入的基础之上，再提供一个华氏温度输入，并且它们能保持同步。
 
-我们可以通过从 `Calculator` 组件中抽离一个 `TemperatureInput` 组件出来。我们也会给它添加一个值为 `c` 或 `f` 的表示文旦壶单位的 `scale` 属性。
+我们可以通过从 `Calculator` 组件中抽离一个 `TemperatureInput` 组件出来。我们也会给它添加一个值为 `c` 或 `f` 的表示温度单位的 `scale` 属性。
 
 ```js{1-4,19,22}
 const scaleNames = {
