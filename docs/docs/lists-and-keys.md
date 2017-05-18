@@ -6,25 +6,27 @@ prev: conditional-rendering.html
 next: forms.html
 ---
 
-First, let's review how you transform lists in JavaScript.
+首先，让我们看下在Javascript中如何转化列表
 
-Given the code below, we use the [`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function to take an array of `numbers` and double their values. We assign the new array returned by `map()` to the variable `doubled` and log it:
+如下代码，我们使用[`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)函数让数组中的每一项翻倍,我们得到了一个新的数列`doubled`
 
-```javascript{2}
+```
+javascript{2}
 const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map((number) => number * 2);
 console.log(doubled);
 ```
 
 This code logs `[2, 4, 6, 8, 10]` to the console.
+代码打印出`[2, 4, 6, 8, 10]`
 
-In React, transforming arrays into lists of [elements](/react/docs/rendering-elements.html) is nearly identical.
+在React中，把数组转化为数列[元素](/react/docs/rendering-elements.html)是相似的
 
-### Rendering Multiple Components
+### 渲染多样的组件
 
-You can build collections of elements and [include them in JSX](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx) using curly braces `{}`.
+你可以构建一个元素集合[包括在JSX内](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx)通过使用`{}`
 
-Below, we loop through the `numbers` array using the Javascript [`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function. We return an `<li>` element for each item. Finally, we assign the resulting array of elements to `listItems`:
+下面，我们使用Javascript中的[`map()``](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)方法循遍历`numbers`数组。对数组中的每个元素返回`<li>`标签，最后我们得到一个数组`listItems`
 
 ```javascript{2-4}
 const numbers = [1, 2, 3, 4, 5];
@@ -33,7 +35,7 @@ const listItems = numbers.map((number) =>
 );
 ```
 
-We include the entire `listItems` array inside a `<ul>` element, and [render it to the DOM](/react/docs/rendering-elements.html#rendering-an-element-into-the-dom):
+我们把整个`listTtems`数组插入到`ul`元素中，然后[渲染进DOM](/react/docs/rendering-elements.html#rendering-an-element-into-the-dom):
 
 ```javascript{2}
 ReactDOM.render(
@@ -44,13 +46,14 @@ ReactDOM.render(
 
 [Try it on CodePen.](https://codepen.io/gaearon/pen/GjPyQr?editors=0011)
 
-This code displays a bullet list of numbers between 1 and 5.
+这段代码显示了1到5之间的数字列表
 
-### Basic List Component
+### 基础列表组件
 
-Usually you would render lists inside a [component](/react/docs/components-and-props.html).
+通常你需要渲染一个列表到[组件](/react/docs/components-and-props.html)中
 
-We can refactor the previous example into a component that accepts an array of `numbers` and outputs an unordered list of elements.
+前面的例子我们可以重构成一个组件,接受`numbers`,输出数组元素的无序列表。
+
 
 ```javascript{3-5,7,13}
 function NumberList(props) {
@@ -70,9 +73,9 @@ ReactDOM.render(
 );
 ```
 
-When you run this code, you'll be given a warning that a key should be provided for list items. A "key" is a special string attribute you need to include when creating lists of elements. We'll discuss why it's important in the next section.
+当我们运行这段代码，将会看到一个警告`a key should be provided for list items`,意思是当你创建一个元素时，必须包括一个特殊的`key`属性。我们将在下一节讨论这是为什么？
 
-Let's assign a `key` to our list items inside `numbers.map()` and fix the missing key issue.
+让我们来给每个列表元素分配一个`key`来解决是上面那个警告
 
 ```javascript{4}
 function NumberList(props) {
@@ -98,7 +101,7 @@ ReactDOM.render(
 
 ## Keys
 
-Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity:
+Keys帮助React识别哪个元素变化了，被增加或删除。Key应该被赋予数组内的元素一个稳定的标识
 
 ```js{3}
 const numbers = [1, 2, 3, 4, 5];
@@ -109,7 +112,7 @@ const listItems = numbers.map((number) =>
 );
 ```
 
-The best way to pick a key is to use a string that uniquely identifies a list item among its siblings. Most often you would use IDs from your data as keys:
+选择key的最佳方法是使用一个字符串，该字符串在其兄弟节点中唯一。通常，会使用来自数据的id作为key:
 
 ```js{2}
 const todoItems = todos.map((todo) =>
@@ -119,7 +122,7 @@ const todoItems = todos.map((todo) =>
 );
 ```
 
-When you don't have stable IDs for rendered items, you may use the item index as a key as a last resort:
+当元素没有确定的Ids，你可以使用他的序列号索引index作为key
 
 ```js{2,3}
 const todoItems = todos.map((todo, index) =>
@@ -130,15 +133,16 @@ const todoItems = todos.map((todo, index) =>
 );
 ```
 
-We don't recommend using indexes for keys if the items can reorder, as that would be slow. You may read an [in-depth explanation about why keys are necessary](/react/docs/reconciliation.html#recursing-on-children) if you're interested.
 
-### Extracting Components with Keys
+如果项目可以重新排序，我们不建议使用索引来进行排序，因为那样会很慢。感兴趣戳这里[深度解析key的必要性](/react/docs/reconciliation.html#recursing-on-children)
 
-Keys only make sense in the context of the surrounding array.
+### 用keys提取组件
 
-For example, if you [extract](/react/docs/components-and-props.html#extracting-components) a `ListItem` component, you should keep the key on the `<ListItem />` elements in the array rather than on the root `<li>` element in the `ListItem` itself.
+keys只有在周围数组的上下文中才有意义
 
-**Example: Incorrect Key Usage**
+举例，如果你[取出](/react/docs/components-and-props.html#extracting-components)包括一个`listItem`组件，那么应该将该键保存在数组中的`<ListItem />`元素中而不是`ListItem`本身的根元素
+
+**不正确的使用方式**
 
 ```javascript{4,5,14,15}
 function ListItem(props) {
@@ -171,7 +175,8 @@ ReactDOM.render(
 );
 ```
 
-**Example: Correct Key Usage**
+
+**key的正确使用方式**
 
 ```javascript{2,3,9,10}
 function ListItem(props) {
@@ -202,11 +207,11 @@ ReactDOM.render(
 
 [Try it on CodePen.](https://codepen.io/rthor/pen/QKzJKG?editors=0010)
 
-A good rule of thumb is that elements inside the `map()` call need keys.
+一个好的经验法则是,`map()`内部的元素调用需要key
 
-### Keys Must Only Be Unique Among Siblings
+### keys必须唯一
 
-Keys used within arrays should be unique among their siblings. However they don't need to be globally unique. We can use the same keys when we produce two different arrays:
+数组中使用的key在其兄弟之间应该是独一无二的。然而，它们不需要是全局唯一的。当我们生成两个不同的数组时，我们可以使用相同的键
 
 ```js{2,5,11,12,19,21}
 function Blog(props) {
@@ -246,7 +251,7 @@ ReactDOM.render(
 
 [Try it on CodePen.](https://codepen.io/gaearon/pen/NRZYGN?editors=0010)
 
-Keys serve as a hint to React but they don't get passed to your components. If you need the same value in your component, pass it explicitly as a prop with a different name:
+key作为React的提示，但不会传递给你的组件。如果您的组件中需要相同的值，请将其作为属性传递：
 
 ```js{3,4}
 const content = posts.map((post) =>
@@ -257,11 +262,11 @@ const content = posts.map((post) =>
 );
 ```
 
-With the example above, the `Post` component can read `props.id`, but not `props.key`.
+上面例子中，`Post`组件可以读出`props.id`，但是不能读出`props.key`
 
-### Embedding map() in JSX
+### 在jsx中嵌入map()
 
-In the examples above we declared a separate `listItems` variable and included it in JSX:
+在上面的例子中，我们声明了一个单独的`listItems`变量并将其包含在JSX中
 
 ```js{3-6}
 function NumberList(props) {
@@ -278,8 +283,7 @@ function NumberList(props) {
 }
 ```
 
-JSX allows [embedding any expressions](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx) in curly braces so we could inline the `map()` result:
-
+JSX允许在大括号中[嵌入任何表达式](/ reactions / docs / introduction-jsx.html＃embedding-expressions-in-jsx)，所以我们可以在`map()`中这样使用：
 ```js{5-8}
 function NumberList(props) {
   const numbers = props.numbers;
@@ -296,4 +300,9 @@ function NumberList(props) {
 
 [Try it on CodePen.](https://codepen.io/gaearon/pen/BLvYrB?editors=0010)
 
-Sometimes this results in clearer code, but this style can also be abused. Like in JavaScript, it is up to you to decide whether it is worth extracting a variable for readability. Keep in mind that if the `map()` body is too nested, it might be a good time to [extract a component](/react/docs/components-and-props.html#extracting-components).
+有时这会导致更清晰的代码，但这种风格也可能被滥用。像JavaScript一样，由你决定是否值得提取可变性的变量。请记住，如果`map()`主体太嵌套，那么可能是[提取组件](/ reactions / docs / components-and-props.html＃extract-components)的好时机。
+
+
+
+
+
