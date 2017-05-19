@@ -1,11 +1,12 @@
 ---
 id: state-and-lifecycle
-title: State and Lifecycle
+title: State & 生命周期
 permalink: docs/state-and-lifecycle.html
 redirect_from: "docs/interactivity-and-dynamic-uis.html"
 prev: components-and-props.html
 next: handling-events.html
 ---
+
 参考[该例子](/react/docs/rendering-elements.html#updating-the-rendered-element)。
 
 到目前为止我们只学习了一种方法来更新UI。
@@ -34,6 +35,7 @@ setInterval(tick, 1000);
 在本节中，我们将学习如何使`Clock`组件真正可重用和封装。它将设置自己的计时器，并每秒钟更新一次。
 
 我们可以从封装时钟开始：
+
 ```js{3-6,12}
 function Clock(props) {
   return (
