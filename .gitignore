@@ -1,4 +1,5 @@
 .DS_STORE
+node_modules
 *~
 *.pyc
 static
@@ -13,7 +14,6 @@ docs/.bundle
 docs/code
 docs/_site
 docs/.sass-cache
-docs/js/*
 docs/downloads/*.zip
 docs/vendor/bundle
 <<<<<<< HEAD
