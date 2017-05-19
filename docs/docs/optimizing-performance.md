@@ -1,6 +1,6 @@
 ---
 id: optimizing-performance
-title: Optimizing Performance
+title: 性能优化
 permalink: docs/optimizing-performance.html
 redirect_from: "docs/advanced-performance.html"
 ---

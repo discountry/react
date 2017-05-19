@@ -1,6 +1,6 @@
 ---
 id: uncontrolled-components
-title: Uncontrolled Components
+title: 非受控组件
 permalink: docs/uncontrolled-components.html
 ---
 

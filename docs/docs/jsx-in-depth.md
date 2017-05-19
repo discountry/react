@@ -1,6 +1,6 @@
 ---
 id: jsx-in-depth
-title: JSX In Depth
+title: 深入 JSX
 permalink: docs/jsx-in-depth.html
 redirect_from:
   - "docs/jsx-spread.html"

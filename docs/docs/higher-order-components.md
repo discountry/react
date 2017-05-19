@@ -1,6 +1,6 @@
 ---
 id: higher-order-components
-title: Higher-Order Components
+title: 高阶组件
 permalink: docs/higher-order-components.html
 ---
 

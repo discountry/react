@@ -9,7 +9,6 @@ require ('date')
 CONFIG = YAML.load(File.read('_config.yml'))
 USERNAME = CONFIG["username"] || ENV['GIT_NAME']
 REPO = CONFIG["repo"] || "#{USERNAME}.github.io"
-DESTINATION = CONFIG["destination"]
 
 if REPO == "#{USERNAME}.github.io"
   SOURCE_BRANCH = CONFIG['branch'] || "source"
@@ -212,7 +211,7 @@ end
 
 desc "build into ../../react-gh-pages"
 task :release => [:update_version, :js, :fetch_remotes, :copy_error_codes] do
-  system "jekyll build -d #{DESTINATION}"
+  system "jekyll build -d ../../react-gh-pages"
 end
 
 task :default => [:js]

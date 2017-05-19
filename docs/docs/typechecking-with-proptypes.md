@@ -1,6 +1,6 @@
 ---
 id: typechecking-with-proptypes
-title: Typechecking With PropTypes
+title: 使用 PropTypes 检查类型
 permalink: docs/typechecking-with-proptypes.html
 redirect_from:
   - "docs/react-api.html#typechecking-with-proptypes"
