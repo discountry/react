@@ -1,0 +1,8 @@
+usage: bundle-collapser {FILE | -} {OPTIONS}
+
+  Collapse a browser-pack/browserify bundle from STDIN or a FILE.
+
+OPTIONS:
+
+  -h --help  Show this message.
+

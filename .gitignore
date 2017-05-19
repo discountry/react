@@ -1,5 +1,4 @@
 .DS_STORE
-node_modules
 *~
 *.pyc
 static

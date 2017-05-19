@@ -1,0 +1,16 @@
+[{
+  "id": 1,
+  "source": "module.exports = function (n) { return n * 5 }\n\n\n",
+  "deps": {}
+},
+{
+  "id": 2,
+  "source": "var bar = require(1);\n\nmodule.exports = function (n) { return bar(n+1) }\n\n\n",
+  "deps": {}
+},
+{
+  "id": 3,
+  "source": "var foo = require(2);\nvar bar = require(1);\n\nreturn console.log(foo(5) * bar(2));",
+  "deps": {},
+  "entry": true
+}]

@@ -1,0 +1,3 @@
+All code in this repository is licensed under the MIT license (included).
+
+However, because of dependencies (deflate-js), this library is effectively under the GPLv2.
