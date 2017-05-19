@@ -155,7 +155,7 @@ end
 
 desc "generate js from jsx"
 task :js do
-  system "../node_modules/.bin/babel _js --out-dir=js"
+  system "../node_modules/.bin/babel _js --out-dir=../discountry.github.io/js"
 end
 
 desc "watch js"
