@@ -131,8 +131,7 @@ namespace :site do
     Dir.chdir(CONFIG["destination"]) { sh "git checkout #{DESTINATION_BRANCH}" }
 
     # Generate the site
-    sh "bundle exec rake"
-    sh "bundle exec jekyll build"
+    sh "bundle exec rake release"
 
     # Commit and push to github
     sha = `git log`.match(/[a-z0-9]{40}/)[0]
@@ -155,7 +154,7 @@ end
 
 desc "generate js from jsx"
 task :js do
-  system "../node_modules/.bin/babel _js --out-dir=#{CONFIG["destination"]}/js"
+  system "../node_modules/.bin/babel _js --out-dir=js"
 end
 
 desc "watch js"
@@ -212,7 +211,7 @@ end
 
 desc "build into ../../react-gh-pages"
 task :release => [:update_version, :js, :fetch_remotes, :copy_error_codes] do
-  system "jekyll build -d ../../react-gh-pages"
+  system "jekyll build -d ../discountry.github.io/"
 end
 
 task :default => [:js]
