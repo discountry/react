@@ -30,11 +30,11 @@ We'll assume some familiarity with HTML and JavaScript but you should be able to
 
 If you need a refresher on JavaScript, we recommend reading [this guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript). Note that we're also using some features from ES6, a recent version of JavaScript. In this tutorial, we're using [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), [classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes), [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let), and [`const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) statements. You can use <a href="http://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015%2Creact&experimental=false&loose=false&spec=false&code=const%20element%20%3D%20%3Ch1%3EHello%2C%20world!%3C%2Fh1%3E%3B%0Aconst%20container%20%3D%20document.getElementById('root')%3B%0AReactDOM.render(element%2C%20container)%3B%0A">Babel REPL</a> to check what ES6 code compiles to.
 
-### How to Follow Along
+### 如何编写代码
 
 There are two ways to complete this tutorial: you could either write the code right in the browser, or you could set up a local development environment on your machine. You can choose either option depending on what you feel comfortable with.
 
-#### If You Prefer to Write Code in the Browser
+#### 在浏览器中编写本教程代码
 
 This is the quickest way to get started!
 
@@ -42,7 +42,7 @@ First, open this [starter code](https://codepen.io/gaearon/pen/oWWQNa?editors=00
 
 You can now skip the next section about setting up a local development environment and head straight to the [overview](#overview).
 
-#### If You Prefer to Write Code in Your Editor
+#### 在代码编辑器中编写本教程代码
 
 Alternatively, you can set up a project on your computer.
 
@@ -68,15 +68,15 @@ Now if you run `npm start` in the project folder and open `http://localhost:3000
 
 We recommend following [these instructions](http://babeljs.io/docs/editors) to configure syntax highlighting for your editor.
 
-### Help, I'm Stuck!
+### 寻求帮助
 
 If you get stuck, check out the [community support resources](https://facebook.github.io/react/community/support.html). In particular, [Reactiflux chat](/react/community/support.html#reactiflux-chat) is a great way to get quick help. If you don't get a good answer anywhere, please file an issue, and we'll help you out.
 
 With this out of the way, let's get started!
 
-## Overview
+## 总览
 
-### What is React?
+### React 是什么？
 
 React is a declarative, efficient, and flexible JavaScript library for building user interfaces.
 
