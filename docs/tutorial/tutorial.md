@@ -1,6 +1,6 @@
 ---
 id: tutorial
-title: "Tutorial: Intro To React"
+title: 入门教程
 layout: tutorial
 sectionid: tutorial
 permalink: /tutorial/tutorial.html
@@ -12,9 +12,9 @@ redirect_from:
   - "docs/tutorial-zh-CN.html"
 ---
 
-## Before We Start
+## 课前准备
 
-### What We're Building
+### 教程简介
 
 Today, we're going to build an interactive tic-tac-toe game.
 
@@ -24,7 +24,7 @@ Try playing the game. You can also click on a link in the move list to go "back 
 
 Once you get a little familiar with the game, feel free to close that tab, as we'll start from a simpler template in the next sections.
 
-### Prerequisites
+### 前置知识
 
 We'll assume some familiarity with HTML and JavaScript but you should be able to follow along even if you haven't used them before.
 
