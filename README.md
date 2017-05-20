@@ -43,7 +43,7 @@
 
 ### 提交翻译
 
-所需翻译的文档，都在项目的 [doc](docs/) 文件夹下，你只需要编辑后缀为 `.md` 的 `Markdown` 文档。
+所需翻译的文档，都在项目的 [docs](docs/) 文件夹下，你只需要编辑后缀为 `.md` 的 `Markdown` 文档。
 
 完成你所选部分的翻译之后，可以在 [Pull requests](https://github.com/discountry/react/pulls) 页面发起新的 Pull requests 请求合并你的翻译至本仓库中。
 
