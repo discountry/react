@@ -20,7 +20,7 @@ JSX 用来声明 React 当中的元素。在[下一个章节](/react/docs/render
 
 ### 在 JSX 中使用表达式
 
- 你可以任意地在 JSX 当中使用 [JavaScript 表达式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Expressions)，在 JSX 当中的表达式要包含在打括号里。
+ 你可以任意地在 JSX 当中使用 [JavaScript 表达式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Expressions)，在 JSX 当中的表达式要包含在大括号里。
 
  例如 `2 + 2`, `user.firstName`, 以及 `formatName(user)` 都是可以使用的。
 
