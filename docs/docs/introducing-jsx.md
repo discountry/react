@@ -73,13 +73,13 @@ function getGreeting(user) {
 const element = <div tabIndex="0"></div>;
 ```
 
-也可以使用打括号来定义以 JavaScript 表达式为值的属性：
+也可以使用大括号来定义以 JavaScript 表达式为值的属性：
 
 ```js
 const element = <img src={user.avatarUrl}></img>;
 ```
 
-切记你使用了大括号包裹的 JavaScript 表达式时就不要再到外面套小括号了。否则 JSX 将会无法识别其中的表达式。
+切记你使用了大括号包裹的 JavaScript 表达式时就不要再到外面套引号了。JSX 会将引号当中的内容识别为字符串而不是表达式。
 
 ### JSX 嵌套
 
