@@ -44,6 +44,7 @@ ReactDOM.render(
 
 
 如果你对于每次都要输入 `React.createElement` 感到非常厌倦，这是一种常用的简写形式：
+
 ```js
 const e = React.createElement;
 
