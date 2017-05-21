@@ -159,6 +159,7 @@ class Clock extends React.Component {
 类组件应始终使用`props`调用基础构造函数。
 
 3) 从 `<Clock />` 元素移除 `date` 属性：
+
 ```js{2}
 ReactDOM.render(
   <Clock />,
@@ -201,9 +202,10 @@ ReactDOM.render(
 
 在具有许多组件的应用程序中，在销毁时释放组件所占用的资源非常重要。
 
-We want to [set up a timer](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval) whenever the `Clock` is rendered to the DOM for the first time. 这在 React 中被称为`挂载`。
+每当`Clock`组件第一次加载到DOM中的时候，我们都想[生成定时器](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval)，这在React中被称为`挂载`
 
-We also want to [clear that timer](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/clearInterval) whenever the DOM produced by the `Clock` is removed. 这在 React 中被称为`卸载`。
+同样，每当`Clock`生成的这个DOM被移除的时候，我们也会想要[清除定时器](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/clearInterval)，这在React中被称为`卸载`。
+
 
 我们可以在组件类上声明特殊的方法，当组件挂载或卸载时，来运行一些代码：
 
@@ -318,7 +320,7 @@ ReactDOM.render(
 
 4) 浏览器每秒钟调用 `tick()` 方法。 在其中，`Clock` 组件通过使用包含当前时间的对象调用 `setState()` 来调度UI更新。 通过调用 `setState()` ，React 知道状态已经改变，并再次调用 `render()` 方法来确定屏幕上应当显示什么。 这一次，`render()` 方法中的 `this.state.date` 将不同，所以渲染输出将包含更新的时间，并相应地更新DOM。
 
-5) If the `Clock` component is ever removed from the DOM, React calls the `componentWillUnmount()` lifecycle hook so the timer is stopped.
+5) 一旦`Clock`组件被从DOM中移除，React会调用`componentWillUnmount()`这个钩子函数，定时器也就会被清除。
 
 ## 正确地使用状态
 
@@ -411,8 +413,7 @@ this.setState(function(prevState, props) {
   }
 ```
 
-The merging is shallow, so `this.setState({comments})` leaves `this.state.posts` intact, but completely replaces `this.state.comments`.
-
+这里的合并是浅合并，也就是说`this.setState({comments})`完整保留了`this.state.posts`，但完全替换了`this.state.comments`。
 
 ## 数据自顶向下流动
 
