@@ -20,7 +20,7 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 > **注意**
 >
-> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术带来的问题要比产生的价值大。[更多资料](/react/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
+> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术产生的问题要比带来的价值大。[更多资料](/react/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
 
 在React中，组件是代码复用的主要单元。然而你会发现，一些模式并不适用传统的组件。
 
@@ -165,13 +165,13 @@ function withSubscription(WrappedComponent, selectData) {
 
 就是这样！被包裹的组件接受容器组件的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而被包裹组件也不关心数据来自何处。
 
-Because `withSubscription` is a normal function, you can add as many or as few arguments as you like. For example, you may want to make the name of the `data` prop configurable, to further isolate the HOC from the wrapped component. Or you could accept an argument that configures `shouldComponentUpdate`, or one that configures the data source. These are all possible because the HOC has full control over how the component is defined.
+因为 `withSubscription` 就是一个普通函数，你可以添加任意数量的参数。例如，你或许会想使 `data` 属性可配置化，使高阶组件和被包裹组件进一步隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源的参数。这些都可以实现，因为高阶组件可以完全控制组件的定义。
 
-Like components, the contract between `withSubscription` and the wrapped component is entirely props-based. This makes it easy to swap one HOC for a different one, as long as they provide the same props to the wrapped component. This may be useful if you change data-fetching libraries, for example.
+和普通组件一样，`withSubscription` 和被包裹组件之间的关联是完全基于props属性的。只要高级组件向被包裹组件提供相同的props属性，就可以轻松的讲一个高阶组件转换成不同的高级组件。例如，如果要改变数据获取库，这就非常有用。
 
-## Don't Mutate the Original Component. Use Composition.
+## 不要改变原始组件，使用组合
 
-Resist the temptation to modify a component's prototype (or otherwise mutate it) inside an HOC.
+不要在高阶组件内部修改原组件的原型属性（或以其它方式修改）。
 
 ```js
 function logProps(InputComponent) {
@@ -188,11 +188,11 @@ function logProps(InputComponent) {
 const EnhancedComponent = logProps(InputComponent);
 ```
 
-There are a few problems with this. One is that the input component cannot be reused separately from the enhanced component. More crucially, if you apply another HOC to `EnhancedComponent` that *also* mutates `componentWillReceiveProps`, the first HOC's functionality will be overridden! This HOC also won't work with function components, which do not have lifecycle methods.
+上面的示例有一些问题。首先就是，input组件不能够脱离增强型组件被重用。更关键的一点是，如果你用另一个高级组件作用到 `EnhancedComponent` 上，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件（即EnhancedComponent）的功能就会被覆盖。这样的高阶组件（修改原型的高级组件）对没有生命周期函数的无状态函数式组件也是无效的。
 
-Mutating HOCs are a leaky abstraction—the consumer must know how they are implemented in order to avoid conflicts with other HOCs.
+更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的具体实现，才能避免与其他高级组件的冲突。
 
-Instead of mutation, HOCs should use composition, by wrapping the input component in a container component:
+不应该修改原组件，高阶组件应该通过将input组件包含到容器组件中，使用组合技术：
 
 ```js
 function logProps(WrappedComponent) {
@@ -209,15 +209,15 @@ function logProps(WrappedComponent) {
 }
 ```
 
-This HOC has the same functionality as the mutating version while avoiding the potential for clashes. It works equally well with class and functional components. And because it's a pure function, it's composable with other HOCs, or even with itself.
+这个组合型高阶组件和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和无状态函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至他自身也是可组合的。
 
-You may have noticed similarities between HOCs and a pattern called **container components**. Container components are part of a strategy of separating responsibility between high-level and low-level concerns. Containers manage things like subscriptions and state, and pass props to components that handle things like rendering UI. HOCs use containers as part of their implementation. You can think of HOCs as parameterized container component definitions.
+你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是策略的一部分，该策略将责任在高层次和低层次关注点之间进行划分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给常规组件。而常规组件则负责处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
 
-## Convention: Pass Unrelated Props Through to the Wrapped Component
+## 约定：将不相关的props属性传递给包裹的组件
 
-HOCs add features to a component. They shouldn't drastically alter its contract. It's expected that the component returned from an HOC has a similar interface to the wrapped component.
+高阶组件给组件添加新特性。他们不应该大幅修改组件的接口（个人理解就是props属性）。预期，从高阶组件返回的组件应该与原包裹的组件具有类似的接口。
 
-HOCs should pass through props that are unrelated to its specific concern. Most HOCs contain a render method that looks something like this:
+高阶组件应该传递与它要实现的功能点无关的props属性。大多数高阶组件都包含一个如下的render函数：
 
 ```js
 render() {
@@ -239,30 +239,30 @@ render() {
 }
 ```
 
-This convention helps ensure that HOCs are as flexible and reusable as possible.
+这种约定能够确保高阶组件最大程度的灵活性和可重用性。
 
-## Convention: Maximizing Composability
+## 约定：最大化使用组合
 
-Not all HOCs look the same. Sometimes they accept only a single argument, the wrapped component:
+并不是所有的高阶组件看起来都一样的。有时，它们仅仅接收一个参数，即包裹的组件：
 
 ```js
 const NavbarWithRouter = withRouter(Navbar);
 ```
 
-Usually, HOCs accept additional arguments. In this example from Relay, a config object is used to specify a component's data dependencies:
+一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，可配置对象用于指定组件的数据依赖：
 
 ```js
 const CommentWithRelay = Relay.createContainer(Comment, config);
 ```
 
-The most common signature for HOCs looks like this:
+大部分常见高阶组件的函数签名如下所示：
 
 ```js
 // React Redux's `connect`
 const ConnectedComment = connect(commentSelector, commentActions)(Comment);
 ```
 
-*What?!* If you break it apart, it's easier to see what's going on.
+*这是什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
 
 ```js
 // connect is a function that returns another function
@@ -271,9 +271,9 @@ const enhance = connect(commentListSelector, commentListActions);
 // to the Redux store
 const ConnectedComment = enhance(CommentList);
 ```
-In other words, `connect` is a higher-order function that returns a higher-order component!
+换句话说，`connect` 是一个返回高阶组件的高阶函数！
 
-This form may seem confusing or unnecessary, but it has a useful property. Single-argument HOCs like the one returned by the `connect` function have the signature `Component => Component`. Functions whose output type is the same as its input type are really easy to compose together.
+这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， 'Component => Component'。输入和输出类型相同的函数真的很容易组合在一起。
 
 ```js
 // Instead of doing this...
