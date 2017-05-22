@@ -66,7 +66,7 @@ import React from 'react';
 import CustomButton from './CustomButton';
 
 function WarningButton() {
-  // return React.createElement(CustomButton, {color: 'red'}, null);
+  // 返回 React.createElement(CustomButton, {color: 'red'}, null);
   return <CustomButton color="red" />;
 }
 ```
@@ -102,14 +102,14 @@ function BlueDatePicker() {
 ```js{3,4,10,11}
 import React from 'react';
 
-// Wrong! This is a component and should have been capitalized:
+// 错误！组件名应该首字母大写:
 function hello(props) {
-  // Correct! This use of <div> is legitimate because div is a valid HTML tag:
+  // 正确！div 是有效的 HTML 标签:
   return <div>Hello {props.toWhat}</div>;
 }
 
 function HelloWorld() {
-  // Wrong! React thinks <hello /> is an HTML tag because it's not capitalized:
+  // 错误！React 会将小写开头的标签名认为是 HTML 原生标签:
   return <hello toWhat="World" />;
 }
 ```
@@ -119,14 +119,14 @@ function HelloWorld() {
 ```js{3,4,10,11}
 import React from 'react';
 
-// Correct! This is a component and should be capitalized:
+// 正确！组件名应该首字母大写:
 function Hello(props) {
-  // Correct! This use of <div> is legitimate because div is a valid HTML tag:
+  // 正确！div 是有效的 HTML 标签:
   return <div>Hello {props.toWhat}</div>;
 }
 
 function HelloWorld() {
-  // Correct! React knows <Hello /> is a component because it's capitalized.
+  // 正确！React 能够将大写开头的标签名认为是 React 组件。
   return <Hello toWhat="World" />;
 }
 ```
@@ -145,7 +145,7 @@ const components = {
 };
 
 function Story(props) {
-  // Wrong! JSX type can't be an expression.
+  // 错误！JSX 标签名不能为一个表达式。
   return <components[props.storyType] story={props.story} />;
 }
 ```
@@ -162,7 +162,7 @@ const components = {
 };
 
 function Story(props) {
-  // Correct! JSX type can be a capitalized variable.
+  // 正确！JSX 标签名可以为大写开头的变量。
   const SpecificStory = components[props.storyType];
   return <SpecificStory story={props.story} />;
 }
