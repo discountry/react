@@ -4,29 +4,27 @@ title: 高阶组件
 permalink: docs/higher-order-components.html
 ---
 
-A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React's compositional nature.
+高阶组件（HOC）是react中对组件逻辑进行重用的高级技术。但高阶组件本身并不是React API。它们只是一种模式。这种模式是由react自身的组合性质必然产生的。
 
-Concretely, **a higher-order component is a function that takes a component and returns a new component.**
-
+具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件**
 ```js
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
 ```
 
-Whereas a component transforms props into UI, a higher-order component transforms a component into another component.
+对比组件将props属性转变成UI，高阶组件则是将一个组件转换成另一个新组件。
 
-HOCs are common in third-party React libraries, such as Redux's [`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) and Relay's [`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
+高阶组件在第三方React库中很常见，比如Redux的[`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)方法和Relay的[`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
 
-In this document, we'll discuss why higher-order components are useful, and how to write your own.
+在本文档中，我们将会讨论为什么高阶组件很有作用，以及该如何实现一个高阶组件。
+## 使用高阶组件（HOC）解决交叉问题
 
-## Use HOCs For Cross-Cutting Concerns
-
-> **Note**
+> **注意**
 >
-> We previously recommended mixins as a way to handle cross-cutting concerns. We've since realized that mixins create more trouble than they are worth. [Read more](/react/blog/2016/07/13/mixins-considered-harmful.html) about why we've moved away from mixins and how you can transition your existing components.
+> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术带来的问题要比产生的价值大。[更多资料](/react/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
 
-Components are the primary unit of code reuse in React. However, you'll find that some patterns aren't a straightforward fit for traditional components.
+在React中，组件是代码复用的主要单元。然而你会发现，一些模式并不适用传统的组件。
 
-For example, say you have a `CommentList` component that subscribes to an external data source to render a list of comments:
+例如，假设你有一个`CommentList`组件，该组件从外部数据源订阅数据并渲染评论列表：
 
 ```js
 class CommentList extends React.Component {
@@ -68,7 +66,7 @@ class CommentList extends React.Component {
 }
 ```
 
-Later, you write a component for subscribing to a single blog post, which follows a similar pattern:
+然后，你又写了一个订阅单个博客文章的组件，该组件遵循类似的模式：
 
 ```js
 class BlogPost extends React.Component {
@@ -100,15 +98,15 @@ class BlogPost extends React.Component {
 }
 ```
 
-`CommentList` and `BlogPost` aren't identical — they call different methods on `DataSource`, and they render different output. But much of their implementation is the same:
+`CommentList` 和 `BlogPost` 组件并不相同 —— 他们调用了 `DataSource` 的不同方法获取数据，并且他们渲染的输出结果也不相同。但是，他们的大部分实现逻辑是一样的：
 
-- On mount, add a change listener to `DataSource`.
-- Inside the listener, call `setState` whenever the data source changes.
-- On unmount, remove the change listener.
+- 挂载组件时， 向 `DataSource` 添加一个监听函数。
+- 在监听函数内, 每当数据源发生变化，都是调用 `setState`函数设置新数据。
+- 卸载组件时, 移除监听函数。
 
-You can imagine that in a large app, this same pattern of subscribing to `DataSource` and calling `setState` will occur over and over again. We want an abstraction that allows us to define this logic in a single place and share them across many components. This is where higher-order components excel.
+设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且能在所有的组件共享使用。这就是高阶组件的精华所在。
 
-We can write a function that creates components, like `CommentList` and `BlogPost`, that subscribe to `DataSource`. The function will accept as one of its arguments a child component that receives the subscribed data as a prop. Let's call the function `withSubscription`:
+我们写一个函数，该函数创建出从 `DataSource`订阅数据的组件，比如 `CommonList` 和 `BlogPost`。该函数接受一个子组件作为其中的一个参数，子组件会将订阅的数据作为props属性传入。我们称该函数为 `withSubscription`：
 
 ```js
 const CommentListWithSubscription = withSubscription(
@@ -122,9 +120,9 @@ const BlogPostWithSubscription = withSubscription(
 });
 ```
 
-The first parameter is the wrapped component. The second parameter retrieves the data we're interested in, given a `DataSource` and the current props.
+第一个参数是包裹组件，第二个参数从 `DataSource`和当前props属性中检索应用需要的数据。
 
-When `CommentListWithSubscription` and `BlogPostWithSubscription` are rendered, `CommentList` and `BlogPost` will be passed a `data` prop with the most current data retrieved from `DataSource`:
+当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` props属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
 
 ```js
 // This function takes a component...
@@ -163,9 +161,9 @@ function withSubscription(WrappedComponent, selectData) {
 }
 ```
 
-Note that an HOC doesn't modify the input component, nor does it use inheritance to copy its behavior. Rather, an HOC *composes* the original component by *wrapping* it in a container component. An HOC is a pure function with zero side-effects.
+注意，高阶组件即不会修改原组件，也不会使用继承复制原组件的行为。相反，高阶组件是通过将原组件 *包裹（wrapping）* 在容器组件里面的方式来 *组合（composes）* 使用原组件。高阶组件就是一个没有副作用的纯函数。
 
-And that's it! The wrapped component receives all the props of the container, along with a new prop, `data`, which it uses to render its output. The HOC isn't concerned with how or why the data is used, and the wrapped component isn't concerned with where the data came from.
+就是这样！被包裹的组件接受容器组件的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而被包裹组件也不关心数据来自何处。
 
 Because `withSubscription` is a normal function, you can add as many or as few arguments as you like. For example, you may want to make the name of the `data` prop configurable, to further isolate the HOC from the wrapped component. Or you could accept an argument that configures `shouldComponentUpdate`, or one that configures the data source. These are all possible because the HOC has full control over how the component is defined.
 
