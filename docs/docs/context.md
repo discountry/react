@@ -6,12 +6,13 @@ permalink: docs/context.html
 
 > 注释：由于React v15.5开始 `React.PropTypes`已经废弃，我们推荐使用[`prop-types`](https://www.npmjs.com/package/prop-types)来定义`contextTypes`。
 
-使用React可以非常轻松地追踪通过React组件的数据流。在React组件中，你可以看到哪些props被传递，这使得你的apps容易理解。
+使用React可以非常轻松地追踪通过React组件的数据流。在React组件中，你可以看到哪些props被传递，这使得你的应用容易理解。
 
-在有些场景中，你不想要向下每层都手动地传递你需要的props。这就需要强大的”context” API了。
+在有些场景中，你不想要向下每层都手动地传递你需要的 props. 这就需要强大的 `context` API了。
 
 ## 为什么不要使用Context
-绝大多数应用程序不需要使用context
+
+绝大多数应用程序不需要使用 context
 
 如果你想让你的应用更稳定，别使用context。因为这是一个实验性的API，在未来的React版本中可能会被更改。
 
@@ -22,7 +23,9 @@ permalink: docs/context.html
 尽管有这些警告，如果你还是坚持要使用context，那么尽量将使用context的代码隔离到一小块地方并避免直接使用context API，这样以后API变更的时候更容易升级。
 
 ## 如何使用Context
+
 假设你有如下代码：
+
 ```javascript
 class Button extends React.Component {
   render() {
