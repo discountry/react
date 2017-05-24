@@ -4,11 +4,11 @@ title: 非受控组件
 permalink: docs/uncontrolled-components.html
 ---
 
-In most cases, we recommend using [controlled components](/react/docs/forms.html) to implement forms. In a controlled component, form data is handled by a React component. The alternative is uncontrolled components, where form data is handled by the DOM itself.
+在大多数情况下，我们推荐使用 [受控组件](/react/docs/forms.html) 来实现表单。 在受控组件中，表单数据由 React 组件处理。如果让表单数据由 DOM 处理时，替代方案为使用非受控组件。
 
-To write an uncontrolled component, instead of writing an event handler for every state update, you can [use a ref](/react/docs/refs-and-the-dom.html) to get form values from the DOM.
+要编写一个非受控组件，而非为每个状态更新编写事件处理程序，你可以 [使用 ref](/react/docs/refs-and-the-dom.html) 从 DOM 获取表单值。
 
-For example, this code accepts a single name in an uncontrolled component:
+例如，下面的代码在非受控组件中接收单个属性。
 
 ```javascript{8,17}
 class NameForm extends React.Component {
@@ -36,15 +36,15 @@ class NameForm extends React.Component {
 }
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/WooRWa?editors=0010)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/WooRWa?editors=0010)
 
-Since an uncontrolled component keeps the source of truth in the DOM, it is sometimes easier to integrate React and non-React code when using uncontrolled components. It can also be slightly less code if you want to be quick and dirty. Otherwise, you should usually use controlled components.
+由于非受控组件将真实数据保存在 DOM 中，因此在使用非受控组件时，更容易同时集成 React 和非 React 代码。如果你想快速而随性，这样做可以减小代码量。否则，你应该使用受控组件。
 
-If it's still not clear which type of component you should use for a particular situation, you might find [this article on controlled versus uncontrolled inputs](http://goshakkk.name/controlled-vs-uncontrolled-inputs-react/) to be helpful.
+如果依然不清楚在哪种特定情况下选择哪种类型的组件，那么你应该阅读 [这篇关于受控和非受控的表单输入](http://goshakkk.name/controlled-vs-uncontrolled-inputs-react/) 了解更多。
 
-### Default Values
+### 默认值
 
-In the React rendering lifecycle, the `value` attribute on form elements will override the value in the DOM. With an uncontrolled component, you often want React to specify the initial value, but leave subsequent updates uncontrolled. To handle this case, you can specify a `defaultValue` attribute instead of `value`.
+在 React 的生命周期中，表单元素上的 `value` 属性将会覆盖 DOM 中的值。使用非受控组件时，通常你希望 React 可以为其指定初始值，但不再控制后续更新。要解决这个问题，你可以指定一个 `defaultValue` 属性而不是 `value`。
 
 ```javascript{7}
 render() {
@@ -63,4 +63,4 @@ render() {
 }
 ```
 
-Likewise, `<input type="checkbox">` and `<input type="radio">` support `defaultChecked`, and `<select>` and `<textarea>` supports `defaultValue`.
+同样，`<input type="checkbox">` 和 `<input type="radio">` 支持 `defaultChecked`，`<select>` 和 `<textarea>` 支持 `defaultValue`.
