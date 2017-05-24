@@ -1,6 +1,6 @@
 ---
 id: react-api
-title: React Top-Level API
+title: React 高阶 API
 layout: docs
 category: Reference
 permalink: docs/react-api.html
@@ -14,31 +14,31 @@ redirect_from:
   - "docs/glossary.html"
 ---
 
-`React` is the entry point to the React library. If you load React from a `<script>` tag, these top-level APIs are available on the `React` global. If you use ES6 with npm, you can write `import React from 'react'`. If you use ES5 with npm, you can write `var React = require('react')`.
+`react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些高阶API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'` 。如果你使用ES5，你可以使用 `var React = require('react')` 。
 
-## Overview
+## 概览
 
 ### Components
 
-React components let you split the UI into independent, reusable pieces, and think about each piece in isolation. React components can be defined by subclassing `React.Component` or `React.PureComponent`.
+React 组件可以让你把UI分割为独立、可复用的片段，并将每一片段视为相互独立的部分。React组件可以通过继承 `React.Component` 或 `React.PureComponent` 来定义。
 
  - [`React.Component`](#react.component)
  - [`React.PureComponent`](#react.purecomponent)
 
-If you don't use ES6 classes, you may use the `create-react-class` module instead. See [Using React without ES6](/react/docs/react-without-es6.html) for more information.
+如果不用ES6类，你可以使用 `create-react-class` 模块。参阅 [Using React without JSX](/react/docs/react-without-es6.html) 了解更多信息。
 
 ### Creating React Elements
 
-We recommend [using JSX](/react/docs/introducing-jsx.html) to describe what your UI should look like. Each JSX element is just syntactic sugar for calling [`React.createElement()`](#createelement). You will not typically invoke the following methods directly if you are using JSX.
+推荐 [使用JSX](/react/docs/introducing-jsx.html) 描述你的UI外观。每个JSX元素仅是调用 [`React.createElement`](#createelement) 的语法糖。如果使用了JSX，你通常不会直接调用以下方法。
 
 - [`createElement()`](#createelement)
 - [`createFactory()`](#createfactory)
 
-See [Using React without JSX](/react/docs/react-without-jsx.html) for more information.
+参阅 [Using React without JSX](/react/docs/react-without-jsx.html) 了解更多。
 
 ### Transforming Elements
 
-`React` also provides some other APIs:
+`React` 同时也提供了其他API：
 
 - [`cloneElement()`](#cloneelement)
 - [`isValidElement()`](#isvalidelement)
@@ -50,7 +50,7 @@ See [Using React without JSX](/react/docs/react-without-jsx.html) for more infor
 
 ### `React.Component`
 
-`React.Component` is the base class for React components when they are defined using [ES6 classes](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes).
+用 [ES6 类](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes) 定义时，`React.Component`是React组件的基类。
 
 ```javascript
 class Greeting extends React.Component {
@@ -60,21 +60,21 @@ class Greeting extends React.Component {
 }
 ```
 
-See the [React.Component API Reference](/react/docs/react-component.html) for a list of methods and properties related to the base `React.Component` class.
+有关 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/react/docs/react-component.html)。
 
 * * *
 
 ### `React.PureComponent`
 
-`React.PureComponent` is exactly like [`React.Component`](#react.component) but implements [`shouldComponentUpdate()`](/react/docs/react-component.html#shouldcomponentupdate) with a shallow prop and state comparison.
+`React.PureComponent` 与 [`React.Component`](#react.component) 几乎完全相同，但 `React.PureComponent` 通过prop和state的浅对比来实现 [`shouldComponentUpate()`](/react/docs/react-component.html#shouldcomponentupdate)。
 
-If your React component's `render()` function renders the same result given the same props and state, you can use `React.PureComponent` for a performance boost in some cases.
+如果React组件的 `render()` 函数在给定相同的props和state下渲染为相同的结果，在某些场景下你可以使用 `React.PureComponent` 来提升性能。
 
 > Note
 
-> `React.PureComponent`'s `shouldComponentUpdate()` only shallowly compares the objects. If these contain complex data structures, it may produce false-negatives for deeper differences. Only extend `PureComponent` when you expect to have simple props and state, or use [`forceUpdate()`](/react/docs/react-component.html#forceupdate) when you know deep data structures have changed. Or, consider using [immutable objects](https://facebook.github.io/immutable-js/) to facilitate fast comparisons of nested data.
+> `React.PureComponent` 的 `shouldComponentUpdate()` 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新, 原文：false-negatives)。当你期望只拥有简单的props和state时，才去继承 `PureComponent` ，或者在你知道深层的数据结构已经发生改变时使用 [`forceUpate()`](/react/docs/react-component.html#forceupdate) 。或者，考虑使用 [不可变对象](https://facebook.github.io/immutable-js/) 来促进嵌套数据的快速比较。
 >
-> Furthermore, `React.PureComponent`'s `shouldComponentUpdate()` skips prop updates for the whole component subtree. Make sure all the children components are also "pure".
+> 此外,`React.PureComponent` 的 `shouldComponentUpate()` 会忽略整个组件的子级。请确保所有的子级组件也是"Pure"的。
 
 * * *
 
@@ -88,11 +88,11 @@ React.createElement(
 )
 ```
 
-Create and return a new [React element](/react/docs/rendering-elements.html) of the given type. The type argument can be either a tag name string (such as `'div'` or `'span'`), or a [React component](/react/docs/components-and-props.html) type (a class or a function).
+根据给定的类型创建并返回新的 [`React element`](/react/docs/rendering-elements.html) 。参数type既可以是一个html标签名称字符串(例如`'div'` 或 `'span'` )，也可以是一个 [`React component`](/react/docs/components-and-props.html) 类型(一个类或一个函数)。
 
-Convenience wrappers around `React.createElement()` for DOM components are provided by `React.DOM`. For example, `React.DOM.a(...)` is a convenience wrapper for `React.createElement('a', ...)`. They are considered legacy, and we encourage you to either use JSX or use `React.createElement()` directly instead.
+`React.DOM` 提供了DOM组件的 `React.createElement()` 的便捷包装。举个例子，`React.DOM.a(...)` 是 `React.createELement('a', ...)` 的一个便捷包装。这个用法被认为是过时的，我们推荐您使用JSX，或者直接使用 `React.createElement()` 。
 
-Code written with [JSX](/react/docs/introducing-jsx.html) will be converted to use `React.createElement()`. You will not typically invoke `React.createElement()` directly if you are using JSX. See [React Without JSX](/react/docs/react-without-jsx.html) to learn more.
+用 [`JSX`](/react/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()` 。参阅 [`React Without JSX`](/react/docs/react-without-jsx.html) 了解更多。
 
 * * *
 
@@ -106,17 +106,17 @@ React.cloneElement(
 )
 ```
 
-Clone and return a new React element using `element` as the starting point. The resulting element will have the original element's props with the new props merged in shallowly. New children will replace existing children. `key` and `ref` from the original element will be preserved.
+以 `element` 作为起点，克隆并返回一个新的React元素(React Element)。生成的元素将会拥有原始元素props与新props的浅合并。新的子级会替换现有的子级。来自原始元素的 `key` 和 `ref` 将会保留。
 
-`React.cloneElement()` is almost equivalent to:
+`React.cloneElement()` 几乎相当于：
 
 ```js
 <element.type {...element.props} {...props}>{children}</element.type>
 ```
 
-However, it also preserves `ref`s. This means that if you get a child with a `ref` on it, you won't accidentally steal it from your ancestor. You will get the same `ref` attached to your new element.
+然而，它也保留了 `ref`。这意味着，如果你通过 `ref` 获取到子级组件时，不会一不小心从祖先组件里窃取了它。你将获得与你新元素相同的 `ref` 。
 
-This API was introduced as a replacement of the deprecated `React.addons.cloneWithProps()`.
+这个API是一个替换已弃用的 `React.addons.cloneWithProps()` 的方案。
 
 * * *
 
@@ -126,11 +126,11 @@ This API was introduced as a replacement of the deprecated `React.addons.cloneWi
 React.createFactory(type)
 ```
 
-Return a function that produces React elements of a given type. Like [`React.createElement()`](#createElement), the type argument can be either a tag name string (such as `'div'` or `'span'`), or a [React component](/react/docs/components-and-props.html) type (a class or a function).
+根据给定的类型返回一个创建React元素的函数。类似 [`React.createElement`](#createElement) ，参数type既可以一个html标签名称字符串，也可以是一个 [`React component`](/react/docs/components-and-props.html) 类型(一个类或时一个函数)。
 
-This helper is considered legacy, and we encourage you to either use JSX or use `React.createElement()` directly instead.
+这个方法过时了，我们推荐你使用JSX或直接使用 `React.createElement()` 来替代它。
 
-You will not typically invoke `React.createFactory()` directly if you are using JSX. See [React Without JSX](/react/docs/react-without-jsx.html) to learn more.
+如果使用了JSX，你通常不会直接调用 `React.createFactory()` 。参阅 [`React Without JSX`](/react/docs/react-without-jsx.html)了解更多 。
 
 * * *
 
@@ -140,13 +140,13 @@ You will not typically invoke `React.createFactory()` directly if you are using 
 React.isValidElement(object)
 ```
 
-Verifies the object is a React element. Returns `true` or `false`.
+验证对象是否是一个React元素。返回 `true` 或 `false` 。
 
 * * *
 
 ### `React.Children`
 
-`React.Children` provides utilities for dealing with the `this.props.children` opaque data structure.
+`React.Children` 提供了处理 `this.props.children` 这个不透明数据结构的工具。
 
 #### `React.Children.map`
 
@@ -154,7 +154,7 @@ Verifies the object is a React element. Returns `true` or `false`.
 React.Children.map(children, function[(thisArg)])
 ```
 
-Invokes a function on every immediate child contained within `children` with `this` set to `thisArg`. If `children` is a keyed fragment or array it will be traversed: the function will never be passed the container objects. If children is `null` or `undefined`, returns `null` or `undefined` rather than an array.
+在包含在 `children` 里的每个子级上调用函数，调用的函数的 `this` 设置为 `thisArg` 。如果 `children` 是一个嵌套的对象或数组，它将被遍历。如果 `children` 是 `null` 或 `undefined` ，返回 `null` 或 `undefined` 而不是一个空数组。
 
 #### `React.Children.forEach`
 
@@ -162,7 +162,7 @@ Invokes a function on every immediate child contained within `children` with `th
 React.Children.forEach(children, function[(thisArg)])
 ```
 
-Like [`React.Children.map()`](#react.children.map) but does not return an array.
+类似 [`React.Children.map()`](#react.children.map) ，但是不返回数组。
 
 #### `React.Children.count`
 
@@ -170,7 +170,7 @@ Like [`React.Children.map()`](#react.children.map) but does not return an array.
 React.Children.count(children)
 ```
 
-Returns the total number of components in `children`, equal to the number of times that a callback passed to `map` or `forEach` would be invoked.
+返回 `children` 中的组件总数，相等于传给 `map` 或 `forEach` 时，回调函数被调用次数。
 
 #### `React.Children.only`
 
@@ -178,7 +178,7 @@ Returns the total number of components in `children`, equal to the number of tim
 React.Children.only(children)
 ```
 
-Returns the only child in `children`. Throws otherwise.
+返回`children`里仅有的子级。否则抛出异常。
 
 #### `React.Children.toArray`
 
@@ -186,8 +186,8 @@ Returns the only child in `children`. Throws otherwise.
 React.Children.toArray(children)
 ```
 
-Returns the `children` opaque data structure as a flat array with keys assigned to each child. Useful if you want to manipulate collections of children in your render methods, especially if you want to reorder or slice `this.props.children` before passing it down.
+返回以赋key给每个子级 `child` 的扁平数组形式来组成不透明的 `children` 数据结构。如果你打算在你的渲染方法里操纵子级集合这很有用，特别是你想在 `this.props.children` 传下之前对它重新排序或切割。
 
 > Note:
 >
-> `React.Children.toArray()` changes keys to preserve the semantics of nested arrays when flattening lists of children. That is, `toArray` prefixes each key in the returned array so that each element's key is scoped to the input array containing it.
+> 当children是扁平列表时，`React.Children.toArray()` 改变key来保留嵌套数组的语义。也就是说，为了在展开时保留嵌套数组的语义，`toArray` 会自动的给数组中每个 key 加了上前缀，以便将每个元素的key被限定到包含它的输入数组。
