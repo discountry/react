@@ -4,7 +4,7 @@ title: 高阶组件
 permalink: docs/higher-order-components.html
 ---
 
-高阶组件（HOC）是react中对组件逻辑进行重用的高级技术。但高阶组件本身并不是React API。它们只是一种模式。这种模式是由react自身的组合性质必然产生的。
+高阶组件（HOC）是react中对组件逻辑进行重用的高级技术。但高阶组件本身并不是React API。它只是一种模式，这种模式是由react自身的组合性质必然产生的。
 
 具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件**
 ```js
@@ -13,7 +13,7 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 对比组件将props属性转变成UI，高阶组件则是将一个组件转换成另一个新组件。
 
-高阶组件在第三方React库中很常见，比如Redux的[`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)方法和Relay的[`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
+高阶组件在React第三方库中很常见，比如Redux的[`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)方法和Relay的[`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
 
 在本文档中，我们将会讨论为什么高阶组件很有作用，以及该如何实现一个高阶组件。
 ## 使用高阶组件（HOC）解决交叉问题
@@ -101,12 +101,12 @@ class BlogPost extends React.Component {
 `CommentList` 和 `BlogPost` 组件并不相同 —— 他们调用了 `DataSource` 的不同方法获取数据，并且他们渲染的输出结果也不相同。但是，他们的大部分实现逻辑是一样的：
 
 - 挂载组件时， 向 `DataSource` 添加一个监听函数。
-- 在监听函数内, 每当数据源发生变化，都是调用 `setState`函数设置新数据。
-- 卸载组件时, 移除监听函数。
+- 在监听函数内， 每当数据源发生变化，都是调用 `setState`函数设置新数据。
+- 卸载组件时， 移除监听函数。
 
-设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且能在所有的组件共享使用。这就是高阶组件的精华所在。
+设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且能对所有的组件使用，这就是高阶组件的精华所在。
 
-我们写一个函数，该函数创建出从 `DataSource`订阅数据的组件，比如 `CommonList` 和 `BlogPost`。该函数接受一个子组件作为其中的一个参数，子组件会将订阅的数据作为props属性传入。我们称该函数为 `withSubscription`：
+我们写一个函数，该函数能够创建类似`CommonList` 和 `BlogPost`出从 `DataSource`这种从数据源订阅数据的组件 。该函数接受一个子组件作为其中的一个参数，并从数据源订阅数据作为props属性传入子组件。我们把这个函数取个名字 `withSubscription`：
 
 ```js
 const CommentListWithSubscription = withSubscription(
@@ -120,7 +120,7 @@ const BlogPostWithSubscription = withSubscription(
 });
 ```
 
-第一个参数是包裹组件，第二个参数从 `DataSource`和当前props属性中检索应用需要的数据。
+第一个参数是包裹组件（wrapped component），第二个参数会从 `DataSource`和当前props（译者注：根据代码示例，这里应该是高阶组件的props属性）属性中检索应用需要的数据。
 
 当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` props属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
 
@@ -161,17 +161,17 @@ function withSubscription(WrappedComponent, selectData) {
 }
 ```
 
-注意，高阶组件即不会修改原组件，也不会使用继承复制原组件的行为。相反，高阶组件是通过将原组件 *包裹（wrapping）* 在容器组件里面的方式来 *组合（composes）* 使用原组件。高阶组件就是一个没有副作用的纯函数。
+注意，高阶组件即不会修改input原组件，也不会使用继承复制input原组件的行为。相反，高阶组件是通过将原组件 *包裹（wrapping）* 在容器组件（container component）里面的方式来 *组合（composes）* 使用原组件。高阶组件就是一个没有副作用的纯函数。
 
-就是这样！被包裹的组件接受容器组件的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而被包裹组件也不关心数据来自何处。
+就是这样！包裹组件接收容器组件的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而包裹组件也不关心数据来自何处。
 
-因为 `withSubscription` 就是一个普通函数，你可以添加任意数量的参数。例如，你或许会想使 `data` 属性可配置化，使高阶组件和被包裹组件进一步隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源的参数。这些都可以实现，因为高阶组件可以完全控制组件的定义。
+因为 `withSubscription` 就是一个普通函数，你可以添加任意数量的参数。例如，你或许会想使 `data` 属性可配置化，使高阶组件和包裹组件进一步隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源的参数。这些都可以实现，因为高阶组件可以完全控制新组件的定义。
 
-和普通组件一样，`withSubscription` 和被包裹组件之间的关联是完全基于props属性的。只要高级组件向被包裹组件提供相同的props属性，就可以轻松的讲一个高阶组件转换成不同的高级组件。例如，如果要改变数据获取库，这就非常有用。
+和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于props属性的。只要高级组件向包裹组件提供相同的props属性，就可以轻松的将一个高阶组件转换成不同的高阶组件。例如，如果要改变数据获取库，这就非常有用。
 
 ## 不要改变原始组件，使用组合
 
-不要在高阶组件内部修改原组件的原型属性（或以其它方式修改）。
+不要在高阶组件内部修改（或以其它方式修改）原组件的原型属性。
 
 ```js
 function logProps(InputComponent) {
@@ -188,11 +188,11 @@ function logProps(InputComponent) {
 const EnhancedComponent = logProps(InputComponent);
 ```
 
-上面的示例有一些问题。首先就是，input组件不能够脱离增强型组件被重用。更关键的一点是，如果你用另一个高级组件作用到 `EnhancedComponent` 上，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件（即EnhancedComponent）的功能就会被覆盖。这样的高阶组件（修改原型的高级组件）对没有生命周期函数的无状态函数式组件也是无效的。
+上面的示例有一些问题。首先就是，input组件不能够脱离增强型组件（enhanced component）被重用。更关键的一点是，如果你用另一个高级组件来转变 `EnhancedComponent` ，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件（即EnhancedComponent）转换的功能就会被覆盖。这样的高阶组件（修改原型的高级组件）对没有生命周期函数的无状态函数式组件也是无效的。
 
-更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的具体实现，才能避免与其他高级组件的冲突。
+更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的具体实现，才能避免与其它高级组件的冲突。
 
-不应该修改原组件，高阶组件应该通过将input组件包含到容器组件中，使用组合技术：
+不应该修改原组件，高阶组件应该使用组合技术，将input组件包含到容器组件中：
 
 ```js
 function logProps(WrappedComponent) {
@@ -209,13 +209,13 @@ function logProps(WrappedComponent) {
 }
 ```
 
-这个组合型高阶组件和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和无状态函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至他自身也是可组合的。
+这个组合型高阶组件（译者注：即上面示例高阶组件）和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和无状态函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至它自身也是可组合的。
 
-你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是策略的一部分，该策略将责任在高层次和低层次关注点之间进行划分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给常规组件。而常规组件则负责处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
+你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是专注于在高层次和低层次关注点之间进行责任划分的策略的一部分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给展示组件。而展示组件则负责处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
 
-## 约定：将不相关的props属性传递给包裹的组件
+## 约定：将不相关的props属性传递给包裹组件
 
-高阶组件给组件添加新特性。他们不应该大幅修改组件的接口（个人理解就是props属性）。预期，从高阶组件返回的组件应该与原包裹的组件具有类似的接口。
+高阶组件给组件添加新特性。他们不应该大幅修改原组件的接口（译者注：应该就是props属性）。预期，从高阶组件返回的组件应该与原包裹的组件具有类似的接口。
 
 高阶组件应该传递与它要实现的功能点无关的props属性。大多数高阶组件都包含一个如下的render函数：
 
@@ -243,13 +243,13 @@ render() {
 
 ## 约定：最大化使用组合
 
-并不是所有的高阶组件看起来都一样的。有时，它们仅仅接收一个参数，即包裹的组件：
+并不是所有的高阶组件看起来都是一样的。有时，它们仅仅接收一个参数，即包裹组件：
 
 ```js
 const NavbarWithRouter = withRouter(Navbar);
 ```
 
-一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，可配置对象用于指定组件的数据依赖：
+一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，可配置对象用于指定组件的数据依赖关系：
 
 ```js
 const CommentWithRelay = Relay.createContainer(Comment, config);
@@ -273,8 +273,8 @@ const ConnectedComment = enhance(CommentList);
 ```
 换句话说，`connect` 是一个返回高阶组件的高阶函数！
 
-这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， 'Component => Component'。输入和输出类型相同的函数真的很容易组合在一起。
-
+这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， 'Component => Component'。输入和输出类型相同的函数是很容易组合在一起。
+<!-- 对以下代码的个人理解：第一段代码对初始组件进行了两次包装；第二段代码就是函数的柯里化 -->
 ```js
 // Instead of doing this...
 const EnhancedComponent = connect(commentSelector)(withRouter(WrappedComponent))
@@ -289,15 +289,16 @@ const enhance = compose(
 const EnhancedComponent = enhance(WrappedComponent)
 ```
 
-(This same property also allows `connect` and other enhancer-style HOCs to be used as decorators, an experimental JavaScript proposal.)
 
-The `compose` utility function is provided by many third-party libraries including lodash (as [`lodash.flowRight`](https://lodash.com/docs/#flowRight)), [Redux](http://redux.js.org/docs/api/compose.html), and [Ramda](http://ramdajs.com/docs/#compose).
+（`connect`函数产生的高阶组件和其它增强型高阶组件具有同样的被用作装饰器的能力。）
 
-## Convention: Wrap the Display Name for Easy Debugging
+包括lodash（比如说[`lodash.flowRight`](https://lodash.com/docs/#flowRight)）, [`Redux`](http://redux.js.org/docs/api/compose.html) 和 [`Ramda`](http://ramdajs.com/docs/#compose)在内的许多第三方库都提供了类似`compose`功能的函数。
 
-The container components created by HOCs show up in the [React Developer Tools](https://github.com/facebook/react-devtools) like any other component. To ease debugging, choose a display name that communicates that it's the result of an HOC.
+## 约定：包装显示名字以便于调试
 
-The most common technique is to wrap the display name of the wrapped component. So if your higher-order component is named `withSubscription`, and the wrapped component's display name is `CommentList`, use the display name `WithSubscription(CommentList)`:
+高价组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个好的名字，确保能够识别出它是由高阶组件创建的新组件还是普通的组件。
+
+最常用的技术就是将包裹组件的名字包装在显示名字中。所以，如果你的高阶组件名字是 `withSubscription`，且包裹组件的显示名字是 `CommentList`，那么就是用 `withSubscription(CommentList)`这样的显示名字：
 
 ```js
 function withSubscription(WrappedComponent) {
@@ -312,15 +313,15 @@ function getDisplayName(WrappedComponent) {
 ```
 
 
-## Caveats
+## 注意事项
 
-Higher-order components come with a few caveats that aren't immediately obvious if you're new to React.
+如果你是React新手，你要知道高阶组件自身也有一些不是太明显的使用注意事项。
 
-### Don't Use HOCs Inside the render Method
+### 不要再render函数中使用高阶组件
 
-React's diffing algorithm (called reconciliation) uses component identity to determine whether it should update the existing subtree or throw it away and mount a new one. If the component returned from `render` is identical (`===`) to the component from the previous render, React recursively updates the subtree by diffing it with the new one. If they're not equal, the previous subtree is unmounted completely.
+React使用的差异算法（称为协调）使用组件标识确定是否更新现有的子对象树或丢掉现有的子树并重新挂载。如果render函数返回的组件和之前render函数返回的组件是相同的，React就递归的比较新子对象树和旧子对象树的差异，并更新旧子对象树。如果他们不相等，就会完全卸载掉旧的之对象树。
 
-Normally, you shouldn't need to think about this. But it matters for HOCs because it means you can't apply an HOC to a component within the render method of a component:
+一般而言，你不需要考虑这些细节东西。但是它对高阶函数的使用有影响，那就是你不能在组件的render函数中调用高阶函数：
 
 ```js
 render() {
@@ -332,17 +333,17 @@ render() {
 }
 ```
 
-The problem here isn't just about performance — remounting a component causes the state of that component and all of its children to be lost.
+这里产生的问题不仅仅是性能问题 —— 还有，重新加载一个组件会引起原有组件的所有状态和子组件丢失。
 
-Instead, apply HOCs outside the component definition so that the resulting component is created only once. Then, its identity will be consistent across renders. This is usually what you want, anyway.
+相反，在组件定义外使用高阶组件，可以使新组件只出现一次定义。在渲染的整个过程中，保证都是同一个组件。无论在任何情况下，这都是最好的使用方式。
 
-In those rare cases where you need to apply an HOC dynamically, you can also do it inside a component's lifecycle methods or its constructor.
+在很少的情况下，你可能需要动态的调用高阶组件。那么你就可以在组件的构造函数或生命周期函数中调用。
 
-### Static Methods Must Be Copied Over
+### 必须将静态方法做拷贝
 
-Sometimes it's useful to define a static method on a React component. For example, Relay containers expose a static method `getFragment` to facilitate the composition of GraphQL fragments.
+有时，给组件定义静态方法是十分有用的。例如，Relay的容器就开放了一个静态方法 `getFragment`便于组合GraphQL的代码片段。
 
-When you apply an HOC to a component, though, the original component is wrapped with a container component. That means the new component does not have any of the static methods of the original component.
+当使用高阶组件包装组件，原始组件被容器组件包裹，也就意味着新组件会丢失原始组件的所有静态方法。
 
 ```js
 // Define a static method
@@ -354,7 +355,7 @@ const EnhancedComponent = enhance(WrappedComponent);
 typeof EnhancedComponent.staticMethod === 'undefined' // true
 ```
 
-To solve this, you could copy the methods onto the container before returning it:
+解决这个问题的方法就是，将原始组件的所有静态方法全部拷贝给新组件：
 
 ```js
 function enhance(WrappedComponent) {
@@ -365,7 +366,7 @@ function enhance(WrappedComponent) {
 }
 ```
 
-However, this requires you to know exactly which methods need to be copied. You can use [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics) to automatically copy all non-React static methods:
+这样做，就需要你清楚的知道都有哪些静态方法需要拷贝。你可以使用[hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)来帮你自动处理，它会自动拷贝所有非React的静态方法：
 
 ```js
 import hoistNonReactStatic from 'hoist-non-react-statics';
@@ -376,7 +377,7 @@ function enhance(WrappedComponent) {
 }
 ```
 
-Another possible solution is to export the static method separately from the component itself.
+另外一个可能的解决方案就是分别导出组件自身的静态方法。
 
 ```js
 // Instead of...
@@ -390,13 +391,13 @@ export { someFunction };
 import MyComponent, { someFunction } from './MyComponent.js';
 ```
 
-### Refs Aren't Passed Through
+### Refs属性不能传递
 
-While the convention for higher-order components is to pass through all props to the wrapped component, it's not possible to pass through refs. That's because `ref` is not really a prop — like `key`, it's handled specially by React. If you add a ref to an element whose component is the result of an HOC, the ref refers to an instance of the outermost container component, not the wrapped component.
+一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高级组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是包裹组件。
 
-If you find yourself facing this problem, the ideal solution is to figure out how to avoid using `ref` at all. Occasionally, users who are new to the React paradigm rely on refs in situations where a prop would work better.
+如果你碰到了这样的问题，最理想的处理方案就是搞清楚如何避免使用 `ref`。有时候，没有看过React示例的新用户在某种场景下使用prop属性要好过使用ref。
 
-That said, there are times when refs are a necessary escape hatch — React wouldn't support them otherwise. Focusing an input field is an example where you may want imperative control of a component. In that case, one solution is to pass a ref callback as a normal prop, by giving it a different name:
+话说，有时候不可避免的要使用ref应用——React在任何时候都不建议使用。例如聚焦输入表单的例子中，你可能想要对组件命令式的控制，在这种情况下，传递一个ref回调函数属性，也就是给ref应用一个不同的名字，这就是一个不错的解决方案：
 
 ```js
 function Field({ inputRef, ...rest }) {
@@ -418,4 +419,4 @@ const EnhancedField = enhance(Field);
 this.inputEl.focus();
 ```
 
-This is not a perfect solution by any means. We prefer that refs remain a library concern, rather than require you to manually handle them. We are exploring ways to solve this problem so that using an HOC is unobservable.
+无论怎样，这都不是最完美的解决方案。我们更愿意把refs应用问题留给库来解决，也不愿让使用者手动去处理他们。我们正在探索解决这个问题的方法，能够让你安心的使用高阶组件而不必关注这个问题。
