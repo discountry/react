@@ -32,23 +32,23 @@ class CommentList extends React.Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      // "DataSource" is some global data source
+      // "DataSource" 就是全局的数据源
       comments: DataSource.getComments()
     };
   }
 
   componentDidMount() {
-    // Subscribe to changes
+    // 添加事件处理函数订阅数据
     DataSource.addChangeListener(this.handleChange);
   }
 
   componentWillUnmount() {
-    // Clean up listener
+    // 清除事件处理函数
     DataSource.removeChangeListener(this.handleChange);
   }
 
   handleChange() {
-    // Update component state whenever the data source changes
+    // 任何时候数据发生改变就更新组件
     this.setState({
       comments: DataSource.getComments()
     });
@@ -125,9 +125,9 @@ const BlogPostWithSubscription = withSubscription(
 当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` props属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
 
 ```js
-// This function takes a component...
+// 函数接受一个组件参数……
 function withSubscription(WrappedComponent, selectData) {
-  // ...and returns another component...
+  // ……返回另一个新组件……
   return class extends React.Component {
     constructor(props) {
       super(props);
@@ -138,7 +138,7 @@ function withSubscription(WrappedComponent, selectData) {
     }
 
     componentDidMount() {
-      // ... that takes care of the subscription...
+      // ……注意订阅数据……
       DataSource.addChangeListener(this.handleChange);
     }
 
@@ -153,8 +153,8 @@ function withSubscription(WrappedComponent, selectData) {
     }
 
     render() {
-      // ... and renders the wrapped component with the fresh data!
-      // Notice that we pass through any additional props
+      // ……使用最新的数据渲染组件
+      // 注意此处将已有的props属性传递给原组件
       return <WrappedComponent data={this.state.data} {...this.props} />;
     }
   };
@@ -179,12 +179,12 @@ function logProps(InputComponent) {
     console.log('Current props: ', this.props);
     console.log('Next props: ', nextProps);
   }
-  // The fact that we're returning the original input is a hint that it has
-  // been mutated.
+  // 我们返回的原始组件实际上已经
+  // 被修改了。
   return InputComponent;
 }
 
-// EnhancedComponent will log whenever props are received
+// EnhancedComponent会记录下所有的props属性
 const EnhancedComponent = logProps(InputComponent);
 ```
 
@@ -202,7 +202,7 @@ function logProps(WrappedComponent) {
       console.log('Next props: ', nextProps);
     }
     render() {
-      // Wraps the input component in a container, without mutating it. Good!
+      // 用容器组件组合包裹组件且不修改包裹组件，这才是正确的打开方式。
       return <WrappedComponent {...this.props} />;
     }
   }
@@ -221,15 +221,15 @@ function logProps(WrappedComponent) {
 
 ```js
 render() {
-  // Filter out extra props that are specific to this HOC and shouldn't be
-  // passed through
+  // 过滤掉与高阶函数功能相关的props属性，
+  // 不再传递
   const { extraProp, ...passThroughProps } = this.props;
 
-  // Inject props into the wrapped component. These are usually state values or
-  // instance methods.
+  // 向包裹组件注入props属性，一般都是高阶组件的state状态
+  // 或实例方法
   const injectedProp = someStateOrInstanceMethod;
 
-  // Pass props to wrapped component
+  // 向包裹组件传递props属性
   return (
     <WrappedComponent
       injectedProp={injectedProp}
@@ -265,10 +265,10 @@ const ConnectedComment = connect(commentSelector, commentActions)(Comment);
 *这是什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
 
 ```js
-// connect is a function that returns another function
+// connect是一个返回函数的函数（译者注：就是个高阶函数）
 const enhance = connect(commentListSelector, commentListActions);
-// The returned function is an HOC, which returns a component that is connected
-// to the Redux store
+// 返回的函数就是一个高阶组件，该高阶组件返回一个与Redux store
+// 关联起来的新组件
 const ConnectedComment = enhance(CommentList);
 ```
 换句话说，`connect` 是一个返回高阶组件的高阶函数！
@@ -276,13 +276,13 @@ const ConnectedComment = enhance(CommentList);
 这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， 'Component => Component'。输入和输出类型相同的函数是很容易组合在一起。
 <!-- 对以下代码的个人理解：第一段代码对初始组件进行了两次包装；第二段代码就是函数的柯里化 -->
 ```js
-// Instead of doing this...
+// 不要这样做……
 const EnhancedComponent = connect(commentSelector)(withRouter(WrappedComponent))
 
-// ... you can use a function composition utility
-// compose(f, g, h) is the same as (...args) => f(g(h(...args)))
+// ……你可以使用一个功能组合工具
+// compose(f, g, h) 和 (...args) => f(g(h(...args)))是一样的
 const enhance = compose(
-  // These are both single-argument HOCs
+  // 这些都是单参数的高阶组件
   connect(commentSelector),
   withRouter
 )
@@ -325,10 +325,10 @@ React使用的差异算法（称为协调）使用组件标识确定是否更新
 
 ```js
 render() {
-  // A new version of EnhancedComponent is created on every render
+  // 每一次render函数调用都会创建一个新的EnhancedComponent实例
   // EnhancedComponent1 !== EnhancedComponent2
   const EnhancedComponent = enhance(MyComponent);
-  // That causes the entire subtree to unmount/remount each time!
+  // 每一次都会使子对象树完全被卸载或移除
   return <EnhancedComponent />;
 }
 ```
@@ -346,12 +346,12 @@ render() {
 当使用高阶组件包装组件，原始组件被容器组件包裹，也就意味着新组件会丢失原始组件的所有静态方法。
 
 ```js
-// Define a static method
+// 定义静态方法
 WrappedComponent.staticMethod = function() {/*...*/}
-// Now apply an HOC
+// 使用高阶组件
 const EnhancedComponent = enhance(WrappedComponent);
 
-// The enhanced component has no static method
+// 增强型组件没有静态方法
 typeof EnhancedComponent.staticMethod === 'undefined' // true
 ```
 
@@ -360,7 +360,7 @@ typeof EnhancedComponent.staticMethod === 'undefined' // true
 ```js
 function enhance(WrappedComponent) {
   class Enhance extends React.Component {/*...*/}
-  // Must know exactly which method(s) to copy :(
+  // 必须得知道要拷贝的方法 :(
   Enhance.staticMethod = WrappedComponent.staticMethod;
   return Enhance;
 }
@@ -380,14 +380,14 @@ function enhance(WrappedComponent) {
 另外一个可能的解决方案就是分别导出组件自身的静态方法。
 
 ```js
-// Instead of...
+// 替代……
 MyComponent.someFunction = someFunction;
 export default MyComponent;
 
-// ...export the method separately...
+// ……分别导出……
 export { someFunction };
 
-// ...and in the consuming module, import both
+// ……在要使用的组件中导入
 import MyComponent, { someFunction } from './MyComponent.js';
 ```
 
@@ -404,18 +404,18 @@ function Field({ inputRef, ...rest }) {
   return <input ref={inputRef} {...rest} />;
 }
 
-// Wrap Field in a higher-order component
+// 在高阶组件中增强Field组件
 const EnhancedField = enhance(Field);
 
-// Inside a class component's render method...
+// 组件的render函数中……
 <EnhancedField
   inputRef={(inputEl) => {
-    // This callback gets passed through as a regular prop
+    // 该回调函数被作为常规的props属性传递
     this.inputEl = inputEl
   }}
 />
 
-// Now you can call imperative methods
+// 现在你就可以愉快的调用控制函数了
 this.inputEl.focus();
 ```
 
