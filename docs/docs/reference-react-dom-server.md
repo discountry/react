@@ -6,11 +6,11 @@ category: Reference
 permalink: docs/react-dom-server.html
 ---
 
-If you load React from a `<script>` tag, these top-level APIs are available on the `ReactDOMServer` global. If you use ES6 with npm, you can write `import ReactDOMServer from 'react-dom/server'`. If you use ES5 with npm, you can write `var ReactDOMServer = require('react-dom/server')`.
+如果你通过 `<script>` 标签加载React，这些高阶API可用于 `ReactDOMServer` 全局。如果你使用ES6，你可以写成 `import ReactDOMServer from 'react-dom/server'`。如果你使用ES5，你可以写成 `var ReactDOMServer = require('react-dom/server')`。
 
-## Overview
+## 概览
 
-The `ReactDOMServer` class allows you to render your components on the server.
+`ReactDOMServer` 类可以让你在服务端渲染你的组件。
 
  - [`renderToString()`](#rendertostring)
  - [`renderToStaticMarkup()`](#rendertostaticmarkup)
@@ -25,9 +25,9 @@ The `ReactDOMServer` class allows you to render your components on the server.
 ReactDOMServer.renderToString(element)
 ```
 
-Render a React element to its initial HTML. This should only be used on the server. React will return an HTML string. You can use this method to generate HTML on the server and send the markup down on the initial request for faster page loads and to allow search engines to crawl your pages for SEO purposes.
+把一个React元素渲染为原始的HTML。这个方法最好只在服务端使用。React将会返回一段HTML字符串。你可以用这个方法在服务端生成HTML，并根据初始请求发送标记来加快页面的加载速度，同时让搜索引擎可以抓取你的页面来达到优化SEO的目的。
 
-If you call [`ReactDOM.render()`](/react/docs/react-dom.html#render) on a node that already has this server-rendered markup, React will preserve it and only attach event handlers, allowing you to have a very performant first-load experience.
+如果在一个已经有了服务端渲染标记的节点上调用 [`ReactDOM.render()`](/react/docs/react-dom.html#render) ，React将保留该节点，仅作绑定事件处理，这会让你有一个非常高效的初次加载体验。
 
 * * *
 
@@ -37,4 +37,4 @@ If you call [`ReactDOM.render()`](/react/docs/react-dom.html#render) on a node t
 ReactDOMServer.renderToStaticMarkup(element)
 ```
 
-Similar to [`renderToString`](#rendertostring), except this doesn't create extra DOM attributes such as `data-reactid`, that React uses internally. This is useful if you want to use React as a simple static page generator, as stripping away the extra attributes can save lots of bytes.
+类似 [`renderToString`](#rendertostring)，但是不会创建额外的DOM属性，例如 `data-reactid` 这些仅在React内部使用的属性。如果你希望把React当作一个简单的静态页面生成器来使用，这很有用，因为去掉额外的属性可以节省很多字节。
