@@ -5,14 +5,12 @@ permalink: docs/events.html
 layout: docs
 category: Reference
 ---
+此参考指南记录了构成React一部分事件系统的`SyntheticEvent`封装器。请参阅[事件处理](/react/docs/handling-events.html)指南了解更多。
 
-This reference guide documents the `SyntheticEvent` wrapper that forms part of React's Event System. See the [Handling Events](/react/docs/handling-events.html) guide to learn more.
+## 概述
+您的事件处理函数将会接收`SyntheticEvent`的实例，一个基于浏览器原生事件的跨浏览器实现。它拥有和浏览器原生事件一样的接口，包括`stopPropagation()`和`preventDefault()`，除了那些所有浏览器功能一样的事件。
 
-## Overview
-
-Your event handlers will be passed instances of `SyntheticEvent`, a cross-browser wrapper around the browser's native event. It has the same interface as the browser's native event, including `stopPropagation()` and `preventDefault()`, except the events work identically across all browsers.
-
-If you find that you need the underlying browser event for some reason, simply use the `nativeEvent` attribute to get it. Every `SyntheticEvent` object has the following attributes:
+出于某些原因，你得使用一些底层的浏览器事件，只需用`nativeEnvent`的属性就能找到。每个`SyntheicEvent`对象都有如下属性：
 
 ```javascript
 boolean bubbles
@@ -31,15 +29,13 @@ number timeStamp
 string type
 ```
 
-> Note:
->
-> As of v0.14, returning `false` from an event handler will no longer stop event propagation. Instead, `e.stopPropagation()` or `e.preventDefault()` should be triggered manually, as appropriate.
+> 敲黑板：
+> 由于在v0.14版本中，事件处理函数返回`false`不会再阻止事件传播, 所以必须得手动触发`e.stopPropagation()`和`e.preventDefault()` 方法。
 
-### Event Pooling
+### 事件池
 
-The `SyntheticEvent` is pooled. This means that the `SyntheticEvent` object will be reused and all properties will be nullified after the event callback has been invoked.
-This is for performance reasons.
-As such, you cannot access the event in an asynchronous way.
+`SyntheticEvent`是共享的。那就意味着在调用事件回调之后，`SyntheticEvent`对象将会被重用，并且所有属性会被置空。这是出于性能因素考虑的。
+因此，您无法以异步方式访问事件。
 
 ```javascript
 function onClick(event) {
@@ -60,15 +56,15 @@ function onClick(event) {
 }
 ```
 
-> Note:
->
-> If you want to access the event properties in an asynchronous way, you should call `event.persist()` on the event, which will remove the synthetic event from the pool and allow references to the event to be retained by user code.
+> 敲黑板：
+> 
+> 如果您想以异步的方式访问事件的属性值，你必须在事件回调中调用`event.persist()`方法，这样会在池中删除合成事件，并且在用户代码中保留对事件的引用。
 
-## Supported Events
+## 支持的事件
 
-React normalizes events so that they have consistent properties across different browsers.
+React标准化了事件，使其在不同的浏览器中拥有一致的属性。
 
-The event handlers below are triggered by an event in the bubbling phase. To register an event handler for the capture phase, append `Capture` to the event name; for example, instead of using `onClick`, you would use `onClickCapture` to handle the click event in the capture phase.
+下面的事件处理函数由冒泡阶段的事件触发。在事件名后面加`Capture`就能在事件捕获阶段注册事件处理函数。举个例子，你可以使用`onClickCapture`代替`onClick`在事件捕获阶段来处理点击事件。
 
 - [Clipboard Events](#clipboard-events)
 - [Composition Events](#composition-events)
@@ -85,19 +81,18 @@ The event handlers below are triggered by an event in the bubbling phase. To reg
 - [Animation Events](#animation-events)
 - [Transition Events](#transition-events)
 
-* * *
-
-## Reference
+***
+## 参考
 
 ### Clipboard Events
 
-Event names:
+事件名:
 
 ```
 onCopy onCut onPaste
 ```
 
-Properties:
+属性:
 
 ```javascript
 DOMDataTransfer clipboardData
@@ -107,13 +102,13 @@ DOMDataTransfer clipboardData
 
 ### Composition Events
 
-Event names:
+事件名:
 
 ```
 onCompositionEnd onCompositionStart onCompositionUpdate
 ```
 
-Properties:
+属性:
 
 ```javascript
 string data
@@ -124,13 +119,13 @@ string data
 
 ### Keyboard Events
 
-Event names:
+事件名:
 
 ```
 onKeyDown onKeyPress onKeyUp
 ```
 
-Properties:
+属性:
 
 ```javascript
 boolean altKey
@@ -151,15 +146,15 @@ number which
 
 ### Focus Events
 
-Event names:
+事件名:
 
 ```
 onFocus onBlur
 ```
 
-These focus events work on all elements in the React DOM, not just form elements.
+这些焦点事件适用于React DOM中的所有元素，而不仅仅是表单元素。
 
-Properties:
+属性:
 
 ```javascript
 DOMEventTarget relatedTarget
@@ -169,19 +164,19 @@ DOMEventTarget relatedTarget
 
 ### Form Events
 
-Event names:
+事件名:
 
 ```
 onChange onInput onSubmit
 ```
 
-For more information about the onChange event, see [Forms](/react/docs/forms.html).
+查阅[表单](/react/docs/forms.html)了解关于onChange事件的更多细节.
 
 * * *
 
 ### Mouse Events
 
-Event names:
+事件名:
 
 ```
 onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit
@@ -189,9 +184,9 @@ onDragLeave onDragOver onDragStart onDrop onMouseDown onMouseEnter onMouseLeave
 onMouseMove onMouseOut onMouseOver onMouseUp
 ```
 
-The `onMouseEnter` and `onMouseLeave` events propagate from the element being left to the one being entered instead of ordinary bubbling and do not have a capture phase.
+ `onMouseEnter` 和 `onMouseLeave` 事件由失去焦点的元素到正在输入的元素传播，并不是普通的冒泡，也没有捕获阶段。
 
-Properties:
+属性:
 
 ```javascript
 boolean altKey
@@ -214,7 +209,7 @@ boolean shiftKey
 
 ### Selection Events
 
-Event names:
+事件名:
 
 ```
 onSelect
@@ -224,13 +219,13 @@ onSelect
 
 ### Touch Events
 
-Event names:
+事件名:
 
 ```
 onTouchCancel onTouchEnd onTouchMove onTouchStart
 ```
 
-Properties:
+属性:
 
 ```javascript
 boolean altKey
@@ -247,13 +242,13 @@ DOMTouchList touches
 
 ### UI Events
 
-Event names:
+事件名:
 
 ```
 onScroll
 ```
 
-Properties:
+属性:
 
 ```javascript
 number detail
@@ -264,13 +259,13 @@ DOMAbstractView view
 
 ### Wheel Events
 
-Event names:
+事件名:
 
 ```
 onWheel
 ```
 
-Properties:
+属性:
 
 ```javascript
 number deltaMode
@@ -283,7 +278,7 @@ number deltaZ
 
 ### Media Events
 
-Event names:
+事件名:
 
 ```
 onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted 
@@ -296,7 +291,7 @@ onTimeUpdate onVolumeChange onWaiting
 
 ### Image Events
 
-Event names:
+事件名:
 
 ```
 onLoad onError
@@ -306,13 +301,13 @@ onLoad onError
 
 ### Animation Events
 
-Event names:
+事件名:
 
 ```
 onAnimationStart onAnimationEnd onAnimationIteration
 ```
 
-Properties:
+属性:
 
 ```javascript
 string animationName
@@ -324,13 +319,13 @@ float elapsedTime
 
 ### Transition Events
 
-Event names:
+事件名:
 
 ```
 onTransitionEnd
 ```
 
-Properties:
+属性:
 
 ```javascript
 string propertyName
