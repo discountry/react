@@ -1111,5 +1111,7 @@ class Game extends React.Component {
 4. 添加一个切换按钮来升序或降序显示棋步记录列表。
 5. 当一方获胜时，高亮显示连成一线的3颗棋子。
 
+> 译者注：如果你在实现上述功能时遇到了问题，也可以参考[React井字棋游戏完整功能示例](https://codepen.io/discountry/pen/ENrZzV)。
+
 通过这一篇教程，我们大概了解了 React 当中包含 元素、组件、props、state 在内的一些概念。想要更深入地了解每一个关键概念，你可以继续阅读 [文档](/react/docs/hello-world.html)。想要更详细地了解 React 组件，可以查阅 [`React.Component` API 参考](/react/docs/react-component.html)。
 
