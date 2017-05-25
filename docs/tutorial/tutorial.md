@@ -506,9 +506,9 @@ var newPlayer = Object.assign({}, player, {score: 2});
 
 ### 函数定义组件
 
-We've removed the constructor, and in fact, React supports a simpler syntax called **functional components** for component types like Square that only consist of a `render` method. Rather than define a class extending `React.Component`, simply write a function that takes props and returns what should be rendered.
+我们刚才已经去掉了 Square 的构造函数，事实上，更进一步的，React 专门为像 Square 组件这种只有 `render` 方法的组件提供了一种更简便的定义组件的方法： **函数定义组件** 。只需要简单写一个以 `props` 为参数的 `function` 返回 JSX 元素就搞定了。
 
-Replace the whole Square class with this function:
+下面我们以函数定义的方式重写 Square 组件：
 
 ```javascript
 function Square(props) {
@@ -520,17 +520,17 @@ function Square(props) {
 }
 ```
 
-You'll need to change `this.props` to `props` both times it appears. Many components in your apps will be able to be written as functional components: these components tend to be easier to write and React will optimize them more in the future.
+记得把所有的 `this.props` 替换成参数 `props`. 我们应用中的大部分简单组件都可以通过函数定义的方式来编写，并且 React 在将来还会对函数定义组件做出更多优化。
 
-While we're cleaning up the code, we also changed `onClick={() => props.onClick()}` to just `onClick={props.onClick}`, as passing the function down is enough for our example. Note that `onClick={props.onClick()}` would not work because it would call `props.onClick` immediately instead of passing it down.
+另外一部分简化的内容则是事件处理函数的写法，这里我们把 `onClick={() => props.onClick()}` 直接修改为 `onClick={props.onClick}` , 注意不能写成 `onClick={props.onClick()}` 否则 `props.onClick` 方法会被直接触发而不是传递到 Square 组件中。
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/QvvJOv?editors=0010)
 
-### Taking Turns
+### 轮流落子
 
-An obvious defect in our game is that only X can play. Let's fix that.
+很明显现在我们点击棋盘只后落子的只有 X . 下面我们要开发出 X 和 O 轮流落子的功能。
 
-Let's default the first move to be by 'X'. Modify our starting state in our Board constructor.
+我们将 X 默认设置为先手棋：
 
 ```javascript{6}
 class Board extends React.Component {
@@ -542,8 +542,7 @@ class Board extends React.Component {
     };
   }
 ```
-
-Each time we move we shall toggle `xIsNext` by flipping the boolean value and saving the state. Now update Board's `handleClick` function to flip the value of `xIsNext`.
+接下来，我们每走一步棋，都需要切换 `xIsNext` 的值以此来实现轮流落子的功能，接下来在 `handleClick` 方法中添加修改 `xIsNext` 的语句。
 
 ```javascript{3,6}
   handleClick(i) {
@@ -556,7 +555,7 @@ Each time we move we shall toggle `xIsNext` by flipping the boolean value and sa
   }
 ```
 
-Now X and O take turns. Next, change the "status" text in Board's `render` so that it also displays who is next.
+到这里我们就实现了 X 和 O 轮流落子的效果了。我们再到 `render` 方法里添加一点内容来显示当前执子的一方：
 
 ```javascript{2}
   render() {
@@ -566,7 +565,7 @@ Now X and O take turns. Next, change the "status" text in Board's `render` so th
       // the rest has not changed
 ```
 
-After these changes you should have this Board component:
+现在你整个的 Board 组件的代码应该是下面这样的：
 
 ```javascript{6,11-16,29}
 class Board extends React.Component {
@@ -625,9 +624,9 @@ class Board extends React.Component {
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/KmmrBy?editors=0010)
 
-### Declaring a Winner
+### 判断赢家
 
-Let's show when a game is won. Add this helper function to the end of the file:
+接下来我们来编写判断游戏获胜方的代码，首先在你的代码里添加下面这个判断获胜方的算法函数：
 
 ```javascript
 function calculateWinner(squares) {
@@ -651,9 +650,9 @@ function calculateWinner(squares) {
 }
 ```
 
-You can call it in Board's `render` function to check if anyone has won the game and make the status text show "Winner: [X/O]" when someone wins.
+然后你就可以在 Board 组件的 `render` 方法里调用它，来检查是否有人获胜并根据判断显示出  "Winner: [X/O]" 来表示获胜方。
 
-Replace the `status` declaration in Board's `render` with this code:
+将 `render` 中的 `status` 替换为如下内容：
 
 ```javascript{2-8}
   render() {
@@ -669,7 +668,7 @@ Replace the `status` declaration in Board's `render` with this code:
       // the rest has not changed
 ```
 
-You can now change `handleClick` in Board to return early and ignore the click if someone has already won the game or if a square is already filled:
+继续完善游戏规则，我们在 `handleClick` 里添加当前方格内已经落子/有一方获胜就就无法继续落子的判断逻辑：
 
 ```javascript{3-5}
   handleClick(i) {
@@ -685,15 +684,15 @@ You can now change `handleClick` in Board to return early and ignore the click i
   }
 ```
 
-Congratulations! You now have a working tic-tac-toe game. And now you know the basics of React. So *you're* probably the real winner here.
+可喜可贺！现在你已经编写好了一个游戏规则逻辑完整的井字棋游戏了。并且你也已经掌握了一些基本的 React 知识。所以坚持到这一步的你才是真正的赢家呀！
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/LyyXgK?editors=0010)
 
-## Storing a History
+## 保存历史纪录
 
-Let's make it possible to revisit old states of the board so we can see what it looked like after any of the previous moves. We're already creating a new `squares` array each time a move is made, which means we can easily store the past board states simultaneously.
+接下来我们一起来实现保存棋局每一步的历史记录的功能。在现有的代码逻辑中，我们已经是在每走一步棋之后就返回一个新的 `squares` 数组了，所以想要保存历史纪录也非常简单。
 
-Let's plan to store an object like this in state:
+我们计划通过一个数组对象来保存每一步的状态数据：
 
 ```javascript
 history = [
@@ -715,9 +714,9 @@ history = [
 ]
 ```
 
-We'll want the top-level Game component to be responsible for displaying the list of moves. So just as we pulled the state up before from Square into Board, let's now pull it up again from Board into Game – so that we have all the information we need at the top level.
+我们期望在顶层的 Game 组件中展示一个链接每一步历史纪录的列表。所以就像我们之前将 state 从 Square 组件提升到 Board 中一样，现在我们把 Board 中的状态数据再提升到 Game 组件中来。
 
-First, set up the initial state for Game by adding a constructor to it:
+首先在 Game 组件的构造函数中初始化我们需要的状态数据：
 
 ```javascript{2-10}
 class Game extends React.Component {
@@ -747,13 +746,13 @@ class Game extends React.Component {
 }
 ```
 
-Then change Board so that it takes `squares` via props and has its own `onClick` prop specified by Game, like the transformation we made for Square earlier. You can pass the location of each square into the click handler so that we still know which square was clicked. Here is a list of steps you need to do:
+接下来，就好像我们之前对 Square 组件的操作一样。我们将 Board 中的状态数据全都移动到 Game 组件当中。Board 现在通过 `props` 获取从 Game 传递下来的数据和事件处理函数。
 
-* Delete the `constructor` in Board.
-* Replace `this.state.squares[i]` with `this.props.squares[i]` in Board's `renderSquare`.
-* Replace `this.handleClick(i)` with `this.props.onClick(i)` in Board's `renderSquare`.
+* 删除 Board 的构造方法 `constructor` .
+* 把 Board 的 `renderSquare` 方法中的 `this.state.squares[i]` 替换为 `this.props.squares[i]` .
+* 把 Board 的 `renderSquare` 方法中的 `this.handleClick(i)` 替换为 `this.props.onClick(i)` .
 
-Now the whole Board component looks like this:
+现在我们的 Board 组件变成了下面这样：
 
 ```javascript{17,18}
 class Board extends React.Component {
@@ -811,7 +810,7 @@ class Board extends React.Component {
 }
 ```
 
-Game's `render` should look at the most recent history entry and can take over calculating the game status:
+Game 组件的 `render` 方法现在则要负责获取最近一步的历史纪录（当前棋局状态），以及计算出游戏进行的状态（是否有人获胜）。
 
 ```javascript{2-11,16-19,22}
   render() {
@@ -843,7 +842,7 @@ Game's `render` should look at the most recent history entry and can take over c
   }
 ```
 
-Since Game is now rendering the status, we can delete `<div className="status">{status}</div>` and the code calculating the status from the Board's `render` function:
+既然现在由 Game 组件负责渲染游戏状态，我们可以直接把 Board 组件的 `render` 方法里的 `<div className="status">{status}</div>` 删掉：
 
 ```js{1-4}
   render() {
@@ -869,9 +868,9 @@ Since Game is now rendering the status, we can delete `<div className="status">{
   }
 ```
 
-Next, we need to move the `handleClick` method implementation from Board to Game. You can cut it from the Board class, and paste it into the Game class.
+之后，我们需要将 Board 组件里的 `handleClick` 移动到 Game 组件当中。你可以直接把它剪切粘贴过来。
 
-We also need to change it a little, since Game state is structured differently. Game's `handleClick` can push a new entry onto the stack by concatenating the new history entry to make a new history array.
+不过为了实现我们新的历史纪录的功能，还需要稍微修改一下我们的代码，让 `handleClick` 在每次触发时，添加当前的棋局状态数据到 `histroy` 当中。
 
 ```javascript{2-4,10-12}
   handleClick(i) {
@@ -891,13 +890,13 @@ We also need to change it a little, since Game state is structured differently. 
   }
 ```
 
-At this point, Board only needs `renderSquare` and `render`; the state initialization and click handler should both live in Game.
+代码编写到这一步，Board 组件当中现在应该只有 `renderSquare` 和 `render` 两个方法；应用状态 state 以及事件处理函数现在都定义在 Game 组件当中。
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/EmmOqJ?editors=0010)
 
-### Showing the Moves
+### 展示每步历史纪录链接
 
-Let's show the previous moves made in the game so far. We learned earlier that React elements are first-class JS objects and we can store them or pass them around. To render multiple items in React, we pass an array of React elements. The most common way to build that array is to map over your array of data. Let's do that in the `render` method of Game:
+现在我们来试着展示每一步棋的历史纪录链接。在教程的开始我们提到过，React 元素事实上都是 JS 当中的对象，我们可以把元素当作参数或定义到变量中使用。在 React 当中渲染多个重复的项目时，我们一般都以数组的方式传递 React 元素。最基本的方法是使用数组的 map 方法，我们试着来修改 Game 组件的 `render` 方法吧：
 
 ```javascript{6-15,34}
   render() {
@@ -942,27 +941,27 @@ Let's show the previous moves made in the game so far. We learned earlier that R
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/EmmGEa?editors=0010)
 
-For each step in the history, we create a list item `<li>` with a link `<a>` inside it that goes nowhere (`href="#"`) but has a click handler which we'll implement shortly. With this code, you should see a list of the moves that have been made in the game, along with a warning that says:
+对于每一步的历史纪录，我们都创建了一个带 `<a>` 链接的 `<li>` 列表项。目前链接还没指向任何地方，别着急我们后面会继续实现切换至对应棋步的功能。有了我们现有的代码，已经能渲染出一个列表了，不过你留心的话，就会在控制台看到警告：
 
 >  Warning:
 >  Each child in an array or iterator should have a unique "key" prop. Check the render method of "Game".
 
-Let's talk about what that warning means.
+我们先来了解一下这条警告是什么情况。
 
 ### Keys
 
-When you render a list of items, React always stores some info about each item in the list. If you render a component that has state, that state needs to be stored – and regardless of how you implement your components, React stores a reference to the backing native views.
+当你在 React 当中渲染列表项时，React 都会试着存储对应每个单独项的相关信息。如果你的组件包含 state 状态数据，那么这些状态数据必须被排序，不管你组件是怎么编写实现的。
 
-When you update that list, React needs to determine what has changed. You could've added, removed, rearranged, or updated items in the list.
+当你想要更新这些列表项时，React 必须能够知道是那一项改变了。这样你才能够在列表中增删改查项目。
 
-Imagine transitioning from
+比方说下面这个例子，从前一个表单
 
 ```html
 <li>Alexa: 7 tasks left</li>
 <li>Ben: 5 tasks left</li>
 ```
 
-to
+变成下面这个表单
 
 ```html
 <li>Ben: 9 tasks left</li>
@@ -970,26 +969,25 @@ to
 <li>Alexa: 5 tasks left</li>
 ```
 
-To a human eye, it looks likely that Alexa and Ben swapped places and Claudia was added – but React is just a computer program and doesn't know what you intended it to do. As a result, React asks you to specify a *key* property on each element in a list, a string to differentiate each component from its siblings. In this case, `alexa`, `ben`, `claudia` might be sensible keys; if the items correspond to objects in a database, the database ID is usually a good choice:
+你用肉眼可以很轻易地分辨，Alexa 被移到了最后，多出来一个 Claudia。可是 React 只是电脑里运行地程序，它无从知晓这些改变。所以我们必须为列表中的每一项添加一个 *key* 作为唯一的标识符。标识符必须是唯一的，比方说刚才这个例子中的 `alexa`, `ben`, `claudia` 就可以用来做标识符。更普遍的一种情况，假如我们的数据是从数据库获取的电话，表单每一项的 ID 就很适合当作它的 *key* ：
 
 ```html
 <li key={user.id}>{user.name}: {user.taskCount} tasks left</li>
 ```
 
-`key` is a special property that's reserved by React (along with `ref`, a more advanced feature). When an element is created, React pulls off the `key` property and stores the key directly on the returned element. Even though it may look like it is part of props, it cannot be referenced with `this.props.key`. React uses the key automatically while deciding which children to update; there is no way for a component to inquire about its own key.
+ `key` 是 React 当中使用的一种特殊的属性（除此之外还有 `ref` 属性）。当元素被创建时，React 会将元素的 `key` 值和对应元素绑定存储起来。尽管 `key` 看起来像是 props 的一部分，可是事实上我们无法通过 `this.props.key` 获取到 `key` 的值。React 会自动的在判断元素更新时使用 `key` ，而组件自己是无法获取到 `key` 的。 
 
-When a list is rerendered, React takes each element in the new version and looks for one with a matching key in the previous list. When a key is added to the set, a component is created; when a key is removed, a component is destroyed. Keys tell React about the identity of each component, so that it can maintain the state across rerenders. If you change the key of a component, it will be completely destroyed and recreated with a new state.
+当一个列表背重新渲染时，React 会根据较新的元素内容依据相应的 key 值来匹配之前的元素内容。当一个新的 key 值添加到列表当中时，表示有一个组件被创建；被删除时表示有一个组件被销毁。Key 值可以让 React 明确标识每个组件，这样它才能在每次重新渲染时保有对应的状态数据。假如你去改变某个组件的 key 值的话，它会在下次渲染时被销毁并当作新的组件重新渲染进来。
 
-**It's strongly recommended that you assign proper keys whenever you build dynamic lists.** If you don't have an appropriate key handy, you may want to consider restructuring your data so that you do.
+**强烈建议你在渲染列表项时添加 keys 值。** 假如你没有现成可以作为唯一 key 值的数据使用的话，你可能需要考虑重新组织设计你的数据了。
 
-If you don't specify any key, React will warn you and fall back to using the array index as a key – which is not the correct choice if you ever reorder elements in the list or add/remove items anywhere but the bottom of the list. Explicitly passing `key={i}` silences the warning but has the same problem so isn't recommended in most cases.
+假如你不提供任何 key 值，React 会提示警告，并且默认使用数组的索引作为默认的 key ，但这样你想在列表的中间添加或删除项目，对应的键值都会改变（也就会出现我们上面提到的组件key值被改变就会被当作新创建的组件处理那种情况）。手动添加列表索引值 `key={i}` 可以消除警告，但也会存在相同的问题。
 
-Component keys don't need to be globally unique, only unique relative to the immediate siblings.
+组件的 keys 值并不需要在全局都保证唯一，只需要在当前的节点里保证唯一即可。
 
+### 实现时间旅行
 
-### Implementing Time Travel
-
-For our move list, we already have a unique ID for each step: the number of the move when it happened. In the Game's `render` method, add the key as `<li key={move}>` and the key warning should disappear:
+在我们的棋步的列表中，已经有了现成的唯一 key 值，也就是每一次 move 的记录值。我们通过  `<li key={move}>` 来添加一下。
 
 ```js{6}
     const moves = history.map((step, move) => {
@@ -1006,9 +1004,9 @@ For our move list, we already have a unique ID for each step: the number of the 
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/PmmXRE?editors=0010)
 
-Clicking any of the move links throws an error because `jumpTo` is undefined. Let's add a new key to Game's state to indicate which step we're currently viewing.
+在上面的代码中，我们同样为每一个 `<a>` 添加了一个 `jumpTo` 方法，用来将棋盘的状态切换至对应的棋步时的状态。接下来我们来着手实现这个方法： 
 
-First, add `stepNumber: 0` to the initial state in Game's `constructor`:
+首先在 Game 组件的初始状态中多设置一项 `stepNumber: 0` ：
 
 ```js{8}
 class Game extends React.Component {
@@ -1024,9 +1022,9 @@ class Game extends React.Component {
   }
 ```
 
-Next, we'll define the `jumpTo` method in Game to update that state. We also want to update `xIsNext`. We set `xIsNext` to true if the index of the move number is an even number.
+接下来，我们正是编写 `jumpTo` 来切换 `stepNumber` 的值。根据游戏的逻辑，与此同时我们还需要修改 `xIsNext` 来保证对应棋步时，执子的一方是能对应上的。我们可以根据棋步计算出是谁在执子。
 
-Add a method called `jumpTo` to the Game class:
+我们把 `jumpTo` 编写在 Game 组件中： 
 
 ```javascript{5-10}
   handleClick(i) {
@@ -1045,7 +1043,7 @@ Add a method called `jumpTo` to the Game class:
   }
 ```
 
-Then update `stepNumber` when a new move is made by adding `stepNumber: history.length` to the state update in Game's `handleClick`:
+接下来，我们在 `handleClick` 方法中对 `stepNumber` 进行更新，添加 `stepNumber: history.length` 保证每走一步 `stepNumber` 会跟着改变：
 
 ```javascript{2,13}
   handleClick(i) {
@@ -1066,7 +1064,7 @@ Then update `stepNumber` when a new move is made by adding `stepNumber: history.
   }
 ```
 
-Now you can modify Game's `render` to read from that step in the history:
+现在你可以直接在 Game 组件的 `render` 方法里根据当前的棋步获取对应的棋局状态了：
 
 ```javascript{3}
   render() {
@@ -1079,30 +1077,39 @@ Now you can modify Game's `render` to read from that step in the history:
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/gWWZgR?editors=0010)
 
-If you click any move link now, the board should immediately update to show what the game looked like at that time.
+现在你试着点击每一步棋记录的列表中的一项，棋盘会自动更新到对应项时的棋局状态。
 
-You may also want to update `handleClick` to be aware of `stepNumber` when reading the current board state so that you can go back in time then click in the board to create a new entry. (Hint: It's easiest to `.slice()` off the extra elements from `history` at the very top of `handleClick`.)
+为了实现“悔棋”的功能，也就是说在切换至某一步之后我们能够继续下，我们需要在 `handleClick` 事件触发时去除掉切回棋步后面的所有记录，最简单的办法就是在 `handleClick` 事件的开头使用 `.slice()` 方法去除。
 
-### Wrapping Up
+```javascript{2}
+  render() {
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const current = history[this.state.stepNumber];
+    const winner = calculateWinner(current.squares);
 
-Now, you've made a tic-tac-toe game that:
+    // the rest has not changed
+```
 
-* lets you play tic-tac-toe,
-* indicates when one player has won the game,
-* stores the history of moves during the game,
-* allows players to jump back in time to see older versions of the game board.
+### 总结
 
-Nice work! We hope you now feel like you have a decent grasp on how React works.
+现在你已经有了一个功能相当丰富的井字棋游戏：
 
-Check out the final result here: [Final Result](https://codepen.io/gaearon/pen/gWWZgR?editors=0010).
+* 实现了井字棋游戏的基本规则并可以进行游戏，
+* 能够判断一方获胜，
+* 能够存储每一步时的棋局状态，
+* 允许玩家切换至之前的某一步“悔棋”。
 
-If you have extra time or want to practice your new skills, here are some ideas for improvements you could make, listed in order of increasing difficulty:
+干得不错！我们希望你至此已经基本掌握了 React 的使用。
 
-1. Display the move locations in the format "(1, 3)" instead of "6".
-2. Bold the currently-selected item in the move list.
-3. Rewrite Board to use two loops to make the squares instead of hardcoding them.
-4. Add a toggle button that lets you sort the moves in either ascending or descending order.
-5. When someone wins, highlight the three squares that caused the win.
+在这里你可以查看游戏代码 [最终的成果](https://codepen.io/gaearon/pen/gWWZgR?editors=0010)。
 
-Throughout this tutorial, we have touched on a number of React concepts including elements, components, props, and state. For a more in-depth explanation for each of these topics, check out [the rest of the documentation](/react/docs/hello-world.html). To learn more about defining components, check out the [`React.Component` API reference](/react/docs/react-component.html).
+如果你之后还会有充裕的时间并且想练习你刚掌握的新技能的话，这里有一些可以完善的游戏功能实现供你参考，列表是由易到难排序的：
+
+1. 以 "(1, 3)" 坐标的方式记录每一步，而不是格子序号 "6"。
+2. 在棋步记录列表里加粗显示当前选中的项目。
+3. 在 Board 组件中用两个循环渲染出 9 个 Square 格子组件。
+4. 添加一个切换按钮来升序或降序显示棋步记录列表。
+5. 当一方获胜时，高亮显示连成一线的3颗棋子。
+
+通过这一篇教程，我们大概了解了 React 当中包含 元素、组件、props、state 在内的一些概念。想要更深入地了解每一个关键概念，你可以继续阅读 [文档](/react/docs/hello-world.html)。想要更详细地了解 React 组件，可以查阅 [`React.Component` API 参考](/react/docs/react-component.html)。
 
