@@ -1,77 +1,77 @@
-- title: Tutorial
+- title: 入门教程
   items:
     - id: tutorial
-      title: Before We Start
+      title: 课前准备
       subitems:
         - id: what-were-building 
-          title: What We're Building
+          title: 教程简介
           href: /react/tutorial/tutorial.html#what-were-building
           forceInternal: true
         - id: prerequisites
-          title: Prerequisites
+          title: 前置知识
           href: /react/tutorial/tutorial.html#prerequisites
           forceInternal: true
         - id: how-to-follow-along
-          title: How to Follow Along
+          title: 如何编写代码
           href: /react/tutorial/tutorial.html#how-to-follow-along
           forceInternal: true
         - id: help-im-stuck
-          title: Help, I'm Stuck!
+          title: 寻求帮助
           href: /react/tutorial/tutorial.html#help-im-stuck
           forceInternal: true
     - id: overview
-      title: Overview
+      title: 总览
       href: /react/tutorial/tutorial.html#overview
       forceInternal: true
       subitems:
         - id: what-is-react
-          title: What is React?
+          title: React 是什么？
           href: /react/tutorial/tutorial.html#what-is-react
           forceInternal: true
         - id: getting-started
-          title: Getting Started
+          title: 开始编码
           href: /react/tutorial/tutorial.html#getting-started
           forceInternal: true
         - id: passing-data-through-props
-          title: Passing Data Through Props
+          title: 通过 Props 传递数据
           href: /react/tutorial/tutorial.html#passing-data-through-props
           forceInternal: true
         - id: an-interactive-component
-          title: An Interactive Component
+          title: 给组件添加交互功能
           href: /react/tutorial/tutorial.html#an-interactive-component
           forceInternal: true
         - id: developer-tools 
-          title: Developer Tools
+          title: 开发工具
           href: /react/tutorial/tutorial.html#developer-tools
           forceInternal: true
     - id: lifting-state-up
-      title: Lifting State Up
+      title: 状态提升
       href: /react/tutorial/tutorial.html#lifting-state-up
       forceInternal: true
       subitems:
         - id: why-immutability-is-important 
-          title: Why Immutability Is Important
+          title: 为什么不可变性在React当中非常重要
           href: /react/tutorial/tutorial.html#why-immutability-is-important
           forceInternal: true
         - id: functional-components 
-          title: Functional Components
+          title: 函数定义组件
           href: /react/tutorial/tutorial.html#functional-components
           forceInternal: true
         - id: taking-turns
-          title: Taking Turns
+          title: 轮流落子
           href: /react/tutorial/tutorial.html#taking-turns
           forceInternal: true
         - id: declaring-a-winner
-          title: Declaring a Winner
+          title: 判断赢家
           href: /react/tutorial/tutorial.html#declaring-a-winner
           forceInternal: true
     - id: storing-a-history
-      title: Storing A History
+      title: 保存历史纪录
       href: /react/tutorial/tutorial.html#storing-a-history
       forceInternal: true
       subitems:
         - id: showing-the-moves
-          title: Showing the Moves
+          title: 展示每步历史纪录链接
           href: /react/tutorial/tutorial.html#showing-the-moves
           forceInternal: true
         - id: keys
@@ -79,10 +79,10 @@
           href: /react/tutorial/tutorial.html#keys
           forceInternal: true
         - id: implementing-time-travel 
-          title: Implementing Time Travel
+          title: 实现时间旅行
           href: /react/tutorial/tutorial.html#implementing-time-travel
           forceInternal: true
         - id: wrapping-up
-          title: Wrapping Up
+          title: 总结
           href: /react/tutorial/tutorial.html#wrapping-up
           forceInternal: true
