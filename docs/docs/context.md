@@ -12,7 +12,7 @@ permalink: docs/context.html
 
 ## 为什么不要使用Context
 
-绝大多数应用程序不需要使用 context
+绝大多数应用程序不需要使用 context.
 
 如果你想让你的应用更稳定，别使用context。因为这是一个实验性的API，在未来的React版本中可能会被更改。
 
@@ -24,7 +24,7 @@ permalink: docs/context.html
 
 ## 如何使用Context
 
-假设你有如下代码：
+假设你有如下代码:
 
 ```javascript
 class Button extends React.Component {
