@@ -26,11 +26,12 @@ permalink: docs/context.html
 
 假设你有如下代码:
 
+
 ```javascript
 class Button extends React.Component {
   render() {
     return (
-      <button style={{background: this.props.color}}>
+      <button style={{'{{'}}background: this.props.color}}>
         {this.props.children}
       </button>
     );
@@ -60,13 +61,14 @@ class MessageList extends React.Component {
 
 在这个例子中，我们手动传递color这个prop，以适当地设置`Button`和`Message`组件的样式。使用context，我们可以自动地在组件树中传递参数。
 
-```javascript
+
+```javascript{6,13-15,21,28-30,40-42}
 const PropTypes = require('prop-types');
 
 class Button extends React.Component {
   render() {
     return (
-      <button style={{background: this.context.color}}>
+      <button style={{'{{'}}background: this.context.color}}>
         {this.props.children}
       </button>
     );
@@ -158,7 +160,7 @@ const BasicExample = () => (
 const PropTypes = require('prop-types');
 
 const Button = ({children}, context) =>
-  <button style={{background: context.color}}>
+  <button style={{'{{'}}background: context.color}}>
     {children}
   </button>;
 
