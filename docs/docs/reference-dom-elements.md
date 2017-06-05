@@ -14,27 +14,27 @@ redirect_from:
   - "tips/dangerously-set-inner-html.html"
 ---
 
-React implements a browser-independent DOM system for performance and cross-browser compatibility. We took the opportunity to clean up a few rough edges in browser DOM implementations.
+React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览器的兼容性。借此机会，我们清理了浏览器DOM实现中一些不一致的问题。
 
-In React, all DOM properties and attributes (including event handlers) should be camelCased. For example, the HTML attribute `tabindex` corresponds to the attribute `tabIndex` in React. The exception is `aria-*` and `data-*` attributes, which should be lowercased.
+在React中，所有的DOM特性和属性（包括事件处理函数）都是小驼峰命名法命名。比如说，与HTML中的`tabindex`属性对应的React实现命名则是`tabIndex`。`aria-*`和`data-*`属性是例外的，一律使用小写字母命名。
 
-## Differences In Attributes
+## React和HTML DOM属性的区别
 
-There are a number of attributes that work differently between React and HTML:
+有许多的属性在React和Html之间行为是不一样的：
 
-### checked
+### checked属性
 
-The `checked` attribute is supported by `<input>` components of type `checkbox` or `radio`. You can use it to set whether the component is checked. This is useful for building controlled components. `defaultChecked` is the uncontrolled equivalent, which sets whether the component is checked when it is first mounted.
+`<input>`标签type属性值为`checkbox`或`radio`时，支持`checked`属性。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次加载时是否选中状态。
 
-### className
+### 类名属性
 
-To specify a CSS class, use the `className` attribute. This applies to all regular DOM and SVG elements like `<div>`, `<a>`, and others.
+在React中，使用`className`属性指定一个CSS类。这个特性适用于所有的常规DOM节点和SVG元素，比如`<div>`，`<a>`和其它的元素。
 
-If you use React with Web Components (which is uncommon), use the `class` attribute instead.
+如果你在React中使用Web组件（这是一种不常见的使用方式），请使用`class`属性。
 
-### dangerouslySetInnerHTML
+### dangerouslySetInnerHTML函数
 
-`dangerouslySetInnerHTML` is React's replacement for using `innerHTML` in the browser DOM. In general, setting HTML from code is risky because it's easy to inadvertently expose your users to a [cross-site scripting (XSS)](https://en.wikipedia.org/wiki/Cross-site_scripting) attack. So, you can set HTML directly from React, but you have to type out `dangerouslySetInnerHTML` and pass an object with a `__html` key, to remind yourself that it's dangerous. For example:
+`dangerouslySetInnerHTML`是React提供的替换浏览器DOM中的`innerHTML`接口的一个函数。一般而言，使用JS代码设置HTML文档的内容是危险的，因为这样很容易把你的用户信息暴露给[跨站脚本](https://en.wikipedia.org/wiki/Cross-site_scripting)攻击.所以，你虽然可以直接在React中设置html的内容，但你要使用 `dangerouslySetInnerHTML` 并向该函数传递一个含有`__html`键的对象，用来提醒你自己这样做很危险。例如：
 
 ```js
 function createMarkup() {
@@ -48,19 +48,19 @@ function MyComponent() {
 
 ### htmlFor
 
-Since `for` is a reserved word in JavaScript, React elements use `htmlFor` instead.
+因为在javascript中`for`是一个保留字，所以React元素使用 `htmlFor`代替。
 
-### onChange
+### onChange函数
 
-The `onChange` event behaves as you would expect it to: whenever a form field is changed, this event is fired. We intentionally do not use the existing browser behavior because `onChange` is a misnomer for its behavior and React relies on this event to handle user input in real time.
+`onChange`事件处理函数的表现正如你所期望的：无论form表单何时发生变化，这个事件都会被触发。我们特意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的表现和这个名字不相称，而且React真实依靠这个事件实现了对用户输入的实时响应处理。
 
 ### selected
 
-The `selected` attribute is supported by `<option>` components. You can use it to set whether the component is selected. This is useful for building controlled components.
+The `selected` attribute is supported by `<option>` components. You can use it to set whether the component is selected. This is useful for building controlled components.`<option>`组件支持`selected`属性。你可以使用该属性设定组件是否选中的状态。这对构建受控组件很有用。
 
-### style
+### style属性
 
-The `style` attribute accepts a JavaScript object with camelCased properties rather than a CSS string. This is consistent with the DOM `style` JavaScript property, is more efficient, and prevents XSS security holes. For example:
+ `style`属性接受一个键为小驼峰命名法命名的javascript对象作为值，而不是像css字符串。这和DOM中style属性接受javascript对象对象key的命名方式保持一致性，更高效而且能够防止跨站脚本（XSS）的安全漏洞。例如：
 
 ```js
 const divStyle = {
@@ -73,7 +73,7 @@ function HelloWorldComponent() {
 }
 ```
 
-Note that styles are not autoprefixed. To support older browsers, you need to supply corresponding style properties:
+要注意，样式属性不会自动补齐前缀的。为了支持旧的浏览器，你需要手动支持相关的样式特性：
 
 ```js
 const divStyle = {
@@ -86,19 +86,19 @@ function ComponentWithTransition() {
 }
 ```
 
-Style keys are camelCased in order to be consistent with accessing the properties on DOM nodes from JS (e.g. `node.style.backgroundImage`). Vendor prefixes [other than `ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/) should begin with a capital letter. This is why `WebkitTransition` has an uppercase "W".
+样式key使用小驼峰命名法是为了和JS访问DOM特性对对象的处理保持一致性（例如 `node.style.backgroundImage`）。浏览器后缀[除了`ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/)以外，都应该以大写字母开头。这就是为什么`WebkitTransition`有一个大写字母`W`。
 
 ### suppressContentEditableWarning
 
-Normally, there is a warning when an element with children is also marked as `contentEditable`, because it won't work. This attribute suppresses that warning. Don't use this unless you are building a library like [Draft.js](https://facebook.github.io/draft-js/) that manages `contentEditable` manually.
+一般来说，当一个拥有子节点的元素被标记为`contentEditable`时，React会发出一个警告信息，因为此时`contentEditable`是无效的。这个属性会触发这样的警告信息。一般不要使用这个属性，除非你要构建一个类似[Draft.js](https://facebook.github.io/draft-js/)这样需要手动处理`contentEditable`属性的库。
 
 ### value
 
-The `value` attribute is supported by `<input>` and `<textarea>` components. You can use it to set the value of the component. This is useful for building controlled components. `defaultValue` is the uncontrolled equivalent, which sets the value of the component when it is first mounted.
+`<input>` 和 `<textarea>` 组件都支持`value`属性。你可以使用该属性设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次加载时的值。
 
-## All Supported HTML Attributes
+## 所有受支持的HTMl属性
 
-React supports all `data-*` and `aria-*` attributes as well as these attributes:
+React支持一下所有的属性，同时也支持所有的`data-*` 和 `aria-*`属性：
 
 ```
 accept acceptCharset accessKey action allowFullScreen allowTransparency alt
@@ -116,13 +116,13 @@ selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step
 style summary tabIndex target title type useMap value width wmode wrap
 ```
 
-These RDFa attributes are supported (several RDFa attributes overlap with standard HTML attributes and thus are excluded from this list):
+React也支持一下这些RDFa属性（有几个RDFa属性和HTML属性重叠，所以不包含在以下列表中）：
 
 ```
 about datatype inlist prefix property resource typeof vocab
 ```
 
-In addition, the following non-standard attributes are supported:
+而且，React也支持下列非标准属性：
 
 - `autoCapitalize autoCorrect` for Mobile Safari.
 - `color` for `<link rel="mask-icon" />` in Safari.
@@ -131,9 +131,9 @@ In addition, the following non-standard attributes are supported:
 - `unselectable` for Internet Explorer.
 - `results autoSave` for WebKit/Blink input fields of type `search`.
 
-## All Supported SVG Attributes
+## 所有受支持的SVG属性
 
-React supports these SVG attributes:
+React支持以下的SVG属性：
 
 ```
 accentHeight accumulate additive alignmentBaseline allowReorder alphabetic

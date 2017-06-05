@@ -1,6 +1,6 @@
 ---
 id: web-components
-title: Web组件（Web Components）
+title: Web Components
 permalink: docs/web-components.html
 redirect_from: "docs/webcomponents.html"
 ---
