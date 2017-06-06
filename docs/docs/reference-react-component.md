@@ -15,13 +15,13 @@ redirect_from:
   - "tips/use-react-with-other-libraries.html"
 ---
 
-[Components](/react/docs/components-and-props.html) let you split the UI into independent, reusable pieces, and think about each piece in isolation. `React.Component` is provided by [`React`](/react/docs/react-api.html).
+[组件](/react/docs/components-and-props.html) 能够让你将UI分割成独立的、可重用的部分，并对每一部分单独考量。[`React`](/react/docs/react-api.html)提供了`React.Component` 。
 
-## Overview
+## 概览
 
-`React.Component` is an abstract base class, so it rarely makes sense to refer to `React.Component` directly. Instead, you will typically subclass it, and define at least a [`render()`](#render) method.
+`React.Component`是一个抽象基础类，因此直接引用`React.Component`基乎没意义。相反，你将会将其子类话，并至少定义一个[`render()`](#render)方法。
 
-Normally you would define a React component as a plain [JavaScript class](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes):
+通常你定义一个React组件相当于一个纯[JavaScript类](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes)：
 
 ```javascript
 class Greeting extends React.Component {
@@ -31,24 +31,24 @@ class Greeting extends React.Component {
 }
 ```
 
-If you don't use ES6 yet, you may use the [`create-react-class`](/react/docs/react-api.html#createclass) module instead. Take a look at [Using React without ES6](/react/docs/react-without-es6.html) to learn more.
+若你仍未使用 ES6，你可以使用 [`create-react-class`](/react/docs/react-api.html#createclass)模块。查看 [Using React without ES6](/react/docs/react-without-es6.html) 了解更多。
 
-### The Component Lifecycle
+### 组件生命周期
 
-Each component has several "lifecycle methods" that you can override to run code at particular times in the process. Methods prefixed with **`will`** are called right before something happens, and methods prefixed with **`did`** are called right after something happens.
+每一个组件都有几个你可以重写以让代码在处理环节的特定时期运行的“生命周期方法”。方法中带有前缀 **`will`** 的在特定环节之前被调用，而带有前缀 **`did`** 的方法则会在特定环节之后被调用。
 
-#### Mounting
+#### 装配
 
-These methods are called when an instance of a component is being created and inserted into the DOM:
+这些方法会在组件实例被创建同时插入DOM中被调用：
 
 - [`constructor()`](#constructor)
 - [`componentWillMount()`](#componentwillmount)
 - [`render()`](#render)
 - [`componentDidMount()`](#componentdidmount)
 
-#### Updating
+#### 更新
 
-An update can be caused by changes to props or state. These methods are called when a component is being re-rendered:
+属性或状态的改变会触发一次更新。当一个组件在被重渲时，这些方法将会被调用：
 
 - [`componentWillReceiveProps()`](#componentwillreceiveprops)
 - [`shouldComponentUpdate()`](#shouldcomponentupdate)
@@ -56,32 +56,32 @@ An update can be caused by changes to props or state. These methods are called w
 - [`render()`](#render)
 - [`componentDidUpdate()`](#componentdidupdate)
 
-#### Unmounting
+#### 卸载
 
-This method is called when a component is being removed from the DOM:
+当一个组件被从DOM中移除时，该方法别调用：
 
 - [`componentWillUnmount()`](#componentwillunmount)
 
-### Other APIs
+### 其他API
 
-Each component also provides some other APIs:
+每一个组件还提供了其他的API：
 
   - [`setState()`](#setstate)
   - [`forceUpdate()`](#forceupdate)
 
-### Class Properties
+### 类属性
 
   - [`defaultProps`](#defaultprops)
   - [`displayName`](#displayname)
 
-### Instance Properties
+### 实例属性
 
   - [`props`](#props)
   - [`state`](#state)
 
 * * *
 
-## Reference
+## 参考
 
 ### `render()`
 
@@ -89,17 +89,17 @@ Each component also provides some other APIs:
 render()
 ```
 
-The `render()` method is required.
+`render()`方法是必须的。
 
-When called, it should examine `this.props` and `this.state` and return a single React element. This element can be either a representation of a native DOM component, such as `<div />`, or another composite component that you've defined yourself.
+当被调用时，其应该检查`this.props` 和 `this.state`并返回一个单独的React元素。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
 
-You can also return `null` or `false` to indicate that you don't want anything rendered. When returning `null` or `false`, `ReactDOM.findDOMNode(this)` will return `null`.
+也也可以返回`null` 或 `false`来声明你并不想渲染任何东西。当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。
 
-The `render()` function should be pure, meaning that it does not modify component state, it returns the same result each time it's invoked, and it does not directly interact with the browser. If you need to interact with the browser, perform your work in `componentDidMount()` or the other lifecycle methods instead. Keeping `render()` pure makes components easier to think about.
+`render()`函数应该纯净，意味着其不应该改变组件的状态，其每次调用都应返回相同的结果，同时不直接和浏览器交互。若需要和浏览器交互，将任务放在`componentDidMount()`阶段或其他的生命周期方法。保持`render()` 方法纯净使得组件更容易思考。
 
-> Note
+> 注意
 >
-> `render()` will not be invoked if [`shouldComponentUpdate()`](#shouldcomponentupdate) returns false.
+> 若 [`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`render()`函数将不会被调用。
 
 * * *
 
@@ -109,11 +109,11 @@ The `render()` function should be pure, meaning that it does not modify componen
 constructor(props)
 ```
 
-The constructor for a React component is called before it is mounted. When implementing the constructor for a `React.Component` subclass, you should call `super(props)` before any other statement. Otherwise, `this.props` will be undefined in the constructor, which can lead to bugs.
+React组件的构造函数将会在装配之前被调用。当为一个`React.Component`子类定义构造函数时，你应该在任何其他的表达式之前调用`super(props)`。否则，`this.props`在构造函数中将是未定义，并可能引发异常。
 
-The constructor is the right place to initialize state. If you don't initialize state and you don't bind methods, you don't need to implement a constructor for your React component.
+构造函数是初始化状态的合适位置。若你不初始化状态且不绑定方法，那你也不需要为你的React组件定义一个构造函数。
 
-It's okay to initialize state based on props. This effectively "forks" the props and sets the state with the initial props. Here's an example of a valid `React.Component` subclass constructor:
+可以基于属性来初始化状态。这样有效地“分离（forks）”属性并根据初始属性设置状态。这有一个有效的`React.Component`子类构造函数的例子：
 
 ```js
 constructor(props) {
@@ -124,9 +124,9 @@ constructor(props) {
 }
 ```
 
-Beware of this pattern, as state won't be up-to-date with any props update. Instead of syncing props to state, you often want to [lift the state up](/react/docs/lifting-state-up.html).
+意识到这模式，任何的属性更新不会使得状态是最新的。保证属性和状态同步，你通常想要[状态提升](/react/docs/lifting-state-up.html)。
 
-If you "fork" props by using them for state, you might also want to implement [`componentWillReceiveProps(nextProps)`](#componentwillreceiveprops) to keep the state up-to-date with them. But lifting state up is often easier and less bug-prone.
+若你通过使用它们为状体“分离”属性，你可能也想要实现[`componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
 
 * * *
 
@@ -136,9 +136,9 @@ If you "fork" props by using them for state, you might also want to implement [`
 componentWillMount()
 ```
 
-`componentWillMount()` is invoked immediately before mounting occurs. It is called before `render()`, therefore setting state synchronously in this method will not trigger a re-rendering. Avoid introducing any side-effects or subscriptions in this method.
+`componentWillMount()`在装配发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重渲。避免在该方法中引入任何的副作用或订阅。
 
-This is the only lifecycle hook called on server rendering. Generally, we recommend using the `constructor()` instead.
+这是唯一的会在服务端渲染调起的生命周期钩子函数。通常地，我们推荐使用`constructor()`来替代。
 
 * * *
 
@@ -148,7 +148,7 @@ This is the only lifecycle hook called on server rendering. Generally, we recomm
 componentDidMount()
 ```
 
-`componentDidMount()` is invoked immediately after a component is mounted. Initialization that requires DOM nodes should go here. If you need to load data from a remote endpoint, this is a good place to instantiate the network request. Setting state in this method will trigger a re-rendering.
+`componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
 
 * * *
 
@@ -158,11 +158,11 @@ componentDidMount()
 componentWillReceiveProps(nextProps)
 ```
 
-`componentWillReceiveProps()` is invoked before a mounted component receives new props. If you need to update the state in response to prop changes (for example, to reset it), you may compare `this.props` and `nextProps` and perform state transitions using `this.setState()` in this method.
+`componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
 
-Note that React may call this method even if the props have not changed, so make sure to compare the current and next values if you only want to handle changes. This may occur when the parent component causes your component to re-render.
+注意即使属性未有任何改变，React可能也会调用该方法，因此若你想要处理改变，请确保比较当前和之后的值。这可能会发生在当父组件引起你的组件重渲。
 
-React doesn't call `componentWillReceiveProps` with initial props during [mounting](#mounting). It only calls this method if some of component's props may update. Calling `this.setState` generally doesn't trigger `componentWillReceiveProps`.
+在 [装配](#mounting)期间，React并不会调用带有初始属性的`componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`componentWillReceiveProps`。
 
 * * *
 
@@ -172,15 +172,15 @@ React doesn't call `componentWillReceiveProps` with initial props during [mounti
 shouldComponentUpdate(nextProps, nextState)
 ```
 
-Use `shouldComponentUpdate()` to let React know if a component's output is not affected by the current change in state or props. The default behavior is to re-render on every state change, and in the vast majority of cases you should rely on the default behavior.
+使用`shouldComponentUpdate()`以让React知道当前状态或属性的改变是否不影响组件的输出。默认行为是在每一次状态的改变重渲，在大部分情况下你应该依赖于默认行为。
 
-`shouldComponentUpdate()` is invoked before rendering when new props or state are being received. Defaults to `true`. This method is not called for the initial render or when `forceUpdate()` is used.
+当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法并不会在初始化渲染或当使用`forceUpdate()`时被调用。
 
-Returning `false` does not prevent child components from re-rendering when *their* state changes.
+当他们状态改变时，返回`false` 并不能阻止子组件重渲。
 
-Currently, if `shouldComponentUpdate()` returns `false`, then [`componentWillUpdate()`](#componentwillupdate), [`render()`](#render), and [`componentDidUpdate()`](#componentdidupdate) will not be invoked. Note that in the future React may treat `shouldComponentUpdate()` as a hint rather than a strict directive, and returning `false` may still result in a re-rendering of the component.
+当前，若`shouldComponentUpdate()`返回`false`，而后[`componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
 
-If you determine a specific component is slow after profiling, you may change it to inherit from [`React.PureComponent`](/react/docs/react-api.html#react.purecomponent) which implements `shouldComponentUpdate()` with a shallow prop and state comparison. If you are confident you want to write it by hand, you may compare `this.props` with `nextProps` and `this.state` with `nextState` and return `false` to tell React the update can be skipped.
+在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/react/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
 
 * * *
 
@@ -190,13 +190,13 @@ If you determine a specific component is slow after profiling, you may change it
 componentWillUpdate(nextProps, nextState)
 ```
 
-`componentWillUpdate()` is invoked immediately before rendering when new props or state are being received. Use this as an opportunity to perform preparation before an update occurs. This method is not called for the initial render.
+当接收到新属性或状态时，`componentWillUpdate()`为在渲染前被立即调用。在更新发生前，使用该方法是一次准备机会。该方法不会在初始化渲染时调用。
 
-Note that you cannot call `this.setState()` here. If you need to update state in response to a prop change, use `componentWillReceiveProps()` instead.
+注意你不能在这调用`this.setState()`，若你需要更新状态响应属性的调整，使用`componentWillReceiveProps()`代替。
 
-> Note
+> 注意
 >
-> `componentWillUpdate()` will not be invoked if [`shouldComponentUpdate()`](#shouldcomponentupdate) returns false.
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentWillUpdate()`将不会被调用。
 
 * * *
 
@@ -206,13 +206,13 @@ Note that you cannot call `this.setState()` here. If you need to update state in
 componentDidUpdate(prevProps, prevState)
 ```
 
-`componentDidUpdate()` is invoked immediately after updating occurs. This method is not called for the initial render.
+`componentDidUpdate()`会在更新发生后立即被调用。该方法并不会在初始化渲染时调用。
 
-Use this as an opportunity to operate on the DOM when the component has been updated. This is also a good place to do network requests as long as you compare the current props to previous props (e.g. a network request may not be necessary if the props have not changed).
+当组件被更新时，使用该方法是操作DOM的一次机会。这也是一个适合发送请求的地方，要是你对比了当前属性和之前属性（例如，如果属性没有改变那么请求也就没必要了）。
 
-> Note
+> 注意
 >
-> `componentDidUpdate()` will not be invoked if [`shouldComponentUpdate()`](#shouldcomponentupdate) returns false.
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentDidUpdate()`将不会被调用。
 
 * * *
 
@@ -222,7 +222,7 @@ Use this as an opportunity to operate on the DOM when the component has been upd
 componentWillUnmount()
 ```
 
-`componentWillUnmount()` is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up any DOM elements that were created in `componentDidMount`
+`componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
 
 * * *
 
@@ -232,21 +232,21 @@ componentWillUnmount()
 setState(updater, [callback])
 ```
 
-`setState()` enqueues changes to the component state and tells React that this component and its children need to be re-rendered with the updated state. This is the primary method you use to update the user interface in response to event handlers and server responses.
+`setState()`队列改变组件状态病告诉React该组件及其子组件需要用更新的状态来重新渲染。这是用于响应事件处理和服务端响应的更新用户界面的主要方式。
 
-Think of `setState()` as a *request* rather than an immediate command to update the component. For better perceived performance, React may delay it, and then update several components in a single pass. React does not guarantee that the state changes are applied immediately.
+将`setState()`认为是一次*请求*而不是一次立即执行更新组件的命令。为了更为客观的性能，React可能会推迟它，而后在一次传递中更新几个组件。React不会保证被立刻应用状态的改变。
 
-`setState()` does not always immediately update the component. It may batch or defer the update until later. This makes reading `this.state` right after calling `setState()` a potential pitfall. Instead, use `componentDidUpdate` or a `setState` callback (`setState(updater, callback)`), either of which are guaranteed to fire after the update has been applied. If you need to set the state based on the previous state, read about the `updater` argument below.
+`setState()`不是立刻更新组件。其可能是批处理或推迟更新。这使得在调用`setState()`后立刻读取`this.state`的一个潜在陷阱。代替地，使用`componentDidUpdate`或一个`setState`回调（`setState(updater, callback)`），当中的每个方法都会保证在更新被应用之后触发。若你需要基于之前的状态来设置状态，阅读下面关于`updater`参数的介绍。
 
-`setState()` will always lead to a re-render unless `shouldComponentUpdate()` returns `false`. If mutable objects are being used and conditional rendering logic cannot be implemented in `shouldComponentUpdate()`, calling `setState()` only when the new state differs from the previous state will avoid unnecessary re-renders.
+除非`shouldComponentUpdate()` 返回`false`，否则`setState()`永远都会导致重渲。若使用可变对象同时条件渲染逻辑无法在`shouldComponentUpdate()`中实现，仅当新状态不同于之前状态时调用`setState()`，将避免不必要的重渲。
 
-The first argument is an `updater` function with the signature:
+第一个函数是带签名的`updater`函数：
 
 ```javascript
 (prevState, props) => stateChange
 ```
 
-`prevState` is a reference to the previous state. It should not be directly mutated. Instead, changes should be represented by building a new object based on the input from `prevState` and `props`. For instance, suppose we wanted to increment a value in state by `props.step`:
+`prevState`是之前状态的引用。其不应该被直接改变。代替地，改变应该通过构建一个来自于`prevState` 和 `props`输入的新对象来表示。例如，假设我们想通过`props.step`在状态中增加一个值：
 
 ```javascript
 this.setState((prevState, props) => {
@@ -254,23 +254,23 @@ this.setState((prevState, props) => {
 });
 ```
 
-Both `prevState` and `props` received by the updater function are guaranteed to be up-to-date. The output of the updater is shallowly merged with `prevState`.
+updater函数接收到的`prevState` 和 `props`保证都是最新的。updater的输出是和`prevState`的浅合并。
 
-The second parameter to `setState()` is an optional callback function that will be executed once `setState` is completed and the component is re-rendered. Generally we recommend using `componentDidUpdate()` for such logic instead.
+`setState()`的第二个参数是一个可选地回调函数，其将会在`setState`执行完成同时组件被重渲之后执行。通常，对于这类逻辑，我们推荐使用`componentDidUpdate`。
 
-You may optionally pass an object as the first argument to `setState()` instead of a function:
+你可以选择性地传递一个对象作为 `setState()`的第一个参数而不是一个函数：
 
 ```javascript
 setState(stateChange, [callback])
 ```
 
-This performs a shallow merge of `stateChange` into the new state, e.g., to adjust a shopping cart item quantity:
+其仅是将`stateChange`浅合并到新状态中。例如，调整购物车中物品数量：
 
 ```javascript
 this.setState({quantity: 2})
 ```
 
-This form of `setState()` is also asynchronous, and multiple calls during the same cycle may be batched together. For example, if you attempt to increment an item quantity more than once in the same cycle, that will result in the equivalent of:
+这一形式的`setState()`也是异步的，并在相同的周期中多次调用可能会被合并到一起。例如，若你在相同的周期中尝试多次增加一件物品的数量，其等价于：
 
 ```javaScript
 Object.assign(
@@ -281,7 +281,7 @@ Object.assign(
 )
 ```
 
-Subsequent calls will override values from previous calls in the same cycle, so the quantity will only be incremented once. If the next state depends on the previous state, we recommend using the updater function form, instead:
+之后的调用在同一周期中将会重写之前调用的值，因此数量仅会被加一。若之后的状态依赖于之前的状态，我们推荐使用updater函数形式：
 
 ```js
 this.setState((prevState) => {
@@ -289,7 +289,7 @@ this.setState((prevState) => {
 });
 ```
 
-For more detail, see the [State and Lifecycle guide](/react/docs/state-and-lifecycle.html).
+更多细节，查看[State & 生命周期指南](/react/docs/state-and-lifecycle.html)。
 
 * * *
 
@@ -299,19 +299,18 @@ For more detail, see the [State and Lifecycle guide](/react/docs/state-and-lifec
 component.forceUpdate(callback)
 ```
 
-By default, when your component's state or props change, your component will re-render. If your `render()` method depends on some other data, you can tell React that the component needs re-rendering by calling `forceUpdate()`.
+默认情况，当你的组件或状态发生改变，你的组件将会重渲。若你的`render()`方法依赖其他数据，你可以通过调用`forceUpdate()`来告诉React组件需要重渲。
 
-Calling `forceUpdate()` will cause `render()` to be called on the component, skipping `shouldComponentUpdate()`. This will trigger the normal lifecycle methods for child components, including the `shouldComponentUpdate()` method of each child. React will still only update the DOM if the markup changes.
+调用`forceUpdate()`将会导致组件的 `render()`方法被调用，并忽略`shouldComponentUpdate()`。这将会触发每一个子组件的生命周期方法，涵盖，每个子组件的`shouldComponentUpdate()` 方法。若当标签改变，React仅会更新DOM。
 
-Normally you should try to avoid all uses of `forceUpdate()` and only read from `this.props` and `this.state` in `render()`.
-
+通常你应该尝试避免所有`forceUpdate()` 的用法并仅在`render()`函数里从`this.props`和`this.state`读取数据。
 * * *
 
-## Class Properties
+## 类属性
 
 ### `defaultProps`
 
-`defaultProps` can be defined as a property on the component class itself, to set the default props for the class. This is used for undefined props, but not for null props. For example:
+`defaultProps`可以被定义为组件类的一个属性，用以为类设置默认的属性。这对于未定义（undefined）的属性来说有用，而对于设为空（null）的属性并没用。例如：
 
 ```js
 class CustomButton extends React.Component {
@@ -323,7 +322,7 @@ CustomButton.defaultProps = {
 };
 ```
 
-If `props.color` is not provided, it will be set by default to `'blue'`:
+若未设置`props.color`，其将被设置默认为`'blue'`:
 
 ```js
   render() {
@@ -331,7 +330,7 @@ If `props.color` is not provided, it will be set by default to `'blue'`:
   }
 ```
 
-If `props.color` is set to null, it will remain null:
+若`props.color`设为null，则其值则为null：
 
 ```js
   render() {
@@ -343,24 +342,24 @@ If `props.color` is set to null, it will remain null:
 
 ### `displayName`
 
-The `displayName` string is used in debugging messages. JSX sets this value automatically; see [JSX in Depth](/react/docs/jsx-in-depth.html).
+`displayName`被用在调试信息中。JSX会自动设置该值；查看[深入JSX](/react/docs/jsx-in-depth.html)。
 
 * * *
 
-## Instance Properties
+## 实例属性
 
 ### `props`
 
-`this.props` contains the props that were defined by the caller of this component. See [Components and Props](/react/docs/components-and-props.html) for an introduction to props.
+`this.props`包含了组件该调用者定义的属性。查看[组件 & Props](/react/docs/components-and-props.html)关于属性的介绍。
 
-In particular, `this.props.children` is a special prop, typically defined by the child tags in the JSX expression rather than in the tag itself.
+特别地，`this.props.children`是一个特别属性，其通常由JSX表达式中的子标签定义，而不是标签本身。
 
 ### `state`
 
-The state contains data specific to this component that may change over time. The state is user-defined, and it should be a plain JavaScript object.
+状态是该组件的特定数据，其可能改变多次。状态由用户定义，且其应为纯JavaScript对象。
 
-If you don't use it in `render()`, it shouldn't be on the state. For example, you can put timer IDs directly on the instance.
+若你不在`render()`方法中使用它，其不应该该被放在状态上。例如，你可直接将timer IDs放在实例上。
 
-See [State and Lifecycle](/react/docs/state-and-lifecycle.html) for more information about the state.
+查看[State & 生命周期](/react/docs/state-and-lifecycle.html)了解更多关于状态的信息。
 
-Never mutate `this.state` directly, as calling `setState()` afterwards may replace the mutation you made. Treat `this.state` as if it were immutable.
+永远不要直接改变`this.state`，因为调用`setState()`会替换你之前做的改变。将`this.state`当成不可变的。
