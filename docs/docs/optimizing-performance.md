@@ -5,52 +5,52 @@ permalink: docs/optimizing-performance.html
 redirect_from: "docs/advanced-performance.html"
 ---
 
-在底层，React使用了几个灵活的技术来减少要求更新UI时DOM操作带来的开销。对于大多数应用来说，使用React会得到一个快速的用户界面而无须过多处理特定地优化工作。然而，还有些方法可以加速你的React应用。
+更新UI时，React在内部使用几种巧妙的技术来最小化DOM操作的数量。对许多应用来说，使用React不需要做太多的优化工作就可以快速创建用户界面。除此之外，还有一些优化React应用性能的办法。
 
-## 使用生产版本（Use the Production Build）
+## 使用生产版本
 
-若你在进行基准测试或在你的React应用中遇到性能问题，确保你在测试的是压缩过的生产构建版本。
+在React应用中检测性能问题时，请务必使用压缩过的生产版本。
 
-默认情况，React包含很多有用的警告。这些警告在开发环境下非常有用。然而，他们使得React变得更大和更慢，因此你应该确保在开发应用时使用的是生产版本。
+默认情况下，React包含很多在开发过程中很有帮助的警告。然而，这会导致React更大更慢。因此，在部署应用时，请确认使用了生产版本。
 
-若你不是很确定你的构建环节是否正确配置，你可以通过安装[React Developer Tools for Chorme](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)进行检查。若你访问一个使用React生产模式的页面，图标会有一个黑背景色：
+如果你不确定构建过程是否正确，可以安装[React开发者工具（chrome）](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)。当你访问一个生产模式的React页面时，这个工具的图标会有一个黑色的背景：
 
-<img src="/react/img/docs/devtools-prod.png" style="max-width:100%" alt="React DevTools on a website with production version of React" />
+<img src="/react/img/docs/devtools-prod.png" style="max-width:100%" alt="React DevTools on a website with production version of React">
 
-若你访问的是一个使用React开发模式的页面，则图标会有一个红色背景：
+当你访问一个开发模式的React页面时，这个工具的图标会有一个红色的背景：
 
-<img src="/react/img/docs/devtools-dev.png" style="max-width:100%" alt="React DevTools on a website with development version of React" />
+<img src="/react/img/docs/devtools-dev.png" style="max-width:100%" alt="React DevTools on a website with development version of React">
 
-最好是在开发应用时使用开发者模式，而当部署应用提给用户时使用生产模式。
+最好在开发应用时使用开发模式，部署应用时换为生产模式。
 
-你可以在下面找到构建生产版本应用的说明。
+以下是构建生产用应用的流程。
 
-### Create React App
+### Create React App方式
 
-若你的项目是通过 [Create React App](https://github.com/facebookincubator/create-react-app)构建，执行：
+如果你的项目是以[Create React App](https://github.com/facebookincubator/create-react-app)创建的，运行如下代码：
 
 ```
 npm run build
 ```
 
-这将会在你项目的`build/`文件夹下生成一个应用的生产版本。
+这将会在该项目的`build/`文件夹内创建一个生产版本的应用。
 
-记得其仅在部署生产版本之前是必须的。对于正常的开发，使用`npm start`。
+注意只有发布项目时才有必要这样做，正常开发时，使用`npm start`。
 
-### Single-File Builds
+### 单文件生产版本
 
-我们提供了React 和React DOM的生产就绪版本作为独立文件：
+我们提供压缩好的生产版本的React和React DOM文件:
 
 ```html
 <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
 <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
 ```
 
-记得以`.min.js`结尾的React文件仅适用于生产环境。
+注意只有结尾为`.min.js`的React文件才是适合生产使用的。
 
 ### Brunch
 
-对于最高效的Brunch生产构建，安装[`uglify-js-brunch`](https://github.com/brunch/uglify-js-brunch)插件：
+为了创建最高效的Brunch生产版本，需要安装[`uglify-js-brunch`](https://github.com/brunch/uglify-js-brunch) 插件:
 
 ```
 # If you use npm
@@ -60,17 +60,17 @@ npm install --save-dev uglify-js-brunch
 yarn add --dev uglify-js-brunch
 ```
 
-而后，为生成生产构建，在`build`命令中增加参数`-p`：
+接下来，为了构建生产版本，在`build`命令后添加`-p`参数：
 
 ```
 brunch build -p
 ```
 
-记住你仅需要处理生产构建。你不应该传递`-p`参数或将这插件应用在开发环境中，因为其会隐藏有用的React警告，并使得构建速度变更慢。
+注意只有生产版本需要这样操作。不要在开发环境中安装这个插件或者使用`-p`参数，因为它会隐藏掉有用的React警告并使构建过程更慢。
 
 ### Browserify
 
-最有效的Browserify生产构建，安装一些插件：
+为了创建最高效的Browserify生产版本，需要安装一些插件：
 
 ```
 # If you use npm
@@ -80,14 +80,14 @@ npm install --save-dev bundle-collapser envify uglify-js uglifyify
 yarn add --dev bundle-collapser envify uglify-js uglifyify 
 ```
 
-为生成一个生产构建，确保你添加了这些调整**（顺序很重要）**：
+为了构建生产版本，务必添加这些设置指令 **(参数很重要)**:
 
-*  [`envify`](https://github.com/hughsk/envify) 确保设置了正确的构建环境。设置为全局模式（`-g`）。
-*  [`uglifyify`](https://github.com/hughsk/uglifyify) 移除了开发环境下的引入。将其也设为全局模式（`-g`）。
-*  [`bundle-collapser`](https://github.com/substack/bundle-collapser)插件用数字替换长的模块ID。
-*  最后，构建结果流向 [`uglify-js`](https://github.com/mishoo/UglifyJS2)以方便压缩（[原因](https://github.com/hughsk/uglifyify#motivationusage)）。
+* [`envify`](https://github.com/hughsk/envify)该插件确保正确的编译环境，全局安装（`-g`）。
+* [`uglifyify`](https://github.com/hughsk/uglifyify)该插件移除了开发接口。全局安装（`-g`）。
+* [`bundle-collapser`](https://github.com/substack/bundle-collapser)该插件用数字替代了长长的模块ID。
+* 最后，以上结果都被输添加至[`uglify-js`](https://github.com/mishoo/UglifyJS2)来得到整合。([了解原因](https://github.com/hughsk/uglifyify#motivationusage)).
 
-例如:
+举个例子：
 
 ```
 browserify ./index.js \
@@ -99,14 +99,14 @@ browserify ./index.js \
 
 >**注意：**
 >
-> 模块包名称为 `uglify-js`，但其提供的二进制称为`uglifyjs`。<br>
-> 这并非一个拼写错误。
+>包的名称是`uglify-js`，但是它提供的文件叫`uglifyjs`。<br>
+>这不是一个错字。
 
-记住你仅需要为生产构建这么做。你不应该将这些插件应用于开发环境，因为他们会隐藏有用的React信息，并使得构建速度更慢。
+注意只有生产版本需要这样操作。不要在开发环境中安装这些插件，因为它们会隐藏掉有用的React警告并使构建过程更慢。
 
 ### Rollup
 
-最为有效的Rollup生产构建，安装一些插件：
+为了创建最高效的Rollup生产版本，需要安装一些插件：
 
 ```
 # If you use npm
@@ -116,11 +116,11 @@ npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugi
 yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify 
 ```
 
-为创建一个生产构建，确保你添加了这些插件**（顺序很重要）**：
+为了构建生产版本，务必添加这些插件 **(参数很重要)**:
 
-* [`replace`](https://github.com/rollup/rollup-plugin-replace) 确保设置了正确的构建环境。
-*  [`commonjs`](https://github.com/rollup/rollup-plugin-commonjs) 为Rollup提供CommonJS规范的支持。
-*  [`uglify`](https://github.com/TrySound/rollup-plugin-uglify) 插件压缩和合并最后的代码包。
+* [`replace`](https://github.com/rollup/rollup-plugin-replace)该插件确保正确的编译环境。
+* [`commonjs`](https://github.com/rollup/rollup-plugin-commonjs)该插件在Rollup内提供对CommonJS的支持。
+* [`uglify`](https://github.com/TrySound/rollup-plugin-uglify)该插件压缩生成最终版本。
 
 ```js
 plugins: [
@@ -134,18 +134,18 @@ plugins: [
 ]
 ```
 
-完整的构建例子[查看git](https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0)。
+查看完整的[安装例子](https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0).
 
-记得你仅需为生产构建处理。你不应将带有`'production'`值的`uglify`插件或`replace`插件应用于开发版本，因为他们会隐藏有用的React警告，并使得构建速度更慢。
+注意只有生产版本需要这样操作。不要在开发环境中安装`uglify`和`replace`，因为它们会隐藏掉有用的React警告并使构建过程更慢。
 
 ### Webpack
 
 >**注意：**
 >
-> 若你正在使用Create React App，请参考[之前的建议](#create-react-app)。<br>
-> 若你直接配置Wepback，这一部分才有效。
+>如果你正在使用[Create React App](#create-react-app)方式，参考上述文档。<br>
+>本节只适用于直接配置Webpack的情况。
 
-对于最有效的Webpack生产构建，请确保将这些插件引入你的生产配置：
+为了创建最高效的Webpack生产版本，需要在生产版本的配置中添加这些插件：
 
 ```js
 new webpack.DefinePlugin({
@@ -156,40 +156,40 @@ new webpack.DefinePlugin({
 new webpack.optimize.UglifyJsPlugin()
 ```
 
-你可以在[Webpack文档](https://webpack.js.org/guides/production-build/)了解到更多关于此的内容。
+了解更多参见[Webpack文档](https://webpack.js.org/guides/production-build/).
 
-记住你仅需要为生产构建这么处理。你不应将带有`'production'`值的`UglifyJsPlugin` 或 `DefinePlugin`，因为他们回隐藏有用的React警告，并使得构建速度更慢。
+注意只有生产版本需要这样操作。不要在开发环境中安装`UglifyJsPlugin`和`DefinePlugin`，因为它们会隐藏掉有用的React警告并使构建过程更慢。
 
-## 使用Chrome时间轴分析组件
+## 使用Chrome Timeline归档组件
 
-在**开发**模式下，你可以使用浏览器支持的性能工具直观看到组件如何装载，更新和卸载。例如
+在**开发**模式下， 在支持的浏览器内使用性能工具可以直观的了解组件何时挂载，更新和卸载。例如：
 
 <center><img src="/react/img/blog/react-perf-chrome-timeline.png" style="max-width:100%" alt="React components in Chrome timeline" /></center>
 
-在Chrome里处理：
+Chrome浏览器内：
 
-1. 通过在查询字符串带 `?react_perf`加载你的应用（例如，`http://localhost:3000/?react_perf`）。
+1. 在项目地址栏内添加查询字符串 `?react_perf`（例如， `http://localhost:3000/?react_perf`）。
 
-2. 打开Chrome开发者工具**[Timeline](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)**面板并点击**记录**
+2. 打开Chrome开发工具**[Timeline](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)** 按tab键然后选**Record**.
 
-3. 记录你要分析的操作。不要记录超过20秒否则Chrome可能挂起。
+3. 执行你想要分析的动作。不要记录超过20s，不然Chrome可能会挂起。
 
-4. 停止记录
+4. 停止记录。
 
-5. React事件将会被分类在**用户时间**标签。
+5. React事件将会被归类在 **User Timing**标签下。
 
-注意**数字是相对的，因此组件在生产模式下渲染速度更快**。此外，这还能帮助你了解不相关的组件被错误更新，以及组件更新的频率和深度。
+注意**由于这些数字是相对的，因此组件在生产版本中会运行更快**。然而，这也能够帮助你了解何时会有无关的组件被错误的更新，以及你的组件更新的深度和频率。
 
-目前仅Chrome，Edge和IE浏览器支持这一特性，但我们使用标准的[User Timing API](https://developer.mozilla.org/en-US/docs/Web/API/User_Timing_API) 因此我们希望更多浏览器能够支持。
+目前浏览器中仅有Chrome，Edge和IE支持此特性，但是我们使用此标准[用户Timing API](https://developer.mozilla.org/en-US/docs/Web/API/User_Timing_API)，因此我们期待更多的浏览器对其添加支持。
 
 
-## 避免协调
+## 避免重复渲染
 
-React构建并维护了一套内建的渲染UI表示法。其包含了从你组件返回的React元素。这一方法让React避免创建DOM节点并采用现有节点，因为这可能比JavaScript的操作要慢。有时其被称之为“虚拟DOM”，但其在React Native上也采用同样的方式。
+React在渲染出的UI内部建立和维护了一个内层的实现方式，它包括了从组件返回的React元素。这种实现方式使得React避免了一些不必要的创建和关联DOM节点，因为这样做可能比直接操作JavaScript对象更慢一些。有时它被称之为“虚拟DOM”，但是它其实和React Native的工作方式是一样的。
 
-当组件的属性或状态发生改变，React通过对新返回的元素和之前渲染的元素来决定是否需要更新真实DOM。当它们不一致时，React则会更新DOM。
+当一个组件的`props`或者`state`改变时，React通过比较新返回的元素和之前渲染的元素来决定是否有必要更新实际的DOM。当他们不相等时，React会更新DOM。
 
-在某些情况，你的组件通过重写在重渲环节开始前触发的生命周期函数`shouldComponentUpdate`来提高性能。默认情况下该函数返回`true`，使React进行更新：
+在一些情况下，你的组件可以通过重写这个生命周期函数`shouldComponentUpdate`来提升速度， 它是在重新渲染过程开始前触发的。 这个函数默认返回`true`，可使React执行更新：
 
 ```javascript
 shouldComponentUpdate(nextProps, nextState) {
@@ -197,27 +197,25 @@ shouldComponentUpdate(nextProps, nextState) {
 }
 ```
 
-若你知道在某些场景你的组件不需要更新，你可以从`shouldComponentUpdate`返回`false`，以忽略整个渲染环节，包括该组件`render()`函数的调用及之后的方法。
+如果你知道在某些情况下你的组件不需要更新，你可以在`shouldComponentUpdate`内返回`false`来跳过整个渲染进程，该进程包括了对该组件和之后的内容调用`render()`指令。
 
-## shouldComponentUpdate实战
+## shouldComponentUpdate应用
 
-这是一个带有子树的组件。其中的每一个，`SCU`表示`shouldComponentUpdate`返回类型，`vDOMEq`表示渲染的React元素是否相等。最后，圆的颜色表示组件是否需要被协调。
+这是一个组件的子树。对其中每个组件来说，`SCU`表明了`shouldComponentUpdate`的返回内容，`vDOMEq`表明了待渲染的React元素与原始元素是否相等，最后，圆圈的颜色表明这个组件是否需要重新渲染。
 
-<figure>
-<img src="/react/img/docs/should-component-update.png" style="max-width:100%" />
-</figure>
+<figure><img src="/react/img/docs/should-component-update.png" style="max-width:100%" /></figure>
 
-由于`shouldComponentUpdate`整个根子树在C2节点返回`false`，React并不会尝试渲染C2，因此甚至不会调用C4和C5的`shouldComponentUpdate`方法。
+由于以C2为根的子树的`shouldComponentUpdate`返回了`false`，React不会试图渲染C2，甚至不会在C4和C5上调用`shouldComponentUpdate`。
 
-对于C1和C3来说，`shouldComponentUpdate` 返回 `true`，因此React会往下遍历叶子节点并检查他们。对于C6， `shouldComponentUpdate` 返回 `true`，由于渲染元素不相等，React不得不更新DOM。
+对C1和C3来说，`shouldComponentUpdate`返回了`true`，因此React会深入到分支中并检查它们。C6的`shouldComponentUpdate`返回了`true`，由于待渲染的元素与原始元素并不相等，React会更新这个DOM节点。
 
-最后一个有趣的例子是C8。React不得不渲染这一组件，但由于返回的React元素和之前渲染的相等，其非需要更新DOM。
+最后一个有趣的情况是C8，React需要渲染这个组件，但是由于组件元素返回值与原元素相等，因此它并没有更新这个DOM节点。
 
-注意React仅需要对C6进行必要的DOM操作。对于C8，其通过对比渲染过的React元素来守护，而对于C2的子树和C7来说，其没必要比较我们在`shouldComponentUpdate`保留的元素，同时`render` 方法并不会被调用。
+注意React只需更新C6，因为它是不可避免的。对C8来说，它通过比较待渲染元素与原始元素避免了渲染，对C2的子树和C7，它们甚至都没有执行比较，因为我们设置了`shouldComponentUpdate`为`false`，`render`没有被调用。
 
-## 举例
+## 案例
 
-若你组件每次更新的唯一方式是当 `props.color` 或 `state.count` 变量改变时，你可以用`shouldComponentUpdate`来检查：
+如果想让组件只在`props.color`或者`state.count`的值变化时重新渲染，你可以像下面这样设定`shouldComponentUpdate`：
 
 ```javascript
 class CounterButton extends React.Component {
@@ -248,7 +246,7 @@ class CounterButton extends React.Component {
 }
 ```
 
-在这段代码，`shouldComponentUpdate`仅检查`props.color` 或 `state.count`是否有任何的改变。若那些值没发生改变，则组件不会更新。若你的组件更为复杂，你可以使用一个类似的模式，在所有的`props`和`state`字段间进行“浅比较”以决定组件是否应该更新。这种模式很常见，即React提供了一个帮助程序来应用该逻辑 - 仅继承自`React.PureComponent`。因此这段代码是实现同样效果的一种相似的方式：
+在以上代码中，`shouldComponentUpdate`只检查`props.color`和`state.count`的变化。如果这些值没有变化，组件就不会更新。当你的组件变得更加复杂时，你可以使用类似的模式来做一个“浅比较”，用来比较属性和值以判定是否需要更新组件。这种模式十分常见，因此React提供了一个辅助对象来实现这个逻辑 - 继承自`React.PureComponent`。以下代码可以更简单的实现相同的操作：
 
 ```js
 class CounterButton extends React.PureComponent {
@@ -269,9 +267,9 @@ class CounterButton extends React.PureComponent {
 }
 ```
 
-大多数时间，你可以使用`React.PureComponent`而不用自己写`shouldComponentUpdate`。其仅能处理浅比较，若属性或状态可能已经被某种浅比较会错过的方式改变，那么你无法使用它。
+大部分情况下，你可以使用`React.PureComponent`而不必写你自己的`shouldComponentUpdate`，它只做一个浅比较。但是由于浅比较会忽略属性或状态**突变**的情况，此时你不能使用它。
 
-这对于更为复杂的数据结构来说是个问题。例如，也就是说你想要一个`ListOfWords`组件用来渲染一个以逗号分隔的单词列表，并在你每次点击父组件`WordAdder`的一个按钮时添加一个词到列表里。这段代码*不*一定能正确工作：
+对于更复杂的数据结构这可能成为一个问题。例如，假设你想要一个`ListOfWords`组件来渲染一个逗号分隔的单词列表，并使用一个带了点击按钮名字叫`WordAdder`的父组件来给子列表添加一个单词。以下代码*并不正确*： 
 
 ```javascript
 class ListOfWords extends React.PureComponent {
@@ -307,11 +305,11 @@ class WordAdder extends React.Component {
 }
 ```
 
-问题就在于`PureComponent`仅会在`this.props.words`的新值和就旧值之间做一个简单比较。由于这段代码在`WordAdder`的`handleClick`方法改变了数组`words`，`this.props.words` 的新值和旧值之间比较是相等，即使实际数组中的词已经发生了改变。因此`ListOfWords`并不会更新，即使已经有了新的应该被渲染的词。
+问题是`PureComponent`将会在`this.props.words`的新旧值之间做一个简单的比较。由于代码中`words`数组在`WordAdder`的`handleClick`方法中被改变了，尽管数组中的实际单词已经改变，`this.props.words`的新旧值还是相等的，因此即便`ListOfWords`具有应该被渲染的新单词，它还是不会更新。
 
-## 不可变数据的力量
+## 不会突变的数据的力量
 
-避免这一问题的最简单的方式是避免改变你用来作为属性或状态的值。例如，之前的`handleClick`方法可以用`concat`来重写为：
+避免此类问题最简单的方式是避免使用值可能会**突变**的属性或状态。例如，上面例子中的`handleClick`应该用`concat`重写成：
 
 ```javascript
 handleClick() {
@@ -321,7 +319,7 @@ handleClick() {
 }
 ```
 
-ES 6对数组支持[扩展语法](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) 使得其更简单。若你在使用Create React App，默认支持该语法。
+ES6支持数组的[spread语法](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator)可以让它变得更容易。如果你使用的是`Create React App`，那么此语法默认可用。
 
 ```js
 handleClick() {
@@ -331,8 +329,7 @@ handleClick() {
 };
 ```
 
-你也可以以类似的方式重写改变对象的代码以避免更改。例如，我们有一个命名为
-`colormap`的对象，同时我们想写一个改变`colormap.right` 为 `'blue'`的函数，我们可以写成：
+你也可以用相似的方式重写可以会突变的对象。例如，假设我们有一个叫`colormap`的对象，我们想写一个把`colormap.right`改变成`'blue'`的函数，我们应该写：
 
 ```js
 function updateColorMap(colormap) {
@@ -340,7 +337,7 @@ function updateColorMap(colormap) {
 }
 ```
 
-为编写一个不改变原始对象的函数，我们可以使用 [Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 方法：
+想要实现代码而不污染原始对象，我们可以使用[Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)方法：
 
 ```js
 function updateColorMap(colormap) {
@@ -348,9 +345,9 @@ function updateColorMap(colormap) {
 }
 ```
 
-`updateColorMap`现在返回一个新对象，而不是改变旧的。`Object.assign`是在ES 6规范的并需要一个兼容实现：
+`updateColorMap`现在会返回一个新对象，而不会改变之前的旧对象。`Object.assign`在ES6中，需要`polyfill`支持。
 
-一份用于增加[对象扩展属性](https://github.com/sebmarkbage/ecmascript-rest-spread)的JavaScript规范以使得在不改变的情况下也能够更容易更新对象：
+有一个JavaScript提议来添加[对象spread属性](https://github.com/sebmarkbage/ecmascript-rest-spread)以便不会突然变化的更新对象：
 
 ```js
 function updateColorMap(colormap) {
@@ -358,18 +355,17 @@ function updateColorMap(colormap) {
 }
 ```
 
-若你在使用Create React App，默认情况`Object.assign`和对象扩展语法可用的。
+如果使用`Create React App`，默认情况下 `Object.assign`和spread对象都可以使用。
 
-## 使用不可变数据结构
+## 使用不可突变的数据结构
 
-[Immutable.js](https://github.com/facebook/immutable-js) 是解决这一问题的另一种方式。
-其通过共享结构提供不可变、持久化的集合：
+[Immutable.js](https://github.com/facebook/immutable-js)是解决这个问题的另一种方法。它通过结构共享提供不可突变的，持久的集合：
 
-* *不可变*：一旦创建，该集合不能在其他任何时间点被改变。
-* *持久化*：新集合可用通过之前的集合和改变创建，如集合（set）。在新的集合被创建后原本的集合仍然有效。
-* *结构共享*：使用尽可能多的与原始结构相同结构创建集合，以将复制减少到最低限度以提升性能。
+* *不可突变*:一旦创建，集合就不能在另一个时间点改变。
+* *持久性*:可以使用原始集合和一个突变来创建新的集合。原始集合在新集合创建后仍然可用。
+* *结构共享*:新集合尽可能多的使用原始集合的结构来创建，以便将复制操作降至最少从而提升性能。
 
-不可变性使得追踪改变更为容易。一次改变将会产生一次新对象，因此我们仅需要检查对象的引用是否改变。例如，在这段传统JavaScript代码：
+不可突变数据使得变化跟踪很方便。每个变化都会导致产生一个新的对象，因此我们只需检查索引对象是否改变。例如，在这个常见的JavaScript代码中：
 
 ```javascript
 const x = { foo: 'bar' };
@@ -378,7 +374,7 @@ y.foo = 'baz';
 x === y; // true
 ```
 
-尽管`y`被编辑，由于其和`x`引用相同的对象，这一比较返回`true`。你可以通过immutable.js写出类似代码：
+虽然`y`被编辑了，但是由于它与`x`索引了相同的对象，这个比较会返回`true`。你可以使用`immutable.js`实现类似效果：
 
 ```javascript
 const SomeRecord = Immutable.Record({ foo: null });
@@ -387,8 +383,8 @@ const y = x.set('foo', 'baz');
 x === y; // false
 ```
 
-在这一情况下，当改变`x`时返回一个新的引用，我们可以安全假定`x`已经改变。
+在这个例子中，`x`突变后返回了一个新的索引，因此我们可以安全的确认`x`被改变了。
 
-其他两个类库[seamless-immutable](https://github.com/rtfeldman/seamless-immutable) 和 [immutability-helper](https://github.com/kolodny/immutability-helper) 也可以使用不可变数据。
+还有两个库可以帮助我们使用不可突变数据：[seamless-immutable](https://github.com/rtfeldman/seamless-immutable) 和[immutability-helper](https://github.com/kolodny/immutability-helper)。
 
-不可变数据结构提供了一种廉价的方式以追踪对象改变，我们所需要的仅是实现`shouldComponentUpdate`。这通常能给你带来可观的性能提升。
+实现`shouldComponentUpdate`时，不可突变的数据结构帮助我们轻松的追踪对象变化。这通常可以提供一个不错的性能提升。
