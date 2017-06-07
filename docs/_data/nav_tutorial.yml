@@ -5,84 +5,84 @@
       subitems:
         - id: 教程简介
           title: 教程简介
-          href: /react/tutorial/tutorial.html#what-were-building
+          href: /react/tutorial/tutorial.html#教程简介
           forceInternal: true
         - id: 前置知识
           title: 前置知识
-          href: /react/tutorial/tutorial.html#prerequisites
+          href: /react/tutorial/tutorial.html#前置知识
           forceInternal: true
         - id: 如何编写代码
           title: 如何编写代码
-          href: /react/tutorial/tutorial.html#how-to-follow-along
+          href: /react/tutorial/tutorial.html#如何编写代码
           forceInternal: true
         - id: 寻求帮助
           title: 寻求帮助
-          href: /react/tutorial/tutorial.html#help-im-stuck
+          href: /react/tutorial/tutorial.html#寻求帮助
           forceInternal: true
     - id: 总览
       title: 总览
-      href: /react/tutorial/tutorial.html#overview
+      href: /react/tutorial/tutorial.html#总览
       forceInternal: true
       subitems:
         - id: React是什么
           title: React 是什么
-          href: /react/tutorial/tutorial.html#what-is-react
+          href: /react/tutorial/tutorial.html#React是什么
           forceInternal: true
         - id: 开始编码
           title: 开始编码
-          href: /react/tutorial/tutorial.html#getting-started
+          href: /react/tutorial/tutorial.html#开始编码
           forceInternal: true
         - id: 通过Props传递数据
           title: 通过 Props 传递数据
-          href: /react/tutorial/tutorial.html#passing-data-through-props
+          href: /react/tutorial/tutorial.html#通过Props传递数据
           forceInternal: true
         - id: 给组件添加交互功能
           title: 给组件添加交互功能
-          href: /react/tutorial/tutorial.html#an-interactive-component
+          href: /react/tutorial/tutorial.html#给组件添加交互功能
           forceInternal: true
         - id: 开发工具 
           title: 开发工具
-          href: /react/tutorial/tutorial.html#developer-tools
+          href: /react/tutorial/tutorial.html#开发工具
           forceInternal: true
     - id: 状态提升
       title: 状态提升
-      href: /react/tutorial/tutorial.html#lifting-state-up
+      href: /react/tutorial/tutorial.html#状态提升
       forceInternal: true
       subitems:
         - id: 为什么不可变性在React当中非常重要
           title: 为什么不可变性在React当中非常重要
-          href: /react/tutorial/tutorial.html#why-immutability-is-important
+          href: /react/tutorial/tutorial.html#为什么不可变性在React当中非常重要
           forceInternal: true
         - id: 函数定义组件 
           title: 函数定义组件
-          href: /react/tutorial/tutorial.html#functional-components
+          href: /react/tutorial/tutorial.html#函数定义组件
           forceInternal: true
         - id: 轮流落子
           title: 轮流落子
-          href: /react/tutorial/tutorial.html#taking-turns
+          href: /react/tutorial/tutorial.html#轮流落子
           forceInternal: true
         - id: 判断赢家
           title: 判断赢家
-          href: /react/tutorial/tutorial.html#declaring-a-winner
+          href: /react/tutorial/tutorial.html#判断赢家
           forceInternal: true
     - id: 保存历史纪录
       title: 保存历史纪录
-      href: /react/tutorial/tutorial.html#storing-a-history
+      href: /react/tutorial/tutorial.html#保存历史纪录
       forceInternal: true
       subitems:
         - id: 展示每步历史纪录链接
           title: 展示每步历史纪录链接
-          href: /react/tutorial/tutorial.html#showing-the-moves
+          href: /react/tutorial/tutorial.html#展示每步历史纪录链接
           forceInternal: true
         - id: Keys
           title: Keys
-          href: /react/tutorial/tutorial.html#keys
+          href: /react/tutorial/tutorial.html#Keys
           forceInternal: true
         - id: 实现时间旅行
           title: 实现时间旅行
-          href: /react/tutorial/tutorial.html#implementing-time-travel
+          href: /react/tutorial/tutorial.html#实现时间旅行
           forceInternal: true
         - id: 总结
           title: 总结
-          href: /react/tutorial/tutorial.html#wrapping-up
+          href: /react/tutorial/tutorial.html#总结
           forceInternal: true
