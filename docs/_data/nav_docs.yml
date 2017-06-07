@@ -52,7 +52,7 @@
       title: 高阶组件
     - id: integrating-with-other-libraries
       title: 与第三方库协同
-- title: 参考
+- title: 参考(标题为API名称，文档已翻译)
   items:
     - id: react-api
       title: React
