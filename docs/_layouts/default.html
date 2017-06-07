@@ -43,14 +43,13 @@
   <script src="https://unpkg.com/es5-shim@4.5.9/es5-shim.min.js"></script>
   <script src="https://unpkg.com/es5-shim@4.5.9/es5-sham.min.js"></script>
   <![endif]-->
-  <script src="https://unpkg.com/docsearch.js@1.5.0/dist/cdn/docsearch.min.js"></script>
-  <script src="https://unpkg.com/codemirror@5.15.2"></script>
-  <script src="https://unpkg.com/codemirror@5.15.2/mode/javascript/javascript.js"></script>
-  <script src="https://unpkg.com/codemirror@5.15.2/mode/xml/xml.js"></script>
-  <script src="https://unpkg.com/codemirror@5.15.2/mode/jsx/jsx.js"></script>
-  <script src="https://unpkg.com/react/dist/react.min.js"></script>
-  <script src="https://unpkg.com/react-dom/dist/react-dom.min.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.15.2/codemirror.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.15.2/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.15.2/mode/xml/xml.min.js"></script>
+  <script src="https://cdn.bootcss.com/codemirror/5.15.2/mode/jsx/jsx.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.5.4/react.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.5.4/react-dom.min.js"></script>
+  <script src="https://cdn.bootcss.com/babel-standalone/6.15.0/babel.min.js"></script>
   <script src="/react/js/live_editor.js"></script>
 </head>
 <body>
@@ -74,23 +73,6 @@
     var s = document.getElementsByTagName("script")[0]; 
     s.parentNode.insertBefore(hm, s);
   })();
-  </script>
-  <script>
-    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=623268441017527";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    docsearch({
-      apiKey: '36221914cce388c46d0420343e0bb32e',
-      indexName: 'react',
-      inputSelector: '#algolia-doc-search'
-    });
   </script>
 </body>
 </html>
