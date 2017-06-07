@@ -1,6 +1,6 @@
 ---
 id: design-principles
-title: Design Principles
+title: 设计理念
 layout: contributing
 permalink: contributing/design-principles.html
 prev: implementation-notes.html
