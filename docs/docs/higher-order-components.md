@@ -7,6 +7,7 @@ permalink: docs/higher-order-components.html
 高阶组件（HOC）是react中对组件逻辑进行重用的高级技术。但高阶组件本身并不是React API。它只是一种模式，这种模式是由react自身的组合性质必然产生的。
 
 具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件**
+
 ```js
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
 ```
@@ -16,6 +17,7 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 高阶组件在React第三方库中很常见，比如Redux的[`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)方法和Relay的[`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
 
 在本文档中，我们将会讨论为什么高阶组件很有作用，以及该如何实现一个高阶组件。
+
 ## 使用高阶组件（HOC）解决交叉问题
 
 > **注意**
@@ -271,10 +273,13 @@ const enhance = connect(commentListSelector, commentListActions);
 // 关联起来的新组件
 const ConnectedComment = enhance(CommentList);
 ```
+
 换句话说，`connect` 是一个返回高阶组件的高阶函数！
 
-这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， 'Component => Component'。输入和输出类型相同的函数是很容易组合在一起。
+这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， `Component => Component`.输入和输出类型相同的函数是很容易组合在一起。
+
 <!-- 对以下代码的个人理解：第一段代码对初始组件进行了两次包装；第二段代码就是函数的柯里化 -->
+
 ```js
 // 不要这样做……
 const EnhancedComponent = connect(commentSelector)(withRouter(WrappedComponent))
