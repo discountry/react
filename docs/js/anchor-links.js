@@ -10,7 +10,7 @@
     var roughText = elements[i][textMethod];
 
     // Regex rule for making the title URL-friendly.
-    var urlFriendlyText = roughText.trim();
+    var urlFriendlyText = roughText.split(' ').join('');
 
     // Create the anchor we'll jump to.
     var anchor = document.createElement('a');
