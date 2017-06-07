@@ -32,7 +32,7 @@ id: home
         React 组件使用一个名为 `render()` 的方法， 接收数据作为输入，输出页面中对应展示的内容。 下面这个示例中类似XML的写法被称为JSX. 输入的数据通过 `this.props` 传入 `render()` 方法。
       </p>
       <p>
-        <strong>使用React时，你也可以不使用JSX语法扩展</strong> 你可以试着点击 "Compiled JS" 查看 JSX 被编译之后的代码。
+        <strong>使用React时，你也可以不使用JSX语法扩展</strong> 你可以试着点击 **Compiled JS** 查看 JSX 被编译之后的代码。
       </p>
       <div id="helloExample"></div>
     </div>
