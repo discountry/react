@@ -2,7 +2,7 @@
 
 ## Notice
 
-> This is not the official react repository. We've been working on translating the offical react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `facebook/react` .
+> This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `facebook/react` .
 
 我们使用 [Jekyll](http://jekyllrb.com/) 静态站点生成器，使用 ([mostly](http://zpao.com/posts/adding-line-highlights-to-markdown-code-fences/)) 处理 Markdown, 文档部署在 [GitHub Pages](http://pages.github.com/).
 
