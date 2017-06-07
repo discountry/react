@@ -24,8 +24,8 @@
       href: /react/tutorial/tutorial.html#总览
       forceInternal: true
       subitems:
-        - id: React是什么
-          title: React 是什么
+        - id: React是什么？
+          title: React 是什么？
           href: /react/tutorial/tutorial.html#React是什么
           forceInternal: true
         - id: 开始编码
