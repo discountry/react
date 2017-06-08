@@ -1,10 +1,10 @@
-- title: Contributing
+- title: 贡献
   items:
   - id: how-to-contribute
-    title: How to Contribute
+    title: 如何参与
   - id: codebase-overview
-    title: Codebase Overview
+    title: 源码总览
   - id: implementation-notes
-    title: Implementation Notes
+    title: 实现说明
   - id: design-principles
-    title: Design Principles
+    title: 设计理念
