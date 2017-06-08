@@ -365,6 +365,12 @@ h1, h2, h3, h4, h5, h6 {
 
 // Docs Nav
 
+@media (min-width: 1200px) { 
+  .nav-docs {
+    position: fixed;
+  }
+}
+
 .nav-docs {
   color: $darkColor;
   font-size: 14px;
