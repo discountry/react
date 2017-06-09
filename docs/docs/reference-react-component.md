@@ -1,425 +1,366 @@
 ---
-id: jsx-in-depth
-title: 深入 JSX
-permalink: docs/jsx-in-depth.html
+id: react-component
+title: React.Component
+layout: docs
+category: Reference
+permalink: docs/react-component.html
 redirect_from:
-  - "docs/jsx-spread.html"
-  - "docs/jsx-gotchas.html"
-  - "tips/if-else-in-JSX.html"
-  - "tips/self-closing-tag.html"
-  - "tips/maximum-number-of-jsx-root-nodes.html"
-  - "tips/children-props-type.html"
-  - "docs/jsx-in-depth-zh-CN.html"
-  - "docs/jsx-in-depth-ko-KR.html"
+  - "docs/component-api.html"
+  - "docs/component-specs.html"
+  - "docs/component-specs-ko-KR.html"
+  - "docs/component-specs-zh-CN.html"
+  - "tips/componentWillReceiveProps-not-triggered-after-mounting.html"
+  - "tips/dom-event-listeners.html"
+  - "tips/initial-ajax.html"
+  - "tips/use-react-with-other-libraries.html"
 ---
 
-本质上来讲，JSX 只是为 `React.createElement(component, props, ...children) ` 方法提供的语法糖。比如下面的代码：
+[组件](/react/docs/components-and-props.html) 能够让你将UI分割成独立的、可重用的部分，并对每一部分单独考量。[`React`](/react/docs/react-api.html)提供了`React.Component` 。
 
-```js
-<MyButton color="blue" shadowSize={2}>
-  Click Me
-</MyButton>
+## 概览
+
+`React.Component`是一个抽象基础类，因此直接引用`React.Component`基乎没意义。相反，你通常会继承自它，并至少定义一个[`render()`](#render)方法。
+
+通常你定义一个React组件相当于一个纯[JavaScript类](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes)：
+
+```javascript
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
 ```
 
-编译为：
+若你仍未使用 ES6，你可以使用 [`create-react-class`](/react/docs/react-api.html#createclass)模块。查看 [Using React without ES6](/react/docs/react-without-es6.html) 了解更多。
+
+### 组件生命周期
+
+每一个组件都有几个你可以重写以让代码在处理环节的特定时期运行的“生命周期方法”。方法中带有前缀 **`will`** 的在特定环节之前被调用，而带有前缀 **`did`** 的方法则会在特定环节之后被调用。
+
+#### 装配
+
+这些方法会在组件实例被创建同时插入DOM中被调用：
+
+- [`constructor()`](#constructor)
+- [`componentWillMount()`](#componentwillmount)
+- [`render()`](#render)
+- [`componentDidMount()`](#componentdidmount)
+
+#### 更新
+
+属性或状态的改变会触发一次更新。当一个组件在被重渲时，这些方法将会被调用：
+
+- [`componentWillReceiveProps()`](#componentwillreceiveprops)
+- [`shouldComponentUpdate()`](#shouldcomponentupdate)
+- [`componentWillUpdate()`](#componentwillupdate)
+- [`render()`](#render)
+- [`componentDidUpdate()`](#componentdidupdate)
+
+#### 卸载
+
+当一个组件被从DOM中移除时，该方法别调用：
+
+- [`componentWillUnmount()`](#componentwillunmount)
+
+### 其他API
+
+每一个组件还提供了其他的API：
+
+  - [`setState()`](#setstate)
+  - [`forceUpdate()`](#forceupdate)
+
+### 类属性
+
+  - [`defaultProps`](#defaultprops)
+  - [`displayName`](#displayname)
+
+### 实例属性
+
+  - [`props`](#props)
+  - [`state`](#state)
+
+* * *
+
+## 参考
+
+### `render()`
+
+```javascript
+render()
+```
+
+`render()`方法是必须的。
+
+当被调用时，其应该检查`this.props` 和 `this.state`并返回一个单独的React元素。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
+
+也也可以返回`null` 或 `false`来声明你并不想渲染任何东西。当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。
+
+`render()`函数应该纯净，意味着其不应该改变组件的状态，其每次调用都应返回相同的结果，同时不直接和浏览器交互。若需要和浏览器交互，将任务放在`componentDidMount()`阶段或其他的生命周期方法。保持`render()` 方法纯净使得组件更容易思考。
+
+> 注意
+>
+> 若 [`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`render()`函数将不会被调用。
+
+* * *
+
+### `constructor()`
+
+```javascript
+constructor(props)
+```
+
+React组件的构造函数将会在装配之前被调用。当为一个`React.Component`子类定义构造函数时，你应该在任何其他的表达式之前调用`super(props)`。否则，`this.props`在构造函数中将是未定义，并可能引发异常。
+
+构造函数是初始化状态的合适位置。若你不初始化状态且不绑定方法，那你也不需要为你的React组件定义一个构造函数。
+
+可以基于属性来初始化状态。这样有效地“分离（forks）”属性并根据初始属性设置状态。这有一个有效的`React.Component`子类构造函数的例子：
 
 ```js
-React.createElement(
-  MyButton,
-  {color: 'blue', shadowSize: 2},
-  'Click Me'
+constructor(props) {
+  super(props);
+  this.state = {
+    color: props.initialColor
+  };
+}
+```
+
+意识到这模式，任何的属性更新不会使得状态是最新的。保证属性和状态同步，你通常想要[状态提升](/react/docs/lifting-state-up.html)。
+
+若你通过使用它们为状体“分离”属性，你可能也想要实现[`componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
+
+* * *
+
+### `componentWillMount()`
+
+```javascript
+componentWillMount()
+```
+
+`componentWillMount()`在装配发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重渲。避免在该方法中引入任何的副作用或订阅。
+
+这是唯一的会在服务端渲染调起的生命周期钩子函数。通常地，我们推荐使用`constructor()`来替代。
+
+* * *
+
+### `componentDidMount()`
+
+```javascript
+componentDidMount()
+```
+
+`componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
+
+* * *
+
+### `componentWillReceiveProps()`
+
+```javascript
+componentWillReceiveProps(nextProps)
+```
+
+`componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
+
+注意即使属性未有任何改变，React可能也会调用该方法，因此若你想要处理改变，请确保比较当前和之后的值。这可能会发生在当父组件引起你的组件重渲。
+
+在 [装配](#mounting)期间，React并不会调用带有初始属性的`componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`componentWillReceiveProps`。
+
+* * *
+
+### `shouldComponentUpdate()`
+
+```javascript
+shouldComponentUpdate(nextProps, nextState)
+```
+
+使用`shouldComponentUpdate()`以让React知道当前状态或属性的改变是否不影响组件的输出。默认行为是在每一次状态的改变重渲，在大部分情况下你应该依赖于默认行为。
+
+当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法并不会在初始化渲染或当使用`forceUpdate()`时被调用。
+
+当他们状态改变时，返回`false` 并不能阻止子组件重渲。
+
+当前，若`shouldComponentUpdate()`返回`false`，而后[`componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
+
+在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/react/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
+
+* * *
+
+### `componentWillUpdate()`
+
+```javascript
+componentWillUpdate(nextProps, nextState)
+```
+
+当接收到新属性或状态时，`componentWillUpdate()`为在渲染前被立即调用。在更新发生前，使用该方法是一次准备机会。该方法不会在初始化渲染时调用。
+
+注意你不能在这调用`this.setState()`，若你需要更新状态响应属性的调整，使用`componentWillReceiveProps()`代替。
+
+> 注意
+>
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentWillUpdate()`将不会被调用。
+
+* * *
+
+### `componentDidUpdate()`
+
+```javascript
+componentDidUpdate(prevProps, prevState)
+```
+
+`componentDidUpdate()`会在更新发生后立即被调用。该方法并不会在初始化渲染时调用。
+
+当组件被更新时，使用该方法是操作DOM的一次机会。这也是一个适合发送请求的地方，要是你对比了当前属性和之前属性（例如，如果属性没有改变那么请求也就没必要了）。
+
+> 注意
+>
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentDidUpdate()`将不会被调用。
+
+* * *
+
+### `componentWillUnmount()`
+
+```javascript
+componentWillUnmount()
+```
+
+`componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
+
+* * *
+
+### `setState()`
+
+```javascript
+setState(updater, [callback])
+```
+
+`setState()`将需要处理的变化塞入（译者注：setState源码中将一个需要改变的变化存放到组件的state对象中，采用队列处理）组件的state对象中，
+并告诉该组件及其子组件需要用更新的状态来重新渲染。这是用于响应事件处理和服务端响应的更新用户界面的主要方式。
+
+将`setState()`认为是一次*请求*而不是一次立即执行更新组件的命令。为了更为客观的性能，React可能会推迟它，稍后会一次性更新这些组件。React不会保证在setState之后，能够立刻拿到改变的结果。
+
+`setState()`不是立刻更新组件。其可能是批处理或推迟更新。这使得在调用`setState()`后立刻读取`this.state`的一个潜在陷阱。代替地，使用`componentDidUpdate`或一个`setState`回调（`setState(updater, callback)`），当中的每个方法都会保证在更新被应用之后触发。若你需要基于之前的状态来设置状态，阅读下面关于`updater`参数的介绍。
+
+除非`shouldComponentUpdate()` 返回`false`，否则`setState()`永远都会导致重渲。若使用可变对象同时条件渲染逻辑无法在`shouldComponentUpdate()`中实现，仅当新状态不同于之前状态时调用`setState()`，将避免不必要的重渲。
+
+第一个函数是带签名的`updater`函数：
+
+```javascript
+(prevState, props) => stateChange
+```
+
+`prevState`是之前状态的引用。其不应该被直接改变。代替地，改变应该通过构建一个来自于`prevState` 和 `props`输入的新对象来表示。例如，假设我们想通过`props.step`在状态中增加一个值：
+
+```javascript
+this.setState((prevState, props) => {
+  return {counter: prevState.counter + props.step};
+});
+```
+
+updater函数接收到的`prevState` 和 `props`保证都是最新的。updater的输出是和`prevState`的浅合并。
+
+`setState()`的第二个参数是一个可选地回调函数，其将会在`setState`执行完成同时组件被重渲之后执行。通常，对于这类逻辑，我们推荐使用`componentDidUpdate`。
+
+你可以选择性地传递一个对象作为 `setState()`的第一个参数而不是一个函数：
+
+```javascript
+setState(stateChange, [callback])
+```
+
+其仅是将`stateChange`浅合并到新状态中。例如，调整购物车中物品数量：
+
+```javascript
+this.setState({quantity: 2})
+```
+
+这一形式的`setState()`也是异步的，并在相同的周期中多次调用可能会被合并到一起。例如，若你在相同的周期中尝试多次增加一件物品的数量，其等价于：
+
+```javaScript
+Object.assign(
+  previousState,
+  {quantity: state.quantity + 1},
+  {quantity: state.quantity + 1},
+  ...
 )
 ```
 
-如果没有子代，你还可以使用自闭合标签，比如：
+之后的调用在同一周期中将会重写之前调用的值，因此数量仅会被加一。若之后的状态依赖于之前的状态，我们推荐使用updater函数形式：
 
 ```js
-<div className="sidebar" />
+this.setState((prevState) => {
+  return {counter: prevState.quantity + 1};
+});
 ```
 
-编译为：
+更多细节，查看[State & 生命周期指南](/react/docs/state-and-lifecycle.html)。
+
+* * *
+
+### `forceUpdate()`
+
+```javascript
+component.forceUpdate(callback)
+```
+
+默认情况，当你的组件或状态发生改变，你的组件将会重渲。若你的`render()`方法依赖其他数据，你可以通过调用`forceUpdate()`来告诉React组件需要重渲。
+
+调用`forceUpdate()`将会导致组件的 `render()`方法被调用，并忽略`shouldComponentUpdate()`。这将会触发每一个子组件的生命周期方法，涵盖，每个子组件的`shouldComponentUpdate()` 方法。若当标签改变，React仅会更新DOM。
+
+通常你应该尝试避免所有`forceUpdate()` 的用法并仅在`render()`函数里从`this.props`和`this.state`读取数据。
+* * *
+
+## 类属性
+
+### `defaultProps`
+
+`defaultProps`可以被定义为组件类的一个属性，用以为类设置默认的属性。这对于未定义（undefined）的属性来说有用，而对于设为空（null）的属性并没用。例如：
 
 ```js
-React.createElement(
-  'div',
-  {className: 'sidebar'},
-  null
-)
-```
-
-如果你想彻底验证 JSX 是如何转换为 JavaScript 的，你可以尝试 [在线 Babel 编译器](https://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015%2Creact%2Cstage-0&code=function%20hello()%20%7B%0A%20%20return%20%3Cdiv%3EHello%20world!%3C%2Fdiv%3E%3B%0A%7D).
-
-## 指定 React 元素类型
-
-JSX 的标签名决定了 React 元素的类型。
-
-大写开头的 JSX 标签表示一个 React 组件。这些标签将会被编译为同名变量并被引用，所以如果你使用了 `<Foo />` 表达式，则必须在作用域中先声明 `Foo` 变量。
-
-### React 必须声明
-
-由于 JSX 编译后会调用 `React.createElement` 方法，所以在你的 JSX 代码中必须首先声明 `React` 变量。
-
-比如，下面两个导入都是必须的，尽管 `React` 和 `CustomButton` 都没有在代码中被直接调用。
-
-```js{1,2,5}
-import React from 'react';
-import CustomButton from './CustomButton';
-
-function WarningButton() {
-  // 返回 React.createElement(CustomButton, {color: 'red'}, null);
-  return <CustomButton color="red" />;
-}
-```
-
-如果你使用 `<script>` 加载 React，它将作用于全局。
-
-### 点表示法
-
-你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 `MyComponents.DataPicker` 的组件，你可以直接在 JSX 中使用它：
-
-```js{10}
-import React from 'react';
-
-const MyComponents = {
-  DatePicker: function DatePicker(props) {
-    return <div>Imagine a {props.color} datepicker here.</div>;
-  }
+class CustomButton extends React.Component {
+  // ...
 }
 
-function BlueDatePicker() {
-  return <MyComponents.DatePicker color="blue" />;
-}
-```
-
-### 首字母大写
-
-当元素类型以小写字母开头时，它表示一个内置的组件，如 `<div>` 或 `<span>`，并将字符串 'div' 或 'span' 传 递给 `React.createElement`。 以大写字母开头的类型，如 `<Foo />` 编译为 `React.createElement(Foo)`，并它正对应于你在 JavaScript 文件中定义或导入的组件。
-
-我们建议用大写开头命名组件。如果你的组件以小写字母开头，请在 JSX 中使用之前其赋值给大写开头的变量。
-
-例如，下面的代码将无法按预期运行：
-
-```js{3,4,10,11}
-import React from 'react';
-
-// 错误！组件名应该首字母大写:
-function hello(props) {
-  // 正确！div 是有效的 HTML 标签:
-  return <div>Hello {props.toWhat}</div>;
-}
-
-function HelloWorld() {
-  // 错误！React 会将小写开头的标签名认为是 HTML 原生标签:
-  return <hello toWhat="World" />;
-}
-```
-
-为了解决这个问题，我们将 `hello` 重命名为 `Hello`，然后使用 `<Hello />` 引用：
-
-```js{3,4,10,11}
-import React from 'react';
-
-// 正确！组件名应该首字母大写:
-function Hello(props) {
-  // 正确！div 是有效的 HTML 标签:
-  return <div>Hello {props.toWhat}</div>;
-}
-
-function HelloWorld() {
-  // 正确！React 能够将大写开头的标签名认为是 React 组件。
-  return <Hello toWhat="World" />;
-}
-```
-
-### 在运行时选择类型
-
-你不能使用表达式来作为 React 元素的标签。如果你的确想通过表达式来确定 React 元素的类型，请先将其赋值给大写开头的变量。这种情况一般会在你想通过属性值条件渲染组件时出现：
-
-```js{10,11}
-import React from 'react';
-import { PhotoStory, VideoStory } from './stories';
-
-const components = {
-  photo: PhotoStory,
-  video: VideoStory
+CustomButton.defaultProps = {
+  color: 'blue'
 };
-
-function Story(props) {
-  // 错误！JSX 标签名不能为一个表达式。
-  return <components[props.storyType] story={props.story} />;
-}
 ```
 
-要解决这个问题，我们需要先将类型赋值给大写开头的变量。
-
-```js{10-12}
-import React from 'react';
-import { PhotoStory, VideoStory } from './stories';
-
-const components = {
-  photo: PhotoStory,
-  video: VideoStory
-};
-
-function Story(props) {
-  // 正确！JSX 标签名可以为大写开头的变量。
-  const SpecificStory = components[props.storyType];
-  return <SpecificStory story={props.story} />;
-}
-```
-
-## 属性
-
-在 JSX 中有几种不同的方式来指定属性。
-
-### 使用 JavaScript 表达式
-
-你可以传递任何 `{}` 包裹的 JavaScript 表达式作为一个属性值。例如，在这个 JSX 中：
+若未设置`props.color`，其将被设置默认为`'blue'`:
 
 ```js
-<MyComponent foo={1 + 2 + 3 + 4} />
-```
-
-对于 `MyComponent`来说， `props.foo` 的值为 10，这是 `1 + 2 + 3 + 4` 表达式计算得出的。
-
-`if` 语句和 `for` 循环在 JavaScript 中不是表达式，因此它们不能直接在 JSX 中使用，所以你可以将它们放在周围的代码中。
-
-```js{3-7}
-function NumberDescriber(props) {
-  let description;
-  if (props.number % 2 == 0) {
-    description = <strong>even</strong>;
-  } else {
-    description = <i>odd</i>;
+  render() {
+    return <CustomButton /> ; // props.color will be set to blue
   }
-  return <div>{props.number} is an {description} number</div>;
-}
 ```
 
-你可以在相关部分中了解有关 [条件渲染](/react/docs/conditional-rendering.html) 和 [循环](/react/docs/lists-and-keys.html) 的更多信息。
-
-### 字符串常量
-
-你可以将字符串常量作为属性值传递。下面这两个 JSX 表达式是等价的：
+若`props.color`设为null，则其值则为null：
 
 ```js
-<MyComponent message="hello world" />
-
-<MyComponent message={'hello world'} />
-```
-
-当你传递一个字符串常量时，它不会对其进行 HTML 转义，所以下面两个 JSX 表达式是相同的：
-
-```js
-<MyComponent message="&lt;3" />
-
-<MyComponent message={'<3'} />
-```
-
-这种行为通常是无意义的，提到它只是为了完整性。
-
-### 默认为 True
-
-如果你没有给属性传值，它默认为 `true`。因此下面两个 JSX 是等价的：
-
-```js
-<MyTextBox autocomplete />
-
-<MyTextBox autocomplete={true} />
-```
-
-一般情况下，我们不建议这样使用，因为它会与 [ES6 对象简洁表示法](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#New_notations_in_ECMAScript_2015) 混淆。比如 `{foo}` 是 `{foo: foo}` 的简写，而不是 `{foo: true}`。这里能这样用，是因为它符合 HTML 的做法。
-
-### 扩展属性
-
-如果你已经有了个 `props` 对象，并且想在 JSX 中传递它，你可以使用 `...` 作为扩展操作符来传递整个属性对象。下面两个组件是等效的：
-
-```js{7}
-function App1() {
-  return <Greeting firstName="Ben" lastName="Hector" />;
-}
-
-function App2() {
-  const props = {firstName: 'Ben', lastName: 'Hector'};
-  return <Greeting {...props} />;
-}
-```
-
-当你构建通用容器时，扩展属性会非常有用。然而，这样做也可能让很多不相关的属性，传递到不需要它们的组件中使代码变得混乱。我们建议你谨慎使用此语法。
-
-## 子代
-
-在包含开始和结束标签的 JSX 表达式中，标记之间的内容作为特殊的参数传递：`props.children`。有几种不同的方法来传递子代：
-
-### 字符串常量
-
-你可以在开始和结束标签之间放入一个字符串，则 `props.children` 就是那个字符串。这对于许多内置 HTML 元素很有用。例如：
-
-```js
-<MyComponent>Hello world!</MyComponent>
-```
-
-这是有效的 JSX，并且 `MyComponent` 的 `props.children` 值将会直接是 `"hello world!"`。因为 HTML 未转义，所以你可以像写 HTML 一样写 JSX：
-
-```html
-<div>This is valid HTML &amp; JSX at the same time.</div>
-```
-
-JSX 会移除行空行和开始和结尾处的空格。标签邻近的新行也会被移除，字符串常量内部的换行会被压缩成一个空格，所以下面这些都等价：
-
-```js
-<div>Hello World</div>
-
-<div>
-  Hello World
-</div>
-
-<div>
-  Hello
-  World
-</div>
-
-<div>
-
-  Hello World
-</div>
-```
-
-### JSX
-
-你可以通过子代嵌入更多的 JSX 元素，这对于嵌套显示组件非常有用：
-
-```js
-<MyContainer>
-  <MyFirstComponent />
-  <MySecondComponent />
-</MyContainer>
-```
-
-你可以混合不同类型的子元素，同时用字符串常量和 JSX 子元素，这是 JSX 类似 HTML 的另一种形式，这在 JSX 和 HTML 中都是有效的：
-```html
-<div>
-  Here is a list:
-  <ul>
-    <li>Item 1</li>
-    <li>Item 2</li>
-  </ul>
-</div>
-```
-
-一个 React 组件不能返回多个 React 元素，但是单个 JSX 表达式可以有多个子元素，因此，如果你希望一个组件渲染多个元素，你可以用 `<div>` 将其包起来。
-
-### JavsScript 表达式
-
-你可以将任何 `{}` 包裹的 JavaScript 表达式作为子代传递。例如，下面这些表达式是等价的：
-
-```js
-<MyComponent>foo</MyComponent>
-
-<MyComponent>{'foo'}</MyComponent>
-```
-
-这对于渲染任意长度的 JSX 表达式的列表很有用。例如，下面将会渲染一个 HTML 列表：
-
-```js{2,9}
-function Item(props) {
-  return <li>{props.message}</li>;
-}
-
-function TodoList() {
-  const todos = ['finish doc', 'submit pr', 'nag dan to review'];
-  return (
-    <ul>
-      {todos.map((message) => <Item key={message} message={message} />)}
-    </ul>
-  );
-}
-```
-
-JavsScript 表达式可以与其他类型的子代混合使用。这通常对于字符串模板非常有用：
-
-```js{2}
-function Hello(props) {
-  return <div>Hello {props.addressee}!</div>;
-}
-```
-
-### 函数
-
-通常情况下，插入 JSX 中的 JavsScript 表达式将被认作字符串、React 元素或这些内容的列表。然而，`props.children` 可以像其它属性一样传递任何数据，而不仅仅是 React 元素。例如，如果你使用自定义组件，则可以将调用 `props.children` 来获得传递的子代：
-
-```js{4,13}
-// Calls the children callback numTimes to produce a repeated component
-function Repeat(props) {
-  let items = [];
-  for (let i = 0; i < props.numTimes; i++) {
-    items.push(props.children(i));
+  render() {
+    return <CustomButton color={null} /> ; // props.color will remain null
   }
-  return <div>{items}</div>;
-}
-
-function ListOfTenThings() {
-  return (
-    <Repeat numTimes={10}>
-      {(index) => <div key={index}>This is item {index} in the list</div>}
-    </Repeat>
-  );
-}
 ```
 
-传递给自定义组件的子代可以是任何元素，只要该组件在 React 渲染前将其转换成 React 能够理解的东西。这个用法并不常见，但当你想扩展 JSX 时可以使用。
+* * *
 
-### 布尔值、Null 和 Undefined 被忽略
+### `displayName`
 
-`false`、`null`、`undefined` 和 `true` 都是有效的子代，但它们不会直接被渲染。下面的表达式是等价的：
+`displayName`被用在调试信息中。JSX会自动设置该值；查看[深入JSX](/react/docs/jsx-in-depth.html)。
 
-```js
-<div />
+* * *
 
-<div></div>
+## 实例属性
 
-<div>{false}</div>
+### `props`
 
-<div>{null}</div>
+`this.props`包含了组件该调用者定义的属性。查看[组件 & Props](/react/docs/components-and-props.html)关于属性的介绍。
 
-<div>{undefined}</div>
+特别地，`this.props.children`是一个特别属性，其通常由JSX表达式中的子标签定义，而不是标签本身。
 
-<div>{true}</div>
-```
+### `state`
 
-这样就可以方便的条件渲染 React 元素。当 `showHeader` 为 `true` 时，下面这个组件将只渲染一个 `<Header />`。
+状态是该组件的特定数据，其可能改变多次。状态由用户定义，且其应为纯JavaScript对象。
 
-```js{2}
-<div>
-  {showHeader && <Header />}
-  <Content />
-</div>
-```
+若你不在`render()`方法中使用它，其不应该该被放在状态上。例如，你可直接将timer IDs放在实例上。
 
-值得注意的是，React 提供了一些 ["falsy" 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) （即， 除了false 外，0，“”，null，undefined 和 NaN），它们依然会被渲染。例如，下面的代码不会像你预期的那样运行，因为当 `props.message` 为空数组时，它会打印 0：
+查看[State & 生命周期](/react/docs/state-and-lifecycle.html)了解更多关于状态的信息。
 
-```js{2}
-<div>
-  {props.messages.length &&
-    <MessageList messages={props.messages} />
-  }
-</div>
-```
-
-要解决这个问题，请确保 `&&` 前面的表达式始终为布尔值：
-
-```js{2}
-<div>
-  {props.messages.length > 0 &&
-    <MessageList messages={props.messages} />
-  }
-</div>
-```
-
-相反，如果你想让类似 `false`、`true`、`null` 或 `undefined` 出现在输出中，你必须先把它[转换成字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion) :
-
-```js{2}
-<div>
-  My JavaScript variable is {String(myVariable)}.
-</div>
-```
+永远不要直接改变`this.state`，因为调用`setState()`会替换你之前做的改变。将`this.state`当成不可变的。
