@@ -25,14 +25,18 @@ next: design-principles.html
 ## 递归装载
 
 让我们思考你第一次装载一个组件:
+
 ```javascript
 ReactDOM.render(<App />, rootEl);
 ```
+
 React DOM将传递App给识别算法。 记得App是一个React元素，是一个你要渲染什么的描述,你可以认为它是一个原生对象。
+
 ```javascript
 console.log(<App />);
 // { type: App, props: {} }
 ```
+
 这个识别算法将检查App是否是一个类或者是一个函数。如果App是一个函数，这个识别算法将调用<code>App(props)</code>返回React元素。如果App是一个类，这个识别算法将通过<code>new App(props)</code>实例化一个App，然后调用componentWillMount生命周期方法。
 
 换句话说，这个识别算法将了解这个元素App将渲染什么。
@@ -92,6 +96,7 @@ rootEl.appendChild(node);
 除了用户定义的组合组件，React Elements也可以表示特定平台（"宿主”）组件。例如，Button可以从它的render方法返回一个div。
 
 如果元素的type属性是一个字符串，我们就把它当宿主元素来处理：
+
 ```javascript
 console.log(<div/>);
 // {type: 'div', props: {}}
@@ -274,9 +279,13 @@ class CompositeComponent {
 ```
 
 这和之前mountComposite完成没有太多的区别，但是现在我们可以保存一些信息，比如当前元素，当前已渲染返回的组件，以及当前的组件实例用于更新使用。
+
 注意 CompositeComponent的实例和用户定义的类实例不是一回事。CompositeComponent是我们识别算法的一部分，并且从来不暴露给用户。
+
 我们使用这个类通过元素类型来读取用户自定义的类，并且创造它的实例。为了避免困惑，我们把CompositeComponent和DOMComponent的实例称为"内部实例"。
+
 他们存在是为了我们可以关联一些持久数据给他们。只有渲染器和识别算法能够意识到他们的存在。与此相类似，我们叫用户定义的类实例叫"公开实例"。
+
 这个公开实例是你在render方法和其他自定义组件方法中作为this使用的。
 
 这个mountHost函数，重构成DOMComponent的mount方法，看上去相似：
@@ -316,6 +325,7 @@ class DOMComponent {
   }
 }
 ```
+
 重构mountHost函数之后的主要区别是我们保持this.node和this.renderedChildren和内部DOM Component实例保持关联。我们未来将使用它们进行无痕更新。最后，无论组合还是宿主的内部实例，现在都可以指向它的子内部实例。如果一个App组件渲染一个Button类并且Button类渲染一个div，内部实例树将像下边这样：
 
 ```javascript
@@ -333,6 +343,7 @@ class DOMComponent {
   }
 }
 ```
+
 这个内部实例树包含复合类型和宿主类型内部实例。在DOM结构里你将仅看到<div>
 这个composite内部实例包含以下内容：
 
@@ -425,17 +436,18 @@ function mountTree(element,containerNode) {
 
 ## 更新
 
- 在前面章节，我们完成了卸载。然而如果当任何属性改变就重新卸载和插入整个DOM树，那么React并没有太大的实用性。识别算法的目标是重用已存在的实例，这些实例保留对应的DOM节点和状态。
- ```javascript
- var rootEl = document.getElementById('root');
- mountTree(<App />, rootEl);
- // 应该重用已存在的DOM树
- mountTree(<App />, rootEl);
- ```
+在前面章节，我们完成了卸载。然而如果当任何属性改变就重新卸载和插入整个DOM树，那么React并没有太大的实用性。识别算法的目标是重用已存在的实例，这些实例保留对应的DOM节点和状态。
+
+```javascript
+var rootEl = document.getElementById('root');
+mountTree(<App />, rootEl);
+// 应该重用已存在的DOM树
+mountTree(<App />, rootEl);
+```
 
  我们将增加一个或多个方法来扩展内部实例。除了增加mount和unmount方法外,DOMComponent和CompositeComponent将完成一个叫receive(nextElement)的方法。
 
- <code>
+```javascript
  class CompositeComponent {
   // ...
 
@@ -451,11 +463,7 @@ class DOMComponent {
     // ...
   }
 }
- </code>
- Its job is to do whatever is necessary to bring the component (and any of its children) up to date with the description provided by the nextElement.
-
-This is the part that is often described as "virtual DOM diffing" a
-lthough what really happens is that we walk the internal tree recursively and let each internal instance receive an update.
+```
 
 这个函数的职责是将nextElement提供的最新描述给组件或者它的子组件。这部分经常被描述为"虚拟DOM更新"。尽管实际上发生的是我们经常说的内部实例树的递归，同时每个实例树都接受一个更新。
 
@@ -533,6 +541,7 @@ class DOMComponent {
   }
 }
 ```
+
 ## 更新宿主组件
 
 宿主组件的更新方式是不同的，如DOMComponent。当他们接受一个元素时，他们需要更新背后特定平台的视图。
@@ -615,6 +624,7 @@ class DOMComponent {
   }
 }
 ```
+
 ## 更新 
 
 现在包括符合组件和宿主组件都完成了receive方法，我们可以改变以及函数mountTree仅当元素类型和最后一次相同时使用
@@ -650,8 +660,7 @@ mountTree(<App/>,rootEl);
 
 这些基本展现了react内部是如何运作的。
 
-## 我们还没有提什么
-
+##我们还没有提什么
 
 这份文档简化了真实的代码库。有一些方面很重要，但是我们并没有提及：
 
@@ -671,7 +680,7 @@ mountTree(<App/>,rootEl);
 
 +  React放当前更新到一个叫"transaction'的内部对象中。Transactions在跟踪声明周期钩子队列方面很有用，当前DOM嵌套错误警告，任何特定的全局更新。Transactions也确保React在更新后清空一切。例如，被React DOM提供的事务类将在任何更新后，重新存储输入的东西。
 
-## 跳着看代码
+##跳着看代码
 
 + [ReactMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/dom/client/ReactMount.js)处可以发现本章节中提到的mountTree和unmountTree函数。它负责装载和卸载顶级类。[ReactNativeMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/native/ReactNativeMount.js)完成了React Native中同样的功能。
 
