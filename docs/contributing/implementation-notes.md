@@ -659,7 +659,7 @@ mountTree(<App/>,rootEl);
 
 这些基本展现了react内部是如何运作的。
 
-##我们还没有提什么
+## 我们还没有提什么
 
 这份文档简化了真实的代码库。有一些方面很重要，但是我们并没有提及：
 
@@ -679,7 +679,7 @@ mountTree(<App/>,rootEl);
 
 +  React放当前更新到一个叫"transaction'的内部对象中。Transactions在跟踪声明周期钩子队列方面很有用，当前DOM嵌套错误警告，任何特定的全局更新。Transactions也确保React在更新后清空一切。例如，被React DOM提供的事务类将在任何更新后，重新存储输入的东西。
 
-##跳着看代码
+## 跳着看代码
 
 + [ReactMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/dom/client/ReactMount.js)处可以发现本章节中提到的mountTree和unmountTree函数。它负责装载和卸载顶级类。[ReactNativeMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/native/ReactNativeMount.js)完成了React Native中同样的功能。
 
@@ -705,6 +705,6 @@ mountTree(<App/>,rootEl);
 
 ## 下一步
 
-读下一章节来了解我们在开发React时使用的指导准则。
+读下一章节来了解我们在开发React时的理念。
 
 
