@@ -140,7 +140,7 @@ const element = React.createElement(
 );
 ```
 
-`React.createElement()` 这个方法首先会进行一些避免bug的检查，之后会返回一个类似下面离子的对象：
+`React.createElement()` 这个方法首先会进行一些避免bug的检查，之后会返回一个类似下面例子的对象：
 
 ```js
 // 注意: 以下示例是简化过的（不代表在 React 源码中是这样）
