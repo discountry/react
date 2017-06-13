@@ -364,7 +364,7 @@ var root = document.getElementById('root');
 mountTree(<App/>,root);
 ```
 
-##卸载
+## 卸载
 
 现在我们有了可以联系他们孩子和DOM节点的内部实例，我们可以用他们完成卸载。
 对于一个复合组件，调用生命周期方法递归卸载。
@@ -533,7 +533,7 @@ class DOMComponent {
   }
 }
 ```
-##更新宿主组件
+## 更新宿主组件
 
 宿主组件的更新方式是不同的，如DOMComponent。当他们接受一个元素时，他们需要更新背后特定平台的视图。
 以React DOM为例，这意味着更新DOM节点的属性。
@@ -615,7 +615,7 @@ class DOMComponent {
   }
 }
 ```
-##更新 
+## 更新 
 
 现在包括符合组件和宿主组件都完成了receive方法，我们可以改变以及函数mountTree仅当元素类型和最后一次相同时使用
 
@@ -650,7 +650,7 @@ mountTree(<App/>,rootEl);
 
 这些基本展现了react内部是如何运作的。
 
-##我们还没有提什么
+## 我们还没有提什么
 
 
 这份文档简化了真实的代码库。有一些方面很重要，但是我们并没有提及：
@@ -671,7 +671,7 @@ mountTree(<App/>,rootEl);
 
 +  React放当前更新到一个叫"transaction'的内部对象中。Transactions在跟踪声明周期钩子队列方面很有用，当前DOM嵌套错误警告，任何特定的全局更新。Transactions也确保React在更新后清空一切。例如，被React DOM提供的事务类将在任何更新后，重新存储输入的东西。
 
-##跳着看代码
+## 跳着看代码
 
 + [ReactMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/dom/client/ReactMount.js)处可以发现本章节中提到的mountTree和unmountTree函数。它负责装载和卸载顶级类。[ReactNativeMount](https://github.com/facebook/react/blob/83381c1673d14cd16cf747e34c945291e5518a86/src/renderers/native/ReactNativeMount.js)完成了React Native中同样的功能。
 
