@@ -17,7 +17,7 @@ next: design-principles.html
  
  这篇文档和他的演讲简化了真实react的代码库，因此你也许通过熟悉他们两者，可以更好的理解react代码库。
  
-##总览
+## 总览
 
 这个识别算法并没有公共的API.渲染器像React DOM和React Native使用它有效地更新用户使用react构建的用户界面。
 
