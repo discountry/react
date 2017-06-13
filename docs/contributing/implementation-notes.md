@@ -6,7 +6,7 @@ permalink: contributing/implementation-notes.html
 prev: codebase-overview.html
 next: design-principles.html
 ---
-# Implementation Notes
+# 实现说明
 
   这部分来源于完成栈识别算法的笔记。它是一份技术文档并假定读者对react的公共api也包括react如何划分为核心，渲染器，识别算法有很深的理解。如果你还不熟react的[代码库](https://facebook.github.io/react/contributing/codebase-overview.html)，请首先阅读[代码库]
 (https://facebook.github.io/react/contributing/codebase-overview.html)。
