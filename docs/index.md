@@ -1,6 +1,6 @@
 ---
 layout: hero
-title: 用于构建用户界面的 JavaScript 框架
+title: 用于构建用户界面的 JavaScript 库
 id: home
 ---
 
