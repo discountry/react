@@ -19,7 +19,7 @@ redirect_from:
 
 ## 概览
 
-`React.Component`是一个抽象基础类，因此直接引用`React.Component`基乎没意义。相反，你通常会继承自它，并至少定义一个[`render()`](#render)方法。
+`React.Component`是一个抽象基础类，因此直接引用`React.Component`几乎没意义。相反，你通常会继承自它，并至少定义一个[`render()`](#render)方法。
 
 通常你定义一个React组件相当于一个纯[JavaScript类](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes)：
 
