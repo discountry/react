@@ -52,6 +52,8 @@
       title: 高阶组件
     - id: integrating-with-other-libraries
       title: 与第三方库协同
+    - id: accessibility
+      title: 可访问性
 - title: 参考(本节已翻译)
   items:
     - id: react-api
