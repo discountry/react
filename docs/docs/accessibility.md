@@ -8,7 +8,7 @@ redirect_from:
 
 ## 为何要需要可访问性？
 
-Web可访问性（也被称为 [**a11y**](https://en.wiktionary.org/wiki/a11y)）是为大家提供可用的网站的设计和发明。通过通过辅助技术来与页面交互对于可访问性支持是必要的。
+Web可访问性（也被称为 [**a11y**](https://en.wiktionary.org/wiki/a11y)）是为大家提供可用的网站的设计和发明。通过辅助技术来与页面交互对于可访问性支持是必要的。
 
 React完全支持构建可访问性的页面， 通常通过使用标准的HTML技术。
 
@@ -16,7 +16,7 @@ React完全支持构建可访问性的页面， 通常通过使用标准的HTML�
 
 ### WCAG
 
-[网络内容可访问性指南](https://www.w3.org/WAI/intro/wcag) 为创建可访问性站点提供了知道。
+[网络内容可访问性指南](https://www.w3.org/WAI/intro/wcag) 为创建可访问性站点提供了指导。
 
 下列的WCAG列表提供了概览：
 
@@ -26,7 +26,7 @@ React完全支持构建可访问性的页面， 通常通过使用标准的HTML�
 
 ### WAI-ARIA
 
-[网络可访问倡议 - 可访问富网络应用](https://www.w3.org/WAI/intro/aria) 文档涵盖了构建完整的可访问JavaScript工具技术。
+[网络可访问倡议 - 可访问性富网络应用](https://www.w3.org/WAI/intro/aria) 文档涵盖了构建完整的可访问JavaScript工具技术。
 
 注意JSX完全支持所有的`aria-*` HTML属性。然而，在React中大部分DOM属性和特性采用小驼峰命名规则，这些特性应该采用小写：
 
@@ -45,7 +45,7 @@ React完全支持构建可访问性的页面， 通常通过使用标准的HTML�
 
 ### 标签
 
-每个HTML表单控件，例如`<input>` 和 `<textarea>`，都需要可被标记上的可访问的标签。我们需要提供描述性的标签同时也展示给屏幕阅读器。
+每个HTML表单控件，例如`<input>` 和 `<textarea>`，都需要被标记上的可访问的标签。我们需要提供描述性的标签同时也展示给屏幕阅读器。
 
 下列资源展示了如何使用标签：
 
@@ -81,7 +81,7 @@ React完全支持构建可访问性的页面， 通常通过使用标准的HTML�
 
 仅能使用CSS来移除这一边框，若你要用其他边框来替换他，例如可以设置`outline: 0`。
 
-### 定位的期望内容的机制
+### 定位到期望内容的机制
 
 在应用中提供一种机制用以允许用户跳过之前的导航部分来帮助和加速键盘导航。
 
@@ -99,7 +99,7 @@ Skiplinks 或 Skip Navigation Links 隐藏在导航链接中，仅当用户用�
 
 我们的React应用会在运行期间持续地修改HTML DOM元素，有时会导致键盘焦点丢失或定位到未知元素上。为修复该问题，我们需要用代码微调键盘焦点到正确的方向。例如，重设键盘焦点到一个打开模态窗口的按钮上，在模态窗口关闭之后。
 
-火狐开发者网络可以查看并描述了我们如何构建[键盘导航的JavaScript工具](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets)。
+Mozilla开发者网络可以查看并描述了我们如何构建[键盘导航的JavaScript工具](https://developer.mozilla.org/en-US/docs/Web/Accessibility/Keyboard-navigable_JavaScript_widgets)。
 
 为在React中设置焦点，我们可使用[Refs to Components](refs-and-the-dom.html)。
 
@@ -126,7 +126,7 @@ render() {
  }
  ```
 
-一个好的焦点管理的例子是[react-aria-modal](https://github.com/davidtheclark/react-aria-modal)。这是个相对罕见的完全可访问的模态窗口的例子。不仅将初始焦点设在取消按钮（阻止用户意外地激活成功操作）和在模态对话框内记录键盘焦点，其还重置焦点回到最初触发对话框的元素上。
+一个不错的焦点管理的例子是[react-aria-modal](https://github.com/davidtheclark/react-aria-modal)。这是个相对罕见的完全可访问的模态窗口的例子。不仅将初始焦点设在取消按钮（阻止用户意外地激活成功操作）和在模态对话框内记录键盘焦点，其还重置焦点回到最初触发对话框的元素上。
 
 >注意：
 
