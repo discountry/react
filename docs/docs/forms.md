@@ -179,7 +179,7 @@ class FlavorForm extends React.Component {
 }
 ```
 
-[[在 CodePen 上尝试.](https://codepen.io/gaearon/pen/JbbEzX?editors=0010)
+[在 CodePen 上尝试.](https://codepen.io/gaearon/pen/JbbEzX?editors=0010)
 
 总之，`<input type="text">`, `<textarea>`, 和 `<select>` 都十分类似 - 他们都通过传入一个`value`属性来实现对组件的控制。
 
