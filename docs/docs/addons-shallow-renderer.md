@@ -1,6 +1,6 @@
 ---
 id: shallow-renderer
-title: Shallow Renderer
+title: 浅层渲染
 permalink: docs/shallow-renderer.html
 layout: docs
 category: Reference
