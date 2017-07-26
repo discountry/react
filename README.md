@@ -12,7 +12,7 @@
 
 ## Contributors
 
-感谢所有[参与翻译的同学](./graphs/contributors)。是大家的开源精神和辛勤工作让文档的翻译得以如此顺利迅速进行。
+感谢所有[参与翻译的同学](https://github.com/discountry/react/graphs/contributors)。是大家的开源精神和辛勤工作让文档的翻译得以如此顺利迅速进行。
 
 ## License
 
