@@ -10,6 +10,10 @@
 
 ![2017-07-26_11-22-41.png](https://i.loli.net/2017/07/26/59780b3f526c0.png)
 
+## Contributors
+
+感谢所有[参与翻译的同学](./graphs/contributors)。是大家的开源精神和辛勤工作让文档的翻译得以如此顺利迅速进行。
+
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
