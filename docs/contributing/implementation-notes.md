@@ -99,7 +99,7 @@ rootEl.appendChild(node);
 ```javascript
 console.log(<div/>);
 // {type: 'div', props: {}}
-```
+``` 
 
 宿主元素里不包含用户定义的代码。
 
@@ -343,7 +343,7 @@ class DOMComponent {
 }
 ```
 
-这个内部实例树包含复合类型和宿主类型内部实例。在DOM结构里你将仅看到<div>
+这个内部实例树包含复合类型和宿主类型内部实例。在DOM结构里你将仅看到`<div>`
 这个composite内部实例包含以下内容：
 
 + 当前元素
