@@ -358,9 +358,9 @@ class DOMComponent {
 
 如果你正在努力想想内部复杂程序中内部实例树是什么样子。[React开发者工具](https://github.com/facebook/react-devtools)可以给你一个直观的印象。它使用灰色高亮宿主实例，使用紫色高亮复合实例。
 
-![](https://facebook.github.io/react/img/docs/implementation-notes-tree.png)
+![implementation-notes-tree](https://facebook.github.io/react/img/docs/implementation-notes-tree.png)
 
-为了完成这次重构，我们将介绍一个函数像ReactDOM.render()来负责装载完整的树到一个容器节点。它也像ReactDOM.render()一样返回一个公开实例。
+为了完成这次重构，我们将介绍一个函数像ReactDOM.render()来负责装载完整的树到一个容器节点。它也像 `ReactDOM.render()` 一样返回一个公开实例。
 
 ```javascript
 function mountTree(element,containerNode) {
@@ -404,7 +404,7 @@ class DOMComponent {
 ```
 
 实际上，卸载DOM组件也需要移除事件监听器和清除一些缓存，但是我们将跳过这些细节。
-我们可以增加一个一级函数叫unmountTree(containerNode)，这个函数和ReactDOM.unmountComponentAtNode()类似。
+我们可以增加一个一级函数叫 `unmountTree(containerNode)`，这个函数和 `ReactDOM.unmountComponentAtNode()` 类似。
 
 ```javascript
 function unmountTree(containerNode) {
@@ -415,7 +415,7 @@ function unmountTree(containerNode) {
 }
 ```
 
-为了让上面的代码工作，我们需要从DOM节点中读取一个内部根实例。我们将修改mountTree()增加一个_internalInstance属性给根DOM节点。为了让mountTree可以被调用多次，我们也让mountTree来销毁已存在的DOM树。
+为了让上面的代码工作，我们需要从DOM节点中读取一个内部根实例。我们将修改mountTree()增加一个 `_internalInstance` 属性给根DOM节点。为了让 `mountTree` 可以被调用多次，我们也让 `mountTree` 来销毁已存在的DOM树。
 
 ```javascript
 function mountTree(element,containerNode) {
@@ -431,11 +431,11 @@ function mountTree(element,containerNode) {
 }
 ```
 
-现在重复运行unmountTree()或者运行mountTree()移除旧的dom树，运行componentWillUnmount()生命周期钩子在组件上。
+现在重复运行 `unmountTree()` 或者运行 `mountTree()` 移除旧的dom树，运行 `componentWillUnmount()` 生命周期钩子在组件上。
 
 ## 更新
 
-在前面章节，我们完成了卸载。然而如果当任何属性改变就重新卸载和插入整个DOM树，那么React并没有太大的实用性。识别算法的目标是重用已存在的实例，这些实例保留对应的DOM节点和状态。
+在前面章节，我们完成了卸载。然而如果当任何属性改变就重新卸载和插入整个DOM树，那么 React 并没有太大的实用性。识别算法的目标是重用已存在的实例，这些实例保留对应的DOM节点和状态。
 
 ```javascript
 var rootEl = document.getElementById('root');
@@ -444,7 +444,7 @@ mountTree(<App />, rootEl);
 mountTree(<App />, rootEl);
 ```
 
- 我们将增加一个或多个方法来扩展内部实例。除了增加mount和unmount方法外,DOMComponent和CompositeComponent将完成一个叫receive(nextElement)的方法。
+ 我们将增加一个或多个方法来扩展内部实例。除了增加 `mount` 和 `unmount` 方法外,`DOMComponent` 和 `CompositeComponent` 将完成一个叫 `receive(nextElement)` 的方法。
 
 ```javascript
  class CompositeComponent {
@@ -464,11 +464,11 @@ class DOMComponent {
 }
 ```
 
-这个函数的职责是将nextElement提供的最新描述给组件或者它的子组件。这部分经常被描述为"虚拟DOM更新"。尽管实际上发生的是我们经常说的内部实例树的递归，同时每个实例树都接受一个更新。
+这个函数的职责是将 `nextElement` 提供的最新描述给组件或者它的子组件。这部分经常被描述为"虚拟DOM更新"。尽管实际上发生的是我们经常说的内部实例树的递归，同时每个实例树都接受一个更新。
 
 ## 更新复合组件
 
-当一个复合组件接受一个新元素时，我们运行componentWillUpdate这个生命周期钩子。
+当一个复合组件接受一个新元素时，我们运行 `componentWillUpdate` 这个生命周期钩子。
 
 然后我们将用新的属性重新渲染组件并且得到新一个已渲染的元素：
 
@@ -499,13 +499,14 @@ class CompositeComponent {
   }
 }
 ```
+
 接下来，我们看下一渲染元素的类型。如果这个类型从上次渲染至今都没改变过，那么组件接下来就可以保持自身更新，而不是完全替换。
 
-例如，如果你第一次返回的是<**Button** color="red"/>>并且第二次返回的是<**Button** color="blue">，
+例如，如果你第一次返回的是 `<Button color="red" />` 并且第二次返回的是 `<Button color="blue" />` ，
 我们仅可以告诉对应的内部实例通过receive方法来接受下个元素。
 
-然而，如果下一个已渲染的元素和之前已渲染的元素有不同的type，我们不能更新内部实例。一个<**button**>不可能"变成"一个<**input**>。相反，我们必须卸载已存在的内部实例同时按照已渲染元素类型对应装载一个新的内部实例。
-例如，这种情况发生在当一个<**button**>要渲染成<**input**/>
+然而，如果下一个已渲染的元素和之前已渲染的元素有不同的type，我们不能更新内部实例。一个 `<button>` 不可能"变成"一个 `<input>` 。相反，我们必须卸载已存在的内部实例同时按照已渲染元素类型对应装载一个新的内部实例。
+例如，这种情况发生在当一个 `<button>` 要渲染成 `<input>`
 
 ```javascript
  else {
@@ -521,11 +522,11 @@ class CompositeComponent {
  }
 ```
 
-综上所述，当一个复合组件接受一个新元素时，如果新元素的类型和之前的元素类型一样，那么就直接调用自身的receive方法进行更新，否则需要卸载掉原来的内部实例，在原来的地方插入一个新的元素。
+综上所述，当一个复合组件接受一个新元素时，如果新元素的类型和之前的元素类型一样，那么就直接调用自身的 `receive` 方法进行更新，否则需要卸载掉原来的内部实例，在原来的地方插入一个新的元素。
 
-还有另外一种情况，组件会重新装载而不是接受一个新元素。这种情况是元素的key已经已经变化的时候。因为这个文档已经很复杂了，我们不想在这已经复杂的文档中，在去讨论如何处理元素key。
+还有另外一种情况，组件会重新装载而不是接受一个新元素。这种情况是元素的 key 已经已经变化的时候。因为这个文档已经很复杂了，我们不想在这已经复杂的文档中，在去讨论如何处理元素 key。
 
-为了我们可以在更新期间，锁定特定平台代码并且替换掉它，现在我们需要增加在内部实例中增加一个叫getHostNode的方法。它的完成在DOMComponent和CompositeComponent中是一致的。
+为了我们可以在更新期间，锁定特定平台代码并且替换掉它，现在我们需要增加在内部实例中增加一个叫 `getHostNode` 的方法。它的完成在 `DOMComponent` 和`CompositeComponent` 中是一致的。
 
 ```javascript
 class CompositeComponent {
@@ -543,7 +544,7 @@ class DOMComponent {
 
 ## 更新宿主组件
 
-宿主组件的更新方式是不同的，如DOMComponent。当他们接受一个元素时，他们需要更新背后特定平台的视图。
+宿主组件的更新方式是不同的，如 `DOMComponent`。当他们接受一个元素时，他们需要更新背后特定平台的视图。
 以React DOM为例，这意味着更新DOM节点的属性。
 然后，宿主组件需要更新他们的子节点。不像复合组件仅包含最多一个子节点。在下面这个简单的例子中，我们使用一个内部实例数组并不断迭代它。通过判断接受的元素类型和之前的元素类型是否相同来决定是更新还是取代内部实例。
 真实的识别算法也考虑元素的key并且通过它来跟踪移动实现元素的插入和删除，但是在这里我们暂时不讨论这个逻辑。
@@ -706,5 +707,3 @@ mountTree(<App/>,rootEl);
 ## 下一步
 
 读下一章节来了解我们在开发React时的理念。
-
-
