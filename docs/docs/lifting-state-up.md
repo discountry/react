@@ -13,7 +13,7 @@ redirect_from:
 
 这部分内容当中，我们会创建一个温度计算器来计算水是否会在给定的温度下烧开。
 
-开始呢，我们先创建一个名为 `BoilingVerdict` 的组件。它会接受 `celsius` 这个温度变量最为它的 prop 属性，最后根据温度判断返回内容：
+开始呢，我们先创建一个名为 `BoilingVerdict` 的组件。它会接受 `celsius` 这个温度变量作为它的 prop 属性，最后根据温度判断返回内容：
 
 ```js{3,5}
 function BoilingVerdict(props) {
