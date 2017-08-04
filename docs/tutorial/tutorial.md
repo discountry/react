@@ -522,7 +522,7 @@ function Square(props) {
 
 记得把所有的 `this.props` 替换成参数 `props`. 我们应用中的大部分简单组件都可以通过函数定义的方式来编写，并且 React 在将来还会对函数定义组件做出更多优化。
 
-另外一部分简化的内容则是事件处理函数的写法，这里我们把 `onClick={() => props.onClick()}` 直接修改为 `onClick={props.onClick}` , 注意不能写成 `onClick={props.onClick()}` 否则 `props.onClick` 方法会被直接触发而不是传递到 Square 组件中。
+另外一部分简化的内容则是事件处理函数的写法，这里我们把 `onClick={() => props.onClick()}` 直接修改为 `onClick={props.onClick}` , 注意不能写成 `onClick={props.onClick()}` 否则 `props.onClick` 方法会在 Square 组件渲染时被直接触发而不是等到 Board 组件渲染完成时通过点击触发，又因为此时 Board 组件正在渲染中（即 Board 组件的 `render()` 方法正在调用），又触发 `handleClick(i)` 方法调用 `setState()` 会再次调用 `render()` 方法导致死循环。
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/QvvJOv?editors=0010)
 
