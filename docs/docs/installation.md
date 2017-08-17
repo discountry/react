@@ -176,7 +176,7 @@ Yarn 和 npm 都会从 [npm 仓库](http://npmjs.com/) 下载软件包。
 
 [Babel 安装说明](https://babeljs.io/docs/setup/) 说明了如何在多种不同的环境中配置 Babel，确保你已经安装了[`babel-preset-react`](http://babeljs.io/docs/plugins/preset-react/#basic-setup-with-the-cli-) 和 [`babel-preset-es2015`](http://babeljs.io/docs/plugins/preset-es2015/#basic-setup-with-the-cli-) 并且在 [`.babelrc` configuration](http://babeljs.io/docs/usage/babelrc/) 配置文件中启用它们, 到这里就准备就绪了。
 
-### 在 Hello Wrorld 中使用 ES6 的 JSX
+### 在 Hello World 中使用 ES6 的 JSX
 
 我们建议你使用像 [webpack](https://webpack.js.org/) 或 [Browserify](http://browserify.org/) 这样的构建工具，以便于编写模块代码并将其压缩，优化加载时间。
 
