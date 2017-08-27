@@ -71,7 +71,7 @@ ReactDOM.render(
 );
 ```
 
-当我们运行这段代码，将会看到一个警告`a key should be provided for list items`,意思是当你创建一个元素时，必须包括一个特殊的`key`属性。我们将在下一节讨论这是为什么？
+当我们运行这段代码，将会看到一个警告`a key should be provided for list items`,意思是当你创建一个元素时，必须包括一个特殊的`key`属性。我们将在下一节讨论这是为什么。
 
 让我们来给每个列表元素分配一个`key`来解决上面的那个警告
 
