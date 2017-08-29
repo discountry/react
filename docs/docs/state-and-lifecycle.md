@@ -7,7 +7,7 @@ prev: components-and-props.html
 next: handling-events.html
 ---
 
-参考[该例子](/react/docs/rendering-elements.html#updating-the-rendered-element)。
+参考[该例子](/react/docs/rendering-elements.html#更新元素渲染)。
 
 到目前为止我们只学习了一种方法来更新UI。
 
