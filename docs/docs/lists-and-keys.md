@@ -22,7 +22,7 @@ console.log(doubled);
 
 ### 渲染多样的组件
 
-你可以通过使用`{}`在JSX内构建一个[元素集合](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx)
+你可以通过使用`{}`在JSX内构建一个[元素集合](/react/docs/introducing-jsx.html#JSX嵌套)
 
 下面，我们使用Javascript中的[`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)方法循遍历`numbers`数组。对数组中的每个元素返回`<li>`标签，最后我们得到一个数组`listItems`
 
@@ -33,7 +33,7 @@ const listItems = numbers.map((number) =>
 );
 ```
 
-我们把整个`listItems`插入到`ul`元素中，然后[渲染进DOM](/react/docs/rendering-elements.html#rendering-an-element-into-the-dom):
+我们把整个`listItems`插入到`ul`元素中，然后[渲染进DOM](/react/docs/rendering-elements.html#将元素渲染到DOM中):
 
 ```javascript{2}
 ReactDOM.render(
@@ -131,7 +131,7 @@ const todoItems = todos.map((todo, index) =>
 ```
 
 
-如果列表可以重新排序，我们不建议使用索引来进行排序，因为这会导致渲染变得很慢。如果你想要了解更多，请点击[深度解析key的必要性](/react/docs/reconciliation.html#recursing-on-children)
+如果列表可以重新排序，我们不建议使用索引来进行排序，因为这会导致渲染变得很慢。如果你想要了解更多，请点击[深度解析key的必要性](/react/docs/reconciliation.html#递归子节点)
 
 ### 用keys提取组件
 
@@ -280,7 +280,7 @@ function NumberList(props) {
 }
 ```
 
-JSX允许在大括号中[嵌入任何表达式](/ reactions / docs / introduction-jsx.html＃embedding-expressions-in-jsx)，所以我们可以在`map()`中这样使用：
+JSX允许在大括号中[嵌入任何表达式](/react/docs/introduction-jsx.html＃JSX嵌套)，所以我们可以在`map()`中这样使用：
 
 ```js{5-8}
 function NumberList(props) {
@@ -298,4 +298,4 @@ function NumberList(props) {
 
 [在 CodePen 上试试。](https://codepen.io/gaearon/pen/BLvYrB?editors=0010)
 
-这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在JavaScript中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个`map()`嵌套了太多层级，那可能就是你[提取出组件](/reactions / docs / components-and-props.html＃extract-components)的一个好时机。
+这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在JavaScript中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个`map()`嵌套了太多层级，那可能就是你[提取出组件](/react/docs/components-and-props.html＃提取组件)的一个好时机。
