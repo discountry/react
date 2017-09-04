@@ -191,7 +191,7 @@ class Chosen extends React.Component {
 
 ## 在 React 中使用其他引擎加载页面
 
-由于 [`ReactDOM.reander()`](/react/docs/react-dom.html#render) 方法很灵活，因此我们可以将 React 与其他处理页面显示的库结合使用。
+由于 [`ReactDOM.render()`](/react/docs/react-dom.html#render) 方法很灵活，因此我们可以将 React 与其他处理页面显示的库结合使用。
 
 通常来说，尽管 React 是在页面加载的时候把一个根组件放到 DOM 里，但 `ReactDOM.render()` 方法也可以被不同的 UI 部件多次调用。这个部件可以仅仅是一个按钮，或者也可以是一个应用。
 
