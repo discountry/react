@@ -202,7 +202,7 @@ function Comment(props) {
 }
 ```
 
-接下里，我们要提取一个`UserInfo`组件，用来渲染`Avatat`旁边的用户名：
+接下里，我们要提取一个`UserInfo`组件，用来渲染`Avatar`旁边的用户名：
 
 ```js{3-8}
 function UserInfo(props) {
