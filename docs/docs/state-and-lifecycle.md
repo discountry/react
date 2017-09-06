@@ -331,14 +331,14 @@ ReactDOM.render(
 例如，此代码不会重新渲染组件：
 
 ```js
-// Wrong
+// 错误的
 this.state.comment = 'Hello';
 ```
 
 应当使用 `setState()`:
 
 ```js
-// Correct
+// 正确的
 this.setState({comment: 'Hello'});
 ```
 
@@ -353,7 +353,7 @@ React 可以将多个`setState()` 调用合并成一个调用来提高性能。
 例如，此代码可能无法更新计数器：
 
 ```js
-// Wrong
+// 错误的
 this.setState({
   counter: this.state.counter + this.props.increment,
 });
@@ -362,7 +362,7 @@ this.setState({
 要修复它，请使用第二种形式的 `setState()` 来接受一个函数而不是一个对象。 该函数将接收先前的状态作为第一个参数，将需要更新的值作为第二个参数：
 
 ```js
-// Correct
+// 正确的
 this.setState((prevState, props) => ({
   counter: prevState.counter + props.increment
 }));
