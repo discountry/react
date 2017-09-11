@@ -69,7 +69,7 @@ function LogoutButton(props) {
 }
 ```
 
-在下面的例子中，我们将要创建一个名为 `LoginControl` 的[有状态的组件](/react/docs/state-and-lifecycle.html#adding-local-state-to-a-class)。
+在下面的例子中，我们将要创建一个名为 `LoginControl` 的[有状态的组件](/react/docs/state-and-lifecycle.html#为一个类添加局部状态)。
 
 它会根据当前的状态来渲染 `<LoginButton />` 或 `<LogoutButton>`，它也将渲染前面例子中的 `<Greeting />`。
 
@@ -120,7 +120,7 @@ ReactDOM.render(
 声明变量并使用 `if` 语句是条件渲染组件的不错的方式，但有时你也想使用更简洁的语法，在 JSX 中有如下几种方法。
 
 ### 与运算符 && 
-你可以通过用花括号包裹代码[在 JSX 中嵌入任何表达式](/react/docs/introducing-jsx.html#embedding-expressions-in-jsx) ，也包括 JavaScript 的逻辑与 &&，它可以方便地条件渲染一个元素。
+你可以通过用花括号包裹代码[在 JSX 中嵌入任何表达式](/react/docs/introducing-jsx.html#在JSX中使用表达式) ，也包括 JavaScript 的逻辑与 &&，它可以方便地条件渲染一个元素。
 
 ```js{6-10}
 function Mailbox(props) {
@@ -184,7 +184,7 @@ render() {
 }
 ```
 
-像在 JavaScript 中一样，你可以根据团队的习惯选择更易读的方式。还要记住如果条件变得过于复杂，可能就是[提取组件](/react/docs/components-and-props.html#extracting-components)的好时机了。
+像在 JavaScript 中一样，你可以根据团队的习惯选择更易读的方式。还要记住如果条件变得过于复杂，可能就是[提取组件](/react/docs/components-and-props.html#提取组件)的好时机了。
 
 ### 阻止组件渲染
 
