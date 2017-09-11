@@ -241,7 +241,7 @@ function Comment(props) {
 
 ## Props的只读性
 
-无论是使用[函数或是类](#functional-and-class-components)来声明一个组件，它决不能修改它自己的props。来看这个`sum`函数：
+无论是使用[函数或是类](#函数定义/类定义组件)来声明一个组件，它决不能修改它自己的props。来看这个`sum`函数：
 
 ```js
 function sum(a, b) {
