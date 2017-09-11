@@ -73,7 +73,7 @@ ReactDOM.render(
 
 状态与属性十分相似，但是状态是私有的，完全受控于当前组件。
 
-我们之前[提到过](/react/docs/components-and-props.html#functional-and-class-components)，定义为类的组件有一些特性。局部状态就是如此：一个功能只适用于类。
+我们之前[提到过](/react/docs/components-and-props.html#函数定义/类定义组件)，定义为类的组件有一些特性。局部状态就是如此：一个功能只适用于类。
 
 ## 将函数转换为类
 
