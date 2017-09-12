@@ -39,7 +39,7 @@ class Greeting extends React.Component {
 
 #### 装配
 
-这些方法会在组件实例被创建同时插入DOM中被调用：
+这些方法会在组件实例被创建和插入DOM中时被调用：
 
 - [`constructor()`](#constructor)
 - [`componentWillMount()`](#componentwillmount)
@@ -58,7 +58,7 @@ class Greeting extends React.Component {
 
 #### 卸载
 
-当一个组件被从DOM中移除时，该方法别调用：
+当一个组件被从DOM中移除时，该方法被调用：
 
 - [`componentWillUnmount()`](#componentwillunmount)
 
