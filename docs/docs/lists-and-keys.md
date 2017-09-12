@@ -298,4 +298,4 @@ function NumberList(props) {
 
 [在 CodePen 上试试。](https://codepen.io/gaearon/pen/BLvYrB?editors=0010)
 
-这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在JavaScript中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个`map()`嵌套了太多层级，那可能就是你[提取出组件](/react/docs/components-and-props.html＃提取组件)的一个好时机。
+这么做有时可以使你的代码更清晰，但有时这种风格也会被滥用。就像在JavaScript中一样，何时需要为了可读性提取出一个变量，这完全取决于你。但请记住，如果一个`map()`嵌套了太多层级，那可能就是你[提取出组件](/react/docs/components-and-props.html#提取组件)的一个好时机。
