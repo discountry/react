@@ -239,7 +239,7 @@ class Reservation extends React.Component {
 
 [在 CodePen 上尝试.](https://codepen.io/gaearon/pen/wgedvV?editors=0010)
 
-还要注意的是如果我们想要使用ES6当中的[computed property name](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names)语法来更新与给定输入名称相对应的状态键：
+注意我们如何使用ES6当中的[计算属性名](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names)语法来更新与给定输入名称相对应的状态键：
 
 ```js{2}
 this.setState({
@@ -255,7 +255,7 @@ partialState[name] = value;
 this.setState(partialState);
 ```
 
-同样由于setState()自动将部分状态合并到当前状态[merges a partial state into the current state](/react/docs/state-and-lifecycle.html#state-updates-are-merged)，因此我们只需要在已经更改的部分调用它。
+同样由于 `setState()` 自动[将部分状态合并到当前状态](/react/docs/state-and-lifecycle.html#状态更新合并)，因此我们只需要使用发生变化的部分调用它。
 
 ## 受控组件的替代方法
 
