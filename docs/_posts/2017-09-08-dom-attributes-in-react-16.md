@@ -12,7 +12,7 @@ author: gaearon
 
 在 React 15 中将会在 DOM 节点中渲染一个空的 div:
 
-````js
+```js
 // React 15 output:
 <div />
 ```
