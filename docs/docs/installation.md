@@ -233,6 +233,16 @@ ReactDOM.render(
 
 如果你在使用 Bower，可以通过 `react` 包来使用 React。
 
+为什么crossorigin属性？
+如果你从CDN引用react,我们建议保持设置crossorigin属性:
+
+```js
+<script crossorigin src="..."></script>
+```
+![Alt cdn-cors-header](https://facebook.github.io/react/img/docs/cdn-cors-header.png)
+
+这能在React 16和之后的版本中有一个更好的错误处理经验。
+
 <script>
 /**
  * The code below is based on a snippet from React Native Getting Started page.
