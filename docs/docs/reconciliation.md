@@ -8,7 +8,7 @@ React提供了一组声明式API以让你不必关心每次更新的变化。这
 
 ## 目的
 
-当你使用React，在单一时间点你可以考虑`render()`函数作为创建React元素的树。在下一次状态或属性更新，`render()`函数将返回一个不同的React元素的树。React需要算出如何高效更新UI以匹配最为接近的树。
+当你使用React，在单一时间点你可以考虑`render()`函数作为创建React元素的树。在下一次状态或属性更新，`render()`函数将返回一个不同的React元素的树。React需要算出如何高效更新UI以匹配最新的树。
 
 有一些解决将一棵树转换为另一棵树的最小操作数算法问题的通用方案。然而，树中元素个数为n，[最先进的算法](http://grfia.dlsi.ua.es/ml/algorithms/references/editsurvey_bille.pdf) 的时间复杂度为O(n<sup>3</sup>) 。
 
