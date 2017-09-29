@@ -22,7 +22,13 @@ module.exports = {
     'gatsby-plugin-glamor',
     'gatsby-plugin-react-next',
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-plugin-nprogress',
+      options: {
+        color: '#61dafb',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/src/pages`,
         name: 'pages',
@@ -30,27 +36,27 @@ module.exports = {
     },
     {
       /* Docs, Tutorial, Community, and Blog section content comes from here. */
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `packages`,
+        name: 'packages',
         path: `${__dirname}/../docs/`,
       },
     },
     {
-      resolve: `gatsby-transformer-remark`,
+      resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
           'gatsby-remark-responsive-iframe',
           {
-            resolve: `gatsby-remark-images`,
+            resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 800,
+              maxWidth: 840,
             },
           },
           'gatsby-remark-autolink-headers',
           'gatsby-remark-use-jsx',
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: 'gatsby-remark-prismjs',
             options: {
               classPrefix: 'gatsby-code-',
             },
@@ -60,15 +66,14 @@ module.exports = {
         ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
-        //trackingId: 'UA-45453476-6',
+        trackingId: 'UA-41298772-1',
       },
     },
-    `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-react-helmet',
   ],
 };

@@ -99,7 +99,7 @@ class Home extends Component {
                     fontWeight: 300,
                   },
                 }}>
-                用于构建用户界面的 JavaScript 库
+                A JavaScript library for building user interfaces
               </p>
               <Flex
                 valign="center"
@@ -112,12 +112,12 @@ class Home extends Component {
                 }}>
                 <CtaItem>
                   <ButtonLink to="/docs/hello-world.html" type="primary">
-                    快速开始
+                    Get Started
                   </ButtonLink>
                 </CtaItem>
                 <CtaItem>
                   <ButtonLink to="/tutorial/tutorial.html" type="secondary">
-                    入门教程
+                    Take the Tutorial
                   </ButtonLink>
                 </CtaItem>
               </Flex>
@@ -143,12 +143,12 @@ class Home extends Component {
             <Flex valign="center">
               <CtaItem>
                 <ButtonLink to="/docs/hello-world.html" type="primary">
-                  快速开始
+                  Get Started
                 </ButtonLink>
               </CtaItem>
               <CtaItem>
                 <ButtonLink to="/tutorial/tutorial.html" type="secondary">
-                  入门教程
+                  Take the Tutorial
                 </ButtonLink>
               </CtaItem>
             </Flex>
