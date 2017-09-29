@@ -5,14 +5,13 @@ $textColorLight: lighten($textColor, 20%);
 
 html {
   font-family: $helvetica;
-  font-family: source-han-sans-simplified-c, $helvetica;
+  font-family: proxima-nova, $helvetica;
   color: $textColor;
   line-height: 1.28;
 }
 
 p {
   margin: 0 0 10px;
-  line-height: 1.8rem;
 }
 
 .subHeader {

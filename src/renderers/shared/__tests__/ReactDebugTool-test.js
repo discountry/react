@@ -1,10 +1,8 @@
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
  */
@@ -15,7 +13,7 @@ describe('ReactDebugTool', () => {
   var ReactDebugTool;
 
   beforeEach(() => {
-    jest.resetModuleRegistry();
+    jest.resetModules();
     ReactDebugTool = require('ReactDebugTool');
   });
 
@@ -63,14 +61,13 @@ describe('ReactDebugTool', () => {
     });
 
     ReactDebugTool.onTestEvent();
-    expect(console.error.calls.count()).toBe(1);
-    expect(console.error.calls.argsFor(0)[0]).toContain(
-      'Exception thrown by hook while handling ' +
-      'onTestEvent: Error: Hi.'
+    expectDev(console.error.calls.count()).toBe(1);
+    expectDev(console.error.calls.argsFor(0)[0]).toContain(
+      'Exception thrown by hook while handling ' + 'onTestEvent: Error: Hi.',
     );
 
     ReactDebugTool.onTestEvent();
-    expect(console.error.calls.count()).toBe(1);
+    expectDev(console.error.calls.count()).toBe(1);
   });
 
   it('returns isProfiling state', () => {

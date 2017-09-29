@@ -1,24 +1,24 @@
 ---
 title: "Community Round-up #5"
-author: vjeux
+author: [vjeux]
 ---
 
 We launched the [React Facebook Page](https://www.facebook.com/react) along with the React v0.4 launch. 700 people already liked it to get updated on the project :)
 
 ## Cross-browser onChange
 
-[Ben Alpert](http://benalpert.com/) from [Khan Academy](https://www.khanacademy.org/) worked on a cross-browser implementation of `onChange` event that landed in v0.4. He wrote a blog post explaining the various browser quirks he had to deal with.
+[Sophie Alpert](http://sophiebits.com/) from [Khan Academy](https://www.khanacademy.org/) worked on a cross-browser implementation of `onChange` event that landed in v0.4. She wrote a blog post explaining the various browser quirks she had to deal with.
 
 > First off, what is the input event? If you have an `<input>` element and want to receive events whenever the value changes, the most obvious thing to do is to listen to the change event. Unfortunately, change fires only after the text field is defocused, rather than on each keystroke. The next obvious choice is the keyup event, which is triggered whenever a key is released. Unfortunately, keyup doesn't catch input that doesn't involve the keyboard (e.g., pasting from the clipboard using the mouse) and only fires once if a key is held down, rather than once per inserted character.
 >
 > Both keydown and keypress do fire repeatedly when a key is held down, but both fire immediately before the value changes, so to read the new value you have to defer the handler to the next event loop using `setTimeout(fn, 0)` or similar, which slows down your app. Of course, like keyup, neither keydown nor keypress fires for non-keyboard input events, and all three can fire in cases where the value doesn't change at all (such as when pressing the arrow keys).
 >
-> [Read the full post...](http://benalpert.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html)
+> [Read the full post...](http://sophiebits.com/2013/06/18/a-near-perfect-oninput-shim-for-ie-8-and-9.html)
 
 
 ## React Samples
 
-Learning a new library is always easier when you have working examples you can play with. [jwh](https://github.com/jhw) put many of them on his [react-samples Github repo](https://github.com/jhw/react-samples).
+Learning a new library is always easier when you have working examples you can play with. [jwh](https://github.com/jhw) put many of them on his [react-samples GitHub repo](https://github.com/jhw/react-samples).
 
 > Some simple examples with Facebook's React framework
 >
@@ -75,7 +75,7 @@ React.renderComponent(
 
 [Tom Occhino](http://tomocchino.com/) and [Jordan Walke](https://github.com/jordwalke), React developers, did a presentation of React at Facebook Seattle's office. Check out the first 25 minutes for the presentation and the remaining 45 for a Q&A. I highly recommend you watching this video.
 
-<figure><iframe width="100%" height="400" src="//www.youtube-nocookie.com/embed/XxVg_s8xAms" frameborder="0" allowfullscreen></iframe></figure>
+<figure><iframe width="650" height="400" src="//www.youtube-nocookie.com/embed/XxVg_s8xAms" frameborder="0" allowfullscreen></iframe></figure>
 
 
 ## Docs
@@ -84,15 +84,15 @@ React.renderComponent(
 
 > Guides
 >
-> * [Why React?](/react/docs/why-react.html)
-> * [Displaying Data](/react/docs/displaying-data.html)
->   * [JSX in Depth](/react/docs/jsx-in-depth.html)
->   * [JSX Gotchas](/react/docs/jsx-gotchas.html)
-> * [Interactivity and Dynamic UIs](/react/docs/interactivity-and-dynamic-uis.html)
-> * [Multiple Components](/react/docs/multiple-components.html)
-> * [Reusable Components](/react/docs/reusable-components.html)
-> * [Forms](/react/docs/forms.html)
-> * [Working With the Browser](/react/docs/working-with-the-browser.html)
->   * [More About Refs](/react/docs/more-about-refs.html)
-> * [Tooling integration](/react/docs/tooling-integration.html)
-> * [Reference](/react/docs/top-level-api.html)
+> * [Why React?](/docs/why-react.html)
+> * [Displaying Data](/docs/displaying-data.html)
+>   * [JSX in Depth](/docs/jsx-in-depth.html)
+>   * [JSX Gotchas](/docs/jsx-gotchas.html)
+> * [Interactivity and Dynamic UIs](/docs/interactivity-and-dynamic-uis.html)
+> * [Multiple Components](/docs/multiple-components.html)
+> * [Reusable Components](/docs/reusable-components.html)
+> * [Forms](/docs/forms.html)
+> * [Working With the Browser](/docs/working-with-the-browser.html)
+>   * [More About Refs](/docs/more-about-refs.html)
+> * [Tooling integration](/docs/tooling-integration.html)
+> * [Reference](/docs/top-level-api.html)

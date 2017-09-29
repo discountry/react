@@ -1,25 +1,66 @@
-# React 中文文档翻译计划 [![Build Status](https://travis-ci.org/discountry/react.svg?branch=master)](https://travis-ci.org/discountry/react)
+# [React](https://facebook.github.io/react/) &middot; [![CircleCI Status](https://circleci.com/gh/facebook/react.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/facebook/react) [![Coverage Status](https://img.shields.io/coveralls/facebook/react/master.svg?style=flat)](https://coveralls.io/github/facebook/react?branch=master) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
 
-## Notice
+React is a JavaScript library for building user interfaces.
 
-> This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `facebook/react` .
+* **Declarative:** React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes. Declarative views make your code more predictable, simpler to understand, and easier to debug.
+* **Component-Based:** Build encapsulated components that manage their own state, then compose them to make complex UIs. Since component logic is written in JavaScript instead of templates, you can easily pass rich data through your app and keep state out of the DOM.
+* **Learn Once, Write Anywhere:** We don't make assumptions about the rest of your technology stack, so you can develop new features in React without rewriting existing code. React can also render on the server using Node and power mobile apps using [React Native](https://facebook.github.io/react-native/).
 
-## 贡献翻译
+[Learn how to use React in your own project](https://facebook.github.io/react/docs/getting-started.html).
 
-目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
+## Examples
 
-![2017-07-26_11-22-41.png](https://i.loli.net/2017/07/26/59780b3f526c0.png)
+We have several examples [on the website](https://facebook.github.io/react/). Here is the first one to get you started:
 
-## Contributors
+```jsx
+class HelloMessage extends React.Component {
+  render() {
+    return <div>Hello {this.props.name}</div>;
+  }
+}
 
-感谢所有[参与翻译的同学](https://github.com/discountry/react/graphs/contributors)。是大家的开源精神和辛勤工作让文档的翻译得以如此顺利迅速进行。
+ReactDOM.render(
+  <HelloMessage name="John" />,
+  document.getElementById('container')
+);
+```
 
-## License
+This example will render "Hello John" into a container on the page.
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+You'll notice that we used an HTML-like syntax; [we call it JSX](https://facebook.github.io/react/docs/introducing-jsx.html). JSX is not required to use React, but it makes code more readable, and writing it feels like writing HTML. We recommend using [Babel](https://babeljs.io/) with a [React preset](https://babeljs.io/docs/plugins/preset-react/) to convert JSX into native JavaScript for browsers to digest.
 
-文档翻译采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a> 进行许可。著作权归译者本人所有，禁止商用。
+## Installation
 
+React is available as the `react` package on [npm](https://www.npmjs.com/). It is also available on a [CDN](https://facebook.github.io/react/docs/installation.html#using-a-cdn).
 
+React is flexible and can be used in a variety of projects. You can create new apps with it, but you can also gradually introduce it into an existing codebase without doing a rewrite.
 
+The recommended way to install React depends on your project. Here you can find short guides for the most common scenarios:
 
+* [Trying Out React](https://facebook.github.io/react/docs/installation.html#trying-out-react)
+* [Creating a New Application](https://facebook.github.io/react/docs/installation.html#creating-a-new-application)
+* [Adding React to an Existing Application](https://facebook.github.io/react/docs/installation.html#adding-react-to-an-existing-application)
+
+## Contributing
+
+The main purpose of this repository is to continue to evolve React core, making it faster and easier to use. Development of React happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving React.
+
+### [Code of Conduct](https://code.facebook.com/codeofconduct)
+
+Facebook has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](https://code.facebook.com/codeofconduct) so that you can understand what actions will and will not be tolerated.
+
+### Contributing Guide
+
+Read our [contributing guide](https://facebook.github.io/react/contributing/how-to-contribute.html) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to React.
+
+### Beginner Friendly Bugs
+
+To help you get your feet wet and get you familiar with our contribution process, we have a list of [beginner friendly bugs](https://github.com/facebook/react/labels/Difficulty%3A%20beginner) that contain bugs which are fairly easy to fix. This is a great place to get started.
+
+### License
+
+React is [MIT licensed](./LICENSE).
+
+React documentation is [Creative Commons licensed](./LICENSE-docs).
+
+Examples provided in this repository and in the documentation are [separately licensed](./LICENSE-examples).

@@ -1,6 +1,6 @@
 ---
 title: "DOM Attributes in React 16"
-author: gaearon
+author: [gaearon]
 ---
 
 过去，React 习惯于忽视未知的 DOM 属性。若你在 JSX 中写了一个 React 无法识别的元素， React 将会忽略他。例如这样：

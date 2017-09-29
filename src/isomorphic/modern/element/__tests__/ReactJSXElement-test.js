@@ -1,10 +1,8 @@
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
  */
@@ -19,11 +17,11 @@ describe('ReactJSXElement', () => {
   var Component;
 
   beforeEach(() => {
-    jest.resetModuleRegistry();
+    jest.resetModules();
 
-    React = require('React');
-    ReactDOM = require('ReactDOM');
-    ReactTestUtils = require('ReactTestUtils');
+    React = require('react');
+    ReactDOM = require('react-dom');
+    ReactTestUtils = require('react-dom/test-utils');
     Component = class extends React.Component {
       render() {
         return <div />;
@@ -64,7 +62,7 @@ describe('ReactJSXElement', () => {
 
   it('returns an immutable element', () => {
     var element = <Component />;
-    expect(() => element.type = 'div').toThrow();
+    expect(() => (element.type = 'div')).toThrow();
   });
 
   it('does not reuse the object that is spread into props', () => {
@@ -80,7 +78,7 @@ describe('ReactJSXElement', () => {
     expect(element.type).toBe(Component);
     expect(element.key).toBe('12');
     expect(element.ref).toBe('34');
-    var expectation = {foo:'56'};
+    var expectation = {foo: '56'};
     Object.freeze(expectation);
     expect(element.props).toEqual(expectation);
   });
@@ -90,7 +88,7 @@ describe('ReactJSXElement', () => {
     expect(element.type).toBe(Component);
     expect(element.key).toBe('12');
     expect(element.ref).toBe(null);
-    var expectation = {foo:'56'};
+    var expectation = {foo: '56'};
     Object.freeze(expectation);
     expect(element.props).toEqual(expectation);
   });
@@ -100,21 +98,21 @@ describe('ReactJSXElement', () => {
     var a = 1;
     var element = <Component children="text">{a}</Component>;
     expect(element.props.children).toBe(a);
-    expect(console.error.calls.count()).toBe(0);
+    expectDev(console.error.calls.count()).toBe(0);
   });
 
   it('does not override children if no JSX children are provided', () => {
     spyOn(console, 'error');
     var element = <Component children="text" />;
     expect(element.props.children).toBe('text');
-    expect(console.error.calls.count()).toBe(0);
+    expectDev(console.error.calls.count()).toBe(0);
   });
 
   it('overrides children if null is provided as a JSX child', () => {
     spyOn(console, 'error');
     var element = <Component children="text">{null}</Component>;
     expect(element.props.children).toBe(null);
-    expect(console.error.calls.count()).toBe(0);
+    expectDev(console.error.calls.count()).toBe(0);
   });
 
   it('overrides children if undefined is provided as an argument', () => {
@@ -124,7 +122,7 @@ describe('ReactJSXElement', () => {
     var element2 = React.cloneElement(
       <Component children="text" />,
       {},
-      undefined
+      undefined,
     );
     expect(element2.props.children).toBe(undefined);
   });
@@ -136,7 +134,7 @@ describe('ReactJSXElement', () => {
     var c = 3;
     var element = <Component>{a}{b}{c}</Component>;
     expect(element.props.children).toEqual([1, 2, 3]);
-    expect(console.error.calls.count()).toBe(0);
+    expectDev(console.error.calls.count()).toBe(0);
   });
 
   it('allows static methods to be called using the type property', () => {
@@ -153,7 +151,7 @@ describe('ReactJSXElement', () => {
 
     var element = <StaticMethodComponent />;
     expect(element.type.someStaticMethod()).toBe('someReturnValue');
-    expect(console.error.calls.count()).toBe(0);
+    expectDev(console.error.calls.count()).toBe(0);
   });
 
   it('identifies valid elements', () => {
@@ -165,7 +163,7 @@ describe('ReactJSXElement', () => {
     expect(React.isValidElement({})).toEqual(false);
     expect(React.isValidElement('string')).toEqual(false);
     expect(React.isValidElement(Component)).toEqual(false);
-    expect(React.isValidElement({ type: 'div', props: {} })).toEqual(false);
+    expect(React.isValidElement({type: 'div', props: {}})).toEqual(false);
   });
 
   it('is indistinguishable from a plain object', () => {
@@ -178,10 +176,7 @@ describe('ReactJSXElement', () => {
     Component.defaultProps = {fruit: 'persimmon'};
 
     var container = document.createElement('div');
-    var instance = ReactDOM.render(
-      <Component fruit="mango" />,
-      container
-    );
+    var instance = ReactDOM.render(<Component fruit="mango" />, container);
     expect(instance.props.fruit).toBe('mango');
 
     ReactDOM.render(<Component />, container);
@@ -199,9 +194,9 @@ describe('ReactJSXElement', () => {
     var instance = ReactTestUtils.renderIntoDocument(<NormalizingComponent />);
     expect(instance.props.prop).toBe('testKey');
 
-    var inst2 =
-      ReactTestUtils.renderIntoDocument(<NormalizingComponent prop={null} />);
+    var inst2 = ReactTestUtils.renderIntoDocument(
+      <NormalizingComponent prop={null} />,
+    );
     expect(inst2.props.prop).toBe(null);
   });
-
 });

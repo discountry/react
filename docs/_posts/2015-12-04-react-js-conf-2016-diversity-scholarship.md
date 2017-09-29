@@ -1,6 +1,6 @@
 ---
 title: React.js Conf 2016 Diversity Scholarship
-author: zpao
+author: [zpao]
 ---
 
 I am thrilled to announced that we will be organizing another diversity scholarship program for the upcoming React.js Conf! The tech industry is suffering from a lack of diversity, but it's important to us that we have a thriving community that is made up of people with a variety of experiences and viewpoints.
@@ -28,7 +28,7 @@ To apply for the scholarship, please visit the application page: **<http://goo.g
 
 ## Award Includes
 
-* Paid registration fee for the React.js Conf Feburary 22 & 23 in downtown San Francisco, CA
+* Paid registration fee for the React.js Conf February 22 & 23 in downtown San Francisco, CA
 * Paid lodging expenses for February 21, 22, 23
 
 ## Important Dates

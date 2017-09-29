@@ -1,6 +1,6 @@
 ---
 title: "Error Handle in React 16"
-author: Dan Abramov
+author: [gaearon]
 ---
 
 随着React 16发布在即，我们打算介绍一些在组件内部React如何处理JavaScript错误。这些改变包含在React 16的beta版本中，并将成为React 16的一部分。

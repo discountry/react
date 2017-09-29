@@ -365,13 +365,6 @@ h1, h2, h3, h4, h5, h6 {
 
 // Docs Nav
 
-@media only screen and (min-width: 1200px) { 
-  .sticky {
-    position: sticky; 
-    top: 40px;
-  }
-}
-
 .nav-docs {
   color: $darkColor;
   font-size: 14px;

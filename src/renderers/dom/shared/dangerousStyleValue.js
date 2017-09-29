@@ -1,10 +1,8 @@
 /**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2013-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule dangerousStyleValue
  */
@@ -12,10 +10,8 @@
 'use strict';
 
 var CSSProperty = require('CSSProperty');
-var warning = require('warning');
 
 var isUnitlessNumber = CSSProperty.isUnitlessNumber;
-var styleWarnings = {};
 
 /**
  * Convert a value into the proper css writable value. The style name `name`
@@ -24,10 +20,9 @@ var styleWarnings = {};
  *
  * @param {string} name CSS property name such as `topMargin`.
  * @param {*} value CSS property value such as `10px`.
- * @param {ReactDOMComponent} component
  * @return {string} Normalized style value with dimensions applied.
  */
-function dangerousStyleValue(name, value, component) {
+function dangerousStyleValue(name, value, isCustomProperty) {
   // Note that we've removed escapeTextForBrowser() calls here since the
   // whole string will be escaped when the attribute is injected into
   // the markup. If you provide unsafe user data here they can inject
@@ -43,47 +38,16 @@ function dangerousStyleValue(name, value, component) {
     return '';
   }
 
-  var isNonNumeric = isNaN(value);
-  if (isNonNumeric || value === 0 ||
-      isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name]) {
-    return '' + value; // cast to string
+  if (
+    !isCustomProperty &&
+    typeof value === 'number' &&
+    value !== 0 &&
+    !(isUnitlessNumber.hasOwnProperty(name) && isUnitlessNumber[name])
+  ) {
+    return value + 'px'; // Presumes implicit 'px' suffix for unitless numbers
   }
 
-  if (typeof value === 'string') {
-    if (__DEV__) {
-      // Allow '0' to pass through without warning. 0 is already special and
-      // doesn't require units, so we don't need to warn about it.
-      if (component && value !== '0') {
-        var owner = component._currentElement._owner;
-        var ownerName = owner ? owner.getName() : null;
-        if (ownerName && !styleWarnings[ownerName]) {
-          styleWarnings[ownerName] = {};
-        }
-        var warned = false;
-        if (ownerName) {
-          var warnings = styleWarnings[ownerName];
-          warned = warnings[name];
-          if (!warned) {
-            warnings[name] = true;
-          }
-        }
-        if (!warned) {
-          warning(
-            false,
-            'a `%s` tag (owner: `%s`) was passed a numeric string value ' +
-            'for CSS property `%s` (value: `%s`) which will be treated ' +
-            'as a unitless number in a future version of React.',
-            component._currentElement.type,
-            ownerName || 'unknown',
-            name,
-            value
-          );
-        }
-      }
-    }
-    value = value.trim();
-  }
-  return value + 'px';
+  return ('' + value).trim();
 }
 
 module.exports = dangerousStyleValue;

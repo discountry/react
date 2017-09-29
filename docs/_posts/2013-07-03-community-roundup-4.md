@@ -1,13 +1,13 @@
 ---
 title: "Community Round-up #4"
-author: vjeux
+author: [vjeux]
 ---
 
 React reconciliation process appears to be very well suited to implement a text editor with a live preview as people at Khan Academy show us.
 
 ## Khan Academy
 
-[Ben Kamens](http://bjk5.com/) explains how [Ben Alpert](http://benalpert.com/) and [Joel Burget](http://joelburget.com/) are promoting React inside of [Khan Academy](https://www.khanacademy.org/). They now have three projects in the works using React.
+[Ben Kamens](http://bjk5.com/) explains how [Sophie Alpert](http://sophiebits.com/) and [Joel Burget](http://joelburget.com/) are promoting React inside of [Khan Academy](https://www.khanacademy.org/). They now have three projects in the works using React.
 
 > Recently two Khan Academy devs dropped into our team chat and said they were gonna use React to write a new feature. They even hinted that we may want to adopt it product-wide.
 >
@@ -18,11 +18,12 @@ React reconciliation process appears to be very well suited to implement a text 
 The best part is the demo of how React reconciliation process makes live editing more user-friendly.
 
 > Our renderer, post-React, is on the left. A typical math editor's preview is on the right.
-> <figure>[<img src="/react/img/blog/monkeys.gif" width="70%" />](http://bjk5.com/post/53742233351/getting-your-team-to-adopt-new-technology)</figure>
+
+[![](../img/blog/monkeys.gif)](http://bjk5.com/post/53742233351/getting-your-team-to-adopt-new-technology)
 
 ## React Snippets
 
-Over the past several weeks, members of our team, [Pete Hunt](http://www.petehunt.net/) and [Paul O'Shannessy](http://zpao.com/), answered many questions that were asked in the [React group](https://groups.google.com/forum/#!forum/reactjs). They give a good overview of how to integrate React with other libraries and APIs through the use of [Mixins](/react/docs/reusable-components.html) and [Lifecycle Methods](/react/docs/working-with-the-browser.html).
+Over the past several weeks, members of our team, [Pete Hunt](http://www.petehunt.net/) and [Paul O'Shannessy](http://zpao.com/), answered many questions that were asked in the [React group](https://groups.google.com/forum/#!forum/reactjs). They give a good overview of how to integrate React with other libraries and APIs through the use of [Mixins](/docs/reusable-components.html) and [Lifecycle Methods](/docs/working-with-the-browser.html).
 
 > [Listening Scroll Event](https://groups.google.com/forum/#!topic/reactjs/l6PnP8qbofk)
 >
@@ -53,5 +54,5 @@ Over the past several weeks, members of our team, [Pete Hunt](http://www.petehun
 
 [Tom Occhino](http://tomocchino.com/) implemented Snake in 150 lines with React.
 
-> [Check the source on Github](https://github.com/tomocchino/react-snake/blob/master/src/snake.js)
-> <figure>[![](/react/img/blog/snake.png)](https://tomocchino.github.io/react-snake/)</figure>
+> [Check the source on GitHub](https://github.com/tomocchino/react-snake/blob/master/src/snake.js)
+> <figure><a href="https://tomocchino.github.io/react-snake/"><img src="../img/blog/snake.png"></a></figure>
