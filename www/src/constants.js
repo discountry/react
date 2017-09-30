@@ -17,5 +17,5 @@
 export default {
   // NOTE: We can't just use `location.toString()` because when we are rendering
   // the SSR part in node.js we won't have a proper location.
-  urlRoot: 'https://reactjs.org',
+  urlRoot: 'https://doc.react-china.org',
 };

@@ -29,7 +29,7 @@ class Home extends Component {
 
   render() {
     const {data} = this.props;
-    const title = 'React - A JavaScript library for building user interfaces';
+    const title = 'React - 用于构建用户界面的 JavaScript 库';
 
     return (
       <div css={{width: '100%'}}>

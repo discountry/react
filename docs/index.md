@@ -35,7 +35,7 @@ id: home
         <strong>使用 React 的时候也可以不使用 JSX 语法</strong>
         你可以在
         <a href="http://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&code_lz=MYGwhgzhAEASCmIQHsCy8pgOb2vAHgC7wB2AJjAErxjCEB0AwsgLYAOyJph0A3gFABIAE6ky8YQAoAlHyEj4hAK7CS0ADxkAlgDcAfAiTI-hABZaI9NsORtLJMC3gBfdQHpt-gNxDn_P_zUtIQAIgDyqPSi5BKS6oYo6Jg40A5OALwARCHwOlokmdBuegA00CzISiSEAHLI4tJeQA&debug=false&circleciRepo=&evaluate=false&lineWrap=false&presets=react&prettier=true&targets=&version=6.26.0">Babel REPL</a>
-        JSX 是如何被渲染成原生 JavaScript 代码的。
+        查看 JSX 是如何被渲染成原生 JavaScript 代码的。
       </p>
       <div id="helloExample"></div>
     </div>
