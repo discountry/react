@@ -14,7 +14,11 @@
 
 **完善网站**
 
-React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/www`](https://github.com/discountry/react/tree/master/www)文件夹下，如果有需要对网站模板的或配置的改动，请直接编辑该目录下文件并提交 pr 即可。
+React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/www`](https://github.com/discountry/react/tree/master/www) 文件夹下，如果有需要对网站模板的或配置的改动，请直接编辑该目录下文件并提交 pr 即可。
+
+**为 React 官方贡献翻译**
+
+React 官网会在将来支持多语言功能，目前官方已经发起了翻译项目，你可以在 [React on Crowdin](https://crowdin.com/project/react) 贡献翻译。
 
 ## Contributors
 
