@@ -1,17 +1,15 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule ReactNativeTagHandles
  * @flow
  */
 'use strict';
 
-var invariant = require('invariant');
+var invariant = require('fbjs/lib/invariant');
 
 /**
  * Keeps track of allocating and associating native "tags" which are numeric,
@@ -44,7 +42,8 @@ var ReactNativeTagHandles = {
   assertRootTag: function(tag: number): void {
     invariant(
       this.reactTagIsNativeTopRootID(tag),
-      'Expect a native root tag, instead got %s', tag
+      'Expect a native root tag, instead got %s',
+      tag,
     );
   },
 

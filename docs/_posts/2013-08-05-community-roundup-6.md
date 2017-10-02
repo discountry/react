@@ -1,6 +1,6 @@
 ---
 title: "Community Round-up #6"
-author: vjeux
+author: [vjeux]
 ---
 
 This is the first Community Round-up where none of the items are from Facebook/Instagram employees. It's great to see the adoption of React growing.
@@ -8,7 +8,7 @@ This is the first Community Round-up where none of the items are from Facebook/I
 ## React Game Tutorial
 
 [Caleb Cassel](https://twitter.com/CalebCassel) wrote a [step-by-step tutorial](https://rawgithub.com/calebcassel/react-demo/master/part1.html) about making a small game. It covers JSX, State and Events, Embedded Components and Integration with Backbone.
-<figure>[![](/react/img/blog/dog-tutorial.png)](https://rawgithub.com/calebcassel/react-demo/master/part1.html)</figure>
+<figure><a href="https://rawgithub.com/calebcassel/react-demo/master/part1.html"><img src="../img/blog/dog-tutorial.png"></a></figure>
 
 
 ## Reactify
@@ -18,12 +18,12 @@ This is the first Community Round-up where none of the items are from Facebook/I
 > Browserify v2 transform for `text/jsx`. Basic usage is:
 >
 > ```
-% browserify -t reactify main.jsx
-```
+> % browserify -t reactify main.jsx
+> ```
 >
 > `reactify` transform activates for files with either `.jsx` extension or `/** @jsx React.DOM */` pragma as a first line for any `.js` file.
 >
-> [Check it out on Github...](https://github.com/andreypopp/reactify)
+> [Check it out on GitHub...](https://github.com/andreypopp/reactify)
 
 
 
@@ -49,7 +49,7 @@ este.demos.react.todoApp = este.react.create (`/** @lends {React.ReactComponent.
     ]
 ```
 
-[Check it out on Github...](https://github.com/steida/este-library/blob/master/este/demos/thirdparty/react/start.coffee)
+[Check it out on GitHub...](https://github.com/steida/este-library/blob/master/este/demos/thirdparty/react/start.coffee)
 
 
 ## React Stylus Boilerplate
@@ -64,7 +64,7 @@ este.demos.react.todoApp = este.react.create (`/** @lends {React.ReactComponent.
 >   - `grunt build` to compile JSX and Stylus into a development build
 >   - `grunt dist` to minify and optimize the development build for production
 >
-> [Check it out on Github...](https://github.com/zaim/react-stylus-boilerplate)
+> [Check it out on GitHub...](https://github.com/zaim/react-stylus-boilerplate)
 
 
 ## WebFUI
@@ -74,6 +74,6 @@ este.demos.react.todoApp = este.react.create (`/** @lends {React.ReactComponent.
 > I'm the author of "[Land of Lisp](http://landoflisp.com/)" and I love your framework. I built a somewhat similar framework a year ago [WebFUI](https://github.com/drcode/webfui) aimed at ClojureScript. My framework also uses global event delegates, a global "render" function, DOM reconciliation, etc just like react.js. (Of course these ideas all have been floating around the ether for ages, always great to see more people building on them.)
 >
 > Your implementation is more robust, and so I think the next point release of webfui will simply delegate all the "hard work" to react.js and will only focus on the areas where it adds value (enabling purely functional UI programming in clojurescript, and some other stuff related to streamlining event handling)
-<figure>[![](/react/img/blog/landoflisp.png)](https://groups.google.com/forum/#!msg/reactjs/e3bYersyd64/qODfcuBR9LwJ)</figure>
+<figure><a href="https://groups.google.com/forum/#!msg/reactjs/e3bYersyd64/qODfcuBR9LwJ"><img src="../img/blog/landoflisp.png"></a></figure>
 >
 > [Read the full post...](https://groups.google.com/forum/#!msg/reactjs/e3bYersyd64/qODfcuBR9LwJ)

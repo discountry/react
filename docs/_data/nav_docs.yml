@@ -46,6 +46,8 @@
       title: Reconciliation
     - id: context
       title: Context
+    - id: portals
+      title: Portals
     - id: web-components
       title: Web Components
     - id: higher-order-components
@@ -73,3 +75,7 @@
       title: Test Utilities
     - id: shallow-renderer
       title: Shallow Renderer
+    - id: test-renderer
+      title: Test Renderer
+    - id: javascript-environment-requirements
+      title: JS Environment Requirements

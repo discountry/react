@@ -32,7 +32,10 @@ id: home
         React 组件使用一个名为 `render()` 的方法， 接收数据作为输入，输出页面中对应展示的内容。 下面这个示例中类似XML的写法被称为JSX. 输入的数据通过 `this.props` 传入 `render()` 方法。
       </p>
       <p>
-        <strong>使用React时，你也可以不使用JSX语法扩展</strong> 你可以试着点击 **Compiled JS** 查看 JSX 被编译之后的代码。
+        <strong>使用 React 的时候也可以不使用 JSX 语法</strong>
+        你可以在
+        <a href="http://babeljs.io/repl#?babili=false&browsers=&build=&builtIns=false&code_lz=MYGwhgzhAEASCmIQHsCy8pgOb2vAHgC7wB2AJjAErxjCEB0AwsgLYAOyJph0A3gFABIAE6ky8YQAoAlHyEj4hAK7CS0ADxkAlgDcAfAiTI-hABZaI9NsORtLJMC3gBfdQHpt-gNxDn_P_zUtIQAIgDyqPSi5BKS6oYo6Jg40A5OALwARCHwOlokmdBuegA00CzISiSEAHLI4tJeQA&debug=false&circleciRepo=&evaluate=false&lineWrap=false&presets=react&prettier=true&targets=&version=6.26.0">Babel REPL</a>
+        查看 JSX 是如何被渲染成原生 JavaScript 代码的。
       </p>
       <div id="helloExample"></div>
     </div>
@@ -55,21 +58,10 @@ id: home
     <div class="example">
       <h3>在组件中使用第三方库</h3>
       <p>
-        React 的使用非常灵活，并且提供了可以调用其他第三方框架或库的接口。下面这个示例就使用了一个用来渲染markdown语法，名为 [**remarkable**](https://github.com/jonschlinkert/remarkable) 的库。
+        React 的使用非常灵活，并且提供了可以调用其他第三方框架或库的接口。下面这个示例就使用了一个用来渲染markdown语法，名为 **remarkable** 的库。
       </p>
       <div id="markdownExample"></div>
     </div>
   </div>
   <script src="https://cdn.bootcss.com/remarkable/1.7.1/remarkable.min.js"></script>
-  <script src="/react/js/examples/hello.js"></script>
-  <script src="/react/js/examples/timer.js"></script>
-  <script src="/react/js/examples/todo.js"></script>
-  <script src="/react/js/examples/markdown.js"></script>
-</section>
-<hr class="home-divider" />
-<section class="home-bottom-section">
-  <div class="buttons-unit">
-    <a href="docs/hello-world.html" class="button">快速开始</a>
-    <a href="tutorial/tutorial.html" class="button">入门教程</a>
-  </div>
 </section>

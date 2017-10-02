@@ -1,10 +1,8 @@
 /**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2016-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule ReactComponentTreeTestUtils
  */
@@ -14,13 +12,15 @@
 var ReactComponentTreeHook = require('ReactComponentTreeHook');
 
 function getRootDisplayNames() {
-  return ReactComponentTreeHook.getRootIDs()
-    .map(ReactComponentTreeHook.getDisplayName);
+  return ReactComponentTreeHook.getRootIDs().map(
+    ReactComponentTreeHook.getDisplayName,
+  );
 }
 
 function getRegisteredDisplayNames() {
-  return ReactComponentTreeHook.getRegisteredIDs()
-    .map(ReactComponentTreeHook.getDisplayName);
+  return ReactComponentTreeHook.getRegisteredIDs().map(
+    ReactComponentTreeHook.getDisplayName,
+  );
 }
 
 function expectTree(rootID, expectedTree, parentPath) {
@@ -35,7 +35,7 @@ function expectTree(rootID, expectedTree, parentPath) {
   function expectEqual(actual, expected, name) {
     // Get Jasmine to print descriptive error messages.
     // We pass path so that we know where the mismatch occurred.
-    expect({
+    expectDev({
       path,
       [name]: actual,
     }).toEqual({
@@ -48,14 +48,14 @@ function expectTree(rootID, expectedTree, parentPath) {
     expectEqual(
       ReactComponentTreeHook.getDisplayName(parentID),
       expectedTree.parentDisplayName,
-      'parentDisplayName'
+      'parentDisplayName',
     );
   }
   if (expectedTree.ownerDisplayName !== undefined) {
     expectEqual(
       ReactComponentTreeHook.getDisplayName(ownerID),
       expectedTree.ownerDisplayName,
-      'ownerDisplayName'
+      'ownerDisplayName',
     );
   }
   if (expectedTree.parentID !== undefined) {
@@ -73,7 +73,7 @@ function expectTree(rootID, expectedTree, parentPath) {
     expectEqual(
       element && element.type,
       expectedTree.element && expectedTree.element.type,
-      'element.type'
+      'element.type',
     );
   } else if (text == null) {
     expectEqual(typeof element, 'object', 'typeof element');
@@ -82,13 +82,13 @@ function expectTree(rootID, expectedTree, parentPath) {
     expectEqual(
       childIDs.length,
       expectedTree.children.length,
-      'children.length'
+      'children.length',
     );
     for (var i = 0; i < childIDs.length; i++) {
       expectTree(
         childIDs[i],
         {parentID: rootID, ...expectedTree.children[i]},
-        path
+        path,
       );
     }
   } else {

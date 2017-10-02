@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @providesModule createReactNativeComponentClass
  * @flow
@@ -12,37 +10,23 @@
 
 'use strict';
 
-var ReactNativeBaseComponent = require('ReactNativeBaseComponent');
+const ReactNativeViewConfigRegistry = require('ReactNativeViewConfigRegistry');
 
-// See also ReactNativeBaseComponent
-type ReactNativeBaseComponentViewConfig = {
-  validAttributes: Object,
-  uiViewClassName: string,
-  propTypes?: Object,
-}
+import type {ViewConfigGetter} from 'ReactNativeTypes';
 
 /**
+ * Creates a renderable ReactNative host component.
+ * Use this method for view configs that are loaded from UIManager.
+ * Use createReactNativeComponentClass() for view configs defined within JavaScript.
+ *
  * @param {string} config iOS View configuration.
  * @private
  */
-var createReactNativeComponentClass = function(
-  viewConfig: ReactNativeBaseComponentViewConfig
-): ReactClass<any> {
-  var Constructor = function(element) {
-    this._currentElement = element;
-    this._topLevelWrapper = null;
-    this._hostParent = null;
-    this._hostContainerInfo = null;
-    this._rootNodeID = 0;
-    this._renderedChildren = null;
-  };
-  Constructor.displayName = viewConfig.uiViewClassName;
-  Constructor.viewConfig = viewConfig;
-  Constructor.propTypes = viewConfig.propTypes;
-  Constructor.prototype = new ReactNativeBaseComponent(viewConfig);
-  Constructor.prototype.constructor = Constructor;
-
-  return ((Constructor: any): ReactClass<any>);
+const createReactNativeComponentClass = function(
+  name: string,
+  callback: ViewConfigGetter,
+): string {
+  return ReactNativeViewConfigRegistry.register(name, callback);
 };
 
 module.exports = createReactNativeComponentClass;

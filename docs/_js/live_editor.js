@@ -8,10 +8,10 @@ var IS_MOBILE = (
     || navigator.userAgent.match(/Windows Phone/i)
 );
 
-var CodeMirrorEditor = React.createClass({
+var CodeMirrorEditor = createReactClass({
   propTypes: {
-    lineNumbers: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
+    lineNumbers: PropTypes.bool,
+    onChange: PropTypes.func,
   },
   getDefaultProps: function() {
     return {
@@ -21,7 +21,7 @@ var CodeMirrorEditor = React.createClass({
   componentDidMount: function() {
     if (IS_MOBILE) return;
 
-    this.editor = CodeMirror.fromTextArea(ReactDOM.findDOMNode(this.refs.editor), {
+    this.editor = CodeMirror.fromTextArea(this.refs.editor, {
       mode: 'jsx',
       lineNumbers: this.props.lineNumbers,
       lineWrapping: true,
@@ -74,18 +74,18 @@ var selfCleaningTimeout = {
   },
 };
 
-var ReactPlayground = React.createClass({
+var ReactPlayground = createReactClass({
   mixins: [selfCleaningTimeout],
 
   MODES: {JSX: 'JSX', JS: 'JS'}, //keyMirror({JSX: true, JS: true}),
 
   propTypes: {
-    codeText: React.PropTypes.string.isRequired,
-    transformer: React.PropTypes.func,
-    renderCode: React.PropTypes.bool,
-    showCompiledJSTab: React.PropTypes.bool,
-    showLineNumbers: React.PropTypes.bool,
-    editorTabTitle: React.PropTypes.string,
+    codeText: PropTypes.string.isRequired,
+    transformer: PropTypes.func,
+    renderCode: PropTypes.bool,
+    showCompiledJSTab: PropTypes.bool,
+    showLineNumbers: PropTypes.bool,
+    editorTabTitle: PropTypes.string,
   },
 
   getDefaultProps: function() {
@@ -200,7 +200,7 @@ var ReactPlayground = React.createClass({
   },
 
   executeCode: function() {
-    var mountNode = ReactDOM.findDOMNode(this.refs.mount);
+    var mountNode = this.refs.mount;
 
     try {
       ReactDOM.unmountComponentAtNode(mountNode);

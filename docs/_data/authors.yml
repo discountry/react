@@ -16,6 +16,9 @@ Daniel15:
 fisherwebdev:
   name: Bill Fisher
   url: https://twitter.com/fisherwebdev
+flarnie:
+  name: Flarnie Marchan
+  url: https://twitter.com/ProbablyFlarnie
 gaearon:
   name: Dan Abramov
   url: https://twitter.com/dan_abramov
@@ -46,6 +49,9 @@ LoukaN:
 matthewjohnston4:
   name: Matthew Johnston
   url: https://github.com/matthewathome
+nhunzaker:
+  name: Nathan Hunzaker
+  url: https://github.com/nhunzaker
 petehunt:
   name: Pete Hunt
   url: https://twitter.com/floydophone
@@ -55,9 +61,9 @@ schrockn:
 sebmarkbage:
   name: Sebastian Markbåge
   url: https://twitter.com/sebmarkbage
-spicyj:
-  name: Ben Alpert
-  url: http://benalpert.com
+sophiebits:
+  name: Sophie Alpert
+  url: https://sophiealpert.com
 steveluscher:
   name: Steven Luscher
   url: https://twitter.com/steveluscher

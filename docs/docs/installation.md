@@ -1,6 +1,6 @@
 ---
 id: installation
-title: 安装
+title: Installation
 permalink: docs/installation.html
 redirect_from:
   - "download.html"
@@ -73,7 +73,7 @@ React 可被灵活地运用在各种项目中。你可以用它创建新的应�
       background-color: #05A5D1;
       color: white;
     }
-    block {
+    section {
       display: none;
     }
     .display-target-fiddle .fiddle,
@@ -104,21 +104,23 @@ React 可被灵活地运用在各种项目中。你可以用它创建新的应�
     </ul>
 </div>
 
-<block id="fiddletab" role="tabpanel" class="fiddle"  />
+<div>
+<section id="fiddletab" role="tabpanel" class="fiddle">
 
-## 尝试 React
+### 尝试 React
 
 如果你只是想简单尝试下 React，可以使用 CodePen. 首先试试这个 [Hello World 示例代码](http://codepen.io/gaearon/pen/rrpgNB?editors=0010)。你不需要安装任何东西，还能简单修改下代码使其生效。
 
-如果你喜欢使用自己的文本编辑器，你还可以 <a href="/react/downloads/single-file-example.html" download="hello.html">下载此 HTML 文件</a> 进行编辑, 然后在本地浏览器中打开。它会缓慢的执行代码转换，所以不要在生产环境中使用。
+如果你喜欢使用自己的文本编辑器，你还可以 <a href="/downloads/single-file-example.html" download="hello.html">下载此 HTML 文件</a> 进行编辑, 然后在本地浏览器中打开。它会缓慢的执行代码转换，所以不要在生产环境中使用。
 
 如果你想在一个完整的项目中使用 React，一般有两种方式：创建 React 应用或添加 React 到现有应用。
+</section>
 
-<block id="newapptab" role="tabpanel" class="newapp" />
+<section id="newapptab" role="tabpanel" class="newapp">
 
-## 创建新应用
+### 创建新应用
 
-[Create React App](http://github.com/facebookincubator/create-react-app) 是开始构建新的 React 单页面应用的最佳途径。 它可以帮你配置开发环境，以便你可以使用最新的 JavaScript 特性，还能提供很棒的开发体验，并为生产环境优化你的应用
+[Create React App](http://github.com/facebookincubator/create-react-app) 是开始构建新的 React 单页面应用的最佳途径。 它可以帮你配置开发环境，以便你可以使用最新的 JavaScript 特性，还能提供很棒的开发体验，并为生产环境优化你的应用。
 
 ```bash
 npm install -g create-react-app
@@ -131,10 +133,11 @@ npm start
 Create React App 并不处理后端逻辑和数据库，它只会创建一个前端的构建管道，所以可以和任何后端搭配使用。它可以使用 Babel 和 Webpack 这样的配置工具，也可以零配置使用。
 
 当你准备好将其部署到生产环境中时，运行 `npm run build`  将会在 `build` 文件夹中创建一个优化好的应用。你可以从 [README](https://github.com/facebookincubator/create-react-app#create-react-app-) 和 [用户指南](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#table-of-contents) 中了解更多信息。
+</section>
 
-<block id="existingapptab" role="tabpanel" class="existingapp" />
+<section id="existingapptab" role="tabpanel" class="existingapp">
 
-## 添加 React 到现有应用
+### 添加 React 到现有应用
 
 你不需要为了使用 React 重写你的应用。
 
@@ -161,7 +164,7 @@ yarn init
 yarn add react react-dom
 ```
 
-使用 npm 安装 React：
+To install React with npm, run:
 
 ```bash
 npm init
@@ -218,120 +221,33 @@ ReactDOM.render(
 如果你不想使用 npm 来管理软件包，'react' 和 'react-dom' npm 软件包同样提供了托管在 CDN 上的独立文件。
 
 ```html
-<script src="https://unpkg.com/react@15/dist/react.js"></script>
-<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 ```
 
 以上版本仅用于开发，不适合生产。压缩优化的生产版本如下：
 
 ```html
-<script src="https://unpkg.com/react@15/dist/react.min.js"></script>
-<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 ```
 
-如果想要加载指定版本的 `react` 和 `react-dom`，用版本号替换 15。
+如果想要加载指定版本的 `react` 和 `react-dom`，用版本号替换 16。
 
 如果你在使用 Bower，可以通过 `react` 包来使用 React。
 
-为什么crossorigin属性？
-如果你从CDN引用react,我们建议保持设置crossorigin属性:
+#### 为什么使用 `crossorigin` 属性?
 
-```js
+如果你从CDN引用react,我们建议保持设置 [`crossorigin`](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) 属性:
+
+```html
 <script crossorigin src="..."></script>
 ```
-![Alt cdn-cors-header](https://facebook.github.io/react/img/docs/cdn-cors-header.png)
 
-这能在React 16和之后的版本中有一个更好的错误处理经验。
+We also recommend to verify that the CDN you are using sets the `Access-Control-Allow-Origin: *` HTTP header:
 
-<script>
-/**
- * The code below is based on a snippet from React Native Getting Started page.
- */
+![Access-Control-Allow-Origin: *](../img/docs/cdn-cors-header.png)
 
-// Convert <div>...<span><block /></span>...</div>
-// Into <div>...<block />...</div>
-var blocks = document.getElementsByTagName('block');
-for (var i = 0; i < blocks.length; ++i) {
-  var block = blocks[i];
-  var span = blocks[i].parentNode;
-  var container = span.parentNode;
-  container.insertBefore(block, span);
-  container.removeChild(span);
-}
-// Convert <div>...<block />content<block />...</div>
-// Into <div>...<block>content</block><block />...</div>
-blocks = document.getElementsByTagName('block');
-for (var i = 0; i < blocks.length; ++i) {
-  var block = blocks[i];
-  while (block.nextSibling && block.nextSibling.tagName !== 'BLOCK') {
-    block.appendChild(block.nextSibling);
-  }
-}
-
-function setSelected(value){
-  var tabs = document.querySelectorAll('li[role="tab"]');
-  for (var i = 0; i < tabs.length; ++i) {
-    var tab = tabs[i];
-    if (tab.className === 'button-' + value) {
-      tabs[i].setAttribute('aria-selected', 'true');
-      tabs[i].setAttribute('tabindex', '0');
-    } else {
-      tabs[i].setAttribute('aria-selected', 'false');
-      tabs[i].setAttribute('tabindex', '-1');
-    }
-  }
-}
-
-function keyToggle(e, value, prevTab, nextTab){
-  if (e.keyCode === 37) {
-    document.getElementById(prevTab).focus();
-    display('target', prevTab);
-  }
-  if (e.keyCode === 39) {
-    document.getElementById(nextTab).focus();
-    display('target', nextTab);
-  }
-}
-
-function display(type, value) {
-  setSelected(value);
-  var container = document.getElementsByTagName('block')[0].parentNode;
-  container.className = 'display-' + type + '-' + value + ' ' +
-    container.className.replace(RegExp('display-' + type + '-[a-z]+ ?'), '');
-}
-
-// If we are coming to the page with a hash in it (i.e. from a search, for example), try to get
-// us as close as possible to the correct platform and dev os using the hashtag and block walk up.
-var foundHash = false;
-if (window.location.hash !== '' && window.location.hash !== 'content') { // content is default
-  // Hash links are added a bit later so we wait for them.
-  window.addEventListener('DOMContentLoaded', selectTabForHashLink);
-}
-
-function selectTabForHashLink() {
-  var hashLinks = document.querySelectorAll('a.hash-link');
-  for (var i = 0; i < hashLinks.length && !foundHash; ++i) {
-    if (hashLinks[i].hash === window.location.hash) {
-      var parent = hashLinks[i].parentElement;
-      while (parent) {
-        if (parent.tagName === 'BLOCK') {
-          var target = null;
-          if (parent.className.indexOf('fiddle') > -1) {
-            target = 'fiddle';
-          } else if (parent.className.indexOf('newapp') > -1) {
-            target = 'newapp';
-          } else if (parent.className.indexOf('existingapp') > -1) {
-            target = 'existingapp';
-          } else {
-            break; // assume we don't have anything.
-          }
-          display('target', target);
-          foundHash = true;
-          break;
-        }
-        parent = parent.parentElement;
-      }
-    }
-  }
-}
-</script>
+This enables a better [error handling experience](/blog/2017/07/26/error-handling-in-react-16.html) in React 16 and later.
+</section>
+</div>

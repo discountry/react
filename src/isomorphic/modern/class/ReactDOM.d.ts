@@ -1,10 +1,8 @@
 /*!
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 /**
@@ -14,7 +12,7 @@
  * just helpers for the unit test.
  */
 
-declare module 'ReactDOM' {
+declare module 'react-dom' {
   export function render(element : any, container : any) : any
   export function unmountComponentAtNode(container : any) : void
   export function findDOMNode(instance : any) : any
