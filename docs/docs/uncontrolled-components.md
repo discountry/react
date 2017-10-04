@@ -4,9 +4,9 @@ title: 非受控组件
 permalink: docs/uncontrolled-components.html
 ---
 
-在大多数情况下，我们推荐使用 [受控组件](/react/docs/forms.html) 来实现表单。 在受控组件中，表单数据由 React 组件处理。如果让表单数据由 DOM 处理时，替代方案为使用非受控组件。
+在大多数情况下，我们推荐使用 [受控组件](/docs/forms.html) 来实现表单。 在受控组件中，表单数据由 React 组件处理。如果让表单数据由 DOM 处理时，替代方案为使用非受控组件。
 
-要编写一个非受控组件，而非为每个状态更新编写事件处理程序，你可以 [使用 ref](/react/docs/refs-and-the-dom.html) 从 DOM 获取表单值。
+要编写一个非受控组件，而非为每个状态更新编写事件处理程序，你可以 [使用 ref](/docs/refs-and-the-dom.html) 从 DOM 获取表单值。
 
 例如，下面的代码在非受控组件中接收单个属性。
 
