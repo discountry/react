@@ -4,17 +4,17 @@ title: Portals
 permalink: docs/portals.html
 ---
 
-Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+Portals 提供了一种很好的将子节点渲染到父组件以外的 DOM 节点的方式。
 
 ```js
 ReactDOM.createPortal(child, container)
 ```
 
-The first argument (`child`) is any [renderable React child](/docs/react-component.html#render), such as an element, string, or fragment. The second argument (`container`) is a DOM element.
+第一个参数（`child`）是任何[可渲染的 React 子元素](/docs/react-component.html#render)，例如一个元素，字符串或碎片。第二个参数（`container`）则是一个 DOM 元素。
 
-## Usage
+## 用法
 
-Normally, when you return an element from a component's render method, it's mounted into the DOM as a child of the nearest parent node:
+通常讲，当你从组件的 render 方法返回一个元素，该元素仅能装配 DOM 节点中离其最近的父元素：
 
 ```js{4,6}
 render() {
@@ -27,7 +27,7 @@ render() {
 }
 ```
 
-However, sometimes it's useful to insert a child into a different location in the DOM:
+然而，有时候将其插入到 DOM 节点的不同位置也是有用的：
 
 ```js{6}
 render() {
@@ -40,19 +40,21 @@ render() {
 }
 ```
 
-A typical use case for portals is when a parent component has an `overflow: hidden` or `z-index` style, but you need the child to visually "break out" of its container. For example, dialogs, hovercards, and tooltips.
+对于 portal 的一个典型用例是当父组件有 `overflow: hidden` 或 `z-index` 样式，但你需要子组件能够在视觉上“跳出（break out）”其容器。例如，对话框、hovercards以及提示框：
 
-> Note:
+> 注意：
 >
-> It is important to remember, when working with portals, you'll need to make sure to follow the proper accessibility guidelines.
+> 记住这点非常重要，当在使用 portals时，你需要确保遵循合适的可访问指南。
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/yzMaBd)
+[在 CodePen 上试一试](https://codepen.io/gaearon/pen/yzMaBd)
 
-## Event Bubbling Through Portals
+## 通过 Portals 进行事件冒泡
 
 Even though a portal can be anywhere in the DOM tree, it behaves like a normal React child in every other way. Features like context work exactly the same regardless of whether the child is a portal, as the portal still exists in the *React tree* regardless of position in the *DOM tree*.
 
-This includes event bubbling. An event fired from inside a portal will propagate to ancestors in the containing *React tree*, even if those elements are not ancestors in the *DOM tree*. Assuming the following HTML structure:
+尽管 portal 可以被放置在 DOM 树的任何地方，但在其他方面其行为和普通的 React 子节点行为一致。如上下文特性依然能够如之前一样正确地工作，无论其子节点是否是 portal，由于 portal 仍存在于 *React 树*中，而不用考虑其在 DOM 树中的位置。
+
+这包含事件冒泡。一个从 portal 内部会触发的事件会一直冒泡至包含 *React 树* 的祖先。假设如下 HTML 结构：
 
 ```html
 <html>
@@ -63,7 +65,7 @@ This includes event bubbling. An event fired from inside a portal will propagate
 </html>
 ```
 
-A `Parent` component in `#app-root` would be able to catch an uncaught, bubbling event from the sibling node `#modal-root`.
+在 `#app-root` 里的 `Parent` 组件能够捕获到未被捕获的从兄弟节点 `#modal-root` 冒泡上来的事件。
 
 ```js{20-23,34-41,45,53-55,62-63,66}
 // These two containers are siblings in the DOM
@@ -139,6 +141,6 @@ function Child() {
 ReactDOM.render(<Parent />, appRoot);
 ```
 
-[Try it on CodePen.](https://codepen.io/gaearon/pen/jGBWpE)
+[在 CodePen 上试一试](https://codepen.io/gaearon/pen/jGBWpE)
 
-Catching an event bubbling up from a portal in a parent component allows the development of more flexible abstractions that are not inherently reliant on portals. For example, if you render a `<Modal />` component, the parent can capture its events regardless of whether it's implemented using portals.
+在父组件里捕获一个来自 portal 的事件冒泡能够在开发时具有不完全依赖于 portal 的更为灵活的抽象。例如，若你在渲染一个 `<Modal />` 组件，父组件能够捕获其事件而无论其是否采用 portal 实现。
