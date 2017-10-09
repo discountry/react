@@ -91,15 +91,39 @@ render()
 
 `render()`方法是必须的。
 
-当被调用时，其应该检查`this.props` 和 `this.state`并返回一个单独的React元素。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
+当被调用时，其应该检查`this.props` 和 `this.state`并返回以下类型中的一个:
 
-也也可以返回`null` 或 `false`来声明你并不想渲染任何东西。当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。
+- **React元素。** 通常是由 JSX 创建。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
+- **字符串和数字。** 这些将被渲染为 DOM 中的 text node。
+- **Portals。** 由 [`ReactDOM.createPortal`](/react/docs/portals.html) 创建。
+- `null`。 什么都不渲染。
+- **布尔值。** 什么都不渲染。（通常存在于 `return test && <Child />`写法，其中 `test` 是布尔值。）
+
+当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。
 
 `render()`函数应该纯净，意味着其不应该改变组件的状态，其每次调用都应返回相同的结果，同时不直接和浏览器交互。若需要和浏览器交互，将任务放在`componentDidMount()`阶段或其他的生命周期方法。保持`render()` 方法纯净使得组件更容易思考。
 
 > 注意
 >
 > 若 [`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`render()`函数将不会被调用。
+
+#### Fragments
+
+你还可以通过使用一个数组让`render()`返回多个元素：
+
+```javascript
+render() {
+  return [
+    <li key="A">First item</li>,
+    <li key="B">Second item</li>,
+    <li key="C">Third item</li>,
+  ];
+}
+```
+
+> 注意
+>
+> 不要忘了给元素[添加key](/react/docs/lists-and-keys.html#keys)来避免key warning。
 
 * * *
 
