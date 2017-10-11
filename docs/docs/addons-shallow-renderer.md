@@ -13,11 +13,11 @@ import ShallowRenderer from 'react-test-renderer/shallow'; // ES6
 var ShallowRenderer = require('react-test-renderer/shallow'); // ES5 with npm
 ```
 
-## Overview
+## 概述
 
-When writing unit tests for React, shallow rendering can be helpful. Shallow rendering lets you render a component "one level deep" and assert facts about what its render method returns, without worrying about the behavior of child components, which are not instantiated or rendered. This does not require a DOM.
+当为 React 写单元测试时, 浅渲染会变得十分有用。浅渲染使您渲染组件的“第一层”，并且对组件的 render 方法的返回值进行断言，不用担心子组件的行为，组件并没有实例化或被渲染。浅渲染并不需要 DOM。
 
-For example, if you have the following component:
+例如，如果您有如下的组件：
 
 ```javascript
 function MyComponent() {
@@ -30,7 +30,7 @@ function MyComponent() {
 }
 ```
 
-Then you can assert:
+你可以断言(assert)：
 
 ```javascript
 import ShallowRenderer from 'react-test-renderer/shallow';
@@ -47,22 +47,22 @@ expect(result.props.children).toEqual([
 ]);
 ```
 
-Shallow testing currently has some limitations, namely not supporting refs.
+浅测试（Shallow testing）当前还有一些局限, 即不支持 refs。
 
-> Note:
+> 注意：
 >
-> We also recommend checking out Enzyme's [Shallow Rendering API](http://airbnb.io/enzyme/docs/api/shallow.html). It provides a nicer higher-level API over the same functionality.
+> 我们还建议看看 Enzyme [Shallow Rendering API](http://airbnb.io/enzyme/docs/api/shallow.html)。它在相同的功能上提供了一个更棒的高级 API。
 
-## Reference
+## 参考
 
 ### `shallowRenderer.render()`
 
-You can think of the shallowRenderer as a "place" to render the component you're testing, and from which you can extract the component's output.
+你可以把 shallowRenderer 想象成一个用来渲染你正在测试的组件的“地方”，并且你可以从那里取到该组件的输出。
 
-`shallowRenderer.render()` is similar to [`ReactDOM.render()`](/react/docs/react-dom.html#render) but it doesn't require DOM and only renders a single level deep. This means you can test components isolated from how their children are implemented.
+`shallowRenderer.render()` 和 [`ReactDOM.render()`](/react/docs/react-dom.html#render)很像。但是它不需要 DOM 并且只渲染一层。这就意味着你可以测试与子组件行为隔离的组件。
 
 ### `shallowRenderer.getRenderOutput()`
 
-After `shallowRenderer.render()` has been called, you can use `shallowRenderer.getRenderOutput()` to get the shallowly rendered output.
+在 `shallowRenderer.render()` 被调用后, 你可以调用 `shallowRenderer.getRenderOutput()` 来获取浅渲染的输出.
 
-You can then begin to assert facts about the output.
+然后，您就可以开始开始对输出进行断言了。
