@@ -50,8 +50,6 @@ render() {
 
 ## 通过 Portals 进行事件冒泡
 
-Even though a portal can be anywhere in the DOM tree, it behaves like a normal React child in every other way. Features like context work exactly the same regardless of whether the child is a portal, as the portal still exists in the *React tree* regardless of position in the *DOM tree*.
-
 尽管 portal 可以被放置在 DOM 树的任何地方，但在其他方面其行为和普通的 React 子节点行为一致。如上下文特性依然能够如之前一样正确地工作，无论其子节点是否是 portal，由于 portal 仍存在于 *React 树*中，而不用考虑其在 DOM 树中的位置。
 
 这包含事件冒泡。一个从 portal 内部会触发的事件会一直冒泡至包含 *React 树* 的祖先。假设如下 HTML 结构：
