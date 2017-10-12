@@ -13,13 +13,13 @@ import ReactTestUtils from 'react-dom/test-utils'; // ES6
 var ReactTestUtils = require('react-dom/test-utils'); // ES5 with npm
 ```
 
-## Overview
+## 概览
 
-`ReactTestUtils` makes it easy to test React components in the testing framework of your choice. At Facebook we use [Jest](https://facebook.github.io/jest/) for painless JavaScript testing. Learn how to get started with Jest through the Jest website's [React Tutorial](http://facebook.github.io/jest/docs/tutorial-react.html#content).
+`ReactTestUtils`可以在您选择的测试框架中轻松地测试React组件。 在 Facebook 我们使用 [Jest](https://facebook.github.io/jest/) 来愉快地测试 JavaScript。通过 Jest 的网站[React Tutorial](http://facebook.github.io/jest/docs/tutorial-react.html#content)来学习如何开始使用 Jest。
 
-> Note:
+> 注意：
 >
-> Airbnb has released a testing utility called Enzyme, which makes it easy to assert, manipulate, and traverse your React Components' output. If you're deciding on a unit testing utility to use together with Jest, or any other test runner, it's worth checking out: [http://airbnb.io/enzyme/](http://airbnb.io/enzyme/)
+> Airbnb（爱彼迎）已经发布了一个名为 Enzyme 的测试工具，该工具可以很容易地对您的 React 组件的输出进行 断言、操作和遍历。如果你正在为选择哪个单元测试工具来和 Jest 或其他测试运行器 协同工作，Enzyme值得一试[http://airbnb.io/enzyme/](http://airbnb.io/enzyme/)。
 
  - [`Simulate`](#simulate)
  - [`renderIntoDocument()`](#renderintodocument)
@@ -37,18 +37,18 @@ var ReactTestUtils = require('react-dom/test-utils'); // ES5 with npm
  - [`scryRenderedComponentsWithType()`](#scryrenderedcomponentswithtype)
  - [`findRenderedComponentWithType()`](#findrenderedcomponentwithtype)
 
-## Reference
+## 参考
 
-## Shallow Rendering
+## 浅渲染
 
-When writing unit tests for React, shallow rendering can be helpful. Shallow rendering lets you render a component "one level deep" and assert facts about what its render method returns, without worrying about the behavior of child components, which are not instantiated or rendered. This does not require a DOM.
+当为 React 写单元测试时, 浅渲染会变得十分有用。浅渲染使您渲染组件的“第一层”，并且对组件的 render 方法的返回值进行断言，不用担心子组件的行为，组件并没有实例化或被渲染。浅渲染并不需要 DOM。
 
-> Note:
+> 注意：
 >
-> The shallow renderer has moved to `react-test-renderer/shallow`.<br>
-> [Learn more about shallow rendering on its reference page.](/react/docs/shallow-renderer.html)
+> 浅渲染已经被移动到了 `react-test-renderer/shallow`.<br>
+> [在浅渲染的参考页面了解更多信息。](/react/docs/shallow-renderer.html)
 
-## Other Utilities
+## 其他工具
 
 ### `Simulate`
 
@@ -59,11 +59,11 @@ Simulate.{eventName}(
 )
 ```
 
-Simulate an event dispatch on a DOM node with optional `eventData` event data.
+模拟分发一个事件到DOM节点，`eventData` 是可选的事件数据。
 
-`Simulate` has a method for [every event that React understands](/react/docs/events.html#supported-events).
+[任一个React支持的事件](/react/docs/events.html#supported-events)都是 `Simulate` 的一个方法。
 
-**Clicking an element**
+**点击一个元素**
 
 ```javascript
 // <button ref="button">...</button>
@@ -71,7 +71,7 @@ const node = this.refs.button;
 ReactTestUtils.Simulate.click(node);
 ```
 
-**Changing the value of an input field and then pressing ENTER.**
+**改变一个输入框（input）的值然后按下回车键（ENTER）.**
 
 ```javascript
 // <input ref="input" />
@@ -81,9 +81,9 @@ ReactTestUtils.Simulate.change(node);
 ReactTestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
 ```
 
-> Note
+> 注意：
 >
-> You will have to provide any event property that you're using in your component (e.g. keyCode, which, etc...) as React is not creating any of these for you.
+> 您必须提供 所有 在你的组件中正在使用的 事件属性（例如 keyCode, which,等等），因为 React 并不会为您创建这些东西。
 
 * * *
 
@@ -93,11 +93,11 @@ ReactTestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
 renderIntoDocument(element)
 ```
 
-Render a React element into a detached DOM node in the document. **This function requires a DOM.**
+将一个 React 元素渲染到 document 中的一个独立的 DOM 节点。 **这个函数需要DOM**
 
-> Note:
+> 注意：
 >
-> You will need to have `window`, `window.document` and `window.document.createElement` globally available **before** you import `React`. Otherwise React will think it can't access the DOM and methods like `setState` won't work.
+> 在导入 React 之前， 您必须拥有全局可用的 `window`, `window.document` 和 `window.document.createElement`。否则， React 会认为它不能访问 DOM 并且像 `setState` 这样的方法将不能工作。
 
 * * *
 
@@ -112,6 +112,10 @@ mockComponent(
 
 Pass a mocked component module to this method to augment it with useful methods that allow it to be used as a dummy React component. Instead of rendering as usual, the component will become a simple `<div>` (or other tag if `mockTagName` is provided) containing any provided children.
 
+> 注意：
+>
+> `mockComponent()` 是一个历史遗留的 API. 我们建议使用 [shallow rendering](/react/docs/test-utils.html#shallow-rendering) 或 [`jest.mock()`](https://facebook.github.io/jest/docs/en/tutorial-react-native.html#mock-native-modules-using-jestmock) 来代替。
+
 * * *
 
 ### `isElement()`
@@ -120,7 +124,7 @@ Pass a mocked component module to this method to augment it with useful methods 
 isElement(element)
 ```
 
-Returns `true` if `element` is any React element.
+如果 `element` 是任一 React 元素，返回 `true`。
 
 * * *
 
@@ -133,7 +137,7 @@ isElementOfType(
 )
 ```
 
-Returns `true` if `element` is a React element whose type is of a React `componentClass`.
+如果 `element` 是一个类型为 `componentClass` 的 React 元素，返回 `true`。
 
 * * *
 
@@ -143,7 +147,7 @@ Returns `true` if `element` is a React element whose type is of a React `compone
 isDOMComponent(instance)
 ```
 
-Returns `true` if `instance` is a DOM component (such as a `<div>` or `<span>`).
+如果 `instance` 是一个 DOM 组件（例如一个 `<div>` 或 `<span>`），返回 `true`。
 
 * * *
 
@@ -153,7 +157,7 @@ Returns `true` if `instance` is a DOM component (such as a `<div>` or `<span>`).
 isCompositeComponent(instance)
 ```
 
-Returns `true` if `instance` is a user-defined component, such as a class or a function.
+如果 `instance` 是一个用户自定义的组件，例如一个类或者一个函数，返回 `true`。
 
 * * *
 
@@ -166,7 +170,7 @@ isCompositeComponentWithType(
 )
 ```
 
-Returns `true` if `instance` is a component whose type is of a React `componentClass`.
+如果 `instance` 是一个类型为 `componentClass` 的组件，返回 `true`。
 
 * * *
 
@@ -179,7 +183,7 @@ findAllInRenderedTree(
 )
 ```
 
-Traverse all components in `tree` and accumulate all components where `test(component)` is `true`. This is not that useful on its own, but it's used as a primitive for other test utils.
+遍历 `tree` 中的所有组件，并且搜集所有 `test(component)` 为 `true` 的组件。它单独使用时不是很有用，但是它被用作其他测试工具的原始数据。
 
 * * *
 
@@ -192,7 +196,7 @@ scryRenderedDOMComponentsWithClass(
 )
 ```
 
-Finds all DOM elements of components in the rendered tree that are DOM components with the class name matching `className`.
+查找渲染树中组件的所有DOM元素，找到 类名 与 `className` 相匹配的DOM组件。
 
 * * *
 
@@ -205,7 +209,7 @@ findRenderedDOMComponentWithClass(
 )
 ```
 
-Like [`scryRenderedDOMComponentsWithClass()`](#scryrendereddomcomponentswithclass) but expects there to be one result, and returns that one result, or throws exception if there is any other number of matches besides one.
+和 [`scryRenderedDOMComponentsWithClass()`](#scryrendereddomcomponentswithclass) 类似，但是期望只匹有一个结果并且返回该结果，如果匹配的结果数量不等于一，则会抛出异常。
 
 * * *
 
@@ -218,7 +222,7 @@ scryRenderedDOMComponentsWithTag(
 )
 ```
 
-Finds all DOM elements of components in the rendered tree that are DOM components with the tag name matching `tagName`.
+查找渲染树中组件的所有DOM元素，找到 标签名 与 `tagName` 相匹配的DOM组件。
 
 * * *
 
@@ -231,7 +235,7 @@ findRenderedDOMComponentWithTag(
 )
 ```
 
-Like [`scryRenderedDOMComponentsWithTag()`](#scryrendereddomcomponentswithtag) but expects there to be one result, and returns that one result, or throws exception if there is any other number of matches besides one.
+和 [`scryRenderedDOMComponentsWithTag()`](#scryrendereddomcomponentswithtag) 类似，但是期望只匹有一个结果并且返回该结果，如果匹配的结果数量不等于一，则会抛出异常。
 
 * * *
 
@@ -244,7 +248,7 @@ scryRenderedComponentsWithType(
 )
 ```
 
-Finds all instances of components with type equal to `componentClass`.
+找到所有 实例的类型为 `componentClass` 的 组件。
 
 * * *
 
@@ -257,6 +261,6 @@ findRenderedComponentWithType(
 )
 ```
 
-Same as [`scryRenderedComponentsWithType()`](#scryrenderedcomponentswithtype) but expects there to be one result and returns that one result, or throws exception if there is any other number of matches besides one.
+和 [`scryRenderedComponentsWithType()`](#scryrenderedcomponentswithtype) 类似，但是期望只匹有一个结果并且返回该结果，如果匹配的结果数量不等于一，则会抛出异常。
 
 * * *
