@@ -13,13 +13,13 @@ import TestRenderer from 'react-test-renderer'; // ES6
 const TestRenderer = require('react-test-renderer'); // ES5 with npm
 ```
 
-## Overview
+## 概览
 
-This package provides a React renderer that can be used to render React components to pure JavaScript objects, without depending on the DOM or a native mobile environment.
+该包提供了一个React的渲染器，可以用来将 React 组件渲染成纯 JavaScript 对象，不需要依赖于 DOM 和原生移动环境。
 
-Essentially, this package makes it easy to grab a snapshot of the platform view hierarchy (similar to a DOM tree) rendered by a React DOM or React Native component without using a browser or [jsdom](https://github.com/tmpvar/jsdom).
+本质上，该包可以在无需使用浏览器或[jsdom](https://github.com/tmpvar/jsdom)的情况下，轻松地抓取由 React DOM 或 React Native渲染出的平台视图层次结构（类似于DOM树）。
 
-Example:
+示例：
 
 ```javascript
 import TestRenderer from 'react-test-renderer';
@@ -38,9 +38,9 @@ console.log(testRenderer.toJSON());
 //   children: [ 'Facebook' ] }
 ```
 
-You can use Jest's snapshot testing feature to automatically save a copy of the JSON tree to a file and check in your tests that it hasn't changed: [Learn more about it](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html).
+您可以使用 Jest 的快照测试来自动保存一个该 JSON 树文件的副本，并且在您的测试中检查它是否被更改。[了解更多](http://facebook.github.io/jest/blog/2016/07/27/jest-14.html).
 
-You can also traverse the output to find specific nodes and make assertions about them.
+您同样可以通过遍历输出来查找特殊节点，并对相应的节点进行断言。
 
 ```javascript
 import TestRenderer from 'react-test-renderer';
@@ -94,7 +94,7 @@ expect(testInstance.findByProps({className: "sub"}).children).toEqual(['Sub']);
 * [`testInstance.parent`](#testInstance.parent)
 * [`testInstance.children`](#testInstance.children)
 
-## Reference
+## 参考
 
 ### `TestRenderer.create()`
 
@@ -102,7 +102,7 @@ expect(testInstance.findByProps({className: "sub"}).children).toEqual(['Sub']);
 TestRenderer.create(element, options);
 ```
 
-Create a TestRenderer instance with a passed element, which has the following methods and properties.
+通过传来的 React 元素创建一个 `TestRenderer` 的实例。它并不使用真实的 DOM，但是它依然将组件树完整地渲染到内存，所以您可以对它进行断言。返回的实例拥有以下的方法和属性。
 
 ### `testRenderer.toJSON()`
 
@@ -110,7 +110,7 @@ Create a TestRenderer instance with a passed element, which has the following me
 testRenderer.toJSON()
 ```
 
-Return a JSON object representing the element.
+返回一个表示渲染后的 树 的对象。该树仅包含特定平台的节点，像`<div>` 或 `<View>`和他们的属性（props），但是并不包含任何用户编写的组件。这对于[快照测试](http://facebook.github.io/jest/docs/en/snapshot-testing.html#snapshot-testing-with-jest)非常方便。
 
 ### `testRenderer.toTree()`
 
@@ -118,7 +118,7 @@ Return a JSON object representing the element.
 testRenderer.toTree()
 ```
 
-Return a tree object representing the element.
+返回一个表示渲染后的 树 的对象。和 `toJSON()` 不同，它表示的内容比 `toJSON()` 提供的内容要更加详细，并且包含用户编写的组件。除非您正在测试渲染器（test rendererer）之上编写您自己的断言库，否则您可能并不需要这个方法。
 
 ### `testRenderer.update()`
 
@@ -126,7 +126,7 @@ Return a tree object representing the element.
 testRenderer.update(element)
 ```
 
-Update the element with a passed element.
+使用新的根元素重新渲染内存中的树。它模拟根元素的一次React更新。如果新的元素和之前的元素有相同的 type 和 key，该树将会被更新；否则，它将重挂载一个新树。
 
 ### `testRenderer.unmount()`
 
@@ -134,7 +134,7 @@ Update the element with a passed element.
 testRenderer.unmount()
 ```
 
-Unmount the element from testRenderer.
+卸载内存中的树，触发相应的生命周期事件。
 
 ### `testRenderer.getInstance()`
 
@@ -142,7 +142,7 @@ Unmount the element from testRenderer.
 testRenderer.getInstance()
 ```
 
-Return a root container instance.
+如果可用的话，返回与根元素相对应的实例。如果根元素是函数组件（functional component），该方法无效，因为函数组件没有实例。
 
 ### `testRenderer.root`
 
@@ -150,7 +150,7 @@ Return a root container instance.
 testRenderer.root
 ```
 
-`root` is a testInstance, which has the following methods and properties.
+返回根元素“测试实例（test instance）”对象，对于断言树中的特殊节点十分有用。您可以利用它来查找其他更深层的“测试实例（test instance）”。
 
 ### `testInstance.find()`
 
@@ -158,7 +158,7 @@ testRenderer.root
 testInstance.find(test)
 ```
 
-Find a descendant testInstance that `test(testInstance)` is `true`.
+找到一个 test(testInstance) 返回 true 的后代 测试实例。如果 test(testInstance) 没有正好只对一个 测试实例 返回 true，将会报错。
 
 ### `testInstance.findByType()`
 
@@ -166,7 +166,7 @@ Find a descendant testInstance that `test(testInstance)` is `true`.
 testInstance.findByType(type)
 ```
 
-Find a descendant testInstance that matches the provided type.
+找到一个匹配指定 类型（type）的 后代 测试实例（testInstances），如果不是正好只有一个测试实例匹配指定的 类型（type），将会报错。
 
 ### `testInstance.findByProps()`
 
@@ -174,7 +174,7 @@ Find a descendant testInstance that matches the provided type.
 testInstance.findByProps(props)
 ```
 
-Find a descendant testInstance that matches the provided props.
+找到匹配指定 属性（props）的 后代 测试实例（testInstances），如果不是正好只有一个测试实例匹配指定的 类型（type），将会报错。
 
 ### `testInstance.findAll()`
 
@@ -182,7 +182,7 @@ Find a descendant testInstance that matches the provided props.
 testInstance.findAll(test)
 ```
 
-Find all descendant testInstances that `test(testInstance)` is `true`.
+找到所有 `test(testInstance)` 等于 `true` 的后代 测试实例（testInstances）。
 
 ### `testInstance.findAllByType()`
 
@@ -190,7 +190,7 @@ Find all descendant testInstances that `test(testInstance)` is `true`.
 testInstance.findAllByType(type)
 ```
 
-Find all descendant testInstances that matches the provided type.
+找到所有匹配指定 类型（type）的 后代 测试实例（testInstances）。
 
 ### `testInstance.findAllByProps()`
 
@@ -198,7 +198,7 @@ Find all descendant testInstances that matches the provided type.
 testInstance.findAllByProps(props)
 ```
 
-Find all descendant testInstances that matches the provided props.
+找到所有匹配指定 属性（props）的 后代 测试实例（testInstances）。
 
 ### `testInstance.instance`
 
@@ -206,7 +206,7 @@ Find all descendant testInstances that matches the provided props.
 testInstance.instance
 ```
 
-`instance` is a component instance of the testInstance.
+该测试实例（testInstances）相对应的组件的实例。它只能用于 类组件（class components），因为函数组件（functional components）没有实例。它匹配给定的组件内部的 `this` 的值。
 
 ### `testInstance.type`
 
@@ -214,7 +214,7 @@ testInstance.instance
 testInstance.type
 ```
 
-`type` is a Component type of the testInstance.
+该测试实例（testInstance）相对应的组件的类型（type），例如，一个 `<Button />` 组件有一个 `Button` 类型（type）。
 
 ### `testInstance.props`
 
@@ -222,7 +222,7 @@ testInstance.type
 testInstance.props
 ```
 
-`props` is a props object of the testInstance.
+该测试实例（testInstance）相对应的组件的属性（props），例如，一个 `<Button size="small" />` 组件的属性（props）为 `{size: 'small'}`。
 
 ### `testInstance.parent`
 
@@ -230,7 +230,7 @@ testInstance.props
 testInstance.parent
 ```
 
-`parent` is a parent testInstance.
+该测试实例的父测试实例。
 
 ### `testInstance.children`
 
@@ -238,13 +238,11 @@ testInstance.parent
 testInstance.children
 ```
 
-`children` is children of the testInstance.
+该测试实例的子测试实例。
 
 ## Ideas
 
-You can pass `createNodeMock` function to `TestRenderer.create` as the option, which allows for custom mock refs.
-`createNodeMock` accepts the current element and should return a mock ref object.
-This is useful when you test a component rely on refs.
+您可以将 `createNodeMock` 函数作为选项（option）传递给 `TestRenderer.create`，可以自行模拟refs。`createNodeMock` 接受当前元素作为参数，并且返回一个模拟的 ref 对象。当您要测试一个依赖于 refs 的组件时，它十分有用。
 
 ```javascript
 import TestRenderer from 'react-test-renderer';
