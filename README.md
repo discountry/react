@@ -1,31 +1,56 @@
-# React 中文文档翻译计划
+# reactjs.org
 
-## Notice
+This repo contains the source code and documentation powering [reactjs.org](https://reactjs.org/).
 
-> This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `facebook/react` .
+## Getting started
 
-## 如何贡献
+### Prerequisites
 
-目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
+1. Git
+1. Node: install version 8.4 or greater
+1. Yarn: See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/)
+1. A clone of the [reactjs.org repo](https://github.com/reactjs/reactjs.org) on your local machine
+1. A fork of the repo (for any contributions)
 
-**翻译文档**
+### Installation
 
-所有文档内容的相关文件均在 [`/docs`](https://github.com/discountry/react/tree/master/docs) 目录下。如有需要翻译或修改纠错的内容，请直接编辑对应 `md` 文件，提交 pr 即可。
+1. `cd reactjs.org` to go into the project root
+1. `yarn` to install the website's npm dependencies
 
-**完善网站**
+### Running locally
 
-React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/www`](https://github.com/discountry/react/tree/master/www) 文件夹下，如果有对网站模板/样式/配置的改动，请直接编辑该目录下文件并提交 pr 即可。
+1. `yarn dev` to start the hot-reloading development server (powered by [Gatsby](https://www.gatsbyjs.org))
+1. `open http://localhost:8000` to open the site in your favorite browser
 
-**为 React 官方贡献翻译**
+## Contributing
 
-React 官网会在将来支持多语言功能，目前官方已经发起了翻译项目，你可以在 [React on Crowdin](https://crowdin.com/project/react) 贡献翻译。
+### Create a branch
 
-## Contributors
+1. `git checkout master` from any folder in your local `reactjs.org` repository
+1. `git pull origin master` to ensure you have the latest main code
+1. `git checkout -b the-name-of-my-branch` (replacing `the-name-of-my-branch` with a suitable name) to create a branch
 
-感谢所有[参与翻译的同学](https://github.com/discountry/react/graphs/contributors)。是大家的开源精神和辛勤工作让文档的翻译得以如此顺利迅速进行。
+### Make the change
 
-## License
+1. Follow the "Running locally" instructions
+1. Save the files and check in the browser
+  1. Changes to React components in `src` will hot-reload
+  1. Changes to markdown files in `content` will hot-reload
+  1. If working with plugins, you may need to remove the `.cache` directory and restart the server
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
+### Test the change
 
-文档翻译采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a> 进行许可。著作权归译者本人所有，禁止商用。
+1. If possible, test any visual changes in all latest versions of common browsers, on both desktop and mobile.
+1. Run `yarn check-all` from the project root. (This will run Prettier, ESLint, and Flow.)
+
+### Push it
+
+1. `git add -A && git commit -m "My message"` (replacing `My message` with a commit message, such as `Fixed header logo on Android`) to stage and commit your changes
+1. `git push my-fork-name the-name-of-my-branch`
+1. Go to the [reactjs.org repo](https://github.com/reactjs/reactjs.org) and you should see recently pushed branches.
+1. Follow GitHub's instructions.
+1. If possible, include screenshots of visual changes. A Netlify build will also be automatically created once you make your PR so other people can see your change.
+
+## Troubleshooting
+
+- `yarn reset` to clear the local cache
