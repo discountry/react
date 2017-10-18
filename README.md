@@ -8,6 +8,8 @@
 
 目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
 
+![check](https://github.com/discountry/react/raw/master/static/check.png)
+
 **本地构建**
 
 请查阅官方 [README](https://github.com/discountry/react/blob/master/README_en.md).
