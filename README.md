@@ -8,9 +8,13 @@
 
 目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
 
+**本地构建**
+
+请查阅官方 [README](https://github.com/discountry/react/blob/master/README_en.md).
+
 **翻译文档**
 
-所有文档内容的相关文件均在 [`/docs`](https://github.com/discountry/react/tree/master/docs) 目录下。如有需要翻译或修改纠错的内容，请直接编辑对应 `md` 文件，提交 pr 即可。
+所有文档内容的相关文件均在 [`/content`](https://github.com/discountry/react/tree/master/content) 目录下。如有需要翻译或修改纠错的内容，请直接编辑对应 `md` 文件，提交 pr 即可。
 
 **完善网站**
 
