@@ -18,7 +18,7 @@
 
 **完善网站**
 
-React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/www`](https://github.com/discountry/react/tree/master/www) 文件夹下，如果有对网站模板/样式/配置的改动，请直接编辑该目录下文件并提交 pr 即可。
+React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/src`](https://github.com/discountry/react/tree/master/src) 文件夹下，如果有对网站模板/样式/配置的改动，请直接编辑该目录下文件并提交 pr 即可。
 
 **为 React 官方贡献翻译**
 
