@@ -25,16 +25,16 @@ React 组件可以让你把UI分割为独立、可复用的片段，并将每一
  - [`React.Component`](#react.component)
  - [`React.PureComponent`](#react.purecomponent)
 
-如果不用ES6类，你可以使用 `create-react-class` 模块。参阅 [Using React without JSX](/react/docs/react-without-es6.html) 了解更多信息。
+如果不用ES6类，你可以使用 `create-react-class` 模块。参阅 [Using React without JSX](/docs/react-without-es6.html) 了解更多信息。
 
 ### Creating React Elements
 
-推荐 [使用JSX](/react/docs/introducing-jsx.html) 描述你的UI外观。每个JSX元素仅是调用 [`React.createElement`](#createelement) 的语法糖。如果使用了JSX，你通常不会直接调用以下方法。
+推荐 [使用JSX](/docs/introducing-jsx.html) 描述你的UI外观。每个JSX元素仅是调用 [`React.createElement`](#createelement) 的语法糖。如果使用了JSX，你通常不会直接调用以下方法。
 
 - [`createElement()`](#createelement)
 - [`createFactory()`](#createfactory)
 
-参阅 [Using React without JSX](/react/docs/react-without-jsx.html) 了解更多。
+参阅 [Using React without JSX](/docs/react-without-jsx.html) 了解更多。
 
 ### Transforming Elements
 
@@ -60,19 +60,19 @@ class Greeting extends React.Component {
 }
 ```
 
-有关 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/react/docs/react-component.html)。
+有关 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/docs/react-component.html)。
 
 * * *
 
 ### `React.PureComponent`
 
-`React.PureComponent` 与 [`React.Component`](#react.component) 几乎完全相同，但 `React.PureComponent` 通过prop和state的浅对比来实现 [`shouldComponentUpate()`](/react/docs/react-component.html#shouldcomponentupdate)。
+`React.PureComponent` 与 [`React.Component`](#react.component) 几乎完全相同，但 `React.PureComponent` 通过prop和state的浅对比来实现 [`shouldComponentUpate()`](/docs/react-component.html#shouldcomponentupdate)。
 
 如果React组件的 `render()` 函数在给定相同的props和state下渲染为相同的结果，在某些场景下你可以使用 `React.PureComponent` 来提升性能。
 
 > Note
 
-> `React.PureComponent` 的 `shouldComponentUpdate()` 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新, 原文：false-negatives)。当你期望只拥有简单的props和state时，才去继承 `PureComponent` ，或者在你知道深层的数据结构已经发生改变时使用 [`forceUpate()`](/react/docs/react-component.html#forceupdate) 。或者，考虑使用 [不可变对象](https://facebook.github.io/immutable-js/) 来促进嵌套数据的快速比较。
+> `React.PureComponent` 的 `shouldComponentUpdate()` 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新, 原文：false-negatives)。当你期望只拥有简单的props和state时，才去继承 `PureComponent` ，或者在你知道深层的数据结构已经发生改变时使用 [`forceUpate()`](/docs/react-component.html#forceupdate) 。或者，考虑使用 [不可变对象](https://facebook.github.io/immutable-js/) 来促进嵌套数据的快速比较。
 >
 > 此外,`React.PureComponent` 的 `shouldComponentUpate()` 会忽略整个组件的子级。请确保所有的子级组件也是"Pure"的。
 
@@ -88,11 +88,11 @@ React.createElement(
 )
 ```
 
-根据给定的类型创建并返回新的 [`React element`](/react/docs/rendering-elements.html) 。参数type既可以是一个html标签名称字符串(例如`'div'` 或 `'span'` )，也可以是一个 [`React component`](/react/docs/components-and-props.html) 类型(一个类或一个函数)。
+根据给定的类型创建并返回新的 [`React element`](/docs/rendering-elements.html) 。参数type既可以是一个html标签名称字符串(例如`'div'` 或 `'span'` )，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或一个函数)。
 
 `React.DOM` 提供了DOM组件的 `React.createElement()` 的便捷包装。举个例子，`React.DOM.a(...)` 是 `React.createELement('a', ...)` 的一个便捷包装。这个用法被认为是过时的，我们推荐您使用JSX，或者直接使用 `React.createElement()` 。
 
-用 [`JSX`](/react/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()` 。参阅 [`React Without JSX`](/react/docs/react-without-jsx.html) 了解更多。
+用 [`JSX`](/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html) 了解更多。
 
 * * *
 
@@ -126,11 +126,11 @@ React.cloneElement(
 React.createFactory(type)
 ```
 
-根据给定的类型返回一个创建React元素的函数。类似 [`React.createElement`](#createElement) ，参数type既可以一个html标签名称字符串，也可以是一个 [`React component`](/react/docs/components-and-props.html) 类型(一个类或时一个函数)。
+根据给定的类型返回一个创建React元素的函数。类似 [`React.createElement`](#createElement) ，参数type既可以一个html标签名称字符串，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或时一个函数)。
 
 这个方法过时了，我们推荐你使用JSX或直接使用 `React.createElement()` 来替代它。
 
-如果使用了JSX，你通常不会直接调用 `React.createFactory()` 。参阅 [`React Without JSX`](/react/docs/react-without-jsx.html)了解更多 。
+如果使用了JSX，你通常不会直接调用 `React.createFactory()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html)了解更多 。
 
 * * *
 

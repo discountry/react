@@ -15,7 +15,7 @@ redirect_from:
   - "tips/use-react-with-other-libraries.html"
 ---
 
-[组件](/react/docs/components-and-props.html) 能够让你将UI分割成独立的、可重用的部分，并对每一部分单独考量。[`React`](/react/docs/react-api.html)提供了`React.Component` 。
+[组件](/docs/components-and-props.html) 能够让你将UI分割成独立的、可重用的部分，并对每一部分单独考量。[`React`](/docs/react-api.html)提供了`React.Component` 。
 
 ## 概览
 
@@ -31,7 +31,7 @@ class Greeting extends React.Component {
 }
 ```
 
-若你仍未使用 ES6，你可以使用 [`create-react-class`](/react/docs/react-api.html#createclass)模块。查看 [Using React without ES6](/react/docs/react-without-es6.html) 了解更多。
+若你仍未使用 ES6，你可以使用 [`create-react-class`](/docs/react-api.html#createclass)模块。查看 [Using React without ES6](/docs/react-without-es6.html) 了解更多。
 
 ### 组件生命周期
 
@@ -95,7 +95,7 @@ render()
 
 - **React元素。** 通常是由 JSX 创建。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
 - **字符串和数字。** 这些将被渲染为 DOM 中的 text node。
-- **Portals。** 由 [`ReactDOM.createPortal`](/react/docs/portals.html) 创建。
+- **Portals。** 由 [`ReactDOM.createPortal`](/docs/portals.html) 创建。
 - `null`。 什么都不渲染。
 - **布尔值。** 什么都不渲染。（通常存在于 `return test && <Child />`写法，其中 `test` 是布尔值。）
 
@@ -123,7 +123,7 @@ render() {
 
 > 注意
 >
-> 不要忘了给元素[添加key](/react/docs/lists-and-keys.html#keys)来避免key warning。
+> 不要忘了给元素[添加key](/docs/lists-and-keys.html#keys)来避免key warning。
 
 * * *
 
@@ -148,7 +148,7 @@ constructor(props) {
 }
 ```
 
-意识到这模式，任何的属性更新不会使得状态是最新的。保证属性和状态同步，你通常想要[状态提升](/react/docs/lifting-state-up.html)。
+意识到这模式，任何的属性更新不会使得状态是最新的。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
 
 若你通过使用它们为状体“分离”属性，你可能也想要实现[`componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
 
@@ -204,7 +204,7 @@ shouldComponentUpdate(nextProps, nextState)
 
 当前，若`shouldComponentUpdate()`返回`false`，而后[`componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
 
-在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/react/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
+在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
 
 * * *
 
@@ -314,7 +314,7 @@ this.setState((prevState) => {
 });
 ```
 
-更多细节，查看[State & 生命周期指南](/react/docs/state-and-lifecycle.html)。
+更多细节，查看[State & 生命周期指南](/docs/state-and-lifecycle.html)。
 
 * * *
 
@@ -367,7 +367,7 @@ CustomButton.defaultProps = {
 
 ### `displayName`
 
-`displayName`被用在调试信息中。JSX会自动设置该值；查看[深入JSX](/react/docs/jsx-in-depth.html)。
+`displayName`被用在调试信息中。JSX会自动设置该值；查看[深入JSX](/docs/jsx-in-depth.html)。
 
 * * *
 
@@ -375,7 +375,7 @@ CustomButton.defaultProps = {
 
 ### `props`
 
-`this.props`包含了组件该调用者定义的属性。查看[组件 & Props](/react/docs/components-and-props.html)关于属性的介绍。
+`this.props`包含了组件该调用者定义的属性。查看[组件 & Props](/docs/components-and-props.html)关于属性的介绍。
 
 特别地，`this.props.children`是一个特别属性，其通常由JSX表达式中的子标签定义，而不是标签本身。
 
@@ -385,6 +385,6 @@ CustomButton.defaultProps = {
 
 若你不在`render()`方法中使用它，其不应该该被放在状态上。例如，你可直接将timer IDs放在实例上。
 
-查看[State & 生命周期](/react/docs/state-and-lifecycle.html)了解更多关于状态的信息。
+查看[State & 生命周期](/docs/state-and-lifecycle.html)了解更多关于状态的信息。
 
 永远不要直接改变`this.state`，因为调用`setState()`会替换你之前做的改变。将`this.state`当成不可变的。

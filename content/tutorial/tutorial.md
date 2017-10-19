@@ -53,7 +53,7 @@ redirect_from:
 如果你已经决定了，那么跟着下面的步骤开始搭建吧：
 
 1. 确保你电脑上安装了最新版本的 [Node.js](https://nodejs.org/zh-cn/).
-2. 跟着 [安装指南](/react/docs/installation.html#creating-a-new-application) 创建一个新的 React 项目。
+2. 跟着 [安装指南](/docs/installation.html#creating-a-new-application) 创建一个新的 React 项目。
 3. 删除掉生成项目中 `src/` 文件夹下的所有文件。
 4. 在 `src/` 文件夹下新建一个名为 `index.css` 的文件并拷贝 [这里的 CSS 代码](https://codepen.io/gaearon/pen/oWWQNa?editors=0100) 到文件中。
 5. 在 `src/` 文件夹下新建一个名为 `index.js` 的文件并拷贝 [这里的 JS 代码](https://codepen.io/gaearon/pen/oWWQNa?editors=0010) 到文件中, 并在此文件的最开头加上下面几行代码：
@@ -70,7 +70,7 @@ redirect_from:
 
 ### 寻求帮助
 
-如果你遇到了任何困难，可以在 [community support resources](https://facebook.github.io/react/community/support.html) 寻求帮助。 加入我们的 [Reactiflux chat](/react/community/support.html#reactiflux-chat) 也是一个很不错的选择。如果通过上述方式还是解决不了你的问题，你也可以给我们提一个 issue.
+如果你遇到了任何困难，可以在 [community support resources](https://facebook.github.io/community/support.html) 寻求帮助。 加入我们的 [Reactiflux chat](/community/support.html#reactiflux-chat) 也是一个很不错的选择。如果通过上述方式还是解决不了你的问题，你也可以给我们提一个 issue.
 
 > **译者补充资源：**
 > 
@@ -121,7 +121,7 @@ return React.createElement('div', {className: 'shopping-list'},
 
 [查看完整代码。](https://babeljs.io/repl/#?babili=false&evaluate=false&lineWrap=false&presets=react&targets=&browsers=&builtIns=false&debug=false&experimental=false&loose=false&spec=false&playground=true&code=%3Cdiv%20className%3D%22shopping-list%22%3E%0A%20%20%3Ch1%3EShopping%20List%20for%20%7Bprops.name%7D%3C%2Fh1%3E%0A%20%20%3Cul%3E%0A%20%20%20%20%3Cli%3EInstagram%3C%2Fli%3E%0A%20%20%20%20%3Cli%3EWhatsApp%3C%2Fli%3E%0A%20%20%20%20%3Cli%3EOculus%3C%2Fli%3E%0A%20%20%3C%2Ful%3E%0A%3C%2Fdiv%3E)
 
-如果你对这个比较感兴趣，可以在 [API 参考](/react/docs/react-api.html#createelement) 查阅对 `createElement()` 方法更详细的介绍。但在我们接下来的教程中，并不会直接使用这个方法，而是继续使用 JSX.
+如果你对这个比较感兴趣，可以在 [API 参考](/docs/react-api.html#createelement) 查阅对 `createElement()` 方法更详细的介绍。但在我们接下来的教程中，并不会直接使用这个方法，而是继续使用 JSX.
 
 在 JSX 中你可以任意使用 JavaScript 表达式，只需要用一个大括号把表达式括起来。每一个 React 元素事实上都一个 JavaScript 对象，你可以在你的应用中把它当保存在变量中或者作为参数传递。
 
@@ -171,12 +171,12 @@ class Square extends React.Component {
 
 修改前：
 
-![React Devtools](/react/img/tutorial/tictac-empty.png)
+![React Devtools](/images/tutorial/tictac-empty.png)
 
 修改后： 在每个格子当中你都能看到一个渲染出来的数字。
 
 
-![React Devtools](/react/img/tutorial/tictac-numbers.png)
+![React Devtools](/images/tutorial/tictac-numbers.png)
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/aWWQOG?editors=0010)
 
@@ -260,7 +260,7 @@ class Square extends React.Component {
 
 在 [Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) 或 [Firefox](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/) 上安装 React 开发者工具可以让你在浏览器的开发控制台里看到 React 渲染出来的组件树。
 
-<img src="/react/img/tutorial/devtools.png" alt="React Devtools" style="max-width: 100%">
+<img src="/images/tutorial/devtools.png" alt="React Devtools" style="max-width: 100%">
 
 你同样可以在开发工具中观察到各个组件的 props 和 state.
 
@@ -455,7 +455,7 @@ class Board extends React.Component {
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/ybbQJX?editors=0010)
 
-我们使用了 `.slice()` 方法来将之前的数组数据**深拷贝**到了一个新的数组中，而不是修改已有的数组。你可以在 [这个章节](/react/tutorial/tutorial.html#为什么不可变性在React当中非常重要) 来了解为什么不可变性在 React 当中的重要性。
+我们使用了 `.slice()` 方法来将之前的数组数据**深拷贝**到了一个新的数组中，而不是修改已有的数组。你可以在 [这个章节](/tutorial/tutorial.html#为什么不可变性在React当中非常重要) 来了解为什么不可变性在 React 当中的重要性。
 
 现在你点击棋盘上的格子应该就能够正常落子了。而且状态数据是统一保管在棋盘组件 Board 当中的。你应该注意到了，当事件处理函数触发棋盘父组件的状态数据改变时，格子子组件会自动重新渲染。
 
@@ -502,7 +502,7 @@ var newPlayer = Object.assign({}, player, {score: 2});
 
 运用不可变性原则给 React 带来最大的好处是，既然我们现在可以很方便地判断对象数据是否发生改变了，那么也就很好决定何时根据数据的改变重新渲染组件。尤其是当我们编写的都属于 **纯组件 pure components **的时候，这种好处的效果更为明显。
 
-了解更多有关 `shouldComponentUpdate()` 以及如何编写 *pure components* 的内容，你可以查阅 [性能优化](/react/docs/optimizing-performance.html#examples) 这一篇。
+了解更多有关 `shouldComponentUpdate()` 以及如何编写 *pure components* 的内容，你可以查阅 [性能优化](/docs/optimizing-performance.html#examples) 这一篇。
 
 ### 函数定义组件
 
@@ -1113,4 +1113,4 @@ class Game extends React.Component {
 
 > 译者注：如果你在实现上述功能时遇到了问题，也可以参考[React井字棋游戏完整功能示例](https://codepen.io/discountry/pen/ENrZzV)。
 
-通过这一篇教程，我们大概了解了 React 当中包含 元素、组件、props、state 在内的一些概念。想要更深入地了解每一个关键概念，你可以继续阅读 [文档](/react/docs/hello-world.html)。想要更详细地了解 React 组件，可以查阅 [`React.Component` API 参考](/react/docs/react-component.html)。
+通过这一篇教程，我们大概了解了 React 当中包含 元素、组件、props、state 在内的一些概念。想要更深入地了解每一个关键概念，你可以继续阅读 [文档](/docs/hello-world.html)。想要更详细地了解 React 组件，可以查阅 [`React.Component` API 参考](/docs/react-component.html)。

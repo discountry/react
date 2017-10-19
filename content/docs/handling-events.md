@@ -54,7 +54,7 @@ function ActionLink() {
 }
 ```
 
-在这里，`e` 是一个合成事件。React 根据 [W3C spec](https://www.w3.org/TR/DOM-Level-3-Events/) 来定义这些合成事件，所以你不需要担心跨浏览器的兼容性问题。查看 [SyntheticEvent](/react/docs/events.html) 参考指南来了解更多。
+在这里，`e` 是一个合成事件。React 根据 [W3C spec](https://www.w3.org/TR/DOM-Level-3-Events/) 来定义这些合成事件，所以你不需要担心跨浏览器的兼容性问题。查看 [SyntheticEvent](/docs/events.html) 参考指南来了解更多。
 
 使用 React 的时候通常你不需要使用 `addEventListener` 为一个已创建的 DOM 元素添加监听器。你仅仅需要在这个元素初始渲染的时候提供一个监听器。
 

@@ -22,7 +22,7 @@ const EnhancedComponent = higherOrderComponent(WrappedComponent);
 
 > **注意**
 >
-> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术产生的问题要比带来的价值大。[更多资料](/react/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
+> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术产生的问题要比带来的价值大。[更多资料](/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
 
 在React中，组件是代码复用的主要单元。然而你会发现，一些模式并不适用传统的组件。
 

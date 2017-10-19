@@ -143,14 +143,14 @@ const BasicExample = () => (
 
 ## 在生命周期函数中引用Context
 
-如果在一个组件中定义了`contextTypes`，那么下面这些[生命周期函数](/react/docs/react-component.html#the-component-lifecycle)中将会接收到额外的参数，即`context`对象:
+如果在一个组件中定义了`contextTypes`，那么下面这些[生命周期函数](/docs/react-component.html#the-component-lifecycle)中将会接收到额外的参数，即`context`对象:
 
 
-- [`constructor(props, context)`](/react/docs/react-component.html#constructor)
-- [`componentWillReceiveProps(nextProps, nextContext)`](/react/docs/react-component.html#componentwillreceiveprops)
-- [`shouldComponentUpdate(nextProps, nextState, nextContext)`](/react/docs/react-component.html#shouldcomponentupdate)
-- [`componentWillUpdate(nextProps, nextState, nextContext)`](/react/docs/react-component.html#componentwillupdate)
-- [`componentDidUpdate(prevProps, prevState, prevContext)`](/react/docs/react-component.html#componentdidupdate)
+- [`constructor(props, context)`](/docs/react-component.html#constructor)
+- [`componentWillReceiveProps(nextProps, nextContext)`](/docs/react-component.html#componentwillreceiveprops)
+- [`shouldComponentUpdate(nextProps, nextState, nextContext)`](/docs/react-component.html#shouldcomponentupdate)
+- [`componentWillUpdate(nextProps, nextState, nextContext)`](/docs/react-component.html#componentwillupdate)
+- [`componentDidUpdate(prevProps, prevState, prevContext)`](/docs/react-component.html#componentdidupdate)
 
 ## 在无状态函数组件中引用Context
 

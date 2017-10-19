@@ -5,7 +5,7 @@ permalink: docs/events.html
 layout: docs
 category: Reference
 ---
-此参考指南记录了构成React一部分事件系统的`SyntheticEvent`封装器。请参阅[事件处理](/react/docs/handling-events.html)指南了解更多。
+此参考指南记录了构成React一部分事件系统的`SyntheticEvent`封装器。请参阅[事件处理](/docs/handling-events.html)指南了解更多。
 
 ## 概述
 您的事件处理函数将会接收`SyntheticEvent`的实例，一个基于浏览器原生事件的跨浏览器实现。它拥有和浏览器原生事件一样的接口，包括`stopPropagation()`和`preventDefault()`，除了那些所有浏览器功能一样的事件。
@@ -170,7 +170,7 @@ DOMEventTarget relatedTarget
 onChange onInput onSubmit
 ```
 
-查阅[表单](/react/docs/forms.html)了解关于onChange事件的更多细节.
+查阅[表单](/docs/forms.html)了解关于onChange事件的更多细节.
 
 * * *
 

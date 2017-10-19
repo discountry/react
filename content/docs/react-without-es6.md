@@ -172,13 +172,13 @@ class SayHello extends React.Component {
 >
 >ES6 本身是不包含混入支持的。因此，如果你使用 `class` 关键字创建组件，那就不能使用混入功能了。
 >
->**我们也发现了很多使用混入然后出现了问题的代码库。[因此，我们并不推荐在 ES6 中使用混入](/react/blog/2016/07/13/mixins-considered-harmful.html).**
+>**我们也发现了很多使用混入然后出现了问题的代码库。[因此，我们并不推荐在 ES6 中使用混入](/blog/2016/07/13/mixins-considered-harmful.html).**
 >
 >以下内容仅作为参考
 
-如果完全不同的组件有相似的功能，这就会产生 ["横切关注点"问题](https://en.wikipedia.org/wiki/Cross-cutting_concern)。针对这个问题，在使用 [`createReactClass`](/react/docs/top-level-api.html#react.createclass) 创建 React 组件的时候，引入`混入`功能会是一个很好的解决方案。
+如果完全不同的组件有相似的功能，这就会产生 ["横切关注点"问题](https://en.wikipedia.org/wiki/Cross-cutting_concern)。针对这个问题，在使用 [`createReactClass`](/docs/top-level-api.html#react.createclass) 创建 React 组件的时候，引入`混入`功能会是一个很好的解决方案。
 
-一个常见的使用情景是，当一个组件想要每隔一段时间更新，那么最简单的方法就是使用 `setInterval()`。但更重要的是，如果后续代码中不需要这个功能，为了节省内存，你应该把它删除。React 提供了 [生命周期方法](/react/docs/working-with-the-browser.html#component-lifecycle)，这样你就可以知道某一个组件什么时候要被创建或者什么时候会被销毁。我们先来创建一个使用 `setInterval()` 的混入，它会在组件销毁的时候也销毁。
+一个常见的使用情景是，当一个组件想要每隔一段时间更新，那么最简单的方法就是使用 `setInterval()`。但更重要的是，如果后续代码中不需要这个功能，为了节省内存，你应该把它删除。React 提供了 [生命周期方法](/docs/working-with-the-browser.html#component-lifecycle)，这样你就可以知道某一个组件什么时候要被创建或者什么时候会被销毁。我们先来创建一个使用 `setInterval()` 的混入，它会在组件销毁的时候也销毁。
 
 ```javascript
 var SetIntervalMixin = {

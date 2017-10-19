@@ -185,7 +185,7 @@ class TemperatureInput extends React.Component {
     const temperature = this.props.temperature;
 ```
 
-我们首先知道[props是只读的](/react/docs/components-and-props.html#props-are-read-only)
+我们首先知道[props是只读的](/docs/components-and-props.html#props-are-read-only)
 这么一个事实。而之前`temperature`变量是被保存在其自身的 state 中的，`TemperatureInput` 组件只需要调用 `this.setState()` 就能改变它。但现在，`temperature` 是作为 prop 从父组件传递下来的，`TemperatureInput` 组件是没有控制权的。
 
 在React中，这个问题通常是通过让组件“受控”来解决。就像 `<input>` 能够接受 `value` 和 `onChange` 这两个prop属性值，自定义组件 `TemperatureInput` 也能接受来自 `Calculator` 父组件的 `temperature` 变量和 `onTemperatureChange` 方法作为props属性值。
@@ -315,7 +315,7 @@ class Calculator extends React.Component {
 
 ## 经验教训
 
-在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。此时，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的父组件中。你应该在应用中保持 [自上而下的数据流](/react/docs/state-and-lifecycle.html#the-data-flows-down)，而不是尝试在不同组件中同步状态。
+在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。此时，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的父组件中。你应该在应用中保持 [自上而下的数据流](/docs/state-and-lifecycle.html#the-data-flows-down)，而不是尝试在不同组件中同步状态。
 
 状态提升比双向绑定方式要写更多的“模版代码”，但带来的好处是，你也可以更快地寻找和定位bug的工作。因为哪个组件保有状态数据，也只有它自己能够操作这些数据，发生bug的范围就被大大地减小了。此外，你也可以使用自定义逻辑来拒绝或者更改用户的输入。
 

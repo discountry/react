@@ -44,7 +44,7 @@ class Welcome extends React.Component {
 
 上面两个组件在React中是相同的。
 
-我们将在[下一节](/react/docs/state-and-lifecycle.html)讨论类的一些额外特性。在那之前，我们都将使用较为简洁的函数定义组件。
+我们将在[下一节](/docs/state-and-lifecycle.html)讨论类的一些额外特性。在那之前，我们都将使用较为简洁的函数定义组件。
 
 ## 组件渲染
 

@@ -59,7 +59,7 @@ expect(result.props.children).toEqual([
 
 你可以把 shallowRenderer 想象成一个用来渲染你正在测试的组件的“地方”，并且你可以从那里取到该组件的输出。
 
-`shallowRenderer.render()` 和 [`ReactDOM.render()`](/react/docs/react-dom.html#render)很像。但是它不需要 DOM 并且只渲染一层。这就意味着你可以测试与子组件行为隔离的组件。
+`shallowRenderer.render()` 和 [`ReactDOM.render()`](/docs/react-dom.html#render)很像。但是它不需要 DOM 并且只渲染一层。这就意味着你可以测试与子组件行为隔离的组件。
 
 ### `shallowRenderer.getRenderOutput()`
 

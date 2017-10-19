@@ -18,7 +18,7 @@ permalink: docs/integrating-with-other-libraries.html
 
 为了解释得更清楚，我们先来封装一个通用的 jQuery 插件吧。
 
-在这里，我们给 DOM 的根节点元素加了一个 [ref](/react/docs/refs-and-the-dom.html)。在 `componentDidMount` 中，我们会调用这个 ref，并把它传给 jQuery 插件。
+在这里，我们给 DOM 的根节点元素加了一个 [ref](/docs/refs-and-the-dom.html)。在 `componentDidMount` 中，我们会调用这个 ref，并把它传给 jQuery 插件。
 
 为了防止 React 在 DOM 加载后修改节点，我们先要在 `render()` 中返回一个空的 `<div />`。这个空的 `<div />` 既没有属性也没有子元素，这样一来，React 就不会更新它了。那么，我们封装的 jQuery 插件就可以随意地更新这个节点。
 
@@ -39,7 +39,7 @@ class SomePlugin extends React.Component {
 }
 ```
 
-值得注意的是，我们既调用了 `componentDidMount` 也调用了 `componentWillUnmount` [生命周期函数](/react/docs/react-component.html#the-component-lifecycle)。由于很多 jQuery 的插件都会在 DOM 上挂载事件监听器，因此我们必须要在 `componentWillUnmount` 的时候把这个监听器删掉。如果某个插件没有提供“删除监听器”这类的方法，那你很可能需要自己写一个。为了防止内存泄漏，请务必在生命周期函数中移除插件挂载的事件监听器。
+值得注意的是，我们既调用了 `componentDidMount` 也调用了 `componentWillUnmount` [生命周期函数](/docs/react-component.html#the-component-lifecycle)。由于很多 jQuery 的插件都会在 DOM 上挂载事件监听器，因此我们必须要在 `componentWillUnmount` 的时候把这个监听器删掉。如果某个插件没有提供“删除监听器”这类的方法，那你很可能需要自己写一个。为了防止内存泄漏，请务必在生命周期函数中移除插件挂载的事件监听器。
 
 ### 集成 jQuery Chosen 插件
 
@@ -67,7 +67,7 @@ function Example() {
 }
 ```
 
-为了方便，我么先把它写成一个 [不可控组件](/react/docs/uncontrolled-components.html)。
+为了方便，我么先把它写成一个 [不可控组件](/docs/uncontrolled-components.html)。
 
 首先，我们来创建一个带有 `render()` 方法的空组件，这个组件返回用 `<div>` 包着的 `<select>`：
 
@@ -191,7 +191,7 @@ class Chosen extends React.Component {
 
 ## 在 React 中使用其他引擎加载页面
 
-由于 [`ReactDOM.render()`](/react/docs/react-dom.html#render) 方法很灵活，因此我们可以将 React 与其他处理页面显示的库结合使用。
+由于 [`ReactDOM.render()`](/docs/react-dom.html#render) 方法很灵活，因此我们可以将 React 与其他处理页面显示的库结合使用。
 
 通常来说，尽管 React 是在页面加载的时候把一个根组件放到 DOM 里，但 `ReactDOM.render()` 方法也可以被不同的 UI 部件多次调用。这个部件可以仅仅是一个按钮，或者也可以是一个应用。
 
@@ -228,7 +228,7 @@ ReactDOM.render(
 );
 ```
 
-那么现在开始，你就可以在这个组件中应用 React 的思路，加入更多的逻辑代码。比如，习惯上来说组件是不应该依赖 ID 的，因为这一个组件可能会显示很多次。因此，我们需要使用 [React 事件系统](/react/docs/handling-events.html) 来给 `<button>` 添加点击事件的回调
+那么现在开始，你就可以在这个组件中应用 React 的思路，加入更多的逻辑代码。比如，习惯上来说组件是不应该依赖 ID 的，因为这一个组件可能会显示很多次。因此，我们需要使用 [React 事件系统](/docs/handling-events.html) 来给 `<button>` 添加点击事件的回调
 
 ```js{2,6,9}
 function Button(props) {
@@ -284,13 +284,13 @@ const ParagraphView = Backbone.View.extend({
 
 ## 在 React 中使用其他数据层库和框架
 
-一般来说，推荐大家使用符合单向数据流的框架和库，比如 [React state](/react/docs/lifting-state-up.html)、[Flux](http://facebook.github.io/flux/) 或 [Redux](http://redux.js.org/)。但 React 的组件也可以支持其他处理数据流的框架和库。
+一般来说，推荐大家使用符合单向数据流的框架和库，比如 [React state](/docs/lifting-state-up.html)、[Flux](http://facebook.github.io/flux/) 或 [Redux](http://redux.js.org/)。但 React 的组件也可以支持其他处理数据流的框架和库。
 
 ### 在 React 组件中使用 Backbone 处理数据
 
 如果想在 React 中使用 [Backbone](http://backbonejs.org/) 处理数据模型，最简单的实现方式就是监听多个事件，然后手动调用方法，强制更新页面。
 
-负责处理数据模型的组件通常都会监听 `'change'` 事件，但负责处理数据本身的组件还要监听 `'add'` 和 `'remove'` 事件。无论对于哪种，我们都可以通过调用 [`this.forceUpdate()`](/react/docs/react-component.html#forceupdate) 来强制更新页面显示的数据。
+负责处理数据模型的组件通常都会监听 `'change'` 事件，但负责处理数据本身的组件还要监听 `'add'` 和 `'remove'` 事件。无论对于哪种，我们都可以通过调用 [`this.forceUpdate()`](/docs/react-component.html#forceupdate) 来强制更新页面显示的数据。
 
 在接下来的例子中，`List` 组件用来显示来自 Backbone 的数据，而 `Item` 组件是负责显示每一条数据的。
 
@@ -354,7 +354,7 @@ class List extends React.Component {
 
 上面的方法需要 React 组件实时获取 Backbone 数据的更新。如果将来你打算迁移到另一个数据管理系统，你肯定不愿意在 Backbone 这里改动太多的代码。
 
-一种解决方案就是在数据变化时，提取出数据模型的属性，并把这个逻辑封装起来。这里有个 [高阶组件](/react/docs/higher-order-components.html) 的例子，作用就是把 Backbone 数据模型中的属性提取出来成为 state，并把数据传到组件中。
+一种解决方案就是在数据变化时，提取出数据模型的属性，并把这个逻辑封装起来。这里有个 [高阶组件](/docs/higher-order-components.html) 的例子，作用就是把 Backbone 数据模型中的属性提取出来成为 state，并把数据传到组件中。
 
 采用这种写法，只有这个高阶组件需要实时获取到 Backbone 数据模型的更新，应用中的其他组件都不需要与 Backbone 互动。
 

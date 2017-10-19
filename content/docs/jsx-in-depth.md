@@ -196,7 +196,7 @@ function NumberDescriber(props) {
 }
 ```
 
-你可以在相关部分中了解有关 [条件渲染](/react/docs/conditional-rendering.html) 和 [循环](/react/docs/lists-and-keys.html) 的更多信息。
+你可以在相关部分中了解有关 [条件渲染](/docs/conditional-rendering.html) 和 [循环](/docs/lists-and-keys.html) 的更多信息。
 
 ### 字符串常量
 

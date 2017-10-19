@@ -75,7 +75,7 @@ React完全支持构建可访问性的页面， 通常通过使用标准的 HTML
 
 键盘焦点涉及DOM中被键盘选中用于接受输入的当前元素。我们可以在每一处地方看见如下图所示的类似的焦点边框：
 
-<img src="/react/img/docs/keyboard-focus.png" alt="Blue keyboard focus outline around a selected link." />
+<img src="/images/docs/keyboard-focus.png" alt="Blue keyboard focus outline around a selected link." />
 
 仅能使用CSS来移除这一边框，若你要用其他边框来替换他，例如可以设置`outline: 0`。
 

@@ -25,7 +25,7 @@ HTML表单元素与React中的其他DOM元素有所不同,因为表单元素生�
 
 ## 受控组件
 
-在HTML当中，像`<input>`,`<textarea>`, 和 `<select>`这类表单元素会维持自身状态，并根据用户输入进行更新。但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 [`setState()`](/react/docs/react-component.html#setstate). 方法进行更新.
+在HTML当中，像`<input>`,`<textarea>`, 和 `<select>`这类表单元素会维持自身状态，并根据用户输入进行更新。但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 [`setState()`](/docs/react-component.html#setstate). 方法进行更新.
 
 我们通过使react变成一种单一数据源的状态来结合二者。React负责渲染表单的组件仍然控制用户后续输入时所发生的变化。相应的，其值由React控制的输入表单元素称为“受控组件”。
 
@@ -255,7 +255,7 @@ partialState[name] = value;
 this.setState(partialState);
 ```
 
-同样由于 `setState()` 自动[将部分状态合并到当前状态](/react/docs/state-and-lifecycle.html#状态更新合并)，因此我们只需要使用发生变化的部分调用它。
+同样由于 `setState()` 自动[将部分状态合并到当前状态](/docs/state-and-lifecycle.html#状态更新合并)，因此我们只需要使用发生变化的部分调用它。
 
 ## 受控组件的替代方法
 

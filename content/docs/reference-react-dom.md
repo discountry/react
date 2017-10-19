@@ -38,7 +38,7 @@ ReactDOM.render(
 )
 ```
 
-渲染一个React元素，添加到位于提供的`container`里的DOM元素中，并返回这个组件的一个 [引用](/react/docs/more-about-refs.html) (或者对于[无状态组件](/react/docs/components-and-props.html#functional-and-class-components)返回`null`).
+渲染一个React元素，添加到位于提供的`container`里的DOM元素中，并返回这个组件的一个 [引用](/docs/more-about-refs.html) (或者对于[无状态组件](/docs/components-and-props.html#functional-and-class-components)返回`null`).
 
 如果这个React元素之前已经被渲染到`container`里去了，这段代码就会进行一次更新，并且只会改变那些反映元素最新状态所必须的DOM元素。
 
@@ -50,7 +50,7 @@ ReactDOM.render(
 >
 > `ReactDOM.render()`不会修改容器节点（只修改容器的子项）。你可以在不覆盖已有子节点的情况下添加一个组件到已有的DOM节点中去。
 >
-> `ReactDOM.render()` 目前会返回一个引用， 指向 `ReactComponent`的根实例。但是这个返回值是历史遗留，应该避免使用。因为未来版本的React可能会在某些情况下进行异步渲染。如果你真的需要一个指向 `ReactComponent` 的根实例的引用，推荐的方法是添加一个 [callback ref](/react/docs/more-about-refs.html#the-ref-callback-attribute)到根元素上。
+> `ReactDOM.render()` 目前会返回一个引用， 指向 `ReactComponent`的根实例。但是这个返回值是历史遗留，应该避免使用。因为未来版本的React可能会在某些情况下进行异步渲染。如果你真的需要一个指向 `ReactComponent` 的根实例的引用，推荐的方法是添加一个 [callback ref](/docs/more-about-refs.html#the-ref-callback-attribute)到根元素上。
 
 * * *
 

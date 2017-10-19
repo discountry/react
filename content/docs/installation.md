@@ -50,7 +50,7 @@ Create React App 并不处理后端逻辑和数据库，它只会创建一个前
 
 我们建议你将 React 添加到应用的一小部分中，比如单个小部件，以便你看它是否适用于你的情况。
 
-虽然 React [可以在没有构建管道的情况下使用](/react/docs/react-without-es6.html) ，但是为了更高效我是还建议你使用它，现代的构建管道通常包括:
+虽然 React [可以在没有构建管道的情况下使用](/docs/react-without-es6.html) ，但是为了更高效我是还建议你使用它，现代的构建管道通常包括:
 
 * **包管理器**，比如 [Yarn](https://yarnpkg.com/) 或 [npm](https://www.npmjs.com/)。它可以让你使用庞大的第三方软件包生态系统，还能很方便的安装或升级。
 * **构建器**，比如 [webpack](https://webpack.js.org/) 或 [Browserify](http://browserify.org/)。它允许你编写模块化代码并且压缩文件以优化加载时间。
@@ -60,7 +60,7 @@ Create React App 并不处理后端逻辑和数据库，它只会创建一个前
 
 >**注意：**
 >
->一旦安装 React，我们强烈建议你将它配置为[生产构建程序](/react/docs/optimizing-performance.html#use-the-production-build) ，以确保你在生产环境中使用最新版本的 React。
+>一旦安装 React，我们强烈建议你将它配置为[生产构建程序](/docs/optimizing-performance.html#use-the-production-build) ，以确保你在生产环境中使用最新版本的 React。
 
 我们建议使用 [Yarn](https://yarnpkg.com/) 或 [npm](https://www.npmjs.com/) 来管理前端的依赖关系, 如果你还未使用过包管理器，阅读 [Yarn 文档](https://yarnpkg.com/en/docs/getting-started) 以快速入门。 
 
@@ -106,7 +106,7 @@ ReactDOM.render(
 
 类似以上，你可以在任何由其他 JavaScript UI 库编辑的现有应用中，将 React 渲染进一个 DOM 元素。
 
-[了解有关将 React 与现有代码集成的更多信息。](/react/docs/integrating-with-other-libraries.html#integrating-with-other-view-libraries)
+[了解有关将 React 与现有代码集成的更多信息。](/docs/integrating-with-other-libraries.html#integrating-with-other-view-libraries)
 
 ### 开发和生产版本
 
@@ -114,14 +114,14 @@ ReactDOM.render(
 
 **然而，这些警告使开发版本的 React 体积过大并且运行过慢，所以你应该在部署应用时使用生产版本**
 
-了解[如何判断你的网页是否运行了合适的 React 版本](/react/docs/optimizing-performance.html#use-the-production-build), 以及如何有效的配置生产构建程序：
+了解[如何判断你的网页是否运行了合适的 React 版本](/docs/optimizing-performance.html#use-the-production-build), 以及如何有效的配置生产构建程序：
 
-* [使用 Create React App 构建应用](/react/docs/optimizing-performance.html#create-react-app)
-* [使用独立文件构建应用](/react/docs/optimizing-performance.html#single-file-builds)
-* [使用 Brunch 构建应用](/react/docs/optimizing-performance.html#brunch)
-* [使用 Browserify 构建应用](/react/docs/optimizing-performance.html#browserify)
-* [使用 Rollup 构建应用](/react/docs/optimizing-performance.html#rollup)
-* [使用 Webpack 构建应用](/react/docs/optimizing-performance.html#webpack)
+* [使用 Create React App 构建应用](/docs/optimizing-performance.html#create-react-app)
+* [使用独立文件构建应用](/docs/optimizing-performance.html#single-file-builds)
+* [使用 Brunch 构建应用](/docs/optimizing-performance.html#brunch)
+* [使用 Browserify 构建应用](/docs/optimizing-performance.html#browserify)
+* [使用 Rollup 构建应用](/docs/optimizing-performance.html#rollup)
+* [使用 Webpack 构建应用](/docs/optimizing-performance.html#webpack)
 
 ### 使用 CDN
 

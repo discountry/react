@@ -11,7 +11,7 @@ redirect_from:
 permalink: docs/refs-and-the-dom.html
 ---
 
-在典型的 React 数据流中, [属性（props）](/react/docs/components-and-props.html)是父组件与子代交互的唯一方式。要修改子组件，你需要通用新的 props 重新渲染它。但是，某些情况下你需要在典型数据流外强制修改子代。要修改的子代可以是 React 组件实例，也可以是 DOM 元素。对于这两种情况，React 提供了解决办法。
+在典型的 React 数据流中, [属性（props）](/docs/components-and-props.html)是父组件与子代交互的唯一方式。要修改子组件，你需要通用新的 props 重新渲染它。但是，某些情况下你需要在典型数据流外强制修改子代。要修改的子代可以是 React 组件实例，也可以是 DOM 元素。对于这两种情况，React 提供了解决办法。
 
 ### 何时使用 Refs
 
@@ -27,7 +27,7 @@ permalink: docs/refs-and-the-dom.html
 
 ### 不要过度使用 Refs
 
-你可能首先会想到在你的应用程序中使用 refs 来更新组件。如果是这种情况，请花一点时间，更多的关注在组件层中使用 state。在组件层中，通常较高级别的 state 更为清晰。有关示例，请参考[状态提升](/react/docs/lifting-state-up.html).
+你可能首先会想到在你的应用程序中使用 refs 来更新组件。如果是这种情况，请花一点时间，更多的关注在组件层中使用 state。在组件层中，通常较高级别的 state 更为清晰。有关示例，请参考[状态提升](/docs/lifting-state-up.html).
 
 ### 为 DOM 元素添加 Ref
 
@@ -214,11 +214,11 @@ class Grandparent extends React.Component {
 
 上面的例子中，`Grandparent` 首先指定了 ref 回调函数。它通过一个常规的 `inputRef` 属性被传递到 `Parent`，`Parent` 也同样把它传递给了 `CustomTextInput`。最后 `CustomTextInput` 读取了 `inputRef` 属性并将传递的函数作为 `ref` 属性附加到 `<input>`。最终，`Grandparent` 中的 `this.inputElement` 被设置为 `CustomTextInput` 的 `input` 对应的 DOM 节点。
 
-总而言之，我们建议尽可能不暴露 DOM 节点，但这是一个有用的解决方式。请注意，此方法要求您向子组件添加一些代码，如果你无法完全控制子组件，最后的办法是使用 [`findDOMNode()`](/react/docs/react-dom.html#finddomnode)，但是不推荐这样做。
+总而言之，我们建议尽可能不暴露 DOM 节点，但这是一个有用的解决方式。请注意，此方法要求您向子组件添加一些代码，如果你无法完全控制子组件，最后的办法是使用 [`findDOMNode()`](/docs/react-dom.html#finddomnode)，但是不推荐这样做。
 
 ### 旧版 API：String 类型的 Refs
 
-如果你之前使用过 React ，你可能了解过之前的API中的 string 类型的 ref 属性，比如 "textInput" ，你可以通过 this.refs.textInput 访问DOM节点。我们不建议使用它，因为 String 类型的 refs [存在问题](https://github.com/facebook/react/pull/8333#issuecomment-271648615)。它已过时并**可能会在未来的版本是移除**。如果你目前还在使用 this.refs.textInput 这种方式访问 refs ，我们建议用回调函数的方式代替。
+如果你之前使用过 React ，你可能了解过之前的API中的 string 类型的 ref 属性，比如 "textInput" ，你可以通过 this.refs.textInput 访问DOM节点。我们不建议使用它，因为 String 类型的 refs [存在问题](https://github.com/facebook/pull/8333#issuecomment-271648615)。它已过时并**可能会在未来的版本是移除**。如果你目前还在使用 this.refs.textInput 这种方式访问 refs ，我们建议用回调函数的方式代替。
 
 ### 注意
 

@@ -19,7 +19,7 @@ const element = <h1>Hello, world</h1>;
 
 >**注意:**
 >
->初学者很可能把元素的定义和一个内涵更广的定义“组件”给搞混了。我们将会在[下一个章节](/react/docs/components-and-props.html)当中对组件进行详细的介绍。元素事实上只是构成组件的一个部分，所以我们还是推荐你先读完这一章节的内容再往后看。
+>初学者很可能把元素的定义和一个内涵更广的定义“组件”给搞混了。我们将会在[下一个章节](/docs/components-and-props.html)当中对组件进行详细的介绍。元素事实上只是构成组件的一个部分，所以我们还是推荐你先读完这一章节的内容再往后看。
 
 ## 将元素渲染到 DOM 中
 
@@ -78,7 +78,7 @@ setInterval(tick, 1000);
 
 >**注意:**
 >
->在实际生产开发中, 大多数React应用只会调用一次 `ReactDOM.render()` . 在下一个章节中我们将会详细介绍 [有状态组件](/react/docs/state-and-lifecycle.html) 实现 DOM 更新方式。
+>在实际生产开发中, 大多数React应用只会调用一次 `ReactDOM.render()` . 在下一个章节中我们将会详细介绍 [有状态组件](/docs/state-and-lifecycle.html) 实现 DOM 更新方式。
 >
 >前后的内容是相辅相成的，所以你最好还是先读完本章节再往下看。
 
