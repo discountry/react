@@ -387,7 +387,7 @@ function ListOfTenThings() {
 <div>{true}</div>
 ```
 
-这样就可以方便的条件渲染 React 元素。当 `showHeader` 为 `true` 时，下面这个组件将只渲染一个 `<Header />`。
+这在根据条件来确定是否渲染React元素时非常有用。以下的JSX只会在`showHeader`为`true`时渲染`<Header />`组件。
 
 ```js{2}
 <div>
