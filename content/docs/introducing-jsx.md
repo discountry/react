@@ -120,7 +120,7 @@ React DOM 在渲染之前默认会 [过滤](http://stackoverflow.com/questions/7
 
 ### JSX 代表 Objects
 
-Babel 转义器会把 JSX 转换成一个名为 `React.createElement()` 的方法调用。
+Babel 转译器会把 JSX 转换成一个名为 `React.createElement()` 的方法调用。
 
 下面两种代码的作用是完全相同的：
 
