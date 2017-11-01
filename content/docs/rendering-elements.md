@@ -33,7 +33,7 @@ const element = <h1>Hello, world</h1>;
 
 我们用React 开发应用时一般只会定义一个根节点。但如果你是在一个已有的项目当中引入 React 的话，你可能会需要在不同的部分单独定义 React 根节点。
 
-我们将 元素传入一个名为 `ReactDOM.render()` 的方法来将其渲染到页面上：
+要将React元素渲染到根DOM节点中，我们通过把它们都传递给 `ReactDOM.render()` 的方法来将其渲染到页面上：
 
 ```js
 const element = <h1>Hello, world</h1>;
