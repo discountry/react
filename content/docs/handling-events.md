@@ -140,15 +140,15 @@ class LoggingButton extends React.Component {
 
 使用这个语法有个问题就是每次 `LoggingButton` 渲染的时候都会创建一个不同的回调函数。在大多数情况下，这没有问题。然而如果这个回调函数作为一个属性值传入低阶组件，这些组件可能会进行额外的重新渲染。我们通常建议在构造函数中绑定或使用属性初始化器语法来避免这类性能问题。
 
-## Passing Arguments to Event Handlers
+## 向事件处理程序传递参数
 
-Inside a loop it is common to want to pass an extra parameter to an event handler. For example, if `id` is the row ID, either of the following would work:
+通常我们会为事件处理程序传递额外的参数。例如，若是 `id` 是一个内联 id，以下两种方式都可以向事件处理程序传递参数：
 
 ```js
 <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
 <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 ```
 
-The above two lines are equivalent, and use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) and [`Function.prototype.bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) respectively.
+上述两种方式是等价的，分别通过 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) 和 [`Function.prototype.bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) 来为特定事件类型添加事件处理程序。
 
-In both cases, the `e` argument representing the React event will be passed as a second argument after the ID. With an arrow function, we have to pass it explicitly, but with `bind` any further arguments are automatically forwarded.
+上面两个例子中，参数 `e` 做为 React 事件对象将会被做为第二个参数进行传递。通过箭头函数的方式，事件对象必须显示的进行传递，但是通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。
