@@ -204,7 +204,7 @@ ReactDOM.render(
 
 [在 CodePen 上试试。](https://codepen.io/rthor/pen/QKzJKG?editors=0010)
 
-当你在`map()`方法内部调用的元素时，你最好随时记得为每一个元素加上一个独一无二的`key`。
+当你在`map()`方法的内部调用元素时，你最好随时记得为每一个元素加上一个独一无二的`key`。
 
 ### 元素的key在他的兄弟元素之间应该唯一
 
