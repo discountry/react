@@ -455,7 +455,7 @@ class Board extends React.Component {
 
 [查看此步完整代码示例。](https://codepen.io/gaearon/pen/ybbQJX?editors=0010)
 
-我们使用了 `.slice()` 方法来将之前的数组数据**深拷贝**到了一个新的数组中，而不是修改已有的数组。你可以在 [这个章节](/tutorial/tutorial.html#为什么不可变性在React当中非常重要) 来了解为什么不可变性在 React 当中的重要性。
+我们使用了 `.slice()` 方法来将之前的数组数据**浅拷贝**到了一个新的数组中，而不是修改已有的数组。你可以在 [这个章节](/tutorial/tutorial.html#为什么不可变性在React当中非常重要) 来了解为什么不可变性在 React 当中的重要性。
 
 现在你点击棋盘上的格子应该就能够正常落子了。而且状态数据是统一保管在棋盘组件 Board 当中的。你应该注意到了，当事件处理函数触发棋盘父组件的状态数据改变时，格子子组件会自动重新渲染。
 
