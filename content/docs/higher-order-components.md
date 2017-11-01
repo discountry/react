@@ -108,7 +108,7 @@ class BlogPost extends React.Component {
 
 设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且能对所有的组件使用，这就是高阶组件的精华所在。
 
-我们写一个函数，该函数能够创建类似`CommonList` 和 `BlogPost`从 `DataSource`数据源订阅数据的组件 。该函数接受一个子组件作为其中的一个参数，并从数据源订阅数据作为props属性传入子组件。我们把这个函数取个名字 `withSubscription`：
+我们写一个函数，该函数能够创建类似 `CommonList` 和 `BlogPost` 从 `DataSource` 数据源订阅数据的组件 。该函数接受一个子组件作为其中的一个参数，并从数据源订阅数据作为props属性传入子组件。我们把这个函数取个名字 `withSubscription`：
 
 ```js
 const CommentListWithSubscription = withSubscription(
