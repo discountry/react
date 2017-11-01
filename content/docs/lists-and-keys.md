@@ -20,7 +20,7 @@ console.log(doubled);
 
 在React中，把数组转化为数列[元素](/docs/rendering-elements.html)的过程是相似的
 
-### 渲染多样的组件
+### 同时渲染多个组件
 
 你可以通过使用`{}`在JSX内构建一个[元素集合](/docs/introducing-jsx.html#JSX嵌套)
 
@@ -71,7 +71,7 @@ ReactDOM.render(
 );
 ```
 
-当我们运行这段代码，将会看到一个警告`a key should be provided for list items`,意思是当你创建一个元素时，必须包括一个特殊的`key`属性。我们将在下一节讨论这是为什么。
+当你运行这段代码，你将会得到一个警告：应该为每一个列表项提供一个键。这个 “键” 是在创建元素列表时需要包含的特殊字符串属性。我们将会在下一小节讨论这个 “键” 为什么如此的重要。
 
 让我们来给每个列表元素分配一个`key`来解决上面的那个警告
 
@@ -145,7 +145,7 @@ const todoItems = todos.map((todo, index) =>
 function ListItem(props) {
   const value = props.value;
   return (
-    // 错啦！你不需要在这里明确key:
+    // 错啦！你不需要在这里指定key:
     <li key={value.toString()}>
       {value}
     </li>
@@ -155,7 +155,7 @@ function ListItem(props) {
 function NumberList(props) {
   const numbers = props.numbers;
   const listItems = numbers.map((number) =>
-    //错啦！元素的key应该在这里明确：
+    //错啦！元素的key应该在这里指定：
     <ListItem value={number} />
   );
   return (
@@ -177,14 +177,14 @@ ReactDOM.render(
 
 ```javascript{2,3,9,10}
 function ListItem(props) {
-  // 对啦！这里不需要明确出key:
+  // 对啦！这里不需要指定key:
   return <li>{props.value}</li>;
 }
 
 function NumberList(props) {
   const numbers = props.numbers;
   const listItems = numbers.map((number) =>
-    // 又对啦！key应该在数组中被明确出来
+    // 又对啦！key应该在数组的上下文中被指定
     <ListItem key={number.toString()}
               value={number} />
   );
