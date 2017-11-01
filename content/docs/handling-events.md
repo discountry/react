@@ -151,4 +151,4 @@ class LoggingButton extends React.Component {
 
 上述两种方式是等价的，分别通过 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) 和 [`Function.prototype.bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) 来为特定事件类型添加事件处理程序。
 
-上面两个例子中，参数 `e` 做为 React 事件对象将会被做为第二个参数进行传递。通过箭头函数的方式，事件对象必须显示的进行传递，但是通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。
+上面两个例子中，参数 `e` 作为 React 事件对象将会被作为第二个参数进行传递。通过箭头函数的方式，事件对象必须显式的进行传递，但是通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。
