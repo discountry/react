@@ -20,7 +20,7 @@ console.log(doubled);
 
 在React中，把数组转化为数列[元素](/docs/rendering-elements.html)的过程是相似的
 
-### 同时渲染多个组件
+### 渲染多个组件
 
 你可以通过使用`{}`在JSX内构建一个[元素集合](/docs/introducing-jsx.html#JSX嵌套)
 
@@ -71,9 +71,9 @@ ReactDOM.render(
 );
 ```
 
-当你运行这段代码，你将会得到一个警告：应该为每一个列表项提供一个键。这个 “键” 是在创建元素列表时需要包含的特殊字符串属性。我们将会在下一小节讨论这个 “键” 为什么如此的重要。
+当我们运行这段代码，将会看到一个警告 `a key should be provided for list items` ,意思是当你创建一个元素时，必须包括一个特殊的 `key` 属性。我们将在下一节讨论这是为什么。
 
-让我们来给每个列表元素分配一个`key`来解决上面的那个警告
+让我们来给每个列表元素分配一个 `key` 来解决上面的那个警告：
 
 ```javascript{4}
 function NumberList(props) {
