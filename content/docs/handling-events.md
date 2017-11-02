@@ -155,7 +155,7 @@ class LoggingButton extends React.Component {
 
 值得注意的是，通过 `bind` 方式向监听函数传参，在类组件中定义的监听函数，事件对象 `e` 要排在所传递参数的后面，例如:
 
-```js{7-9,17}
+```js{7-9,17-20}
 class Popper extends React.Component{
     constructor(){
         super();
@@ -175,7 +175,7 @@ class Popper extends React.Component{
                 <a 
                   href="https://reactjs.org" 
                   onClick={this.preventPop.bind(this,this.state.name)}
-                >Click</a>
+                  >Click</a>
             </div>
         );
     }
