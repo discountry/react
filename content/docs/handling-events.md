@@ -151,24 +151,30 @@ class LoggingButton extends React.Component {
 
 上述两种方式是等价的，分别通过 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) 和 [`Function.prototype.bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) 来为特定事件类型添加事件处理程序。
 
-上面两个例子中，参数 `e` 作为 React 事件对象将会被作为第二个参数进行传递。通过箭头函数的方式，事件对象必须显式的进行传递，但是通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。值得注意的是，通过bind方式向监听函数传参，在类组件中定义的监听函数，事件对象e要排在所传递参数的后面，eg:
-```js
-class Counter extends React.Component{
+上面两个例子中，参数 `e` 作为 React 事件对象将会被作为第二个参数进行传递。通过箭头函数的方式，事件对象必须显式的进行传递，但是通过 `bind` 的方式，事件对象以及更多的参数将会被隐式的进行传递。
+
+值得注意的是，通过 `bind` 方式向监听函数传参，在类组件中定义的监听函数，事件对象 `e` 要排在所传递参数的后面，例如:
+
+```js{7-9,17}
+class Popper extends React.Component{
     constructor(){
         super();
-        this.state={name:'XiaoMing'};
+        this.state = {name:'Hello world!'};
     }
-    pop=(val,e)=>{    //事件对象e要放在最后
+    
+    preventPop(name, e){    //事件对象e要放在最后
         e.preventDefault();
-        alert(val)
+        alert(name);
     }
+    
     render(){
         return (
             <div>
                 <p>hello</p>
-                <a href="http://www.baidu.com" onClick={this.pop.bind(this,this.state.name)}>点击</a>   //通过bind传参
+                {/* Pass params via bind() method. */}
+                <a href="https://reactjs.org" onClick={this.preventPop.bind(this,this.state.name)}>Click</a>   
             </div>
-        )
+        );
     }
 }
 ```
