@@ -172,7 +172,10 @@ class Popper extends React.Component{
             <div>
                 <p>hello</p>
                 {/* Pass params via bind() method. */}
-                <a href="https://reactjs.org" onClick={this.preventPop.bind(this,this.state.name)}>Click</a>   
+                <a 
+                  href="https://reactjs.org" 
+                  onClick={this.preventPop.bind(this,this.state.name)}
+                >Click</a>
             </div>
         );
     }
