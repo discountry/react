@@ -68,7 +68,7 @@ const PropTypes = require('prop-types');
 class Button extends React.Component {
   render() {
     return (
-      <button style={{'{{'}}background: this.context.color}}>
+      <button style={{background: this.context.color}}>
         {this.props.children}
       </button>
     );
