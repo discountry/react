@@ -43,7 +43,7 @@ ReactDOM.render(
 
 [在 CodePen 上试试。](https://codepen.io/gaearon/pen/ZpVxNq?editors=0011)
 
-此示例根据 `isLoggedIn` 的值渲染将不同的问候语。
+此示例根据 `isLoggedIn` 的值渲染不同的问候语。
 
 ### 元素变量
 
