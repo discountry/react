@@ -77,7 +77,7 @@ React 组件在加载时将 DOM 元素传入 `ref` 的回调函数，在卸载�
 ```javascript{3,9}
 class AutoFocusTextInput extends React.Component {
   componentDidMount() {
-    this.textInput.focus();
+    this.textInput.focusTextInput();
   }
 
   render() {
