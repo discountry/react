@@ -227,7 +227,7 @@ class Square extends React.Component {
 现在我们试着通过点击事件触发 state 的改变来更新棋盘格子显示的内容：
 
 * 将 `<button>` 当中的 `this.props.value` 替换为 `this.state.value` .
-* 将 `() => alert()` 方法替换为 `() => setState({value: 'X'})` .
+* 将 `() => alert()` 方法替换为 `() => this.setState({value: 'X'})` .
 
 现在我们的 `<button>` 标签就变成了下面这样：
 
