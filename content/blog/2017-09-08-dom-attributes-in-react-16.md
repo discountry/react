@@ -163,7 +163,7 @@ title: 'title',
     <div tabIndex={0 / 0} />
     ```
 
-    React 16：将 `NaN` 转换为字符串并传递给组件。
+    React 15：将 `NaN` 转换为字符串并传递给组件。
     React 16：警告并忽略。
 
 随这一测试版的发布，我们也为所有已知元素[创建一个自动生成的表单](https://github.com/facebook/react/blob/master/fixtures/attribute-behavior/AttributeTableSnapshot.md)以追踪潜在的问题。
