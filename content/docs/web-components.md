@@ -27,7 +27,7 @@ class HelloMessage extends React.Component {
 >
 > 你需要手动捕获事件处理器以处理那些在React组件里的事件。 
 
-一个普遍的困扰是Web组件使用“class”而非“claassName”。
+一个普遍的困扰是Web组件使用“class”而非“className”。
 
 ```javascript
 function BrickFlipbox() {
