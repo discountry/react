@@ -1,18 +1,8 @@
 [ignore]
 
-<<<<<<< HEAD
-<PROJECT_ROOT>/examples/.*
-=======
-<PROJECT_ROOT>/fixtures/.*
->>>>>>> 4a37718... Remove examples/ folder (#9323)
-<PROJECT_ROOT>/build/.*
-<PROJECT_ROOT>/.*/node_modules/y18n/.*
-<PROJECT_ROOT>/.*/__mocks__/.*
-<PROJECT_ROOT>/.*/__tests__/.*
-
-# Ignore Docs
-<PROJECT_ROOT>/docs/.*
-<PROJECT_ROOT>/.*/docs/.*
+<PROJECT_ROOT>/content/.*
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/public/.*
 
 [include]
 
@@ -22,9 +12,12 @@
 
 [options]
 module.system=haste
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
 
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
+unsafe.enable_getters_and_setters=true
 
 munge_underscores=false
 
@@ -39,5 +32,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.37.0
-
+^0.56.0

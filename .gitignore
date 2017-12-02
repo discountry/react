@@ -2,4 +2,8 @@
 .DS_STORE
 .idea
 node_modules
+<<<<<<< HEAD
 public
+=======
+public
+>>>>>>> upstream/master

@@ -8,13 +8,19 @@
 
 目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
 
+![check](https://github.com/discountry/react/raw/master/static/check.png)
+
+**本地构建**
+
+请查阅官方 [README](https://github.com/discountry/react/blob/master/README_en.md).
+
 **翻译文档**
 
-所有文档内容的相关文件均在 [`/docs`](https://github.com/discountry/react/tree/master/docs) 目录下。如有需要翻译或修改纠错的内容，请直接编辑对应 `md` 文件，提交 pr 即可。
+所有文档内容的相关文件均在 [`/content`](https://github.com/discountry/react/tree/master/content) 目录下。如有需要翻译或修改纠错的内容，请直接编辑对应 `md` 文件，提交 pr 即可。
 
 **完善网站**
 
-React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/www`](https://github.com/discountry/react/tree/master/www) 文件夹下，如果有对网站模板/样式/配置的改动，请直接编辑该目录下文件并提交 pr 即可。
+React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gatsby) 静态站点生成器，站点对应文件均在 [`/src`](https://github.com/discountry/react/tree/master/src) 文件夹下，如果有对网站模板/样式/配置的改动，请直接编辑该目录下文件并提交 pr 即可。
 
 **为 React 官方贡献翻译**
 
