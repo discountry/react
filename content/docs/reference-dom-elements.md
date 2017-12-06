@@ -96,7 +96,7 @@ function ComponentWithTransition() {
 
 `<input>` 和 `<textarea>` 组件都支持`value`属性。你可以使用该属性设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次加载时的值。
 
-## 所有受支持的HTMl属性
+## 所有受支持的HTML属性
 
 React支持一下所有的属性，同时也支持所有的`data-*` 和 `aria-*`属性：
 
