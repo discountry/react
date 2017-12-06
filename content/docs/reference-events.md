@@ -10,7 +10,7 @@ category: Reference
 ## 概述
 您的事件处理函数将会接收`SyntheticEvent`的实例，一个基于浏览器原生事件的跨浏览器实现。它拥有和浏览器原生事件一样的接口，包括`stopPropagation()`和`preventDefault()`，除了那些所有浏览器功能一样的事件。
 
-出于某些原因，你得使用一些底层的浏览器事件，只需用`nativeEnvent`的属性就能找到。每个`SyntheicEvent`对象都有如下属性：
+出于某些原因，你得使用一些底层的浏览器事件，只需用`nativeEvent`的属性就能找到。每个`SyntheicEvent`对象都有如下属性：
 
 ```javascript
 boolean bubbles
