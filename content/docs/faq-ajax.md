@@ -6,26 +6,26 @@ layout: docs
 category: FAQ
 ---
 
-### How can I make an AJAX call?
+### 怎样发送 AJAX 请求?
 
-You can use any AJAX library you like with React. Some popular ones are [Axios](https://github.com/axios/axios), [jQuery AJAX](https://api.jquery.com/jQuery.ajax/), and the browser built-in [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+你可以在 React 中使用任何你喜欢的 AJAX 库，例如很受欢迎的 [Axios](https://github.com/axios/axios)，[jQuery AJAX](https://api.jquery.com/jQuery.ajax/) 和浏览器内置的 [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。
 
-### Where in the component lifecycle should I make an AJAX call?
+### 我应该在组件的哪个生命周期发送 AJAX 请求?
 
-You should populate data with AJAX calls in the [`componentDidMount`](/docs/react-component.html#mounting) lifecycle method. This is so you can use `setState` to update your component when the data is retrieved.
+你应该在 [`componentDidMount`](/docs/react-component.html#mounting) 生命周期方法内发送 AJAX 请求数据。这样你才能够在请求的数据到达时使用 `setState` 更新你的组件。
 
-### Example: Using AJAX results to set local state
+### 示例: 使用 AJAX 请求的结果设置组件内状态
 
-The component below demonstrates how to make an AJAX call in `componentDidMount` to populate local component state. 
+下方的组件展示了如何在 `componentDidMount` 方法内使用 AJAX 请求并将结果填入组件内的状态。
 
-The example API returns a JSON object like this:
+示例的 API 返回的 JSON 对象结构如下：
 
 ```
 {
   items: [
     { id: 1, name: 'Apples', price: '$2' },
     { id: 2, name: 'Peaches', price: '$5' }
-  ] 
+  ]
 }
 ```
 
@@ -83,6 +83,6 @@ class MyComponent extends React.Component {
 }
 ```
 
-### Cancellation
+### 取消 AJAX 请求
 
-Note that if the component unmounts before an AJAX call is complete, you may see a warning like `cannot read property 'setState' of undefined`. If this is an issue you may want to keep track of inflight AJAX requests and cancel them in the `componentWillUnmount` lifecycle method.
+需要注意的是，如果组件在 AJAX 请求完成之前被卸载了，那么你会在浏览器的控制面板上看到一条警告：`cannot read property 'setState' of undefined`。如果这对你来说是个问题的话，你可以追踪未完成的 AJAX 请求并在 `componentWillUnmount` 生命周期方法内将它们取消。
