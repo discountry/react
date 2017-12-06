@@ -299,7 +299,7 @@ class Searchbox extends React.Component {
 
 >**注意：**
 >
-> 使用这个方法时只能获取帧中最后一个值。也可以在[`MDN`](https://developer.mozilla.org/en-US/docs/Web/Events/scroll)中看优化的示例。
+> 使用这个方法时只能获取帧中最后发布的值。也可以在[`MDN`](https://developer.mozilla.org/en-US/docs/Web/Events/scroll)中看优化的示例。
 
 ```jsx
 import rafSchedule from 'raf-schd';
@@ -342,4 +342,4 @@ class ScrollListener extends React.Component {
 
 #### 测试速率限制
 
-在测试速率限制的代码是否正确工作的时候，快进是很有帮助的。如果正在使用[`jest`](https://facebook.github.io/jest/)，那么可以使用[`mock timers`](https://facebook.github.io/jest/docs/en/timer-mocks.html)来快进。如果正在使用`requestAnimationFrame`节流，那么就会发现[`raf-stub`](https://github.com/alexreardon/raf-stub)是一个控制动画帧的十分有用的工具。
+在测试速率限制的代码是否正确工作的时候，如果可以（对动画或操作）进行快进将会很有帮助。如果正在使用[`jest`](https://facebook.github.io/jest/)，那么可以使用[`mock timers`](https://facebook.github.io/jest/docs/en/timer-mocks.html)来快进。如果正在使用`requestAnimationFrame`节流，那么就会发现[`raf-stub`](https://github.com/alexreardon/raf-stub)是一个控制动画帧的十分有用的工具。
