@@ -6,7 +6,7 @@ layout: docs
 category: FAQ
 ---
 
-### 什么是虚拟DOM（Virtual DOM
+### 什么是虚拟DOM（Virtual DOM）
 
 虚拟DOM（VDOM）是一种编程概念，是指虚拟的视图被保存在内存中，并通过诸如ReactDOM这样的库与“真实”的DOM保持同步。这个过程被称为[和解](/docs/reconciliation.html)。
 
