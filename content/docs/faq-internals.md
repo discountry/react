@@ -17,4 +17,4 @@ category: FAQ
 不，它们并不是相同的概念。影子DOM是一种浏览器技术，主要被设计用来为Web组件中的变量和CSS提供封装。虚拟DOM是由JavaScript库在浏览器API之上实现的一种概念。
 
 ### 什么是“React Fiber”？
-fiber是React 16中新的和解引擎。它的主要目的是使虚拟DOM能够进行增量渲染。[了解更多](https://github.com/acdlite/react-fiber-architecture)。
+fiber是React 16中新的和解引擎。它的主要目的是使虚拟DOM能够进行增量渲染。[了解更多](https://github.com/xxn520/react-fiber-architecture-cn)。
