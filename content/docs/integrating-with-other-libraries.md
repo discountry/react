@@ -199,7 +199,7 @@ class Chosen extends React.Component {
 
 ### 在 React 中使用“字符串替换”类的库
 
-早起的网页应用中，一个常用的方式是先把内容定义成字符串片段，然后插入到 DOM 节点中，就像这样：`$el.html(htmlString)`。采用这种方式写出来的应用，其实非常适合引入 React。只需要把那些字符串定义成 React 组件就可以了。
+早期的网页应用中，一个常用的方式是先把内容定义成字符串片段，然后插入到 DOM 节点中，就像这样：`$el.html(htmlString)`。采用这种方式写出来的应用，其实非常适合引入 React。只需要把那些字符串定义成 React 组件就可以了。
 
 比如，这一段 jQuery 代码……
 

@@ -309,6 +309,20 @@ JSX 会移除行空行和开始和结尾处的空格。标签邻近的新行也�
 
 一个 React 组件不能返回多个 React 元素，但是单个 JSX 表达式可以有多个子元素，因此，如果你希望一个组件渲染多个元素，你可以用 `<div>` 将其包起来。
 
+React 组件也可以通过数组的形式返回多个元素：
+
+```js
+render() {
+  // 不需要使用额外的元素包裹数组中的元素
+  return [
+    // 不要忘记 key :)
+    <li key="A">First item</li>,
+    <li key="B">Second item</li>,
+    <li key="C">Third item</li>,
+  ];
+}
+```
+
 ### JavsScript 表达式
 
 你可以将任何 `{}` 包裹的 JavaScript 表达式作为子代传递。例如，下面这些表达式是等价的：
@@ -396,7 +410,7 @@ function ListOfTenThings() {
 </div>
 ```
 
-值得注意的是，React 提供了一些 ["falsy" 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) （即， 除了false 外，0，“”，null，undefined 和 NaN），它们依然会被渲染。例如，下面的代码不会像你预期的那样运行，因为当 `props.message` 为空数组时，它会打印 0：
+值得注意的是，JavaScript 中的一些 ["falsy" 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)(比如数字`0`)，它们依然会被渲染。例如，下面的代码不会像你预期的那样运行，因为当 `props.message` 为空数组时，它会打印`0`:
 
 ```js{2}
 <div>
