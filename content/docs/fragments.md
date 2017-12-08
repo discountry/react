@@ -4,9 +4,9 @@ title: Fragments
 permalink: docs/fragments.html
 ---
 
-A common pattern in React is for a component to return multiple elements. Fragments let you group a list of children without adding extra nodes to the DOM.
+React 中一个常见模式是为一个组件返回多个元素。Fragments 可以让你聚合一个子元素列表，并且不在DOM中增加额外节点。
 
-Fragments look like empty JSX tags:
+Fragments 看起来像空的 JSX 标签：
 
 ```js
 render() {
@@ -20,9 +20,9 @@ render() {
 }
 ```
 
-## Motivation
+## 动机
 
-A common pattern is for a component to return a list of children. Take this example React snippet:
+一个常见模式是为一个组件返回一个子元素列表。以这个示例的 React 片段为例：
 
 ```jsx
 class Table extends React.Component {
@@ -38,7 +38,7 @@ class Table extends React.Component {
 }
 ```
 
-`<Columns />` would need to return multiple `<td>` elements in order for the rendered HTML to be valid. If a parent div was used inside the `render()` of `<Columns />`, then the resulting HTML will be invalid.
+为了渲染有效的 HTML ， `<Columns />` 需要返回多个 `<td>` 元素。如果一个父 div 在 `<Columns />` 的 `render()` 函数里面使用，那么最终的 HTML 将是无效的。
 
 ```jsx
 class Columns extends React.Component {
@@ -53,7 +53,7 @@ class Columns extends React.Component {
 }
 ```
 
-results in a `<Table />` output of:
+在 `<Table />` 组件中的输出结果如下：
 
 ```jsx
 <table>
@@ -66,9 +66,9 @@ results in a `<Table />` output of:
 </table>
 ```
 
-So, we introduce `Fragments`.
+所以，我们介绍 `Fragments`。
 
-## Usage
+## 使用
 
 ```jsx{4,7}
 class Columns extends React.Component {
@@ -83,7 +83,7 @@ class Columns extends React.Component {
 }
 ```
 
-which results in a correct `<Table />` output of:
+在正确的 `<Table />` 组件中，这个结果输出如下：
 
 ```jsx
 <table>
@@ -94,13 +94,13 @@ which results in a correct `<Table />` output of:
 </table>
 ```
 
-You can use `<></>` the same way you'd use any other element.
+你可以像使用其它元素那样使用 `<></>`。
 
-### Explicit Form
+### 清晰的形式
 
-Another way to use fragments is by using the `React.Fragment` component, which is available on the main React object.
-This may be necessary is your tooling doesn't support JSX fragments yet.
-Note that in React, `<></>` desugars to `<React.Fragment/>`.
+另一种使用片段的方式是使用 `React.Fragment` 组件，`React.Fragment` 组件可以在 React 对象上使用。
+这可能是必要的，如果你的工具还不支持 JSX 片段。
+注意在 React 中， `<></>` 是 `<React.Fragment/>` 的语法糖。
 
 ```jsx{4,7}
 class Columns extends React.Component {
@@ -115,18 +115,18 @@ class Columns extends React.Component {
 }
 ```
 
-### Keyed Fragments
+### 带 key 的 Fragments
 
-The `<></>` syntax does not accept keys nor attributes.
+`<></>` 语法不能接受键值或属性。
 
-If you need a keyed fragment, you can use `<React.Fragment />` directly. A use case for this is mapping a collection to an array of fragments -- for example, to create a description list:
+如果你需要一个带 key 的片段，你可以直接使用 `<React.Fragment />` 。 一个使用场景是映射一个集合为一个片段数组 -- 例如：创建一个描述列表：
 
 ```jsx
 function Glossary(props) {
   return (
     <dl>
       {props.items.map(item => (
-        // Without the `key`, React will fire a key warning
+        // 没有`key`，将会触发一个key警告
         <React.Fragment key={item.id}>
           <dt>{item.term}</dt>
           <dd>{item.description}</dd>
@@ -137,8 +137,8 @@ function Glossary(props) {
 }
 ```
 
-`key` is the only attribute that can be passed to `Fragment`. In the future, we may add support for additional attributes, such as event handlers.
+`key` 是唯一可以传递给 `Fragment` 的属性。在将来，我们可能增加额外的属性支持，比如事件处理。
 
-### Live Demo
+### 在线 Demo
 
-You can try out JSX fragment syntax with this [CodePen](https://codepen.io/reactjs/pen/VrEbjE?editors=1000).
+你可以使用 [CodePen](https://codepen.io/reactjs/pen/VrEbjE?editors=1000) 试试 JSX 片段语法。
