@@ -32,6 +32,8 @@
       title: 深入 JSX
     - id: typechecking-with-proptypes
       title: 使用 PropTypes 检查类型
+    - id: static-type-checking
+      title: 静态类型检查
     - id: refs-and-the-dom
       title: Refs & DOM
     - id: uncontrolled-components
@@ -46,6 +48,8 @@
       title: Reconciliation
     - id: context
       title: Context
+    - id: fragments
+      title: Fragments
     - id: portals
       title: Portals
     - id: error-boundaries
