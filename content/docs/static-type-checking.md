@@ -1,46 +1,46 @@
 ---
 id: static-type-checking
-title: Static Type Checking
+title: 静态类型检查
 permalink: docs/static-type-checking.html
 prev: typechecking-with-prototypes.html
 next: refs-and-the-dom.html
 ---
 
-Static type checkers like [Flow](https://flowtype.org/) and [TypeScript](https://www.typescriptlang.org/) identify certain types of problems before you even run your code. They can also improve developer workflow by adding features like auto-completion. For this reason, we recommend using Flow or TypeScript instead of `PropTypes` for larger code bases.
+像 [Flow](https://flowtype.org/) 和 [TypeScript](https://www.typescriptlang.org/) 这样的静态类型检查器可以在运行代码之前识别某些类型的问题。 他们还可以通过添加自动完成功能来改善开发人员的工作流程。 出于这个原因，对于更大的代码库我们建议使用 Flow 或者 TypeScript 来替代 `PropTypes`。
 
 ## Flow
 
-[Flow](https://flow.org/) is a static type checker for your JavaScript code. It is developed at Facebook and is often used with React. It lets you annotate the variables, functions, and React components with a special type syntax, and catch mistakes early. You can read an [introduction to Flow](https://flow.org/en/docs/getting-started/) to learn its basics.
+[Flow](https://flow.org/) 是一个针对 JavaScript 代码的静态类型检查器。它是在Facebook开发的，经常和React一起使用。 它可以让你使用特殊的类型语法来注释变量，函数和React组件，并尽早地发现错误。 您可以阅读 [Flow 介绍](https://flow.org/en/docs/getting-started/) 来了解基本知识。
 
-To use Flow, you need to:
+为了使用 Flow, 你需要：
 
-* Add Flow to your project as a dependency.
-* Ensure that Flow syntax is stripped from the compiled code.
-* Add type annotations and run Flow to check them.
+* 将 Flow 添加到您的项目作为依赖项。
+* 确保编译后的代码中去除了 Flow 语法。
+* 添加了类型注释并运行 Flow 来检查它们。
 
-We will explain these steps below in detail.
+我们将在下面详细解释这些步骤。
 
-### Adding Flow to a Project
+### 在一个项目中添加 Flow 
 
-First, navigate to your project directory in the terminal. You will need to run two commands.
+首先，在你的终端里进入到项目目录。你需要执行两条命令。
 
-If you use [Yarn](https://yarnpkg.com/), run:
+如果你使用 [Yarn](https://yarnpkg.com/), 运行：
 
 ```bash
 yarn add --dev flow-bin
 yarn run flow init
 ```
 
-If you use [npm](https://www.npmjs.com/), run:
+如果你使用 [npm](https://www.npmjs.com/), 运行：
 
 ```bash
 npm install --save-dev flow-bin
 npm run flow init
 ```
 
-The first command installs the latest version of Flow into your project. The second command creates a Flow configuration file that you will need to commit.
+第一个命令在你的项目中安装了最新版的 Flow。第二个命令创建一个您需要提交的 Flow 配置文件。
 
-Finally, add `flow` to the `"scripts"` section of your `package.json`:
+最后，将 `flow` 添加到你的 `package.json`中的 `"scripts"` 部分：
 
 ```js{4}
 {
@@ -53,37 +53,37 @@ Finally, add `flow` to the `"scripts"` section of your `package.json`:
 }
 ```
 
-### Stripping Flow Syntax from the Compiled Code
+### 从编译过的代码中剥离 Flow 语法
 
-Flow extends the JavaScript language with a special syntax for type annotations. However, browsers aren't aware of this syntax, so we need to make sure it doesn't end up in the compiled JavaScript bundle that is sent to the browser.
+Flow 通过使用特殊的语法为类型注释扩展了 JavaScript 语言。 然而，浏览器并不知道这个语法，所以我们需要确保它不会在发送到浏览器的已编译的 JavaScript 包中结束。
 
-The exact way to do this depends on the tools you use to compile JavaScript.
+确切的做法取决于你用来编译 JavaScript 的工具。
 
 #### Create React App
 
-If your project was set up using [Create React App](https://github.com/facebookincubator/create-react-app), congratulations! The Flow annotations are already being stripped by default so you don't need to do anything else in this step.
+如果你的项目是使用 [Create React App](https://github.com/facebookincubator/create-react-app) 建立的，恭喜！ Flow 朱时已经被默认剥离，所以在这一步你不需要做任何事情。
 
 #### Babel
 
->Note:
+>注意：
 >
->These instructions are *not* for Create React App users. Even though Create React App uses Babel under the hood, it is already configured to understand Flow. Only follow this step if you *don't* use Create React App.
+>这些说明*不*适用于使用 Create React App 的用户。即使 Create React App 在底层使用 Babel，它已经被配置为理解 Flow。只有那些*没有*使用 Create React App 的用户才需要跟进下面的步骤。
 
-If you manually configured Babel for your project, you will need to install a special preset for Flow.
+如果你手动为你的项目配置了 Babel，你将需要为 Flow 安装一个特殊的 preset。
 
-If you use Yarn, run:
+如果你使用 Yarn, 运行：
 
 ```bash
 yarn add --dev babel-preset-flow
 ```
 
-If you use npm, run:
+如果你使用 npm, 运行：
 
 ```bash
 npm install --save-dev babel-preset-flow
 ```
 
-Then add the `flow` preset to your [Babel configuration](http://babeljs.io/docs/usage/babelrc/). For example, if you configure Babel through `.babelrc` file, it could look like this:
+然后将 `flow` preset 加入你的 [Babel 配置](http://babeljs.io/docs/usage/babelrc/)。比如，如果你通过 `.babelrc` 文件配置 Babel，它可能会如下所示：
 
 ```js{3}
 {
@@ -94,40 +94,40 @@ Then add the `flow` preset to your [Babel configuration](http://babeljs.io/docs/
 }
 ```
 
-This will let you use the Flow syntax in your code.
+这将会让你可以在你的代码中使用 Flow 语法。
 
->Note:
+>注意：
 >
->Flow does not require the `react` preset, but they are often used together. Flow itself understands JSX syntax out of the box.
+>Flow 不需要 `react` preset，但他们经常在一起使用。 Flow 本身就理解 JSX 语法。
 
-#### Other Build Setups
+#### 其他生成设置
 
-If you don't use either Create React App or Babel, you can use [flow-remove-types](https://github.com/flowtype/flow-remove-types) to strip the type annotations.
+如果你既不用 Create React App 也不用 Babel，你可以使用 [flow-remove-types](https://github.com/flowtype/flow-remove-types) 来去除类型注释。
 
-### Running Flow
+### 运行 Flow
 
-If you followed the instructions above, you should be able to run Flow for the first time.
+如果你遵循了上述的说明，你应该能够在第一次就运行 Flow。
 
 ```bash
 yarn flow
 ```
 
-If you use npm, run:
+如果你使用 npm, 运行：
 
 ```bash
 npm run flow
 ```
 
-You should see a message like:
+你应该会看到一条这样的消息：
 
 ```
 No errors!
 ✨  Done in 0.17s.
 ```
 
-### Adding Flow Type Annotations
+### 添加 Flow 类型注释
 
-By default, Flow only checks the files that include this annotation:
+默认情况下， Flow 仅检查包含此批注的文件：
 
 ```js
 // @flow
