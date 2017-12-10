@@ -66,7 +66,7 @@ class CustomTextInput extends React.Component {
 }
 ```
 
-React 组件在加载时将 DOM 元素传入 `ref` 的回调函数，在卸载时则会传入 `null`。
+React 组件在加载时将 DOM 元素传入 `ref` 的回调函数，在卸载时则会传入 `null`。`ref` 回调会在`componentDidMount` 或 `componentDidUpdate` 这些生命周期回调之前执行。
 
 为了在类上设置一个属性使用 `ref` 回调是访问 DOM 元素的常见模式。首先的方法就如上面的例子中一样设置 `ref`。甚至还有更简短的写法： `ref={input => this.textInput = input}`。
 
