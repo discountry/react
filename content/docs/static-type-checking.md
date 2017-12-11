@@ -133,45 +133,46 @@ No errors!
 // @flow
 ```
 
-Typically it is placed at the top of a file. Try adding it to some files in your project and run `yarn flow` or `npm run flow` to see if Flow already found any issues.
+通常它被放置在文件的顶部。 尝试将其添加到项目中的某些文件中，然后运行 `yarn flow` 或 `npm run flow` 来查看 Flow 是否已经发现了一些问题。
 
-There is also [an option](https://flow.org/en/docs/config/options/#toc-all-boolean) to force Flow to check *all* files regardless of the annotation. This can be too noisy for existing projects, but is reasonable for a new project if you want to fully type it with Flow.
+也有[一个选择](https://flow.org/en/docs/config/options/#toc-all-boolean)可以强制 Flow 不考虑注释检查*所有*文件. 对于现有的项目它可能太繁琐了，但对于一个新项目如果你想完全用 Flow 来组织，那会是合理的。
 
-Now you're all set! We recommend to check out the following resources to learn more about Flow:
+现在你们都准备好了！ 我们建议查看以下资源以了解有关 Flow 的更多信息：
 
-* [Flow Documentation: Type Annotations](https://flow.org/en/docs/types/)
-* [Flow Documentation: Editors](https://flow.org/en/docs/editors/)
-* [Flow Documentation: React](https://flow.org/en/docs/react/)
+* [Flow 文档：类型注释](https://flow.org/en/docs/types/)
+* [Flow 文档：编辑器](https://flow.org/en/docs/editors/)
+* [Flow 文档： React](https://flow.org/en/docs/react/)
 * [Linting in Flow](https://medium.com/flow-type/linting-in-flow-7709d7a7e969)
 
 ## TypeScript
 
-[TypeScript](https://www.typescriptlang.org/) is a programming language developed by Microsoft. It is a typed superset of JavaScript, and includes its own compiler. Being a typed language, Typescript can catch errors and bugs at build time, long before your app goes live. You can learn more about using TypeScript with React [here](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter).
+[TypeScript](https://www.typescriptlang.org/) 是一门由微软开发的编程语言。 它是 JavaScript 的一个类型超集，包含它自己的编译器。 作为一种类型化语言，Typescript 可以早在您的应用程序上线之前在构建时发现错误和错误。 你可以在[这里](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter)了解更多关于在 React 中使用 TypeScript 的知识。
 
-To use TypeScript, you need to:
-* Add Typescript as a dependency to your project
-* Configure the TypeScript compiler options
-* Use the right file extensions
-* Add definitions for libraries you use
+要使用 TypeScript，你需要：
+* 将 Typescript 添加为您的项目的依赖项
+* 配置 TypeScript 编译器选项
+* 使用正确的文件扩展名
+* 为你使用的库添加定义
 
-Let's go over these in detail.
+让我们来详细介绍一下。
 
-### Adding TypeScript to a Project
-It all begins with running one command in your terminal.
+### 在一个项目中添加 TypeScript 
 
-If you use [Yarn](https://yarnpkg.com/), run:
+这一切都始于在终端中运行一个命令。
+
+如果你使用 [Yarn](https://yarnpkg.com/), 运行：
 
 ```bash
 yarn add --dev typescript
 ```
 
-If you use [npm](https://www.npmjs.com/), run:
+如果你使用 [npm](https://www.npmjs.com/), 运行：
 
 ```bash
 npm install --save-dev typescript
 ```
 
-Congrats! You've installed the latest version of TypeScript into your project. Installing TypeScript gives us access to the `tsc` command. Before configuration, let's add `tsc` to the "scripts" section in our `package.json`:
+恭喜！ 您已经将最新版本的TypeScript安装到您的项目中。 安装TypeScript让我们可以访问 `tsc` 命令。 在配置之前，让我们将 `tsc` 添加到 `package.json` 中的 "scripts" 部分：
 
 ```js{4}
 {
@@ -184,19 +185,20 @@ Congrats! You've installed the latest version of TypeScript into your project. I
 }
 ```
 
-### Configuring the TypeScript Compiler
-The compiler is of no help to us until we tell it what to do. In TypeScript, these rules are defined in a special file called `tsconfig.json`. To generate this file run:
+### 配置 TypeScript 编译器
+
+除非我们告诉编译器要做什么，否则它对我们将毫无用处。在 TypeScript 中，这些规则定义在一个叫 `tsconfig.json` 的特殊文件中。运行如下命令生成该文件：
 
 ```bash
 tsc --init
 ```
 
-Looking at the now generated `tsconfig.json`, you can see that there are many options you can use to configure the compiler. For a detailed description of all the options, check [here](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
+看看现在生成的 `tsconfig.json`，你可以看到有很多选项可以用来配置编译器。 有关所有选项的详细说明，请点击[这里](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)。
 
-Of the many options, we'll look at `rootDir` and `outDir`. In its true fashion, the compiler will take in typescript files and generate javascript files. However we don't want to get confused with our source files and the generated output.
+在许多选项中，我们会看到 `rootDir` 和 `outDir`。编译器将以真实的情况接收 typescript 文件然后生成 javascript 文件。然而我们不想混淆源文件和编译后的输出。
 
-We'll address this in two steps:
-* Firstly, let's arrange our project structure like this. We'll place all our source code in the `src` directory.
+我们将通过两个步骤解决这个问题：
+* 首先，让我们像这样安排我们的项目结构。我们将所有的源代码放在src目录中。
 
 ```
 ├── package.json
@@ -205,7 +207,7 @@ We'll address this in two steps:
 └── tsconfig.json
 ```
 
-* Next, we'll tell the compiler where our source code is and where the output should go.
+* 接下来，我们会告诉编译器源代码在哪以及编译后输出该放哪。
 
 ```js{6,7}
 // tsconfig.json
@@ -220,40 +222,41 @@ We'll address this in two steps:
 }
 ```
 
-Great! Now when we run our build script the compiler will output the generated javascript to the `build` folder. The [TypeScript React Starter](https://github.com/Microsoft/TypeScript-React-Starter/blob/master/tsconfig.json) provides a `tsconfig.json` with a good set of rules to get you started.
+非常棒！现在当我们运行构建脚本时编译器将会将生成的 javascript 代码输出到 `build` 文件夹。[TypeScript React Starter](https://github.com/Microsoft/TypeScript-React-Starter/blob/master/tsconfig.json) 提供了一个带有一套配置的 `tsconfig.json` 文件让你上手。
 
-Generally, you don't want to keep the generated javascript in your source control, so be sure to add the build folder to your `.gitignore`.
+通常，您不希望将生成的JavaScript保留在源代码管理中，因此请确保将生成文件夹添加到 `.gitignore` 中。
 
-### File extensions
-In React, you most likely write your components in a `.js` file. In TypeScript we have 2 file extensions:
+### 文件扩展名
 
-`.ts` is the default file extension while `.tsx` is a special extension used for files which contain `JSX`.
+在 React 中，你最有可能在 `.js` 文件中编写你的组件。在 TypeScript 中我们有两个文件扩展名：
 
-### Running TypeScript
+`.ts` 是默认的文件扩展名， `.tsx` 是一个为包含  `JSX` 代码使用的特殊扩展名。
 
-If you followed the instructions above, you should be able to run TypeScript for the first time.
+### 运行 TypeScript
+
+如果你遵循了如上的说明，你应该能够第一次就成功运行 TypeScript。
 
 ```bash
 yarn build
 ```
 
-If you use npm, run:
+如果你使用 npm, 运行：
 
 ```bash
 npm run build
 ```
 
-If you see no output, it mean's that it completed successfully.
+如果你没有看到输出，这意味着它完全编译成功了。
 
+### 类型定义
 
-### Type Definitions
-To be able to show errors and hints from other packages, the compiler relies on declaration files. A declaration file provides all the type information about a library. This enables us to use javascript libraries like those on npm in our project. 
+为了能够显示来自其他包的错误和提示，编译器依赖于声明文件。 声明文件提供了关于库的所有类型信息。 这使我们能够在我们的项目中使用像那些在 npm 中的 JavaScript 库。
 
-There are two main ways to get declarations for a library:
+对于一个库来说，主要有两种方式获得声明：
 
-__Bundled__ - The library bundles it's own declaration file. This is great for us, since all we need to do is install the library, and we can use it right away. To check if a library has bundled types, look for an `index.d.ts` file in the project. Some libraries will have it specified in their `package.json` under the `typings` or `types` field.
+__Bundled__ - 该库捆绑了自己的声明文件。 这对我们来说很好，因为我们所要做的就是安装这个库，我们便可以马上使用它。 要检查一个库是否有 bundled types，请在项目中查找 `index.d.ts` 文件。 有些库会在 `package.json` 文件的 `typings` 或者 `types` 属性中指定它。
 
-__[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)__ - DefinitelyTyped is a huge repository of declarations for libraries that don't bundle a declaration file. The declarations are crowd-sourced and managed by Microsoft and open source contributors. React for example doesn't bundle it's own declaration file. Instead we can get it from DefinitelyTyped. To do so enter this command in your terminal.
+__[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)__ - DefinitelyTyped 是一个不包含声明文件的库的声明库。这些声明是由微软和开源贡献者提供的。 例如 React 并不捆绑它自己的声明文件。 相反，我们可以从 DefinitelyTyped 中获得。 为此，请在终端中输入此命令。
 
 ```bash
 # yarn
@@ -263,8 +266,8 @@ yarn add --dev @types/react
 npm i --save-dev @types/react
 ```
 
-__Local Declarations__
-Sometimes the package that you want to use doesn't bundle declarations nor is it available on DefinitelyTyped. In that case, we can have a local declaration file. To do this, create a `declarations.d.ts` file in the root of your source directory. A simple declaration could look like this:
+__局部声明__
+有时你想使用的包不包含声明，也不能在 DefinitelyTyped 上使用。 在这种情况下，我们可以有一个本地声明文件。 为此，请在源目录的根目录中创建一个 `declarations.d.ts` 文件。 一个简单的声明可能是这样的：
 
 ```typescript
 declare module 'querystring' {
@@ -273,36 +276,36 @@ declare module 'querystring' {
 }
 ```
 
-### Using TypeScript with Create React App
+### 和 Create React App 一起使用 TypeScript 
 
-[react-scripts-ts](https://www.npmjs.com/package/react-scripts-ts) automatically configures a `create-react-app` project to support TypeScript. You can use it like this:
+[react-scripts-ts](https://www.npmjs.com/package/react-scripts-ts) 自动配置了一个 `create-react-app` 项目支持 TypeScript。你可以像这样使用：
 
 ```bash
 create-react-app my-app --scripts-version=react-scripts-ts
 ```
 
-Note that it is a **third party** project, and is not a part of Create React App.
+请注意它是一个**第三方**项目，而且不是 Create React App 的一部分。
 
-You can also try [typescript-react-starter](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter).
+你也可以尝试 [typescript-react-starter](https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter)。
 
-You are now ready to code! We recommend to check out the following resources to learn more about Typescript:
+你已经准备好写代码了！我们建议查看以下资源来了解有关 TypeScript 的更多信息：
 
-* [TypeScript Documentation: Basic Types](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-* [TypeScript Documentation: Migrating from Javascript](http://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html)
-* [TypeScript Documentation: React and Webpack](http://www.typescriptlang.org/docs/handbook/react-&-webpack.html)
+* [TypeScript 文档：基本类型](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+* [TypeScript 文档：从 Javascript 迁徙](http://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html)
+* [TypeScript 文档： React 和 Webpack](http://www.typescriptlang.org/docs/handbook/react-&-webpack.html)
 
 ## Reason
 
-[Reason](https://reasonml.github.io/) is not a new language; it's a new syntax and toolchain powered by the battle-tested language, [OCaml](http://ocaml.org/). Reason gives OCaml a familiar syntax geared toward JavaScript programmers, and caters to the existing NPM/Yarn workflow folks already know.
+[Reason](https://reasonml.github.io/) 不是一种新的语言; 这是一个新的语法和工具链，由测试语言 [OCaml](http://ocaml.org/) 提供支持。 Reason 使 OCaml 成为了面向 JavaScript 程序员的熟悉语法，而且迎合现有已知的 NPM/Yarn 工作流。
 
-Reason is developed at Facebook, and is used in some of its products like Messenger. It is still somewhat experimental but it has [dedicated React bindings](https://reasonml.github.io/reason-react/) maintained by Facebook and a [vibrant community](https://reasonml.github.io/community/).
+Reason 是在Facebook开发的，并且在其一些产品如 Messenger 中使用。它仍然具有一定的实验性质，但它有由 Facebook 维护的[专门的 React 绑定](https://reasonml.github.io/reason-react/) 和一个[充满活力的社区](https://reasonml.github.io/community/)。
 
 ## Kotlin
 
-[Kotlin](https://kotlinlang.org/) is a statically typed language developed by JetBrains. Its target platforms include the JVM, Android, LLVM, and [JavaScript](https://kotlinlang.org/docs/reference/js-overview.html). 
+[Kotlin](https://kotlinlang.org/) 是由 JetBrains 开发的一门静态类型语言。其目标平台包括 JVM， Android， LLVM 和 [JavaScript](https://kotlinlang.org/docs/reference/js-overview.html)。
 
-JetBrains develops and maintains several tools specifically for the React community: [React bindings](https://github.com/JetBrains/kotlin-wrappers) as well as [Create React Kotlin App](https://github.com/JetBrains/create-react-kotlin-app). The latter helps you start building React apps with Kotlin with no build configuration.
+JetBrains 专门为React社区开发和维护了几个工具： [React bindings](https://github.com/JetBrains/kotlin-wrappers) 以及 [Create React Kotlin App](https://github.com/JetBrains/create-react-kotlin-app)。 后者可以帮助您开始使用Kotlin 构建 React 应用程序，而不需要构建配置。 
 
-## Other Languages
+## 其他语言
 
-Note there are other statically typed languages that compile to JavaScript and are thus React compatible. For example, [F#/Fable](http://fable.io) with [elmish-react](https://fable-elmish.github.io/react). Check out their respective sites for more information, and feel free to add more statically typed languages that work with React to this page!
+请注意，还有其他静态类型的语言可以编译成 JavaScript，因此是 React 兼容的。 例如，和 [elmish-react](https://fable-elmish.github.io/react) 一起使用的 [F#/Fable](http://fable.io)。查看他们各自的网站以获取更多信息，并欢迎添加更多和与 React 一起工作的静态类型的语言到这个页面！
