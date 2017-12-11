@@ -172,7 +172,7 @@ yarn add --dev typescript
 npm install --save-dev typescript
 ```
 
-恭喜！ 您已经将最新版本的TypeScript安装到您的项目中。 安装TypeScript让我们可以访问 `tsc` 命令。 在配置之前，让我们将 `tsc` 添加到 `package.json` 中的 "scripts" 部分：
+恭喜！ 您已经将最新版本的 TypeScript 安装到您的项目中。 安装 TypeScript 让我们可以访问 `tsc` 命令。 在配置之前，让我们将 `tsc` 添加到 `package.json` 中的 "scripts" 部分：
 
 ```js{4}
 {
@@ -198,7 +198,7 @@ tsc --init
 在许多选项中，我们会看到 `rootDir` 和 `outDir`。编译器将以真实的情况接收 typescript 文件然后生成 javascript 文件。然而我们不想混淆源文件和编译后的输出。
 
 我们将通过两个步骤解决这个问题：
-* 首先，让我们像这样安排我们的项目结构。我们将所有的源代码放在src目录中。
+* 首先，让我们像这样安排我们的项目结构。我们将所有的源代码放在 src 目录中。
 
 ```
 ├── package.json
@@ -254,7 +254,7 @@ npm run build
 
 对于一个库来说，主要有两种方式获得声明：
 
-__Bundled__ - 该库捆绑了自己的声明文件。 这对我们来说很好，因为我们所要做的就是安装这个库，我们便可以马上使用它。 要检查一个库是否有 bundled types，请在项目中查找 `index.d.ts` 文件。 有些库会在 `package.json` 文件的 `typings` 或者 `types` 属性中指定它。
+__Bundled__ - 该库捆绑了自己的声明文件。 这对我们来说很好，因为我们所要做的就是安装这个库，我们便可以马上使用它。 要检查一个库是否有 bundled 类型，请在项目中查找 `index.d.ts` 文件。 有些库会在 `package.json` 文件的 `typings` 或者 `types` 属性中指定它。
 
 __[DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)__ - DefinitelyTyped 是一个不包含声明文件的库的声明库。这些声明是由微软和开源贡献者提供的。 例如 React 并不捆绑它自己的声明文件。 相反，我们可以从 DefinitelyTyped 中获得。 为此，请在终端中输入此命令。
 
@@ -298,13 +298,13 @@ create-react-app my-app --scripts-version=react-scripts-ts
 
 [Reason](https://reasonml.github.io/) 不是一种新的语言; 这是一个新的语法和工具链，由测试语言 [OCaml](http://ocaml.org/) 提供支持。 Reason 使 OCaml 成为了面向 JavaScript 程序员的熟悉语法，而且迎合现有已知的 NPM/Yarn 工作流。
 
-Reason 是在Facebook开发的，并且在其一些产品如 Messenger 中使用。它仍然具有一定的实验性质，但它有由 Facebook 维护的[专门的 React 绑定](https://reasonml.github.io/reason-react/) 和一个[充满活力的社区](https://reasonml.github.io/community/)。
+Reason 是在 Facebook 开发的，并且在其一些产品如 Messenger 中使用。它仍然具有一定的实验性质，但它有由 Facebook 维护的[专门的 React 绑定](https://reasonml.github.io/reason-react/) 和一个[充满活力的社区](https://reasonml.github.io/community/)。
 
 ## Kotlin
 
 [Kotlin](https://kotlinlang.org/) 是由 JetBrains 开发的一门静态类型语言。其目标平台包括 JVM， Android， LLVM 和 [JavaScript](https://kotlinlang.org/docs/reference/js-overview.html)。
 
-JetBrains 专门为React社区开发和维护了几个工具： [React bindings](https://github.com/JetBrains/kotlin-wrappers) 以及 [Create React Kotlin App](https://github.com/JetBrains/create-react-kotlin-app)。 后者可以帮助您开始使用Kotlin 构建 React 应用程序，而不需要构建配置。 
+JetBrains 专门为 React 社区开发和维护了几个工具： [React bindings](https://github.com/JetBrains/kotlin-wrappers) 以及 [Create React Kotlin App](https://github.com/JetBrains/create-react-kotlin-app)。 后者可以帮助您开始使用Kotlin 构建 React 应用程序，而不需要构建配置。 
 
 ## 其他语言
 
