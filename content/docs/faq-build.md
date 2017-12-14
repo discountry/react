@@ -6,19 +6,19 @@ layout: docs
 category: FAQ
 ---
 
-### Do I need to use JSX with React?
+### 用 React 时需要使用 JSX 吗？
 
-No! Check out ["React Without JSX"](/docs/react-without-jsx.html) to learn more.
+非也！查看 ["React 不使用 JSX"](/docs/react-without-jsx.html) 学习更多。
 
-### Do I need to use ES6 (+) with React?
+### 用 React 时需要使用 ES6 (+) 吗?
 
-No! Check out ["React Without ES6"](/docs/react-without-es6.html) to learn more.
+非也！查看 ["React 不使用 ES6"](/docs/react-without-es6.html) 学习更多。
 
-### How can I write comments in JSX?
+### 在 JSX 中如何写注释?
 
 ```jsx
 <div>
-  {/* Comment goes here */}
+  {/* 在这里写注释 */}
   Hello, {name}!
 </div>
 ```
