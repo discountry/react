@@ -98,7 +98,7 @@ function ComponentWithTransition() {
 
 ## 所有受支持的HTML属性
 
-React支持一下所有的属性，同时也支持所有的`data-*` 和 `aria-*`属性：
+React支持以下所有的属性，同时也支持所有的`data-*` 和 `aria-*`属性：
 
 ```
 accept acceptCharset accessKey action allowFullScreen allowTransparency alt
@@ -116,7 +116,7 @@ selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step
 style summary tabIndex target title type useMap value width wmode wrap
 ```
 
-React也支持一下这些RDFa属性（有几个RDFa属性和HTML属性重叠，所以不包含在以下列表中）：
+React也支持以下这些RDFa属性（有几个RDFa属性和HTML属性重叠，所以不包含在以下列表中）：
 
 ```
 about datatype inlist prefix property resource typeof vocab
