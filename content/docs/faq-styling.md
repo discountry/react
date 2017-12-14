@@ -6,9 +6,9 @@ layout: docs
 category: FAQ
 ---
 
-### How do I add CSS classes to components?
+### 怎样给组件添加 CSS 类?
 
-Pass a string as the `className` prop:
+传递一个字符串给 `className` 属性：
 
 ```jsx
 render() {
@@ -16,7 +16,7 @@ render() {
 }
 ```
 
-It is common for CSS classes to depend on the component props or state:
+CSS 类依赖组件的属性或状态很普遍：
 
 ```jsx
 render() {
@@ -28,22 +28,22 @@ render() {
 }
 ```
 
-If you often find yourself writing code like this, [classnames](https://www.npmjs.com/package/classnames) package can simplify it.
+如果你经常发现自己在写类似的代码，[classnames](https://www.npmjs.com/package/classnames) 包可以简化它。
 
-### Can I use inline styles?
+### 可以使用行内样式吗？
 
-Yes, see the docs on styling [here](/docs/dom-elements.html#style).
+是的，在[这里](/docs/dom-elements.html#style)查看关于样式的文档。
 
-### Are inline styles bad?
+### 写行内样式不好吗？
 
-CSS classes are generally more efficient than inline styles.
+CSS 类比起行内样式通常更加高效。
 
-### What is CSS-in-JS?
+### CSS-in-JS 是什么？
 
-"CSS-in-JS" refers to a pattern where CSS is composed using JavaScript instead of defined in external files. Read a comparison of CSS-in-JS libraries [here](https://github.com/MicheleBertoli/css-in-js).
+"CSS-in-JS" 代表一个范式，使用 Javascript 组成CSS，而不是在额外的文件里面定义。在[这里](https://github.com/MicheleBertoli/css-in-js)查看 CSS-in-JS 库的比较。
 
-_Note that this functionality is not a part of React, but provided by third-party libraries._ React does not have an opinion about how styles are defined; if in doubt, a good starting point is to define your styles in a separate `*.css` file as usual and refer to them using [`className`](/docs/dom-elements.html#classname).
+_注意这个功能不是 React 的一部分，而是第三方库提供的。_ React 没有样式应该怎样被定义的主张；如果不信，一个好的起点是项往常一样在一个分离的 `*.css` 文件中定义你的样式，使用[`className`](/docs/dom-elements.html#classname)引用它们。
 
-### Can I do animations in React?
+### 在 React 中如何做动画？
 
-React can be used to power animations. See [React Transition Group](https://reactcommunity.org/react-transition-group/) and [React Motion](https://github.com/chenglou/react-motion), for example.
+React 可以被用来增强动画。例如：查看 [React Transition Group](https://reactcommunity.org/react-transition-group/) 和 [React Motion](https://github.com/chenglou/react-motion)。
