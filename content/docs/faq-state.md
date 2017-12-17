@@ -1,51 +1,52 @@
 ---
 id: faq-state
-title: Component State
+title: 组件状态
 permalink: docs/faq-state.html
 layout: docs
 category: FAQ
 ---
 
-### What does setState do?
+### setState 做了什么？
 
-`setState()` schedules an update to a component's `state` object. When state changes, the component responds by re-rendering.
+`setState()` 用于安排一个组件的 `state` 对象的一次更新。当状态改变时，组件通过重新渲染来响应。
 
-### What is the difference between state and props?
+### state 和 props 之间有什么区别？
 
-[`props`](/docs/components-and-props.html) (short for "properties") and [`state`](/docs/state-and-lifecycle.html) are both just JavaScript objects that trigger a re-render when changed. While both hold information that influences the output of render, they are different in one important way: `props` get passed to the component (similar to function parameters) whereas `state` is managed within the component (similar to variables declared within a function).
+[`props`](/docs/components-and-props.html) （简称“属性”）和 [`state`](/docs/state-and-lifecycle.html) 都是在改变时会触发一次重新渲染的 JavaScript 对象。虽然两者都具有影响渲染输出的信息，但它们在一个重要方面是不同的： `props` 传递到组件（类似于函数参数），而 `state` 是在组件内管理的（类似于函数中声明的变量）。
 
-Here are some good resources for further reading on when to use `props` vs `state`:
+这里有一些很好的资源，用以进一步了解何时使用 `props` vs `state` ：
+
 * [Props vs State](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
 * [ReactJS: Props vs. State](http://lucybain.com/blog/2016/react-state-vs-pros/)
 
-### Why is `setState` is giving me the wrong value?
+### 为什么 `setState` 给我传递了错误值？
 
-Calls to `setState` are asynchronous - don't rely on `this.state` to reflect the new value immediately after calling `setState`. Pass an updater function instead of an object if you need compute values based on the current state (see below for details).
+`setState` 的调用是异步的 - 在调用 `setState` 之后，不要依赖 `this.state` 来立即反映新值。如果你需要基于当前状态的计算值（请参阅下面的详细信息），则传递更新函数而不是对象。
 
-Example of code that will not behave as expected:
+代码将不会按预期方式运行的示例：
 
 ```jsx
 incrementCount() {
-  // Note: this will *not* work as intended.
+  // 注意：这将*不*按照预期工作。
   this.setState({count: this.state.count + 1});
 }
 
 handleSomething() {
-  // this.state.count is 1, then we do this:
+  // this.state.count 是 1，然后我们这样做：
   this.incrementCount();
-  this.incrementCount(); // state wasn't updated yet, so this sets 2 not 3
+  this.incrementCount(); // 状态还没有更新，所以这里是将它设置为 2 而不是 3
 }
 ```
 
-See below for how to fix this problem.
+接着看如果解决这个问题。
 
-### How do I update state with values that depend on the current state? 
+### 如果用依赖于当前状态的值更新状态？
 
-Pass a function instead of an object to setState to ensure the call always uses the most updated version of state (see below). 
+传递一个函数而不是对象给 setState 来确保调用总是使用最新的状态（接着往下看）。
 
-### What is the difference between passing an object or a function in setState?
+### 在 setState 中传递一个对象或者一个函数有什么区别？
 
-Passing an update function allows you to access the current state value inside the updater. Since `setState` calls are batched, this lets you chain updates and ensure they build on top of each other instead of conflicting:
+传递一个更新函数允许你在更新中访问当前的状态值。由于 `setState` 调用是批处理的,这允许你链式更新并确保它们建立在彼此之上，而不是产生冲突：
 
 ```jsx
 incrementCount() {
@@ -55,16 +56,16 @@ incrementCount() {
 }
 
 handleSomething() {
-  // this.state.count is 1, then we do this:
+  // this.state.count 是 1，然后我们这样做：
   this.incrementCount();
-  this.incrementCount(); // count is now 3
+  this.incrementCount(); // count 现在是 3
 }
 ```
 
-[Learn more about setState](/docs/react-component.html#setstate)
+[了解有关 setState 的更多](/docs/react-component.html#setstate)
 
-### Should I use a state management library like Redux or MobX?
+### 我是否应该使用一个像 Redux 或者 Mobx 的状态管理库？
 
-[Maybe.](http://redux.js.org/docs/faq/General.html#general-when-to-use)
+[也许。](http://redux.js.org/docs/faq/General.html#general-when-to-use)
 
-It's a good idea to get to know React first, before adding in additional libraries. You can build quite complex applications using only React.
+在添加额外的库之前，首先了解 React 是个好主意。你可以只使用 React 来构建相当复杂的应用程序。
