@@ -1,13 +1,13 @@
 ---
 id: glossary
-title: Glossary of React Terms
+title: React 术语表
 layout: docs
 category: Reference
 permalink: docs/glossary.html
 
 ---
 
-## Single-page Application
+## 单页面应用 Single-page Application
 
 A single-page application is an application that loads a single HTML page and all the necessary assets (such as JavaScript and CSS) required for the application to run. Any interactions with the page or subsequent pages do not require a round trip to the server which means the page is not reloaded.
 
@@ -17,15 +17,15 @@ Though you may build a single-page application in React, it is not a requirement
 
 These acronyms all refer to the most recent versions of the ECMAScript Language Specification standard, which the JavaScript language is an implementation of. The ES6 version (also known as ES2015) includes many additions to the previous versions such as: arrow functions, classes, template literals, `let` and `const` statements. You can learn more about specific versions [here](https://en.wikipedia.org/wiki/ECMAScript#Versions).
 
-## Compilers
+## 编译器 Compilers
 
 A JavaScript compiler takes JavaScript code, transforms it and returns JavaScript code in a different format. The most common use case is to take ES6 syntax and transform it into syntax that older browsers are capable of interpreting. [Babel](https://babeljs.io/) is the compiler most commonly used with React.
 
-## Bundlers
+## 打包工具 Bundlers
 
 Bundlers take JavaScript and CSS code written as separate modules (often hundreds of them), and combine them together into a few files better optimized for the browsers. Some bundlers commonly used in React applications include [Webpack](https://webpack.js.org/) and [Browserify](http://browserify.org/).
 
-## Package Managers
+## 包管理工具 Package Managers
 
 Package managers are tools that allow you to manage dependencies in your project. [npm](https://www.npmjs.com/) and [Yarn](http://yarnpkg.com/) are two package managers commonly used in React applications. Both of them are clients for the same npm package registry.
 
@@ -47,7 +47,7 @@ ReactDOM.render(
 );
 ```  
 
-## [Elements](/docs/rendering-elements.html)
+## 元素 [Elements](/docs/rendering-elements.html)
 
 React elements are the building blocks of React applications. One might confuse elements with a more widely known concept of "components". An element describes what you want to see on the screen. React elements are immutable.
 
@@ -57,7 +57,7 @@ const element = <h1>Hello, world</h1>;
 
 Typically, elements are not used directly, but get returned from components.
 
-## [Components](/docs/components-and-props.html)
+## 组件 [Components](/docs/components-and-props.html)
 
 React components are small, reusable pieces of code that return a React element to be rendered to the page. The simplest version of React component is a plain JavaScript function that returns a React element:
 
@@ -118,7 +118,7 @@ class Welcome extends React.Component {
 }
 ```
 
-### [`state`](/docs/state-and-lifecycle.html#adding-local-state-to-a-class)
+### 状态 [`state`](/docs/state-and-lifecycle.html#adding-local-state-to-a-class)
 
 A component needs `state` when some data associated with it changes over time. For example, a `Checkbox` component might need `isChecked` in its state, and a `NewsFeed` component might want to keep track of `fetchedPosts` in its state.
 
@@ -126,11 +126,11 @@ The most important difference between `state` and `props` is that `props` are pa
 
 For each particular piece of changing data, there should be just one component that "owns" it in its state. Don't try to synchronize states of two different components. Instead, [lift it up](/docs/lifting-state-up.html) to their closest shared ancestor, and pass it down as props to both of them.
 
-## [Lifecycle Methods](/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
+## 生命周期函数 [Lifecycle Methods](/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
 
 Lifecycle methods are custom functionality that gets executed during the different phases of a component. There are methods available when the component gets created and inserted into the DOM ([mounting](/docs/react-component.html#mounting)), when the component updates, and when the component gets unmounted or removed from the DOM.
 
- ## [Controlled](/docs/forms.html#controlled-components) vs. [Uncontrolled Components](/docs/uncontrolled-components.html)
+ ## 受控 & 非受控组件 [Controlled](/docs/forms.html#controlled-components) vs. [Uncontrolled Components](/docs/uncontrolled-components.html)
 
 React has two different approaches to dealing with form inputs. 
 
@@ -140,7 +140,7 @@ An *uncontrolled component* works like form elements do outside of React. When a
 
 In most cases you should use controlled components.
 
-## [Keys](/docs/lists-and-keys.html) 
+## 键值 [Keys](/docs/lists-and-keys.html) 
 
 A "key" is a special string attribute you need to include when creating arrays of elements. Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside an array to give the elements a stable identity.
 
@@ -154,7 +154,7 @@ React supports a special attribute that you can attach to any component. The `re
 
 Use refs sparingly. If you find yourself often using refs to "make things happen" in your app, consider getting more familiar with [top-down data flow](/docs/lifting-state-up.html).
 
-## [Events](/docs/handling-events.html) 
+## 事件 [Events](/docs/handling-events.html) 
 
 Handling events with React elements has some syntactic differences:
 
