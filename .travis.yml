@@ -1,9 +1,0 @@
-language: ruby
-rvm:
-  - 2.2
-install:
-- cd docs/ && bundle install
-script: cd docs/ && bundle exec rake site:deploy --quiet
-env:
-  global:
-    secure: DSUGK6kpVzWd61h/9cOF7CBjP23LnkiedzEvqTT6Kcnl17af+iz1tdrrbRr7o30EBhObj0qZdJGWZe64N8VUZXc8zaUhyExom87UeDsOsqTCeafAQavjRxuKBY+ej7LTJIM1Vbi/Jli/DWqXFrJI1XX5Zs9QmK2PibxUg6c5lV9F684lhYkFy9kzQR8bX6FFIdr/O1+lk9Bb35yvQBBhWovYMGLvrKp49MHz/P1SI8yjwFsofYWuJNmFOOyY0pk/7VSjymX3x+ULMk+xEAw1RmrgGKSuof4IvFBJkqIGXK6s+pRs++Q9Xb2nSUdJ+b5sy4wG5wPMeOSW1Ls78R4dXP8VvvaQgCpFTIOSFqVCMA1e2u6oNMU8jjggS+hFYqNs2voJfE37XxSKg5RTHQa3x9xDENB5R5dVLMfzrcXu/j1wRAB5QwHYnkaG3hYYAId1BIOf0pgpLZvaFagqNR4ZYAPS39H6kNZTTOPRO7eYpA2RzYkW9+o4pQCRst5/Hhay6mZEGyS+X4Ig0TGpAZRRI+eIAY7VbKIVmfPYjvr9wL+wTvP/AQGPxzEh45Uw591bL6TAgFT1CgOVYVF/KouFj4Ptj8Qs9AFvk1H3fS56FFZ/1yJj+Hk01sDvt85y/dOZ3PV719zLc0k6dwOPO8wMVlpLkBziUx+lQwuvHrIpWSo=
