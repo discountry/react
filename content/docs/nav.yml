@@ -62,7 +62,7 @@
       title: 与第三方库协同
     - id: accessibility
       title: 可访问性
-- title: 参考(本节已翻译)
+- title: 参考
   items:
     - id: react-api
       title: React
@@ -85,6 +85,8 @@
       title: Test Renderer
     - id: javascript-environment-requirements
       title: JS Environment Requirements
+    - id: glossary
+      title: 术语表
 - title: 贡献
   items:
   - id: how-to-contribute
