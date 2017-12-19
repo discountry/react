@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
+    working_directory: /tmp/my-project
     steps:
       - checkout
       - restore_cache:
@@ -23,10 +24,14 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:latest
+    working_directory: /tmp/my-project
     steps:
       - run:
+          name: Show directorys
+          command: ls -la
+      - run:
           name: Run deploy scripts
-          command: chmod +x ~/project/.scripts/deploy.sh && ~/project/.scripts/deploy.sh public
+          command: chmod +x .scripts/deploy.sh && .scripts/deploy.sh public
 
 workflows:
   version: 2
