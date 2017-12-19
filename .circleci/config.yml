@@ -26,10 +26,10 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:latest
-    step:
+    steps:
       - run:
-        name: Run deploy scripts
-        command: chmod +x ../scripts/deploy.sh && ../scripts/deploy.sh public
+          name: Run deploy scripts
+          command: chmod +x ../scripts/deploy.sh && ../scripts/deploy.sh public
 
 workflows:
   version: 2
