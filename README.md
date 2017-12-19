@@ -1,4 +1,4 @@
-# React 中文文档翻译计划
+# React 中文文档翻译计划 ![CircleCI](https://circleci.com/gh/discountry/react.svg?&style=shield&circle-token=4fc9b6b97cb8d5d19ad88cdd40ba8d5f1ccdd2b0)
 
 ## Notice
 
