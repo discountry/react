@@ -74,19 +74,19 @@
     - id: react-dom-server
       title: ReactDOMServer
     - id: dom-elements
-      title: DOM Elements
+      title: DOM 元素
     - id: events
-      title: SyntheticEvent
+      title: 合成事件
     - id: test-utils
       title: Test Utilities
     - id: shallow-renderer
-      title: Shallow Renderer
+      title: 浅层渲染
     - id: test-renderer
       title: Test Renderer
     - id: javascript-environment-requirements
-      title: JS Environment Requirements
+      title: JavaScript 环境要求
     - id: glossary
-      title: Glossary
+      title: 术语表
 - title: 贡献
   items:
   - id: how-to-contribute
@@ -100,16 +100,16 @@
 - title: FAQ
   items:
     - id: faq-ajax
-      title: AJAX and APIs
+      title: AJAX 及 APIs
     - id: faq-build
-      title: Babel, JSX, and Build Steps
+      title: Babel, JSX, 及构建过程
     - id: faq-functions
-      title: Passing Functions to Components
+      title: 在组件中使用事件处理函数
     - id: faq-state
-      title: Component State
+      title: 组件状态
     - id: faq-styling
-      title: Styling and CSS
+      title: 样式及 CSS
     - id: faq-structure
-      title: File Structure
+      title: 项目文件结构
     - id: faq-internals
-      title: Virtual DOM and Internals
+      title: Virtual DOM 及内核
