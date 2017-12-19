@@ -3,10 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
-    working_directory: /tmp/my-project
-    filters:
-      branches:
-        only: master
     steps:
       - checkout
       - restore_cache:
@@ -24,6 +20,25 @@ jobs:
       - run:
           name: Gatsby build site
           command: yarn build
+  deploy:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - run:
+          name: Show directorys
+          command: ls -la
       - run:
           name: Run deploy scripts
-          command: chmod +x .scripts/deploy.sh && .scripts/deploy.sh public
+          command: chmod +x /home/circleci/project/.scripts/deploy.sh && /home/circleci/project/.scripts/deploy.sh public
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
