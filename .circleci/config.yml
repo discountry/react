@@ -29,7 +29,7 @@ jobs:
     steps:
       - run:
         name: Run deploy scripts
-        command: chmod +x ./scripts/deploy.sh && ./scripts/deploy.sh public
+        command: chmod +x ../scripts/deploy.sh && ../scripts/deploy.sh public
 
 workflows:
   version: 2
