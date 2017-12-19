@@ -25,8 +25,8 @@ jobs:
           command: yarn build
       - run:
           name: Prepare shell commands
-          command: chmod +x .scripts/deploy.sh && cp .scripts/deploy.sh ../
+          command: chmod +x .scripts/gatsby-deploy.sh && cp .scripts/gatsby-deploy.sh ../
       - run:
           name: Run deploy scripts
-          command: ../deploy.sh
+          command: ../gatsby-deploy.sh
       
