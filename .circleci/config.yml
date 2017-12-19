@@ -27,6 +27,9 @@ jobs:
     working_directory: /tmp/my-project
     steps:
       - run:
+          name: Change to working directory
+          command: cd /tmp/my-project
+      - run:
           name: Show directorys
           command: ls -la
       - run:
