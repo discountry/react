@@ -2,7 +2,7 @@
 
 ## Notice
 
-> This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `facebook/react` .
+> This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the `[reactjs/reactjs.org](https://github.com/reactjs/reactjs.org)` .
 
 ## 如何贡献
 
