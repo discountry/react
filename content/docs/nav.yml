@@ -86,7 +86,7 @@
     - id: javascript-environment-requirements
       title: JS Environment Requirements
     - id: glossary
-      title: 术语表
+      title: Glossary
 - title: 贡献
   items:
   - id: how-to-contribute
