@@ -26,7 +26,7 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:latest
-    steps:
+    step:
       - run:
         name: Run deploy scripts
         command: chmod +x ../scripts/deploy.sh && ../scripts/deploy.sh public
