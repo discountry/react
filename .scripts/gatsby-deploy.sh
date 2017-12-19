@@ -8,7 +8,7 @@ git checkout gh-pages
 rm -rf *
 cp -r ../public/* ./
 git add -A
-git commit -m "update docs"
+git commit -m "update docs at $(date)"
 git push -u origin gh-pages
 rm -rf ../public
 
