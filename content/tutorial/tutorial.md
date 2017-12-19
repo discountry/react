@@ -72,11 +72,6 @@ redirect_from:
 
 如果你遇到了任何困难，可以在 [community support resources](https://facebook.github.io/community/support.html) 寻求帮助。 加入我们的 [Reactiflux chat](/community/support.html#reactiflux-chat) 也是一个很不错的选择。如果通过上述方式还是解决不了你的问题，你也可以给我们提一个 issue.
 
-> **译者补充资源：**
-> 
-> * [从零学习React技术栈](https://zhuanlan.zhihu.com/reactjs) 
-> * [React China](http://react-china.org/)
-
 废话不多说，我们开始动手编码吧！
 
 ## 总览
@@ -1114,3 +1109,5 @@ class Game extends React.Component {
 > 译者注：如果你在实现上述功能时遇到了问题，也可以参考[React井字棋游戏完整功能示例](https://codepen.io/discountry/pen/ENrZzV)。
 
 通过这一篇教程，我们大概了解了 React 当中包含 元素、组件、props、state 在内的一些概念。想要更深入地了解每一个关键概念，你可以继续阅读 [文档](/docs/hello-world.html)。想要更详细地了解 React 组件，可以查阅 [`React.Component` API 参考](/docs/react-component.html)。
+
+

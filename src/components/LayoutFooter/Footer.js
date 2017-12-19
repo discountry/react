@@ -2,9 +2,8 @@
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * @emails react-core
+ * @flow
  */
-
-'use strict';
 
 import Container from 'components/Container';
 import ExternalFooterLink from './ExternalFooterLink';
@@ -16,7 +15,7 @@ import {colors, media} from 'theme';
 
 import ossLogoPng from 'images/oss_logo.png';
 
-const Footer = ({layoutHasSidebar = false}) => (
+const Footer = ({layoutHasSidebar = false}: {layoutHasSidebar: boolean}) => (
   <footer
     css={{
       backgroundColor: colors.darker,
@@ -60,18 +59,18 @@ const Footer = ({layoutHasSidebar = false}) => (
             },
           }}>
           <FooterNav layoutHasSidebar={layoutHasSidebar}>
-            <MetaTitle onDark={true}>Docs</MetaTitle>
-            <FooterLink to="/docs/hello-world.html">Quick Start</FooterLink>
+            <MetaTitle onDark={true}>文档</MetaTitle>
+            <FooterLink to="/docs/hello-world.html">快速开始</FooterLink>
             <FooterLink to="/docs/thinking-in-react.html">
-              Thinking in React
+              React 理念
             </FooterLink>
-            <FooterLink to="/tutorial/tutorial.html">Tutorial</FooterLink>
+            <FooterLink to="/tutorial/tutorial.html">入门教程</FooterLink>
             <FooterLink to="/docs/jsx-in-depth.html">
-              Advanced Guides
+              高级指引
             </FooterLink>
           </FooterNav>
           <FooterNav layoutHasSidebar={layoutHasSidebar}>
-            <MetaTitle onDark={true}>Community</MetaTitle>
+            <MetaTitle onDark={true}>社区</MetaTitle>
             <ExternalFooterLink
               href="http://stackoverflow.com/questions/tagged/reactjs"
               target="_blank"
@@ -82,13 +81,13 @@ const Footer = ({layoutHasSidebar = false}) => (
               href="https://discuss.reactjs.org"
               target="_blank"
               rel="noopener">
-              Discussion Forum
+              Discussion 论坛
             </ExternalFooterLink>
             <ExternalFooterLink
               href="https://discord.gg/0ZcbPKXt5bZjGY5n"
               target="_blank"
               rel="noopener">
-              Reactiflux Chat
+              Reactiflux 聊天室
             </ExternalFooterLink>
             <ExternalFooterLink
               href="https://www.facebook.com/react"
@@ -104,27 +103,19 @@ const Footer = ({layoutHasSidebar = false}) => (
             </ExternalFooterLink>
           </FooterNav>
           <FooterNav layoutHasSidebar={layoutHasSidebar}>
-            <MetaTitle onDark={true}>Resources</MetaTitle>
+            <MetaTitle onDark={true}>参考资料</MetaTitle>
             <FooterLink to="/community/conferences.html">
-              Conferences
+              会议
             </FooterLink>
-            <FooterLink to="/community/videos.html">Videos</FooterLink>
-            <ExternalFooterLink
-              href="https://github.com/facebook/react/wiki/Examples"
-              target="_blank"
-              rel="noopener">
-              Examples
-            </ExternalFooterLink>
-            <ExternalFooterLink
-              href="https://github.com/facebook/react/wiki/Complementary-Tools"
-              target="_blank"
-              rel="noopener">
-              Complementary Tools
-            </ExternalFooterLink>
+            <FooterLink to="/community/videos.html">视频</FooterLink>
+            <FooterLink to="/community/examples.html">示例</FooterLink>
+            <FooterLink to="/community/debugging-tools.html">
+              开发工具
+            </FooterLink>
           </FooterNav>
           <FooterNav layoutHasSidebar={layoutHasSidebar}>
-            <MetaTitle onDark={true}>More</MetaTitle>
-            <FooterLink to="/blog/">Blog</FooterLink>
+            <MetaTitle onDark={true}>其他</MetaTitle>
+            <FooterLink to="/blog/">博客</FooterLink>
             <ExternalFooterLink
               href="https://github.com/facebook/react"
               target="_blank"
@@ -138,7 +129,7 @@ const Footer = ({layoutHasSidebar = false}) => (
               React Native
             </ExternalFooterLink>
             <FooterLink to="/acknowledgements.html">
-              Acknowledgements
+              致谢
             </FooterLink>
           </FooterNav>
         </div>

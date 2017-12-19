@@ -4,11 +4,9 @@
  * @emails react-core
  */
 
-'use strict';
-
 import React from 'react';
 
-const ExternalLinkSvg = ({cssProps = {}}) => (
+const ExternalLinkSvg = ({cssProps = {}}: {cssProps: Object}) => (
   <svg
     x="0px"
     y="0px"

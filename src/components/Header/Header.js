@@ -2,14 +2,15 @@
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * @emails react-core
+ * @flow
  */
-
-'use strict';
 
 import React from 'react';
 import {colors, fonts} from 'theme';
 
-const Header = ({children}) => (
+import type {Node} from 'react';
+
+const Header = ({children}: {children: Node}) => (
   <h1
     css={{
       color: colors.dark,

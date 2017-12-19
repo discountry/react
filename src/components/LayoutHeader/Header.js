@@ -2,9 +2,8 @@
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * @emails react-core
+ * @flow
  */
-
-'use strict';
 
 import Container from 'components/Container';
 import HeaderLink from './HeaderLink';
@@ -13,10 +12,11 @@ import React from 'react';
 import {colors, fonts, media} from 'theme';
 import {version} from 'site-constants';
 import ExternalLinkSvg from 'templates/components/ExternalLinkSvg';
+import DocSearch from './DocSearch';
 
 import logoSvg from 'icons/logo.svg';
 
-const Header = ({location}) => (
+const Header = ({location}: {location: Location}) => (
   <header
     css={{
       backgroundColor: colors.darker,
@@ -47,6 +47,12 @@ const Header = ({location}) => (
             marginRight: 10,
             height: '100%',
             alignItems: 'center',
+            color: colors.brand,
+
+            ':focus': {
+              outline: 0,
+              color: colors.white,
+            },
 
             [media.greaterThan('small')]: {
               width: 'calc(100% / 6)',
@@ -59,7 +65,7 @@ const Header = ({location}) => (
           <img src={logoSvg} alt="" height="20" />
           <span
             css={{
-              color: colors.brand,
+              color: 'inherit',
               marginLeft: 10,
               fontWeight: 700,
               fontSize: 20,
@@ -94,6 +100,7 @@ const Header = ({location}) => (
             WebkitOverflowScrolling: 'touch',
             height: '100%',
             width: '60%',
+
             [media.size('xsmall')]: {
               flexGrow: '1',
               width: 'auto',
@@ -108,92 +115,27 @@ const Header = ({location}) => (
           }}>
           <HeaderLink
             isActive={location.pathname.includes('/docs/')}
-            title="Docs"
+            title="文档"
             to="/docs/hello-world.html"
           />
           <HeaderLink
             isActive={location.pathname.includes('/tutorial/')}
-            title="Tutorial"
+            title="教程"
             to="/tutorial/tutorial.html"
           />
           <HeaderLink
             isActive={location.pathname.includes('/community/')}
-            title="Community"
+            title="社区"
             to="/community/support.html"
           />
           <HeaderLink
             isActive={location.pathname.includes('/blog')}
-            title="Blog"
+            title="博客"
             to="/blog/"
           />
         </nav>
 
-        <form
-          css={{
-            display: 'flex',
-            flex: '0 0 auto',
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingLeft: '0.5rem',
-            paddingRight: '0.5rem',
-
-            [media.lessThan('small')]: {
-              justifyContent: 'flex-end',
-            },
-            [media.lessThan('large')]: {
-              marginRight: 10,
-            },
-            [media.between('small', 'medium')]: {
-              width: 'calc(100% / 3)',
-            },
-            [media.between('medium', 'xlarge')]: {
-              width: 'calc(100% / 6)',
-            },
-            [media.greaterThan('small')]: {
-              minWidth: 120,
-            },
-          }}>
-          <input
-            css={{
-              appearance: 'none',
-              background: 'transparent',
-              border: 0,
-              color: colors.white,
-              fontSize: 18,
-              fontWeight: 300,
-              fontFamily: 'inherit',
-              position: 'relative',
-              paddingLeft: '24px',
-              backgroundImage: 'url(/search.svg)',
-              backgroundSize: '16px 16px',
-              backgroundRepeat: 'no-repeat',
-              backgroundPositionY: 'center',
-              backgroundPositionX: 'left',
-
-              [media.lessThan('large')]: {
-                fontSize: 16,
-              },
-              [media.greaterThan('small')]: {
-                width: '100%',
-              },
-              [media.lessThan('small')]: {
-                width: '16px',
-                transition: 'width 0.2s ease, padding 0.2s ease',
-                paddingLeft: '16px',
-
-                ':focus': {
-                  paddingLeft: '24px',
-                  width: '8rem',
-                  outline: 'none',
-                },
-              },
-            }}
-            id="algolia-doc-search"
-            type="search"
-            placeholder="Search docs"
-            aria-label="Search docs"
-          />
-        </form>
+        <DocSearch />
 
         <div
           css={{
@@ -207,10 +149,18 @@ const Header = ({location}) => (
           <a
             css={{
               padding: '5px 10px',
-              backgroundColor: colors.lighter,
-              borderRadius: 15,
               whiteSpace: 'nowrap',
               ...fonts.small,
+
+              ':hover': {
+                color: colors.brand,
+              },
+
+              ':focus': {
+                outline: 0,
+                backgroundColor: colors.lighter,
+                borderRadius: 15,
+              },
             }}
             href="https://github.com/facebook/react/releases"
             target="_blank"
@@ -223,8 +173,15 @@ const Header = ({location}) => (
               marginLeft: 10,
               whiteSpace: 'nowrap',
               ...fonts.small,
+
               ':hover': {
                 color: colors.brand,
+              },
+
+              ':focus': {
+                outline: 0,
+                backgroundColor: colors.lighter,
+                borderRadius: 15,
               },
             }}
             href="https://github.com/facebook/react/"

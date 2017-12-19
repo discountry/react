@@ -4,14 +4,10 @@
  * @emails react-core
  */
 
-'use strict';
-
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Remarkable from 'remarkable';
-// TODO: switch back to the upstream version of react-live
-// once https://github.com/FormidableLabs/react-live/issues/37 is fixed.
-import {LiveEditor, LiveProvider} from '@gaearon/react-live';
+import {LiveEditor, LiveProvider} from 'react-live';
 import {colors, media} from 'theme';
 import MetaTitle from 'templates/components/MetaTitle';
 
@@ -44,7 +40,29 @@ class CodeEditor extends Component {
 
   render() {
     const {children} = this.props;
-    const {compiledES6, code, error, showJSX} = this.state;
+    const {
+      compiledES6,
+      code,
+      error,
+      showBabelErrorMessage,
+      showJSX,
+    } = this.state;
+
+    let errorMessage;
+    if (showBabelErrorMessage) {
+      errorMessage = (
+        <span>
+          Babel could not be loaded.
+          <br />
+          <br />
+          This can be caused by an ad blocker. If you're using one, consider
+          adding reactjs.org to the whitelist so the live code examples will
+          work.
+        </span>
+      );
+    } else if (error != null) {
+      errorMessage = error.message;
+    }
 
     return (
       <LiveProvider code={showJSX ? code : compiledES6} mountStylesheet={false}>
@@ -197,7 +215,7 @@ class CodeEditor extends Component {
                     color: colors.error,
                     padding: 10,
                   }}>
-                  {error.message}
+                  {errorMessage}
                 </pre>
               </div>
             )}
@@ -304,9 +322,14 @@ class CodeEditor extends Component {
     } catch (error) {
       console.error(error);
 
+      // Certain ad blockers (eg Fair AdBlocker) prevent Babel from loading.
+      // If we suspect this is the case, we can show a more helpful error.
+      const showBabelErrorMessage = !window.Babel;
+
       return {
         compiled: null,
         error,
+        showBabelErrorMessage,
       };
     }
   }
