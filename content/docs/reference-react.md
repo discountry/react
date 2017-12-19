@@ -11,7 +11,6 @@ redirect_from:
   - "docs/top-level-api-ja-JP.html"
   - "docs/top-level-api-ko-KR.html"
   - "docs/top-level-api-zh-CN.html"
-  - "docs/glossary.html"
 ---
 
 `react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些高阶API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'` 。如果你使用ES5，你可以使用 `var React = require('react')` 。
