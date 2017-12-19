@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "bugs": {
-    "url": "https://github.com/reactjs/reactjs.org"
+    "url": "https://github.com/discountry/react"
   },
   "resolutions": {
     "gatsby/graphql": "0.10.5",
@@ -60,7 +60,7 @@
   "engines": {
     "node": ">=8.4.0"
   },
-  "homepage": "https://reactjs.org/",
+  "homepage": "https://doc.react-china.org/",
   "keywords": [
     "gatsby"
   ],
@@ -68,7 +68,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reactjs/reactjs.org.git"
+    "url": "git+https://github.com/discountry/react.git"
   },
   "scripts": {
     "build": "gatsby build",
