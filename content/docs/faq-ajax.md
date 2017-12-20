@@ -89,28 +89,28 @@ class MyComponent extends React.Component {
 
 ```js{19}
 class PostsFetch extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        posts: []
-      }
+  constructor(props) {
+    super(props)
+    this.state = {
+      posts: []
     }
-    
-    componentDidMount() {
-        this.serverRequest = axios.get('/api')
-          .then(posts => {
-              this.setState({
-              posts
-          })
+  }
+  
+  componentDidMount() {
+    this.serverRequest = axios.get('/api')
+      .then(posts => {
+        this.setState({
+          posts
       })
-    }
-    
-    componentWillUnmount() {
-      this.serverRequest.abort()
-    }
-    
-    render() {
-      return <PostList posts={this.state.posts} />
-    }
+    })
+  }
+  
+  componentWillUnmount() {
+    this.serverRequest.abort()
+  }
+  
+  render() {
+    return <PostList posts={this.state.posts} />
+  }
 }
 ```
