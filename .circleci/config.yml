@@ -3,9 +3,9 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
-    filters:
-      branches:
-        only: master
+    branches:
+      only:
+        - master
     steps:
       - add_ssh_keys:
           fingerprints:
