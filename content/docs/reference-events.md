@@ -80,6 +80,7 @@ React标准化了事件，使其在不同的浏览器中拥有一致的属性。
 - [Image Events](#image-events)
 - [Animation Events](#animation-events)
 - [Transition Events](#transition-events)
+- [Other Events](#other-events)
 
 ***
 ## 参考
@@ -331,5 +332,15 @@ onTransitionEnd
 string propertyName
 string pseudoElement
 float elapsedTime
+```
+
+* * *
+
+### Other Events
+
+事件名:
+
+```
+onToggle
 ```
 
