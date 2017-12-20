@@ -86,3 +86,31 @@ class MyComponent extends React.Component {
 ### 取消 AJAX 请求
 
 需要注意的是，如果组件在 AJAX 请求完成之前被卸载了，那么你会在浏览器的控制面板上看到一条警告：`cannot read property 'setState' of undefined`。如果这对你来说是个问题的话，你可以追踪未完成的 AJAX 请求并在 `componentWillUnmount` 生命周期方法内将它们取消。
+
+```js{19}
+class PostsFetch extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        posts: []
+      }
+    }
+    
+    componentDidMount() {
+        this.serverRequest = axios.get('/api')
+          .then(posts => {
+              this.setState({
+              posts
+          })
+      })
+    }
+    
+    componentWillUnmount() {
+      this.serverRequest.abort()
+    }
+    
+    render() {
+      return <PostList posts={this.state.posts} />
+    }
+}
+```
