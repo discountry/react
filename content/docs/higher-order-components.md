@@ -126,7 +126,7 @@ const BlogPostWithSubscription = withSubscription(
 
 当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` props属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
 
-```js
+```js{31}
 // 函数接受一个组件参数……
 function withSubscription(WrappedComponent, selectData) {
   // ……返回另一个新组件……
@@ -169,7 +169,7 @@ function withSubscription(WrappedComponent, selectData) {
 
 因为 `withSubscription` 就是一个普通函数，你可以添加任意数量的参数。例如，你或许会想使 `data` 属性可配置化，使高阶组件和包裹组件进一步隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源的参数。这些都可以实现，因为高阶组件可以完全控制新组件的定义。
 
-和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于props属性的。只要高级组件向包裹组件提供相同的props属性，就可以轻松的将一个高阶组件转换成不同的高阶组件。例如，如果要改变数据获取库，这就非常有用。
+和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于 props 属性的。这就使为组件切换一个 HOC 变得非常轻松，只要保证备选的几种高级组件向包裹组件提供是相同类型的 props 属性即可。就像上述这个例子中，在为组件切换数据源时，就会显得非常有用。
 
 ## 不要改变原始组件，使用组合
 
