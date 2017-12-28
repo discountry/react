@@ -161,7 +161,7 @@ ReactDOM.render(
 );
 ```
 
-如果你在使用像[transform-class-properties](https://babeljs.io/docs/plugins/transform-class-properties/) 的Babel 转换器，你也可以在React 组件类中声明`defaultProps` 作为静态属性。这个语法还没有最终通过，在浏览器中需要一步编译工作。更多信息，查看[类字段提议](https://github.com/tc39/proposal-class-fields)。
+如果你在使用像 [transform-class-properties](https://babeljs.io/docs/plugins/transform-class-properties/) 的 Babel 转换器，你也可以在React 组件类中声明 `defaultProps` 作为静态属性。这个语法还没有最终通过，在浏览器中需要一步编译工作。更多信息，查看[类字段提议](https://github.com/tc39/proposal-class-fields)。
 
 ```javascript
 class Greeting extends React.Component {
