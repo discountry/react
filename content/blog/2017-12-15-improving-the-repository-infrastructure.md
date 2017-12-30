@@ -358,7 +358,7 @@ type Check<_X, Y: _X, X: Y = _X> = null;
 
 将变更迁入到稳定的 `master` 后，我们创建了一个新的 [发布流程清单](https://github.com/facebook/react/issues/10620)。尽管比之前的环节更简单，这仍然包含了大量的步骤且遗忘了一个可能会导致一次异常的发布。
 
-为解决这一问题，我们创建了一个新的 [自动地发布流程](https://github.com/facebook/react/pull/11223)，其[更容易使用](https://github.com/facebook/react/tree/master/scripts/release#react-release-script)并包含了几项构建检查以确保我们发布了一次有效的构建。新的流程被分隔为两步：_构建_ 和_发布_。这是你第一次运行的样子：
+为解决这一问题，我们创建了一个新的 [自动地发布流程](https://github.com/facebook/react/pull/11223)，其[更容易使用](https://github.com/facebook/react/tree/master/scripts/release#react-release-script)并包含了几项构建检查以确保我们发布了一次有效的构建。新的流程被分隔为两步：_构建_ 和 _发布_。这是你第一次运行的样子：
 
 ![Release Script overview](../images/blog/release-script-build-overview.png)
 
