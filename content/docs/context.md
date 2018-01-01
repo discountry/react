@@ -160,7 +160,7 @@ const BasicExample = () => (
 const PropTypes = require('prop-types');
 
 const Button = ({children}, context) =>
-  <button style={{'{{'}}background: context.color}}>
+  <button style={{background: context.color}}>
     {children}
   </button>;
 
