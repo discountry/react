@@ -321,7 +321,7 @@ render() {
 }
 ```
 
-### JavsScript 表达式
+### JavaScript 表达式
 
 你可以将任何 `{}` 包裹的 JavaScript 表达式作为子代传递。例如，下面这些表达式是等价的：
 
