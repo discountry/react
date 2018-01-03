@@ -61,7 +61,7 @@ Flow 通过使用特殊的语法为类型注释扩展了 JavaScript 语言。 �
 
 #### Create React App
 
-如果你的项目是使用 [Create React App](https://github.com/facebookincubator/create-react-app) 建立的，恭喜！ Flow 朱时已经被默认剥离，所以在这一步你不需要做任何事情。
+如果你的项目是使用 [Create React App](https://github.com/facebookincubator/create-react-app) 建立的，恭喜！ Flow 此时已经被默认剥离，所以在这一步你不需要做任何事情。
 
 #### Babel
 
