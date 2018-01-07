@@ -265,7 +265,7 @@ function App2() {
 <div>This is valid HTML &amp; JSX at the same time.</div>
 ```
 
-JSX 会移除行空行和开始和结尾处的空格。标签邻近的新行也会被移除，字符串常量内部的换行会被压缩成一个空格，所以下面这些都等价：
+JSX 会移除空行和开始与结尾处的空格。标签邻近的新行也会被移除，字符串常量内部的换行会被压缩成一个空格，所以下面这些都等价：
 
 ```js
 <div>Hello World</div>
