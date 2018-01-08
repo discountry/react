@@ -11,7 +11,7 @@ redirect_from:
 permalink: docs/refs-and-the-dom.html
 ---
 
-在典型的 React 数据流中, [属性（props）](/docs/components-and-props.html)是父组件与子代交互的唯一方式。要修改子组件，你需要通用新的 props 重新渲染它。但是，某些情况下你需要在典型数据流外强制修改子代。要修改的子代可以是 React 组件实例，也可以是 DOM 元素。对于这两种情况，React 提供了解决办法。
+在典型的 React 数据流中, [属性（props）](/docs/components-and-props.html)是父组件与子代交互的唯一方式。要修改子组件，你需要使用新的 props 重新渲染它。但是，某些情况下你需要在典型数据流外强制修改子代。要修改的子代可以是 React 组件实例，也可以是 DOM 元素。对于这两种情况，React 提供了解决办法。
 
 ### 何时使用 Refs
 
