@@ -9,9 +9,9 @@ permalink: docs/glossary.html
 
 ## 单页面应用 Single-page Application
 
-单页面应用，会加载应用程序运行所需的单个HTML页面和所有必需的资源（如JavaScript和CSS）。 之后任何与页面或后续页面的交互都不需要再往返于服务器，即页面不会再被重新加载。
+单页面应用，第一次会加载应用程序运行所需的单个HTML页面和所有必需的资源（如JavaScript和CSS）。 之后任何与页面或后续页面的交互都不需要再往返于服务器，即页面不会再被重新加载。
 
-尽管你可以通过React构建一个单页面应用，但对于React来说并不是必需的。 React也可以只用于现有网站的一小部分以增加交互性。 用React编写的代码可以和服务端渲染标记（如PHP）或其他客户端库完美兼容。 事实上，React在Facebook中也是这样使用的。
+尽管你可以通过React构建一个单页面应用，但单页面应用对于React而言并不是必需的。 React也可以只用于现有网站中的一小部分以增加交互性。 用React编写的代码可以和服务端渲染标记（如PHP）或其他客户端库完美兼容。 事实上，React在Facebook中也是这样使用的。
 
 ## ES6, ES2015, ES2016等
 
@@ -23,11 +23,11 @@ JavaScript编译器用于转换JavaScript代码，并用其它格式返回JavaSc
 
 ## 打包工具 Bundlers
 
-开发中将JavaScript和CSS代码编写为单独的模块（通常为数百个），打包工具将它们组合成为浏览器更好地优化的几个文件。[Webpack](https://webpack.js.org/)和[Browserify](http://browserify.org/)是在React应用程序中常用的打包工具。
+开发中将JavaScript和CSS代码编写为单独的模块（通常为数百个），打包工具会针对浏览器将它们组合并优化为几个文件。[Webpack](https://webpack.js.org/)和[Browserify](http://browserify.org/)是在React应用程序中常用的打包工具。
 
 ## 包管理工具 Package Managers
 
-包管理工具允许你通过依赖项来管理项目。[npm](https://www.npmjs.com/) and [Yarn](http://yarnpkg.com/)是React应用程序中常用的包管理工具。它们都是使用相同npm包注册表的客户端。
+包管理工具允许你通过依赖项来管理项目。[npm](https://www.npmjs.com/) 和 [Yarn](http://yarnpkg.com/)是React应用程序中常用的包管理工具。它们都是使用相同npm包注册表的客户端。
 
 ## CDN
 
@@ -35,9 +35,9 @@ CDN即内容分发网络。 CDN从全球各地的服务器网络提供静态内�
 
 ## JSX
 
-JSX是一种JavaScript的语法扩展。JSX与模板语言相似，但它具有JavaScript的全部功能。JSX会被编译为`React.createElement()`方法调用，将返回名为“React元素”的普通JavaScript对象。JSX的基本教程参见[这里](/docs/introducing-jsx.html)，更多高级指引参见[这里](/docs/jsx-in-depth.html)。
+JSX是一种JavaScript的语法扩展。JSX与模板语言相似，但它具有JavaScript的全部功能。JSX会被编译为`React.createElement()`方法调用，将返回名为“React elements”的普通JavaScript对象。JSX的基本教程参见[这里](/docs/introducing-jsx.html)，更多高级指引参见[这里](/docs/jsx-in-depth.html)。
 
-React DOM使用属性名称使用驼峰法代替HTML属性名称。例如，`tabindex`在JSX中写作`tabIndex`。由于`class`是JavaScript中的保留字，属性`class`被写为`className`：
+React DOM使用属性名称使用驼峰法代替HTML属性名称。例如，`tabindex`在JSX中写作`tabIndex`。由于`class`是JavaScript中的保留字，`class`属性用`className`替代：
 
 ```js
 const name = 'Clementine';
@@ -49,7 +49,7 @@ ReactDOM.render(
 
 ## 元素 [Elements](/docs/rendering-elements.html)
 
-React元素是React应用程序的最小单位。初学者很可能把元素的定义和一个内涵更广的定义“组件”给搞混了。元素用来描述界面上的任何东西。 React 元素都是immutable不可变的。
+React元素是React应用程序的最小单位。初学者很可能把元素的定义和定义内涵更广的“组件”给搞混了。元素用来描述界面上的任何东西。 React 元素都是immutable不可变的。
 
 ```js
 const element = <h1>Hello, world</h1>;
@@ -77,7 +77,7 @@ class Welcome extends React.Component {
 }
 ```
 
-组件可以按照功能分解成不同的部件，并在其他组件中使用。组件可以返回其他组件，数组，字符串或数字。当你的UI中有一部分重复使用了好几次（比如，Button、Panel、Avatar），或者其自身就足够复杂（比如，App、FeedStory、Comment），类似这些都是抽象成一个可复用组件的绝佳选择，这也是一个比较好的做法。 组件名称应始终以大写字母开头 (`<Wrapper/>` **而不是** `<wrapper/>`). 参见 [这里](/docs/components-and-props.html#rendering-a-component)获取更多有关渲染组件的信息。
+组件可以按照功能分解成不同的部件，并在其他组件中使用。组件可以返回其他组件，数组，字符串或数字。当你的UI中有一部分重复使用了好几次（比如，Button、Panel、Avatar），或者其自身就足够复杂（比如，App、FeedStory、Comment），类似这些都是抽象成一个可复用组件的绝佳选择，这也是一个比较好的做法。 组件名称应始终以大写字母开头 (`<Wrapper/>` **而不是** `<wrapper/>`)。参见 [这里](/docs/components-and-props.html#rendering-a-component)获取更多有关渲染组件的信息。
 
 ### [`props`](/docs/components-and-props.html)
 
@@ -120,15 +120,15 @@ class Welcome extends React.Component {
 
 ### 状态 [`state`](/docs/state-and-lifecycle.html#adding-local-state-to-a-class)
 
-当某个组件与其关联的某些数据随时间而改变时，组件中需要使用`state`。例如，`Checkbox`组件气的状态需要转变为`isChecked`，并且`NewsFeed` 组件可能希望追踪其状态中的`fetchedPosts`。
+当某个组件与其关联的某些数据随时间而改变时，组件中需要使用`state`。例如，`Checkbox`组件中的状态需要转变为`isChecked`，或者`NewsFeed` 组件可能希望追踪其状态中的`fetchedPosts`。
 
-`state`和`props`之间最重要的区别是`props`是从父组件传递的，而`state`是由组件本身管理的。组件不能改变其`props`，但可以改变其`state`。 通过使用`this.setState()`。 只有定义为类的组件可以具有状态。
+`state`和`props`之间最重要的区别是`props`是从父组件传递的，而`state`是由组件本身管理的。组件不能改变其`props`，但可以改变`state`。 通过使用`this.setState()`。 只有定义为类的组件才可以具有状态。
 
-对于每一个特定的变化数据，应该只有一个“拥有”它的状态的组件。不要尝试同步两个不同组件的状态。状态分享通过[状态提升](/docs/lifting-state-up.html)最近的父组件来完成，并通过`props`传递给他们。
+对于每一个特定的变化数据，应该只有一个“拥有”它的状态的组件。不要尝试同步两个不同组件的状态。状态分享通过[状态提升](/docs/lifting-state-up.html)至最近的父组件来完成，并通过`props`传递给他们。
 
 ## 生命周期函数 [Lifecycle Methods](/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
 
-生命周期函数是在组件的不同阶段可执行自定义功能的钩子。当组件被创建并插入到DOM中时，可用函数([mounting](/docs/react-component.html#mounting))，组件更新时，以及从DOM卸载或移除组件时可以使用对应的函数。
+生命周期函数是在组件的不同阶段可执行自定义功能的钩子。当组件被创建并插入到DOM中时，可用函数([mounting](/docs/react-component.html#mounting))，组件更新，以及从DOM卸载或移除组件时可以使用对应的生命周期函数。
 
  ## 受控 & 非受控组件 [Controlled](/docs/forms.html#controlled-components) vs. [Uncontrolled Components](/docs/uncontrolled-components.html)
 
@@ -144,7 +144,7 @@ React有两种不同的方法来处理表单输入。
 
 “键值”是创建元素数组时需要包含的特殊字符串属性。键值可以帮助React识别哪些元素被更改，添加或删除。因此你应当给数组中的每一个元素赋予一个确定的标识。
 
-确定的标识键值对于重新渲染很重要，这样React才可以确定何时添加，删除或重新排序元素。不要把类似由`Math.random()`生成的值赋给键值。理想情况下，键值应该对应于来自数据的唯一且稳定的标识符，例如`post.id`。
+确定的标识键值对于重新渲染很重要，这样React才可以确定何时添加，删除或重新排序元素。不要把类似由`Math.random()`生成的值赋给键值。在理想情况下，键值应该对应于来自数据的唯一且稳定的标识符，例如`post.id`。
 
 ## [Refs](/docs/refs-and-the-dom.html)
 
@@ -154,7 +154,7 @@ React支持一个可以附加到任何组件的特殊属性`ref`。`ref`属性�
 
 ## 事件 [Events](/docs/handling-events.html) 
 
-React 元素的事件处理和 DOM元素的很相似。但是有一点语法上的不同:
+React元素的事件处理和DOM元素的很相似。但是有一点语法上的不同:
 
 * React事件绑定属性的命名采用驼峰式写法，而不是小写。
 * 如果采用 JSX 的语法你需要传入一个函数作为事件处理函数，而不是一个字符串(DOM元素的写法)
