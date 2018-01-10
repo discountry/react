@@ -23,7 +23,7 @@ redirect_from: "docs/advanced-performance.html"
 
 最好在开发应用时使用开发模式，部署应用时换为生产模式。
 
-以下是构建生产用应用的流程。
+以下是构建生产应用的流程。
 
 ### Create React App方式
 
