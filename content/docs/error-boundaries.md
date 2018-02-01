@@ -4,7 +4,7 @@ title: Error Boundaries
 permalink: docs/error-boundaries.html
 ---
 
-过去，组件内的 JavaScript 错误常常会破坏 React 内部状态并在下一次渲染时[产生](https://github.com/facebook/react/issues/4026) [加密的](https://github.com/facebook/react/issues/6895) [错误信息](https://github.com/facebook/react/issues/8579)。这些错误总会在应用代码的早起触发，但 React 并没有提供一种方式能够在组件内部优雅地来处理，也不能从错误中恢复。
+过去，组件内的 JavaScript 错误常常会破坏 React 内部状态并在下一次渲染时[产生](https://github.com/facebook/react/issues/4026) [加密的](https://github.com/facebook/react/issues/6895) [错误信息](https://github.com/facebook/react/issues/8579)。这些错误总会在应用代码的早期触发，但 React 并没有提供一种方式能够在组件内部优雅地来处理，也不能从错误中恢复。
 
 
 ## 错误边界介绍
