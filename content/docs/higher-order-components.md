@@ -282,7 +282,7 @@ const ConnectedComment = enhance(CommentList);
 
 ```js
 // 不要这样做……
-const EnhancedComponent = connect(commentSelector)(withRouter(WrappedComponent))
+const EnhancedComponent = withRouter(connect(commentSelector)(WrappedComponent))
 
 // ……你可以使用一个功能组合工具
 // compose(f, g, h) 和 (...args) => f(g(h(...args)))是一样的
