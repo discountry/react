@@ -172,6 +172,13 @@ const Footer = ({layoutHasSidebar = false}: {layoutHasSidebar: boolean}) => (
             }}>
             Copyright © 2017 Facebook Inc.
           </p>
+          <p
+            css={{
+              color: colors.subtleOnDark,
+              paddingTop: 15,
+            }}>
+            <a href="https://docschina.org/" target="_blank">印记中文</a>
+          </p>
         </section>
       </div>
     </Container>
