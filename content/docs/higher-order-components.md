@@ -288,8 +288,8 @@ const EnhancedComponent = withRouter(connect(commentSelector)(WrappedComponent))
 // compose(f, g, h) 和 (...args) => f(g(h(...args)))是一样的
 const enhance = compose(
   // 这些都是单参数的高阶组件
-  connect(commentSelector),
-  withRouter
+  withRouter,
+  connect(commentSelector)
 )
 const EnhancedComponent = enhance(WrappedComponent)
 ```
@@ -301,7 +301,7 @@ const EnhancedComponent = enhance(WrappedComponent)
 
 ## 约定：包装显示名字以便于调试
 
-高价组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个好的名字，确保能够识别出它是由高阶组件创建的新组件还是普通的组件。
+高阶组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个好的名字，确保能够识别出它是由高阶组件创建的新组件还是普通的组件。
 
 最常用的技术就是将包裹组件的名字包装在显示名字中。所以，如果你的高阶组件名字是 `withSubscription`，且包裹组件的显示名字是 `CommentList`，那么就是用 `withSubscription(CommentList)`这样的显示名字：
 
