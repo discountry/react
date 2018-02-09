@@ -139,7 +139,7 @@ class EssayForm extends React.Component {
 </select>
 ```
 
-请注意，Coconut选项最初由于`selected`属性是被选中的。在React中，会在根`select`标签上而不是在当前的`selected`属性上使用`value`属性。
+请注意，Coconut选项最初由于`selected`属性是被选中的。在React中，并不使用之前的`selected`属性，而在根`select`标签上用`value`属性来表示选中项。这在受控组件中更为方便，因为你只需要在一个地方来更新组件。例如：
 
 ```javascript{4,10-12,24}
 class FlavorForm extends React.Component {
