@@ -59,9 +59,9 @@ React提供了一组声明式API以让你不必关心每次更新的变化。这
 当更新`style`时，React同样知道仅更新变更的属性。例如：
 
 ```xml
-<div style={{'{{'}}color: 'red', fontWeight: 'bold'}} />
+<div style={{color: 'red', fontWeight: 'bold'}} />
 
-<div style={{'{{'}}color: 'green', fontWeight: 'bold'}} />
+<div style={{color: 'green', fontWeight: 'bold'}} />
 ```
 
 当在调整两个元素时，React知道仅改变`color`样式而不是`fontWeight`。
