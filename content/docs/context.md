@@ -210,5 +210,4 @@ MediaQuery.childContextTypes = {
 };
 ```
 
-那么问题来了，由于组件更新产生的新的context，如果有一个中间的父组件
-的`shouldComponentUpdate`返回了`false`,那么接下来的子组件中的context是不会被更新的。这么使用context的话，组件就失控了，所以没有一种可靠的方式来更新context。[这篇博客](https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076)很好地解释了为什么这是一个问题，以及如何规避它。
+那么问题来了，由于组件更新产生的新的context，如果有一个中间的父组件的`shouldComponentUpdate`返回了`false`,那么接下来的子组件中的context是不会被更新的。这么使用context的话，组件就失控了，所以没有一种可靠的方式来更新context。[这篇博客](https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076)很好地解释了为什么这是一个问题，以及如何规避它。
