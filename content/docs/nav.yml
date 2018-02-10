@@ -58,6 +58,8 @@
       title: Web Components
     - id: higher-order-components
       title: 高阶组件
+    - id: render-props
+      title: Render Props
     - id: integrating-with-other-libraries
       title: 与第三方库协同
     - id: accessibility
