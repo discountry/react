@@ -64,6 +64,8 @@
       title: 与第三方库协同
     - id: accessibility
       title: 可访问性
+    - id: code-splitting
+      title: Code-Splitting
 - title: 参考
   items:
     - id: react-api
