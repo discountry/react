@@ -1,7 +1,15 @@
+- title: 安装
+  items:
+    - id: try-react
+      title: 试用 React
+    - id: add-react-to-a-new-app
+      title: 使用 React 开发新项目
+    - id: add-react-to-an-existing-app
+      title: 在现有项目中添加 React
+    - id: cdn-links
+      title: CDN 支持
 - title: 快速开始
   items:
-    - id: installation
-      title: 安装
     - id: hello-world
       title: Hello World
     - id: introducing-jsx
