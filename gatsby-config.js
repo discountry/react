@@ -23,7 +23,7 @@ module.exports = {
     'gatsby-plugin-netlify',
     'gatsby-plugin-glamor',
     'gatsby-plugin-react-next',
-    'gatsby-plugin-twitter',
+//     'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-nprogress',
       options: {
