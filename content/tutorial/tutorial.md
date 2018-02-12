@@ -1074,17 +1074,6 @@ class Game extends React.Component {
 
 现在你试着点击每一步棋记录的列表中的一项，棋盘会自动更新到对应项时的棋局状态。
 
-为了实现“悔棋”的功能，也就是说在切换至某一步之后我们能够继续下，我们需要在 `handleClick` 事件触发时去除掉切回棋步后面的所有记录，最简单的办法就是在 `handleClick` 事件的开头使用 `.slice()` 方法去除。
-
-```javascript{2}
-  render() {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
-    const winner = calculateWinner(current.squares);
-
-    // the rest has not changed
-```
-
 ### 总结
 
 现在你已经有了一个功能相当丰富的井字棋游戏：
