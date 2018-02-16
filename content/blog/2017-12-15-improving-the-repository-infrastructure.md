@@ -14,7 +14,7 @@ React 是第一个[完全拥抱](https://github.com/facebook/react/pull/9101)[Pr
 * [使用 Prettier Node API 的](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/prettier/index.js#L71-L77)本地的 [`yarn prettier`](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/package.json#L115) 命令来格式化文件。我们一般在提交变更之前运行。其非常快，因为其仅检查[之前从远程服务器下发的变更文件](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/shared/listChangedFiles.js#L29-L33)。
 * [运行 Prettier](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/prettier/index.js#L79-L90) 脚本是我们[持续集成检查](https://github.com/facebook/react/blob/d906de7f602df810c38aa622c83023228b047db6/scripts/circleci/test_entry_point.sh#L10)的一部分。其不会尝试重写文件，但其仍有可能构建失败若任何文件和 Prettier 输出的文件不同。这确保了除非其已经被完全格式化，否则我们无法合并提交请求。
 
-一部分团队成员也已经将其设置为[编译器集成](https://prettier.io/docs/en/editors.html)。我们对 Preuttier 的体验非常棒，我们也推荐给其他任何写 JavaScript 的团队。
+一部分团队成员也已经将其设置为[编译器集成](https://prettier.io/docs/en/editors.html)。我们对 Prettier 的体验非常棒，我们也推荐给其他任何写 JavaScript 的团队。
 
 ## 重组成单一仓库
 
