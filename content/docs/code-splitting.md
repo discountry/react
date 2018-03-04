@@ -4,15 +4,11 @@ title: Code-Splitting
 permalink: docs/code-splitting.html
 ---
 
-## Bundling
+## 打包
 
-Most React apps will have their files "bundled" using tools like
-[Webpack](https://webpack.js.org/) or [Browserify](http://browserify.org/).
-Bundling is the process of following imported files and merging them into a
-single file: a "bundle". This bundle can then be included on a webpage to load
-an entire app at once.
+大多数 React 应用都会通过类似 [Webpack](https://webpack.js.org/) 或 [Browserify](http://browserify.org/) 构建自己的文件 “包（bundled）”。构建是一个将文件引入并合并到一个单独文件：“包（bundle）” 的环节。该包包含在一个 web  页面上用以立刻加载整个应用。
 
-#### Example
+#### 例子
 
 **App:**
 
@@ -40,44 +36,28 @@ function add(a, b) {
 console.log(add(16, 26)); // 42
 ```
 
-> Note:
+> 注意：
 >
-> Your bundles will end up looking a lot different than this.
+> 你的包最终看起来会和这个有很大的不同。
 
-If you're using [Create React App](https://github.com/facebookincubator/create-react-app), [Next.js](https://github.com/zeit/next.js/), [Gatsby](https://www.gatsbyjs.org/), or a similar tool, you will have a Webpack setup out of the box to bundle your
-app.
+若你正在使用 [Create React App](https://github.com/facebookincubator/create-react-app), [Next.js](https://github.com/zeit/next.js/)、[Gatsby](https://www.gatsbyjs.org/) 或类似工具，你将有一个能够立即对你的应用进行打包的 webpack 配置。
 
-If you aren't, you'll need to setup bundling yourself. For example, see the
-[Installation](https://webpack.js.org/guides/installation/) and
-[Getting Started](https://webpack.js.org/guides/getting-started/) guides on the
-Webpack docs.
+若你未使用，你职责需要自己来进行配置。例如，查看 webpack 文档上的[安装](https://webpack.js.org/guides/installation/)和
+[入门](https://webpack.js.org/guides/getting-started/)指南。
 
-## Code Splitting
+## 代码分隔
 
-Bundling is great, but as your app grows, your bundle will grow too. Especially
-if you are including large third-party libraries. You need to keep an eye on
-the code you are including in your bundle so that you don't accidentally make
-it so large that your app takes a long time to load.
+打包非常棒，但随着你的应用增长，你的代码包也将随之增长。尤其是如果你包含了体积大的第三方库。你需要关注你代码包中所包含的代码以避免体积过大而使得加载时间过长。
 
-To avoid winding up with a large bundle, it's good to get ahead of the problem
-and start "splitting" your bundle.
- [Code-Splitting](https://webpack.js.org/guides/code-splitting/) is a feature
-supported by bundlers like Webpack and Browserify (via
-[factor-bundle](https://github.com/browserify/factor-bundle)) which can create
-multiple bundles that can be dynamically loaded at runtime.
+为了避免清理大体积的代码包，在一开始就解决该问题并开始对代码包进行分割则十分不错。[代码分割](https://webpack.js.org/guides/code-splitting/)是由如 webpack 和 Browserify（通过 [factor-bundle](https://github.com/browserify/factor-bundle)）等打包器支持的一项能够创建多个包并在运行时动态加载的特性。
 
-Code-splitting your app can help you "lazy-load" just the things that are
-currently needed by the user, which can dramatically improve the performance of
-your app. While you haven't reduced the overall amount of code in your app,
-you've avoided loading code that the user may never need, and reduced the amount
-of code needed during the initial load.
+代码分割你的应用能够帮助你“懒加载”当前用户所需要的内容，能够显著地提高你的应用性能。尽管你不用减少你的应用中过多的代码体积，你仍然能够避免加载用户永远不需要的代码，并在初始化时候减少所需加载的代码量。
 
 ## `import()`
 
-The best way to introduce code-splitting into your app is through the dynamic
-`import()` syntax.
+在你的应用中引入代码分割的最佳方式是通过动态 `import()` 语法。
 
-**Before:**
+**之前:**
 
 ```js
 import { add } from './math';
@@ -85,7 +65,7 @@ import { add } from './math';
 console.log(add(16, 26));
 ```
 
-**After:**
+**之后:**
 
 ```js
 import("./math").then(math => {
@@ -93,33 +73,23 @@ import("./math").then(math => {
 });
 ```
 
-> Note:
+> 注意：
 >
-> The dynamic `import()` syntax is a ECMAScript (JavaScript)
-> [proposal](https://github.com/tc39/proposal-dynamic-import) not currently
-> part of the language standard. It is expected to be accepted within the
-> near future.
+> 动态 `imports()` 语法目前是 ECMAScript (JavaScript) [提案](https://github.com/tc39/proposal-dynamic-import) 而不是语言标准。期待其在不远的将来被接纳成为标准的一部分。
 
-When Webpack comes across this syntax, it automatically starts code-splitting
-your app. If you're using Create React App, this is already configured for you
-and you can [start using it](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting) immediately. It's also supported
-out of the box in [Next.js](https://github.com/zeit/next.js/#dynamic-import).
+当 Webpack 解析到该语法时，它会自动地开始进行代码分割。如果你使用 Create React App，该功能已配置好，你已可以[开始使用](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#code-splitting)。[Next.js](https://github.com/zeit/next.js/#dynamic-import) 也已支持该特性而无需再配置(out of box)。
 
-If you're setting up Webpack yourself, you'll probably want to read Webpack's
-[guide on code splitting](https://webpack.js.org/guides/code-splitting/). Your Webpack config should look vaguely [like this](https://gist.github.com/gaearon/ca6e803f5c604d37468b0091d9959269).
+如果你自己配置 Webpack，你可能要阅读下 Webpack [关于代码分割的指南](https://webpack.js.org/guides/code-splitting/)。你的 Webpack 配置应该看起来有点[类似于此](https://gist.github.com/gaearon/ca6e803f5c604d37468b0091d9959269)。
 
-When using [Babel](http://babeljs.io/), you'll need to make sure that Babel can
-parse the dynamic import syntax but is not transforming it. For that you will need [babel-plugin-syntax-dynamic-import](https://yarnpkg.com/en/package/babel-plugin-syntax-dynamic-import).
+当使用 [Babel](http://babeljs.io/) 时，你需要确保 Babel 能够解析动态引入语法而不是将其进行转换。对于这一要求你需要 [babel-plugin-syntax-dynamic-import](https://yarnpkg.com/en/package/babel-plugin-syntax-dynamic-import)。
 
-## Libraries
+## 库
 
 ### React Loadable
 
-[React Loadable](https://github.com/thejameskyle/react-loadable) wraps
-dynamic imports in a nice, React-friendly API for introducing code
-splitting into your app at a given component.
+[React Loadable](https://github.com/thejameskyle/react-loadable) 将动态引入(dynamic import)封装成了一个对 React 友好的 API 来在特定组件下引入代码分割的功能。
 
-**Before:**
+**之前:**
 
 ```js
 import OtherComponent from './OtherComponent';
@@ -129,7 +99,7 @@ const MyComponent = () => (
 );
 ```
 
-**After:**
+**之后:**
 
 ```js
 import Loadable from 'react-loadable';
@@ -144,27 +114,16 @@ const MyComponent = () => (
 );
 ```
 
-React Loadable helps you create
-[loading states](https://github.com/thejameskyle/react-loadable#creating-a-great-loading-component),
-[error states](https://github.com/thejameskyle/react-loadable#loading-error-states),
-[timeouts](https://github.com/thejameskyle/react-loadable#timing-out-when-the-loader-is-taking-too-long),
-[preloading](https://github.com/thejameskyle/react-loadable#preloading), and
-more. It can even help you [server-side render](https://github.com/thejameskyle/react-loadable#------------server-side-rendering) an app with lots of code-splitting.
+React Loadable 帮助你创建[加载状态](https://github.com/thejameskyle/react-loadable#creating-a-great-loading-component)、[错误状态](https://github.com/thejameskyle/react-loadable#loading-error-states)、[超时](https://github.com/thejameskyle/react-loadable#timing-out-when-the-loader-is-taking-too-long)、[预加载](https://github.com/thejameskyle/react-loadable#preloading)等等。它甚至能通过大量的代码分割帮助进行[服务端渲染](https://github.com/thejameskyle/react-loadable#------------server-side-rendering)。
 
-## Route-based code splitting
+## 基于路由的代码分隔
 
-Deciding where in your app to introduce code splitting can be a bit tricky. You
-want to make sure you choose places that will split bundles evenly, but won't
-disrupt the user experience.
+决定在哪引入代码分割则需要一些技巧。你需要确保选择的位置能够均匀地分割代码包而不会影响用户体验。
 
-A good place to start is with routes. Most people on the web are used to
-page transitions taking some amount of time to load. You also tend to be
-re-rendering the entire page at once so your users are unlikely to be
-interacting with other elements on the page at the same time.
+一个不错的位置是从路由开始。大多数网络用户习惯于花费些时间在页面交互。你也可以立刻重渲整个页面这样你的用户则无法与页面的其他元素进行交互。
 
-Here's an example of how to setup route-based code splitting into your app using
-libraries like [React Router](https://reacttraining.com/react-router/) and
-[React Loadable](https://github.com/thejameskyle/react-loadable).
+这有一个使用类似 [React Router](https://reacttraining.com/react-router/) 和
+[React Loadable](https://github.com/thejameskyle/react-loadable) 库的关于如何配置基于路由的代码分割的例子。
 
 ```js
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
