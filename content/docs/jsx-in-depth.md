@@ -208,7 +208,7 @@ function NumberDescriber(props) {
 <MyComponent message={'hello world'} />
 ```
 
-当你传递一个字符串常量时，它不会对其进行 HTML 转义，所以下面两个 JSX 表达式是相同的：
+当传递一个字符串常量时，该值会被解析为HTML非转义字符串，所以下面两个 JSX 表达式是相同的：
 
 ```js
 <MyComponent message="&lt;3" />
