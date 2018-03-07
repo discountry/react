@@ -142,7 +142,7 @@ class LoggingButton extends React.Component {
 
 ## 向事件处理程序传递参数
 
-通常我们会为事件处理程序传递额外的参数。例如，若是 `id` 是一个行 id，以下两种方式都可以向事件处理程序传递参数：
+通常我们会为事件处理程序传递额外的参数。例如，若是 `id` 是你要删除那一行的 id，以下两种方式都可以向事件处理程序传递参数：
 
 ```js
 <button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
