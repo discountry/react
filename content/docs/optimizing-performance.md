@@ -160,7 +160,7 @@ new webpack.optimize.UglifyJsPlugin()
 
 注意只有生产版本需要这样操作。不要在开发环境中安装`UglifyJsPlugin`和`DefinePlugin`，因为它们会隐藏掉有用的React警告并使构建过程更慢。
 
-## 使用Chrome Timeline归档组件
+## 使用 Chrome Performance 归档组件
 
 在**开发**模式下， 在支持的浏览器内使用性能工具可以直观的了解组件何时挂载，更新和卸载。例如：
 
@@ -170,13 +170,15 @@ Chrome浏览器内：
 
 1. 在项目地址栏内添加查询字符串 `?react_perf`（例如， `http://localhost:3000/?react_perf`）。
 
-2. 打开Chrome开发工具**[Timeline](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)** 按tab键然后选**Record**.
+2. 打开Chrome开发工具**[Performance](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool)** 标签页点击**Record**.
 
 3. 执行你想要分析的动作。不要记录超过20s，不然Chrome可能会挂起。
 
 4. 停止记录。
 
 5. React事件将会被归类在 **User Timing**标签下。
+
+更多的详细操作，请参考 [BenSchwarz 的这篇文章](https://building.calibreapp.com/debugging-react-performance-with-react-16-and-chrome-devtools-c90698a522ad)。
 
 注意**由于这些数字是相对的，因此组件在生产版本中会运行更快**。然而，这也能够帮助你了解何时会有无关的组件被错误的更新，以及你的组件更新的深度和频率。
 
