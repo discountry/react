@@ -119,7 +119,7 @@ const CommentListWithSubscription = withSubscription(
 const BlogPostWithSubscription = withSubscription(
   BlogPost,
   (DataSource, props) => DataSource.getBlogPost(props.id)
-});
+);
 ```
 
 第一个参数是包裹组件（wrapped component），第二个参数会从 `DataSource`和当前props（译者注：根据代码示例，这里应该是高阶组件的props属性）属性中检索应用需要的数据。
