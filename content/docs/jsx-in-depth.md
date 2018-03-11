@@ -75,7 +75,7 @@ function WarningButton() {
 
 ### 点表示法
 
-你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 `MyComponents.DataPicker` 的组件，你可以直接在 JSX 中使用它：
+你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 `MyComponents.DatePicker` 的组件，你可以直接在 JSX 中使用它：
 
 ```js{10}
 import React from 'react';
