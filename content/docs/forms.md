@@ -25,7 +25,7 @@ HTML表单元素与React中的其他DOM元素有所不同,因为表单元素生�
 
 ## 受控组件
 
-在HTML当中，像`<input>`,`<textarea>`, 和 `<select>`这类表单元素会维持自身状态，并根据用户输入进行更新。但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 [`setState()`](/docs/react-component.html#setstate). 方法进行更新.
+在HTML当中，像`<input>`,`<textarea>`, 和 `<select>`这类表单元素会维持自身状态，并根据用户输入进行更新。但在React中，可变的状态通常保存在组件的状态属性中，并且只能用 [`setState()`](/docs/react-component.html#setstate) 方法进行更新。
 
 我们通过使react变成一种单一数据源的状态来结合二者。React负责渲染表单的组件仍然控制用户后续输入时所发生的变化。相应的，其值由React控制的输入表单元素称为“受控组件”。
 
@@ -64,7 +64,7 @@ class NameForm extends React.Component {
 }
 ```
 
-[在 CodePen 上尝试.](https://codepen.io/gaearon/pen/VmmPgp?editors=0010)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/VmmPgp?editors=0010)
 
 由于 `value` 属性是在我们的表单元素上设置的，因此显示的值将始终为 React数据源上`this.state.value` 的值。由于每次按键都会触发 `handleChange` 来更新当前React的state，所展示的值也会随着不同用户的输入而更新。
 
@@ -179,7 +179,7 @@ class FlavorForm extends React.Component {
 }
 ```
 
-[在 CodePen 上尝试.](https://codepen.io/gaearon/pen/JbbEzX?editors=0010)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/JbbEzX?editors=0010)
 
 总之，`<input type="text">`, `<textarea>`, 和 `<select>` 都十分类似 - 他们都通过传入一个`value`属性来实现对组件的控制。
 
@@ -237,7 +237,7 @@ class Reservation extends React.Component {
 }
 ```
 
-[在 CodePen 上尝试.](https://codepen.io/gaearon/pen/wgedvV?editors=0010)
+[在 CodePen 上尝试。](https://codepen.io/gaearon/pen/wgedvV?editors=0010)
 
 注意我们如何使用ES6当中的[计算属性名](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names)语法来更新与给定输入名称相对应的状态键：
 
