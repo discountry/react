@@ -13,7 +13,7 @@ redirect_from:
 
 这部分内容当中，我们会创建一个温度计算器来计算水是否会在给定的温度下烧开。
 
-开始呢，我们先创建一个名为 `BoilingVerdict` 的组件。它会接受 `celsius` 这个温度变量作为它的 prop 属性，最后根据温度判断返回内容：
+开始呢，我们先创建一个名为 `BoilingVerdict` 的组件。它会接受 `celsius` 这个温度变量作为它的 props 属性，最后根据温度判断返回内容：
 
 ```js{3,5}
 function BoilingVerdict(props) {
@@ -308,14 +308,14 @@ class Calculator extends React.Component {
 * 当最开始渲染时，`Calculator`组件把内部的`handleCelsiusChange`方法指定给摄氏输入组件`TemperatureInput`的`onTemperatureChange`方法，并且把`handleFahrenheitChange`方法指定给华氏输入组件`TemperatureInput`的`onTemperatureChange`。两个`Calculator`内部的方法都会在相应输入框被编辑时被调用。
 * 在这些方法内部，`Calculator`组件会让React使用编辑输入的新值和当前输入框的温标来调用`this.setState()`方法来重渲染自身。
 * React会调用`Calculator`组件的`render`方法来识别UI界面的样子。基于当前温度和温标，两个输入框的值会被重新计算。温度转换就是在这里被执行的。
-* 接着React会使用`Calculator`指定的新props来分别调用`TemperatureInput`组件.React也会识别出子组件的UI界面。
+* 接着React会使用`Calculator`指定的新props来分别调用`TemperatureInput`组件，React也会识别出子组件的UI界面。
 * React DOM 会更新DOM来匹配对应的值。我们编辑的输入框获取新值，而另一个输入框则更新经过转换的温度值。
 
 一切更新都是经过同样的步骤，因而输入框能保持同步的。
 
 ## 经验教训
 
-在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。此时，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的父组件中。你应该在应用中保持 [自上而下的数据流](/docs/state-and-lifecycle.html#the-data-flows-down)，而不是尝试在不同组件中同步状态。
+在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。此时，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的父组件中。你应该在应用中保持 [自上而下的数据流](/docs/state-and-lifecycle.html#数据自顶向下流动)，而不是尝试在不同组件中同步状态。
 
 状态提升比双向绑定方式要写更多的“模版代码”，但带来的好处是，你也可以更快地寻找和定位bug的工作。因为哪个组件保有状态数据，也只有它自己能够操作这些数据，发生bug的范围就被大大地减小了。此外，你也可以使用自定义逻辑来拒绝或者更改用户的输入。
 
