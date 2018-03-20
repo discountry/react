@@ -77,7 +77,7 @@ handleChange(event) {
 }
 ```
 
-## textarea标签
+## textarea 标签
 
 在HTML当中，`<textarea>` 元素通过子节点来定义它的文本内容
 
@@ -126,7 +126,7 @@ class EssayForm extends React.Component {
 
 注意`this.state.value`是在构造函数中初始化，这样文本区域就能获取到其中的文本。
 
-## select标签
+## select 标签
 
 在HTML当中，`<select>`会创建一个下拉列表。例如这个HTML就创建了一个下拉列表的原型。
 
@@ -182,6 +182,16 @@ class FlavorForm extends React.Component {
 [在 CodePen 上尝试。](https://codepen.io/gaearon/pen/JbbEzX?editors=0010)
 
 总之，`<input type="text">`, `<textarea>`, 和 `<select>` 都十分类似 - 他们都通过传入一个`value`属性来实现对组件的控制。
+
+## file input 标签
+
+在HTML当中，`<input type="file">` 允许用户从他们的存储设备中选择一个或多个文件以提交表单的方式上传到服务器上, 或者通过 Javascript 的  [File API](https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications)  对文件进行操作 。
+
+```
+<input type="file" />
+```
+
+由于该标签的  `value` 属性是只读的， 所以它是 React 中的一个**非受控组件**。我们会把它和其他非受控组件一起在[后面的章节](https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag)进行详细的介绍。
 
 ## 多个输入的解决方法
 
@@ -260,4 +270,4 @@ this.setState(partialState);
 ## 受控组件的替代方法
 
 有时使用受控组件可能很繁琐，因为您要为数据可能发生变化的每一种方式都编写一个事件处理程序，并通过一个组件来管理全部的状态。当您将预先存在的代码库转换为React或将React应用程序与非React库集成时，这可能变得特别烦人。在以上情况下，你或许应该看看[非受控组件](/docs/uncontrolled-components.html)，这是一种表单的替代技术。
-  
+
