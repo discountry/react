@@ -60,7 +60,7 @@ const element = <div />;
 const element = <Welcome name="Sara" />;
 ```
 
-当React遇到的元素是用户自定义的组件，它会将JSX属性作为单个对象传递给该组件,这个对象称之为“props”。
+当React遇到的元素是用户自定义的组件，它会将JSX属性作为单个对象传递给该组件，这个对象称之为“props”。
 
 例如,这段代码会在页面上渲染出"Hello,Sara":
 
@@ -158,7 +158,7 @@ function Comment(props) {
 
 [在 CodePen 上试试。](http://codepen.io/gaearon/pen/VKQwEo?editors=0010)
 
-这个组件接收`author`(对象)、`text`(字符串)、以及`date`(Date对象)作为props, 用来描述一个社交媒体网站上的评论。
+这个组件接收`author`(对象)、`text`(字符串)、以及`date`(Date对象)作为props，用来描述一个社交媒体网站上的评论。
 
 这个组件由于嵌套，变得难以被修改，可复用的部分也难以被复用。所以让我们从这个组件中提取出一些小组件。
 

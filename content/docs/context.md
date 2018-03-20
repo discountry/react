@@ -8,7 +8,7 @@ permalink: docs/context.html
 
 使用React可以非常轻松地追踪通过React组件的数据流。在React组件中，你可以看到哪些props被传递，这使得你的应用容易理解。
 
-在有些场景中，你不想要向下每层都手动地传递你需要的 props. 这就需要强大的 `context` API了。
+在有些场景中，你不想要向下每层都手动地传递你需要的 props。这就需要强大的 `context` API了。
 
 ## 为什么不要使用Context
 
