@@ -12,9 +12,9 @@ next: rendering-elements.html
 const element = <h1>Hello, world!</h1>;
 ```
 
-这种看起来可能有些奇怪的标签语法既不是字符串也不是HTML.
+这种看起来可能有些奇怪的标签语法既不是字符串也不是 HTML。
 
-它被称为 JSX, 一种 JavaScript 的语法扩展。 我们推荐在 React 中使用 JSX 来描述用户界面。JSX 乍看起来可能比较像是模版语言，但事实上它完全是在 JavaScript 内部实现的。
+它被称为 JSX， 一种 JavaScript 的语法扩展。 我们推荐在 React 中使用 JSX 来描述用户界面。JSX 乍看起来可能比较像是模版语言，但事实上它完全是在 JavaScript 内部实现的。
 
 JSX 用来声明 React 当中的元素。在[下一个章节](/docs/rendering-elements.html)里面我们会详细介绍元素是如何被渲染出来的，接下来呢，我们先来看看 JSX 的基本使用方法。
 
@@ -22,7 +22,7 @@ JSX 用来声明 React 当中的元素。在[下一个章节](/docs/rendering-el
 
  你可以任意地在 JSX 当中使用 [JavaScript 表达式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Expressions)，在 JSX 当中的表达式要包含在大括号里。
 
- 例如 `2 + 2`, `user.firstName`, 以及 `formatName(user)` 都是可以使用的。
+ 例如 `2 + 2`， `user.firstName`， 以及 `formatName(user)` 都是可以使用的。
 
 ```js{12}
 function formatName(user) {
@@ -48,7 +48,7 @@ ReactDOM.render(
 
 [在 CodePen 上试试。](http://codepen.io/gaearon/pen/PGEjdG?editors=0010)
 
-我们书写 JSX 的时候一般都会带上换行和缩进，这样可以增强代码的可读性。与此同时，我们同样推荐在 JSX 代码的外面扩上一个小括号，这样可以防止 [分号自动插入](http://stackoverflow.com/q/2846283) 的bug.
+我们书写 JSX 的时候一般都会带上换行和缩进，这样可以增强代码的可读性。与此同时，我们同样推荐在 JSX 代码的外面扩上一个小括号，这样可以防止 [分号自动插入](http://stackoverflow.com/q/2846283) 的 bug。
 
 ### JSX 本身其实也是一种表达式
 
@@ -104,7 +104,7 @@ const element = (
 >
 >因为 JSX 的特性更接近 JavaScript 而不是 HTML , 所以 React DOM 使用 `camelCase` 小驼峰命名 来定义属性的名称，而不是使用 HTML 的属性名称。
 >
->例如，`class` 变成了 [`className`](https://developer.mozilla.org/en-US/docs/Web/API/Element/className)，而 `tabindex` 则对应着 [`tabIndex`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/tabIndex).
+>例如，`class` 变成了 [`className`](https://developer.mozilla.org/en-US/docs/Web/API/Element/className)，而 `tabindex` 则对应着 [`tabIndex`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/tabIndex)。
 
 ### JSX 防注入攻击
 
