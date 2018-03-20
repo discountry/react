@@ -254,7 +254,7 @@ class Clock extends React.Component {
 
 如果你不在 `render()` 中使用某些东西，它就不应该在状态中。
 
-我们将在 `componentWillUnmount（）`生命周期钩子中卸载计时器：
+我们将在 `componentWillUnmount()`生命周期钩子中卸载计时器：
 
 ```js{2}
   componentWillUnmount() {

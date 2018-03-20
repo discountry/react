@@ -135,7 +135,7 @@ No errors!
 
 通常它被放置在文件的顶部。 尝试将其添加到项目中的某些文件中，然后运行 `yarn flow` 或 `npm run flow` 来查看 Flow 是否已经发现了一些问题。
 
-也有[一个选择](https://flow.org/en/docs/config/options/#toc-all-boolean)可以强制 Flow 不考虑注释检查*所有*文件. 对于现有的项目它可能太繁琐了，但对于一个新项目如果你想完全用 Flow 来组织，那会是合理的。
+也有[一个选择](https://flow.org/en/docs/config/options/#toc-all-boolean)可以强制 Flow 不考虑注释检查*所有*文件。对于现有的项目它可能太繁琐了，但对于一个新项目如果你想完全用 Flow 来组织，那会是合理的。
 
 现在你们都准备好了！ 我们建议查看以下资源以了解有关 Flow 的更多信息：
 
