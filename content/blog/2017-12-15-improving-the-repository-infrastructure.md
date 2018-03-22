@@ -83,9 +83,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
-In every package provided by React, the [`cjs` folder](https://unpkg.com/react@16/cjs/) (short for "CommonJS") contains a development and a production pre-built bundle for each entry point. 
+在 React 提供的每个包里， [`cjs` 文件夹](https://unpkg.com/react@16/cjs/) ("CommonJS" 的简写) 下面包含了为每个入口起点提供的开发版本和预发布版本的 bundle。
 
-For example, [`react.development.js`](https://unpkg.com/react@16/cjs/react.development.js) is the version intended for development. It is readable and includes comments. On the other hand, [`react.production.min.js`](https://unpkg.com/react@16/cjs/react.production.min.js) was minified and optimized before it was published to npm.
+比如说，[`react.development.js`](https://unpkg.com/react@16/cjs/react.development.js) 是供开发版使用的。它具有较强的可读性并且有一些注释。另一方面，[`react.production.min.js`](https://unpkg.com/react@16/cjs/react.production.min.js) 在被发布到 npm 之前是经过压缩优化的。
 
 注意这和我们之前使用的单文件的浏览器构建策略实质上是非常相似的（现在仅是重新规划到 [`umd` 目录](https://unpkg.com/react@16/umd/)下，[通用模块定义（Universal Module Definition）](https://www.davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/)的缩写）。现在我们也对 CommonJS 构建采用同样的策略。
 
