@@ -12,7 +12,7 @@
 
 **本地构建**
 
-请查阅官方 [README](https://github.com/discountry/react/blob/master/README_en.md).
+请查阅官方 [README](https://github.com/discountry/react/blob/master/README_en.md)。
 
 **翻译文档**
 

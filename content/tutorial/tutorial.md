@@ -105,7 +105,7 @@ class ShoppingList extends React.Component {
 
 这里的 ShoppingList 是一种 **React 组件类**，或者叫 **React 组件类型** 之类的。一个组件会接受名为 `props` 的参数，并通过名为 `render` 的方法返回一个嵌套结构的视图。
 
-`render` 返回的是你对你想要渲染内容的**描述**。React 会根据你的描述将对应的内容在屏幕上渲染出来。讲得更具体一点，`render` 返回的是一个 **React 元素**，是一种对渲染内容比较简洁的描述。大部分 React 开发者都会使用一种名为 JSX 的语法扩展来跟方便地书写这种描述。比方说里面的 `<div />` 会被编译为 `React.createElement('div')` .上面的那个例子就等同于：
+`render` 返回的是你对你想要渲染内容的**描述**。React 会根据你的描述将对应的内容在屏幕上渲染出来。讲得更具体一点，`render` 返回的是一个 **React 元素**，是一种对渲染内容比较简洁的描述。大部分 React 开发者都会使用一种名为 JSX 的语法扩展来跟方便地书写这种描述。比方说里面的 `<div />` 会被编译为 `React.createElement('div')` 。上面的那个例子就等同于：
 
 ```javascript
 return React.createElement('div', {className: 'shopping-list'},
@@ -221,8 +221,8 @@ class Square extends React.Component {
 
 现在我们试着通过点击事件触发 state 的改变来更新棋盘格子显示的内容：
 
-* 将 `<button>` 当中的 `this.props.value` 替换为 `this.state.value` .
-* 将 `() => alert()` 方法替换为 `() => this.setState({value: 'X'})` .
+* 将 `<button>` 当中的 `this.props.value` 替换为 `this.state.value` 。
+* 将 `() => alert()` 方法替换为 `() => this.setState({value: 'X'})` 。
 
 现在我们的 `<button>` 标签就变成了下面这样：
 
@@ -367,8 +367,8 @@ Board 现在的 `renderSquare` 方法看起来像下面这样：
 
 现在我们从 Board 组件向 Square 组件中传递两个 props 参数：`value` 和 `onClick`. `onClick` 里传递的是一个之后在 Square 组件中能够触发的方法函数。我们动手来修改代码吧：
 
-* 将 Square 组件的 `render` 方法中的 `this.state.value` 替换为 `this.props.value` .
-* 将 Square 组件的 `render` 方法中的 `this.setState()` 替换为 `this.props.onClick()` .
+* 将 Square 组件的 `render` 方法中的 `this.state.value` 替换为 `this.props.value` 。
+* 将 Square 组件的 `render` 方法中的 `this.setState()` 替换为 `this.props.onClick()` 。
 * 删掉 Square  组件中的 构造函数 `constructor` ，因为它现在已经不需要保存 state 了。
 
 进行如上修改之后，代码会变成下面这样：
@@ -523,7 +523,7 @@ function Square(props) {
 
 ### 轮流落子
 
-很明显现在我们点击棋盘只后落子的只有 X . 下面我们要开发出 X 和 O 轮流落子的功能。
+很明显现在我们点击棋盘只后落子的只有 X 。 下面我们要开发出 X 和 O 轮流落子的功能。
 
 我们将 X 默认设置为先手棋：
 
@@ -743,9 +743,9 @@ class Game extends React.Component {
 
 接下来，就好像我们之前对 Square 组件的操作一样。我们将 Board 中的状态数据全都移动到 Game 组件当中。Board 现在通过 `props` 获取从 Game 传递下来的数据和事件处理函数。
 
-* 删除 Board 的构造方法 `constructor` .
-* 把 Board 的 `renderSquare` 方法中的 `this.state.squares[i]` 替换为 `this.props.squares[i]` .
-* 把 Board 的 `renderSquare` 方法中的 `this.handleClick(i)` 替换为 `this.props.onClick(i)` .
+* 删除 Board 的构造方法 `constructor` 。
+* 把 Board 的 `renderSquare` 方法中的 `this.state.squares[i]` 替换为 `this.props.squares[i]` 。
+* 把 Board 的 `renderSquare` 方法中的 `this.handleClick(i)` 替换为 `this.props.onClick(i)` 。
 
 现在我们的 Board 组件变成了下面这样：
 
