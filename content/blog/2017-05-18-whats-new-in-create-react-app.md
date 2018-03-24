@@ -13,7 +13,7 @@ author: [gaearon]
 
 ### webpack 2
 
->*This change was contributed by [@Timer](https://github.com/Timer) in [#1291](https://github.com/facebookincubator/create-react-app/pull/1291).*
+>*这个功能开发者是[@Timer](https://github.com/Timer) 在 [#1291](https://github.com/facebookincubator/create-react-app/pull/1291).*
 
 我们已经升级到了几个月前[正式发布](https://medium.com/webpack/webpack-2-and-beyond-40520af9067f)的 `webpack2`。这对许多 bug 修复和整体改进都是一个巨大的升级。我们已经对它进行了一段时间的测试，并最终认为它已经足够稳定并鼓励大家都来尝试一下。
 
@@ -70,7 +70,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 ### 动态import()代码分割
 
->*This change was contributed by [@Timer](https://github.com/Timer) in [#1538](https://github.com/facebookincubator/create-react-app/pull/1538) and [@tharakawj](https://github.com/tharakawj) in [#1801](https://github.com/facebookincubator/create-react-app/pull/1801).*
+>*这个功能的贡献者是 [@Timer](https://github.com/Timer) 在 [#1538](https://github.com/facebookincubator/create-react-app/pull/1538) 和 [@tharakawj](https://github.com/tharakawj) 在 [#1801](https://github.com/facebookincubator/create-react-app/pull/1801).*
    
  对于 web 应用而言很重要的一点就是减轻页面初始化时的 JS 加载负担，并做到  [按需加载](https://medium.com/@addyosmani/progressive-web-apps-with-react-js-part-2-page-load-performance-33b932d97cf2)。虽然 Create React App 发布以后通过使用 `require.ensure()` 支持 [代码分割](https://webpack.js.org/guides/code-splitting-async/) , 它使用 webpack 规范的语法然而在 Jest 及其他环境下并不适用。
    
