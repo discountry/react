@@ -64,3 +64,55 @@ render() {
 ```
 
 同样，`<input type="checkbox">` 和 `<input type="radio">` 支持 `defaultChecked`，`<select>` 和 `<textarea>` 支持 `defaultValue`.
+
+### 文件输入标签
+
+在HTML中，`<input type="file">` 可以让用户从其设备存储中选择一个或多个文件上传到服务器，或通过[File API](https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications)进行操作。
+
+```javascript
+<input type="file" />
+```
+
+在React中，`<input type="file" />` 始终是一个不受控制的组件，因为它的值只能由用户设置，而不是以编程方式设置。
+
+您应该使用File API与文件进行交互。以下示例显示如何创建ref节点以访问提交处理程序中的文件：
+
+```javascript{9,18-23}
+class FileInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    alert(
+      `Selected file - ${this.fileInput.files[0].name}`
+    );
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Upload file:
+          <input
+            type="file"
+            ref={input => {
+              this.fileInput = input;
+            }}
+          />
+        </label>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
+}
+
+ReactDOM.render(
+  <FileInput />,
+  document.getElementById('root')
+);
+```
+
+[在 CodePen 上尝试。](https://reactjs.org/redirect-to-codepen/uncontrolled-components/input-type-file)
