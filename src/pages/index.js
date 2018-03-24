@@ -74,7 +74,7 @@ class Home extends Component {
     return (
       <div css={{width: '100%'}}>
         <TitleAndMetaTags
-          title="React - 用于构建用户界面的 JavaScript 库"
+          title="React 中文文档 - 用于构建用户界面的 JavaScript 库"
           ogUrl={createOgUrl('index.html')}
         />
         <header
