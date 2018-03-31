@@ -40,13 +40,13 @@ const NavigationFooter = ({next, prev, location}) => {
           <Flex basis="50%" type="li">
             {prev && (
               <div>
-                <SecondaryLabel>Previous article</SecondaryLabel>
+                <SecondaryLabel>上一篇</SecondaryLabel>
                 <div
                   css={{
                     paddingTop: 10,
                   }}>
-                  <PrimaryLink location={location} to={prev}>
-                    {linkToTitle(prev)}
+                  <PrimaryLink location={location} to={`${prev.id}.html`}>
+                    {prev.title}
                   </PrimaryLink>
                 </div>
               </div>
@@ -61,13 +61,13 @@ const NavigationFooter = ({next, prev, location}) => {
                 textAlign: 'right',
               }}>
               <div>
-                <SecondaryLabel>Next article</SecondaryLabel>
+                <SecondaryLabel>下一篇</SecondaryLabel>
                 <div
                   css={{
                     paddingTop: 10,
                   }}>
-                  <PrimaryLink location={location} to={next}>
-                    {linkToTitle(next)}
+                  <PrimaryLink location={location} to={`${next.id}.html`}>
+                    {next.title}
                   </PrimaryLink>
                 </div>
               </div>
@@ -80,13 +80,17 @@ const NavigationFooter = ({next, prev, location}) => {
 };
 
 NavigationFooter.propTypes = {
-  next: PropTypes.string,
-  prev: PropTypes.string,
+  next: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
+  prev: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }),
 };
 
 export default NavigationFooter;
-
-const linkToTitle = link => link.replace(/-/g, ' ').replace('.html', '');
 
 const PrimaryLink = ({children, to, location}) => {
   // quick fix
@@ -97,7 +101,6 @@ const PrimaryLink = ({children, to, location}) => {
     <Link
       css={{
         display: 'inline',
-        textTransform: 'capitalize',
         borderColor: colors.subtle,
         transition: 'border-color 0.2s ease',
         fontSize: 30,

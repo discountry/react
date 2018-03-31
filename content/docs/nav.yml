@@ -66,6 +66,8 @@
       title: Web Components
     - id: higher-order-components
       title: 高阶组件
+    - id: forwarding-refs
+      title: 传递 Refs
     - id: render-props
       title: Render Props
     - id: integrating-with-other-libraries
@@ -74,6 +76,8 @@
       title: 可访问性
     - id: code-splitting
       title: Code-Splitting
+    - id: strict-mode
+      title: 严格模式
 - title: 参考
   items:
     - id: react-api

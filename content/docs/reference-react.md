@@ -43,6 +43,16 @@ React 组件可以让你把UI分割为独立、可复用的片段，并将每一
 - [`isValidElement()`](#isvalidelement)
 - [`React.Children`](#react.children)
 
+### Fragments
+
+`React` also provides a component for rendering multiple elements without a wrapper.
+
+- [`React.Fragment`](#reactfragment)
+
+### Other
+
+- [`React.forwardRef`](#reactforwardref)
+
 * * *
 
 ## Reference
@@ -190,3 +200,29 @@ React.Children.toArray(children)
 > Note:
 >
 > 当children是扁平列表时，`React.Children.toArray()` 改变key来保留嵌套数组的语义。也就是说，为了在展开时保留嵌套数组的语义，`toArray` 会自动的给数组中每个 key 加了上前缀，以便将每个元素的key被限定到包含它的输入数组。
+
+* * *
+
+### `React.Fragment`
+
+The `React.Fragment` component lets you return multiple elements in a `render()` method without creating an additional DOM element:
+
+```javascript
+render() {
+  return (
+    <React.Fragment>
+      Some text.
+      <h2>A heading</h2>
+    </React.Fragment>
+  );
+}
+```
+
+You can also use it with the shorthand `<></>` syntax. For more information, see [React v16.2.0: Improved Support for Fragments](/blog/2017/11/28/react-v16.2.0-fragment-support.html).
+
+### `React.forwardRef`
+
+`React.forwardRef` accepts a render function that receives `props` and `ref` parameters and returns a React node. Ref forwarding is a technique for passing a [ref](/docs/refs-and-the-dom.html) through a component to one of its descendants. This technique can be particularly useful with [higher-order components](/docs/higher-order-components.html):
+`embed:reference-react-forward-ref.js`
+
+For more information, see [forwarding refs](/docs/forwarding-refs.html).

@@ -2,16 +2,16 @@
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * @emails react-core
-*/
+ */
 
 'use strict';
 
 module.exports = {
   siteMetadata: {
-    title: 'React: A JavaScript library for building user interfaces',
+    title: 'React 中文文档: 用于构建用户界面的 JavaScript 库',
     siteUrl: 'https://doc.react-china.org',
-    rssFeedTitle: 'React',
-    rssFeedDescription: 'A JavaScript library for building user interfaces',
+    rssFeedTitle: 'React 中文文档',
+    rssFeedDescription: '用于构建用户界面的 JavaScript 库',
   },
   mapping: {
     'MarkdownRemark.frontmatter.author': 'AuthorYaml',
@@ -23,7 +23,7 @@ module.exports = {
     'gatsby-plugin-netlify',
     'gatsby-plugin-glamor',
     'gatsby-plugin-react-next',
-//     'gatsby-plugin-twitter',
+    'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-nprogress',
       options: {
@@ -67,6 +67,13 @@ module.exports = {
               ],
               redirectTemplate: `${__dirname}/src/templates/codepen-example.js`,
               target: '_blank',
+            },
+          },
+          {
+            resolve: 'gatsby-remark-embed-snippet',
+            options: {
+              classPrefix: 'gatsby-code-',
+              directory: `${__dirname}/examples/`,
             },
           },
           'gatsby-remark-use-jsx',

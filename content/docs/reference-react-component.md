@@ -9,7 +9,7 @@ redirect_from:
   - "docs/component-specs.html"
   - "docs/component-specs-ko-KR.html"
   - "docs/component-specs-zh-CN.html"
-  - "tips/componentWillReceiveProps-not-triggered-after-mounting.html"
+  - "tips/UNSAFE_componentWillReceiveProps-not-triggered-after-mounting.html"
   - "tips/dom-event-listeners.html"
   - "tips/initial-ajax.html"
   - "tips/use-react-with-other-libraries.html"
@@ -42,7 +42,8 @@ class Greeting extends React.Component {
 这些方法会在组件实例被创建和插入DOM中时被调用：
 
 - [`constructor()`](#constructor)
-- [`componentWillMount()`](#componentwillmount)
+- [`static getDerivedStateFromProps()`](#static-getderivedstatefromprops)
+- [`componentWillMount()` / `UNSAFE_componentWillMount()`](#unsafe_componentwillmount)
 - [`render()`](#render)
 - [`componentDidMount()`](#componentdidmount)
 
@@ -50,10 +51,12 @@ class Greeting extends React.Component {
 
 属性或状态的改变会触发一次更新。当一个组件在被重渲时，这些方法将会被调用：
 
-- [`componentWillReceiveProps()`](#componentwillreceiveprops)
+- [`componentWillReceiveProps()` / `UNSAFE_componentWillReceiveProps()`](#unsafe_componentwillreceiveprops)
+- [`static getDerivedStateFromProps()`](#static-getderivedstatefromprops)
 - [`shouldComponentUpdate()`](#shouldcomponentupdate)
-- [`componentWillUpdate()`](#componentwillupdate)
+- [`componentWillUpdate()` / `UNSAFE_componentWillUpdate()`](#unsafe_componentwillupdate)
 - [`render()`](#render)
+- [`getSnapshotBeforeUpdate()`](#getsnapshotbeforeupdate)
 - [`componentDidUpdate()`](#componentdidupdate)
 
 #### 卸载
@@ -61,6 +64,12 @@ class Greeting extends React.Component {
 当一个组件被从DOM中移除时，该方法被调用：
 
 - [`componentWillUnmount()`](#componentwillunmount)
+
+#### 错误处理
+
+在渲染过程中发生错误时会被调用：
+
+- [`componentDidCatch()`](#componentdidcatch)
 
 ### 其他API
 
@@ -150,19 +159,37 @@ constructor(props) {
 
 意识到这模式，任何的属性更新不会使得状态是最新的。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
 
-若你通过使用它们为状体“分离”属性，你可能也想要实现[`componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
+若你通过使用它们为状体“分离”属性，你可能也想要实现[`UNSAFE_componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
 
 * * *
 
-### `componentWillMount()`
+### `static getDerivedStateFromProps()`
 
-```javascript
-componentWillMount()
+```js
+static getDerivedStateFromProps(nextProps, prevState)
 ```
 
-`componentWillMount()`在装配发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重渲。避免在该方法中引入任何的副作用或订阅。
+`getDerivedStateFromProps` is invoked after a component is instantiated as well as when it receives new props. It should return an object to update state, or null to indicate that the new props do not require any state updates.
+
+Note that if a parent component causes your component to re-render, this method will be called even if props have not changed. You may want to compare new and previous values if you only want to handle changes.
+
+Calling `this.setState()` generally doesn't trigger `getDerivedStateFromProps()`.
+
+* * *
+
+### `UNSAFE_componentWillMount()`
+
+```javascript
+UNSAFE_componentWillMount()
+```
+
+`UNSAFE_componentWillMount()`在装配发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重渲。避免在该方法中引入任何的副作用或订阅。
 
 这是唯一的会在服务端渲染调起的生命周期钩子函数。通常地，我们推荐使用`constructor()`来替代。
+
+> Note
+>
+> This lifecycle was previously named `componentWillMount`. That name will continue to work until version 17. Use the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
 
 * * *
 
@@ -174,19 +201,27 @@ componentDidMount()
 
 `componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
 
+This method is a good place to set up any subscriptions. If you do that, don't forget to unsubscribe in `componentWillUnmount()`.
+
+Calling `setState()` in this method will trigger an extra rendering, but it will happen before the browser updates the screen. This guarantees that even though the `render()` will be called twice in this case, the user won't see the intermediate state. Use this pattern with caution because it often causes performance issues. It can, however, be necessary for cases like modals and tooltips when you need to measure a DOM node before rendering something that depends on its size or position.
+
 * * *
 
-### `componentWillReceiveProps()`
+### `UNSAFE_componentWillReceiveProps()`
 
 ```javascript
-componentWillReceiveProps(nextProps)
+UNSAFE_componentWillReceiveProps(nextProps)
 ```
 
-`componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
+`UNSAFE_componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
 
 注意即使属性未有任何改变，React可能也会调用该方法，因此若你想要处理改变，请确保比较当前和之后的值。这可能会发生在当父组件引起你的组件重渲。
 
-在 [装配](#mounting)期间，React并不会调用带有初始属性的`componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`componentWillReceiveProps`。
+在 [装配](#mounting)期间，React并不会调用带有初始属性的`UNSAFE_componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`UNSAFE_componentWillReceiveProps`。
+
+> Note
+>
+> This lifecycle was previously named `componentWillReceiveProps`. That name will continue to work until version 17. Use the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
 
 * * *
 
@@ -202,25 +237,41 @@ shouldComponentUpdate(nextProps, nextState)
 
 当他们状态改变时，返回`false` 并不能阻止子组件重渲。
 
-当前，若`shouldComponentUpdate()`返回`false`，而后[`componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
+当前，若`shouldComponentUpdate()`返回`false`，而后[`UNSAFE_componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
 
 在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
 
 * * *
 
-### `componentWillUpdate()`
+### `UNSAFE_componentWillUpdate()`
 
 ```javascript
-componentWillUpdate(nextProps, nextState)
+UNSAFE_componentWillUpdate(nextProps, nextState)
 ```
 
-当接收到新属性或状态时，`componentWillUpdate()`为在渲染前被立即调用。在更新发生前，使用该方法是一次准备机会。该方法不会在初始化渲染时调用。
+当接收到新属性或状态时，`UNSAFE_componentWillUpdate()`为在渲染前被立即调用。在更新发生前，使用该方法是一次准备机会。该方法不会在初始化渲染时调用。
 
 注意你不能在这调用`this.setState()`，若你需要更新状态响应属性的调整，使用`componentWillReceiveProps()`代替。
 
+> Note
+>
+> This lifecycle was previously named `componentWillUpdate`. That name will continue to work until version 17. Use the [`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles) to automatically update your components.
+
 > 注意
 >
-> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentWillUpdate()`将不会被调用。
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`UNSAFE_componentWillUpdate()`将不会被调用。
+
+* * *
+
+### `getSnapshotBeforeUpdate()`
+
+`getSnapshotBeforeUpdate()` is invoked right before the most recently rendered output is committed to e.g. the DOM. It enables your component to capture current values (e.g. scroll position) before they are potential changed. Any value returned by this lifecycle will be passed as a parameter to `componentDidUpdate()`.
+
+For example:
+
+`embed:react-component-reference/get-snapshot-before-update.js`
+
+In the above examples, it is important to read the `scrollHeight` property in `getSnapshotBeforeUpdate` rather than `componentWillUpdate` in order to support async rendering. With async rendering, there may be delays between "render" phase lifecycles (like `componentWillUpdate` and `render`) and "commit" phase lifecycles (like `getSnapshotBeforeUpdate` and `componentDidUpdate`). If a user does something like resize the browser during this time, a `scrollHeight` value read from `componentWillUpdate` will be stale.
 
 * * *
 
@@ -247,6 +298,24 @@ componentWillUnmount()
 ```
 
 `componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
+
+* * *
+
+### `componentDidCatch()`
+
+```javascript
+componentDidCatch(error, info)
+```
+
+Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+
+A class component becomes an error boundary if it defines this lifecycle method. Calling `setState()` in it lets you capture an unhandled JavaScript error in the below tree and display a fallback UI. Only use error boundaries for recovering from unexpected exceptions; don't try to use them for control flow.
+
+For more details, see [*Error Handling in React 16*](/blog/2017/07/26/error-handling-in-react-16.html).
+
+> Note
+> 
+> Error boundaries only catch errors in the components **below** them in the tree. An error boundary can’t catch an error within itself.
 
 * * *
 

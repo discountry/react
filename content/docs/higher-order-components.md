@@ -402,26 +402,4 @@ import MyComponent, { someFunction } from './MyComponent.js';
 
 如果你碰到了这样的问题，最理想的处理方案就是搞清楚如何避免使用 `ref`。有时候，没有看过React示例的新用户在某种场景下使用prop属性要好过使用ref。
 
-话说，有时候不可避免的要使用ref应用——React在任何时候都不建议使用。例如聚焦输入表单的例子中，你可能想要对组件命令式的控制，在这种情况下，传递一个ref回调函数属性，也就是给ref应用一个不同的名字，这就是一个不错的解决方案：
-
-```js
-function Field({ inputRef, ...rest }) {
-  return <input ref={inputRef} {...rest} />;
-}
-
-// 在高阶组件中增强Field组件
-const EnhancedField = enhance(Field);
-
-// 组件的render函数中……
-<EnhancedField
-  inputRef={(inputEl) => {
-    // 该回调函数被作为常规的props属性传递
-    this.inputEl = inputEl
-  }}
-/>
-
-// 现在你就可以愉快的调用控制函数了
-this.inputEl.focus();
-```
-
-无论怎样，这都不是最完美的解决方案。我们更愿意把refs应用问题留给库来解决，也不愿让使用者手动去处理他们。我们正在探索解决这个问题的方法，能够让你安心的使用高阶组件而不必关注这个问题。
+现在我们提供一个名为 `React.forwardRef` 的 API 来解决这一问题（在 React 16.3 版本中）。[在 refs 传递章节中了解详情](/docs/forwarding-refs.html)。
