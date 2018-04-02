@@ -4,9 +4,13 @@
 
 > This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the [reactjs/reactjs.org](https://github.com/reactjs/reactjs.org) .
 
+## 临时说明
+
+如果你在打开[https://doc.react-china.org](https://doc.react-china.org)官网时遇到了网络问题，可以通过临时备份网址[http://react.yubolun.com/](http://react.yubolun.com/)访问文档。
+
 ## 如何贡献
 
-目前文档的主要内容全部已翻译完成，可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
+目前还有个别文档内容待翻译，已翻译部分可能仍有少许字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
 
 ![check](https://github.com/discountry/react/raw/master/static/check.png)
 
