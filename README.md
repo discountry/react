@@ -6,7 +6,13 @@
 
 ## 临时说明
 
-如果你在打开[https://doc.react-china.org](https://doc.react-china.org)官网时遇到了网络问题，可以通过临时备份网址[http://react.yubolun.com/](http://react.yubolun.com/)访问文档。
+本文档与 React 官方文档保持同步，请认准页脚**印记中文**的标识。不要被网络上一些盗用的过期文档误导。
+
+**官网地址：**[https://doc.react-china.org](https://doc.react-china.org/)
+
+如果你遇到网络问题，请移步：
+
+**备份网址：**[http://react.yubolun.com/](http://react.yubolun.com/)
 
 ## 如何贡献
 
