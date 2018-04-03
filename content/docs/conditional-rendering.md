@@ -71,7 +71,7 @@ function LogoutButton(props) {
 
 在下面的例子中，我们将要创建一个名为 `LoginControl` 的[有状态的组件](/docs/state-and-lifecycle.html#为一个类添加局部状态)。
 
-它会根据当前的状态来渲染 `<LoginButton />` 或 `<LogoutButton>`，它也将渲染前面例子中的 `<Greeting />`。
+它会根据当前的状态来渲染 `<LoginButton />` 或 `<LogoutButton />`，它也将渲染前面例子中的 `<Greeting />`。
 
 ```javascript{20-25,29,30}
 class LoginControl extends React.Component {
