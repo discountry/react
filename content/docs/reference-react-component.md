@@ -157,7 +157,7 @@ constructor(props) {
 }
 ```
 
-当心这模式，因为状态将不会随着属性的更新而更新。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
+当心这种模式，因为状态将不会随着属性的更新而更新。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
 
 若你通过使用它们为状体“分离”属性，你可能也想要实现[`UNSAFE_componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
 
@@ -217,7 +217,7 @@ UNSAFE_componentWillReceiveProps(nextProps)
 
 >注意
 >
-> 推荐你使用[`getDerivedStateFromProps`](#static-getderivedstatefromprops)生命周期而不是`UNSAFE_componentWillReceiveProps`.。[在此了解更对关于此建议。](/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes)
+> 推荐你使用[`getDerivedStateFromProps`](#static-getderivedstatefromprops)生命周期而不是`UNSAFE_componentWillReceiveProps`。[关于此建议在此了解详情。](/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes)
 
 `UNSAFE_componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
 
@@ -278,7 +278,7 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 `embed:react-component-reference/get-snapshot-before-update.js`
 
-在上面的例子中，为了支持异步渲染，很重要在`getSnapshotBeforeUpdate` 中读 `scrollHeight`而不是`componentWillUpdate`。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将会滞后的。
+在上面的例子中，为了支持异步渲染，在`getSnapshotBeforeUpdate` 中读取`scrollHeight`而不是`componentWillUpdate`，这点很重要。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将会滞后的。
 
 * * *
 
@@ -314,15 +314,15 @@ componentWillUnmount()
 componentDidCatch(error, info)
 ```
 
-Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+错误边界是React组件，并不是损坏的组件树。它们捕捉发生在子组件树中任意地方的JavaScript错误，打印错误日志，并且显示回退的用户界面。错误边界捕捉渲染期间、在生命周期方法和在它们之下整棵树的构造函数中的错误。
 
-A class component becomes an error boundary if it defines this lifecycle method. Calling `setState()` in it lets you capture an unhandled JavaScript error in the below tree and display a fallback UI. Only use error boundaries for recovering from unexpected exceptions; don't try to use them for control flow.
+如果定义了这一生命周期方法，一个类组件将成为一个错误边界。在错误边界中调用`setState()`让你捕捉当前树之下未处理的JavaScript错误，并显示回退的用户界面。只有使用错误边界来恢复异常，不要尝试使用它们控制流。
 
-For more details, see [*Error Handling in React 16*](/blog/2017/07/26/error-handling-in-react-16.html).
+详情请见[*React 16中的错误处理*](/blog/2017/07/26/error-handling-in-react-16.html)。
 
-> Note
+> 注意
 > 
-> Error boundaries only catch errors in the components **below** them in the tree. An error boundary can’t catch an error within itself.
+> 错误边界只捕捉树中发生在它们**之下** 组件里的错误。一个错误边界并不能捕捉它自己内部的错误。
 
 * * *
 
