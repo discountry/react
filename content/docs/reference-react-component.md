@@ -159,7 +159,7 @@ constructor(props) {
 
 当心这种模式，因为状态将不会随着属性的更新而更新。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
 
-若你通过使用它们为状体“分离”属性，你可能也想要实现[`UNSAFE_componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
+若你通过使用它们为状态“分离”属性，你可能也想要实现[`UNSAFE_componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
 
 * * *
 
@@ -271,14 +271,14 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 ### `getSnapshotBeforeUpdate()`
 
-`getSnapshotBeforeUpdate()`在最新的渲染输出提交给DOM前将会立即调用。它让你的组件能去获得当前的值在它们可能要改变前。这一生命周期返回的任何值将会
+`getSnapshotBeforeUpdate()`在最新的渲染输出提交给DOM前将会立即调用。它让你的组件能在当前的值可能要改变前获得它们。这一生命周期返回的任何值将会
 作为参数被传递给`componentDidUpdate()`。
 
 例如：
 
 `embed:react-component-reference/get-snapshot-before-update.js`
 
-在上面的例子中，为了支持异步渲染，在`getSnapshotBeforeUpdate` 中读取`scrollHeight`而不是`componentWillUpdate`，这点很重要。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将会滞后的。
+在上面的例子中，为了支持异步渲染，在`getSnapshotBeforeUpdate` 中读取`scrollHeight`而不是`componentWillUpdate`，这点很重要。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将是滞后的。
 
 * * *
 
