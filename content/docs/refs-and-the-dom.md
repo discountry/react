@@ -35,9 +35,9 @@ Refs 提供了一种访问在 render 方法中创建的 DOM 节点或 React 元�
 >
 > The examples below have been updated to use the `React.createRef()` API introduced in React 16.3. If you are using an earlier release of React, we recommend using [callback refs](#callback-refs) instead.
 
-### Creating Refs
+### 创建 Refs
 
-Refs are created using `React.createRef()` and attached to React elements via the `ref` attribute. Refs are commonly assigned to an instance property when a component is constructed so they can be referenced throughout the the component.
+使用 `React.createRef()` 创建 Refs，通过 `ref` 属性来获得 React 元素。当构造组件时，Refs 通常被分配给一个实例属性，所以它们可以在组件中随处引用.
 
 ```javascript{4,7}
 class MyComponent extends React.Component {
@@ -51,21 +51,21 @@ class MyComponent extends React.Component {
 }
 ```
 
-### Accessing Refs
+### 访问 Refs
 
-When a ref is passed to an element in `render`, a reference to the node becomes accessible at the `current` attribute of the ref.
+当一个 ref 属性被传递给一个 `render` 函数中的元素时，可以使用 ref 中的 `current` 属性对节点的引用进行访问。
 
 ```javascript
 const node = this.myRef.current;
 ```
 
-The value of the ref differs depending on the type of the node:
+ref的值取决于节点的类型:
 
-- When the `ref` attribute is used on an HTML element, the `ref` created in the constructor with `React.createRef()` receives the underlying DOM element as its `current` property.
-- When the `ref` attribute is used on a custom class component, the `ref` object receives the mounted instance of the component as its `current`.
-- **You may not use the `ref` attribute on functional components** because they don't have instances.
+- 当 `ref` 属性被用于一个普通的 HTML 元素时，`React.createRef()` 将接收底层 DOM 元素作为它的 `current` 属性以创建 `ref` 。
+- 当 `ref` 属性被用于一个自定义类组件时，`ref` 对象将接收被插入组件的实例作为它的 `current` 。
+- **也许你在函数式组件中不会用到 `ref`** 因为它们没有实例.
 
-The examples below demonstrate the differences.
+下面的例子说明了这些差异。
 
 #### 为 DOM 元素添加 Ref
 
@@ -86,7 +86,7 @@ class CustomTextInput extends React.Component {
   }
 
   render() {
-    // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React 
+    // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React
     // 实例上（比如 this.textInput）
     return (
       <div>
@@ -268,7 +268,7 @@ class Grandparent extends React.Component {
 
 React also supports another way to set refs called "callback refs", which gives more fine-grain control over when refs are set and unset.
 
-Instead of passing a `ref` attribute created by `createRef()`, you pass a function. The function receives the React component instance or HTML DOM element as its argument, which can be stored and accessed elsewhere. 
+Instead of passing a `ref` attribute created by `createRef()`, you pass a function. The function receives the React component instance or HTML DOM element as its argument, which can be stored and accessed elsewhere.
 
 The example below implements a common pattern: using the `ref` callback to store a reference to a DOM node in an instance property.
 
