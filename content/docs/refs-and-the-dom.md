@@ -37,7 +37,7 @@ Refs 提供了一种访问在 render 方法中创建的 DOM 节点或 React 元�
 
 ### 创建 Refs
 
-使用 `React.createRef()` 创建 Refs，通过 `ref` 属性来获得 React 元素。当构造组件时，Refs 通常被分配给一个实例属性，所以它们可以在组件中随处引用.
+使用 `React.createRef()` 创建 refs，通过 `ref` 属性来获得 React 元素。当构造组件时，refs 通常被分配给一个实例属性，所以它们可以在组件中随处引用.
 
 ```javascript{4,7}
 class MyComponent extends React.Component {
@@ -63,7 +63,7 @@ ref的值取决于节点的类型:
 
 - 当 `ref` 属性被用于一个普通的 HTML 元素时，`React.createRef()` 将接收底层 DOM 元素作为它的 `current` 属性以创建 `ref` 。
 - 当 `ref` 属性被用于一个自定义类组件时，`ref` 对象将接收被插入组件的实例作为它的 `current` 。
-- **也许你在函数式组件中不会用到 `ref`** 因为它们没有实例.
+- **也许你在函数式组件中不会用到 `ref`，** 因为它们没有实例.
 
 下面的例子说明了这些差异。
 

@@ -1,10 +1,10 @@
-// Create a theme context, defaulting to light theme
+// 创建一个 theme Context,  默认 theme 的值为 light
 // highlight-next-line
 const ThemeContext = React.createContext('light');
 
 function ThemedButton(props) {
   // highlight-range{1,3-5}
-  // The ThemedButton receives the theme from context
+  // ThemedButton 组件从 context 接收 theme
   return (
     <ThemeContext.Consumer>
       {theme => <Button {...props} theme={theme} />}
@@ -12,7 +12,7 @@ function ThemedButton(props) {
   );
 }
 
-// An intermediate component
+// 中间组件
 function Toolbar(props) {
   return (
     <div>
