@@ -93,7 +93,7 @@ React 组件允许 Consumers 订阅 context 的改变。
 **app.js**
 `embed:context/theme-detailed-app.js`
 
-### 嵌套组件更新 Context
+### 父子耦合
 
 经常需要从组件树中某个深度嵌套的组件中更新 context。在这种情况下，可以通过 context 向下传递一个函数，以允许 Consumer 更新 context ：
 
@@ -120,7 +120,7 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 `embed:context/lifecycles.js`
 
-### Consuming Context with a HOC
+### 高阶组件中的 Context
 
 某些类型的上下文被许多组件（例如主题或者地点信息）共用。使用 `<Context.Consumer>` 元素显示地封装每个依赖项是冗余的。这里[higher-order component](/docs/higher-order-components.html)可以帮助我们解决这个问题。
 
@@ -138,7 +138,7 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 `embed:context/higher-order-component-usage.js`
 
-### Forwarding Refs to Context Consumers
+### 转发 Refs
 
 一个关于渲染属性API的问题是 refs 不会自动的传递给被封装的元素。为了解决这个问题，使用 `React.forwardRef`：
 
@@ -148,7 +148,7 @@ React 组件允许 Consumers 订阅 context 的改变。
 **app.js**
 `embed:context/forwarding-refs-app.js`
 
-## Caveats
+## 告诫
 
 因为 context 使用 `reference identity` 确定何时重新渲染，在 Consumer 中，当一个 Provider 的父节点重新渲染的时候，有一些问题可能触发意外的渲染。例如下面的代码，所有的 Consumner 在 Provider 重新渲染之时，每次都将重新渲染，因为一个新的对象总是被创建对应 Provider 里的 `value`：
 
