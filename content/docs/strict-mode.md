@@ -100,7 +100,7 @@ class MyComponent extends React.Component {
 -  static `getDerivedStateFromProps`
 
 > 注意：
-> 只在开发模式生效。生产模式下不会生命周期不会被双调用。
+> 只在开发模式生效。生产模式下生命周期不会被双调用。
 
 举个例子，考虑以下代码：
 
