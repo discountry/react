@@ -11,5 +11,5 @@ export const themes = {
 
 // highlight-range{1-3}
 export const ThemeContext = React.createContext(
-  themes.dark // default value
+  themes.dark // 默认值
 );

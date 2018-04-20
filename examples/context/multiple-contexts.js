@@ -1,12 +1,12 @@
-// Theme context, default to light theme
+// 主题上下文, 默认light
 // highlight-next-line
 const ThemeContext = React.createContext('light');
 
-// Signed-in user context
+// 登陆用户上下文
 // highlight-next-line
 const UserContext = React.createContext();
 
-// An intermediate component that depends on both contexts
+// 一个依赖于两个上下文的中间组件
 function Toolbar(props) {
   // highlight-range{2-10}
   return (
@@ -26,7 +26,7 @@ class App extends React.Component {
   render() {
     const {signedInUser, theme} = this.props;
 
-    // App component that provides initial context values
+    // App组件提供上下文的初始值
     // highlight-range{2-3,5-6}
     return (
       <ThemeContext.Provider value={theme}>
