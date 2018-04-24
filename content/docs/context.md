@@ -29,8 +29,7 @@ Context 设计目的是为共享那些被认为对于一个组件树而言是“
 
 `embed:context/motivation-problem.js`
 
-经常需要从组件树中某个深度嵌套的组件中更新 context 。在这种情况下，您可以通过 context 向下传递一个函数，以允许 Consumer 更新 context
-使用 context, 我们可以避免通过中间元素传递 props：
+使用 context, 我可以避免通过中间元素传递 props：
 
 `embed:context/motivation-solution.js`
 
