@@ -33,7 +33,7 @@ Refs 提供了一种访问在 render 方法中创建的 DOM 节点或 React 元�
 
 > Note
 >
-> The examples below have been updated to use the `React.createRef()` API introduced in React 16.3. If you are using an earlier release of React, we recommend using [callback refs](#callback-refs) instead.
+> 下面的例子已经用 React v16.3 引入的 `React.createRef()` API 更新。如果你正在使用 React 更早的发布版，我们推荐使用[回调形式的 refs](#callback-refs)。
 
 ### 创建 Refs
 
@@ -154,7 +154,7 @@ class Parent extends React.Component {
     this.textInput = React.createRef();
   }
   render() {
-    // This will *not* work!
+    // 这将 *不会* 工作！
     return (
       <MyFunctionalComponent ref={this.textInput} />
     );
@@ -266,11 +266,12 @@ class Grandparent extends React.Component {
 
 ### Callback Refs
 
-React also supports another way to set refs called "callback refs", which gives more fine-grain control over when refs are set and unset.
+React 也支持另一种被称作“回调形式 refs”的方法来设置 refs，此方法
+提供了在 ref 设置和解除时更细粒度的控制。
 
-Instead of passing a `ref` attribute created by `createRef()`, you pass a function. The function receives the React component instance or HTML DOM element as its argument, which can be stored and accessed elsewhere.
+如果你不传递给 `ref` 通过 `createRef()` 创建的属性，而是一个函数。此函数接收一个 React 组件实例或 HTML DOM 元素作为它的参数，储存后可在任意处使用。
 
-The example below implements a common pattern: using the `ref` callback to store a reference to a DOM node in an instance property.
+下面的例子描述了一种通用的范例：在一个实例属性中使用 `ref` 回调函数存储一个 DOM 节点
 
 ```javascript{5,7-9,11-14,19,29,34}
 class CustomTextInput extends React.Component {
@@ -284,19 +285,19 @@ class CustomTextInput extends React.Component {
     };
 
     this.focusTextInput = () => {
-      // Focus the text input using the raw DOM API
+      // 直接使用原生 API 使 text 输入框获得焦点
       if (this.textInput) this.textInput.focus();
     };
   }
 
   componentDidMount() {
-    // autofocus the input on mount
+    // 渲染后文本框自动获得焦点
     this.focusTextInput();
   }
 
   render() {
-    // Use the `ref` callback to store a reference to the text input DOM
-    // element in an instance field (for example, this.textInput).
+    // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React
+    // 实例上（比如 this.textInput）
     return (
       <div>
         <input
@@ -314,9 +315,9 @@ class CustomTextInput extends React.Component {
 }
 ```
 
-React will call the `ref` callback with the DOM element when the component mounts, and call it with `null` when it unmounts. `ref` callbacks are invoked before `componentDidMount` or `componentDidUpdate` lifecycle hooks.
+React 将在组件挂载时将 DOM 元素传入`ref` 回调函数并调用，当卸载时传入 `null` 并调用它。`ref` 回调函数会在 `componentDidMout` 和 `componentDidUpdate` 生命周期函数前被调用
 
-You can pass callback refs between components like you can with object refs that were created with `React.createRef()`.
+你可以在组件间传递回调形式的 refs，就像你可以传递通过 `React.createRef()` 创建的对象 refs 一样。
 
 ```javascript{4,13}
 function CustomTextInput(props) {
@@ -338,7 +339,7 @@ class Parent extends React.Component {
 }
 ```
 
-In the example above, `Parent` passes its ref callback as an `inputRef` prop to the `CustomTextInput`, and the `CustomTextInput` passes the same function as a special `ref` attribute to the `<input>`. As a result, `this.inputElement` in `Parent` will be set to the DOM node corresponding to the `<input>` element in the `CustomTextInput`.
+在上面的例子中，`Parent` 传递给它的 ref 回调函数作为 `inputRef` 传递给 `CustomTextInput`，然后 `CustomTextInput` 通过 `ref`属性将其传递给 `<input>`。最终，`Parent` 中的 `this.inputElement` 将被设置为与 `CustomTextIput` 中的 `<input>` 元素相对应的 DOM 节点
 
 ### 旧版 API：String 类型的 Refs
 
