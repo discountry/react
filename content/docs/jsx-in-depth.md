@@ -182,7 +182,7 @@ function Story(props) {
 
 对于 `MyComponent`来说， `props.foo` 的值为 10，这是 `1 + 2 + 3 + 4` 表达式计算得出的。
 
-`if` 语句和 `for` 循环在 JavaScript 中不是表达式，因此它们不能直接在 JSX 中使用，所以你可以将它们放在周围的代码中。
+`if` 语句和 `for` 循环在 JavaScript 中不是表达式，因此它们不能直接在 JSX 中使用，但是你可以将它们放在周围的代码中。
 
 ```js{3-7}
 function NumberDescriber(props) {
@@ -348,7 +348,7 @@ function TodoList() {
 }
 ```
 
-JavsScript 表达式可以与其他类型的子代混合使用。这通常对于字符串模板非常有用：
+JavaScript 表达式可以与其他类型的子代混合使用。这通常对于字符串模板非常有用：
 
 ```js{2}
 function Hello(props) {
@@ -358,7 +358,7 @@ function Hello(props) {
 
 ### 函数
 
-通常情况下，插入 JSX 中的 JavsScript 表达式将被认作字符串、React 元素或这些内容的列表。然而，`props.children` 可以像其它属性一样传递任何数据，而不仅仅是 React 元素。例如，如果你使用自定义组件，则可以将调用 `props.children` 来获得传递的子代：
+通常情况下，插入 JSX 中的 JavaScript 表达式将被认作字符串、React 元素或这些内容的列表。然而，`props.children` 可以像其它属性一样传递任何数据，而不仅仅是 React 元素。例如，如果你使用自定义组件，则可以将调用 `props.children` 来获得传递的子代：
 
 ```js{4,13}
 // Calls the children callback numTimes to produce a repeated component
