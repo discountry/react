@@ -1,5 +1,5 @@
 import {ThemeContext, themes} from './theme-context';
-import ThemedButton from './button';
+import ThemedButton from './themed-button';
 
 // 一个使用到ThemedButton组件的中间组件
 function Toolbar(props) {
