@@ -71,11 +71,19 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 接收一个 [函数作为子节点](/docs/render-props.html#using-props-other-than-render). 函数接收当前 context 的值并返回一个 React 节点。传递给函数的 `value` 将等于组件树中上层 context 的最近的 Provider 的 `value` 属性。如果 context 没有 Provider ，那么 `value` 参数将等于被传递给 `createContext()` 的 `defaultValue` 。
 
-每当 Provider 的值发生改变时，所有的 Consumers 都将会重新渲染。通过使用相同的算法如[`Object.is`](//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description)比较新旧值来确定变化。（这在传递对象作为 `value` 时会引发一些问题[Caveats](#caveats).）
+
 
 > 注意
 >
 > 关于此案例的更多信息, 请看 [render props](/docs/render-props.html).
+
+每当Provider的值发送改变时, 作为Provider后代的所有Consumers都会重新渲染。 从Provider到其后代的Consumers传播不受shouldComponentUpdate方法的约束，因此即使祖先组件退出更新时，后代Consumer也会被更新。
+
+通过使用与[Object.is](//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description)相同的算法比较新值和旧值来确定变化。
+
+> 注意
+>
+>（这在传递对象作为 `value` 时会引发一些问题[Caveats](#caveats).）
 
 ## 例子
 
