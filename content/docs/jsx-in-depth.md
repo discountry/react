@@ -316,7 +316,7 @@ render() {
     // 不要忘记 key :)
     <li key="A">First item</li>,
     <li key="B">Second item</li>,
-    <li key="C">Third item</li>,
+    <li key="C">Third item</li>
   ];
 }
 ```
