@@ -1,13 +1,13 @@
 const ThemeContext = React.createContext('light');
 
-// This function takes a component...
+// 在函数中引入组件
 // highlight-next-line
 export function withTheme(Component) {
-  // ...and returns another component...
+  // 然后返回另一个组件
   // highlight-next-line
   return function ThemedComponent(props) {
-    // ... and renders the wrapped component with the context theme!
-    // Notice that we pass through any additional props as well
+    // 最后使用context theme渲染这个被封装组件
+    // 注意我们照常引用了被添加的属性
     // highlight-range{2-4}
     return (
       <ThemeContext.Consumer>

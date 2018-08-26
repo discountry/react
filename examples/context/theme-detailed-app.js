@@ -1,7 +1,7 @@
 import {ThemeContext, themes} from './theme-context';
-import ThemedButton from './button';
+import ThemedButton from './themed-button';
 
-// An intermediate component that uses the ThemedButton
+// 一个使用到ThemedButton组件的中间组件
 function Toolbar(props) {
   return (
     <ThemedButton onClick={props.changeTheme}>
@@ -29,9 +29,9 @@ class App extends React.Component {
 
   render() {
     //highlight-range{1-3}
-    // The ThemedButton button inside the ThemeProvider
-    // uses the theme from state while the one outside uses
-    // the default dark theme
+    // ThemedButton 位于 ThemeProvider 内
+    // 在外部使用时使用来自 state 里面的 theme
+    // 默认 dark theme
     //highlight-range{3-5,7}
     return (
       <Page>

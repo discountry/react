@@ -1,14 +1,14 @@
 ---
-id: context
+id: （Context）上下文
 title: Context
 permalink: docs/context.html
 ---
 
-Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+Context 通过组件树提供了一个传递数据的方法，从而避免了在每一个层级手动的传递 props 属性。
 
-In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like this between components without having to explicitly pass a prop through every level of the tree.
+在一个典型的 React 应用中，数据是通过 props 属性由上向下（由父及子）的进行传递的，但这对于某些类型的属性而言是极其繁琐的（例如：地区偏好，UI主题），这是应用程序中许多组件都所需要的。 Context 提供了一种在组件之间共享此类值的方式，而不必通过组件树的每个层级显式地传递 props 。
 
-- [When to Use Context](#when-to-use-context)
+- [何时使用 Context](#when-to-use-context)
 - [API](#api)
   - [React.createContext](#reactcreatecontext)
   - [Provider](#provider)
@@ -23,19 +23,19 @@ In a typical React application, data is passed top-down (parent to child) via pr
 - [Legacy API](#legacy-api)
 
 
-## When to Use Context
+## 何时使用 Context
 
-Context is designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme, or preferred language. For example, in the code below we manually thread through a "theme" prop in order to style the Button component:
+Context 设计目的是为共享那些被认为对于一个组件树而言是“全局”的数据，例如当前认证的用户、主题或首选语言。例如，在下面的代码中，我们通过一个“theme”属性手动调整一个按钮组件的样式：
 
 `embed:context/motivation-problem.js`
 
-Using context, we can avoid passing props through intermediate elements:
+使用 context, 我可以避免通过中间元素传递 props：
 
 `embed:context/motivation-solution.js`
 
-> Note
+> 注意
 >
-> Don't use context just to avoid passing props a few levels down. Stick to cases where the same data needs to accessed in many components at multiple levels.
+> 不要仅仅为了避免在几个层级下的组件传递 props 而使用 context，它是被用于在多个层级的多个组件需要访问相同数据的情景。
 
 ## API
 
@@ -45,9 +45,9 @@ Using context, we can avoid passing props through intermediate elements:
 const {Provider, Consumer} = React.createContext(defaultValue);
 ```
 
-Creates a `{ Provider, Consumer }` pair.
+创建一对 `{ Provider, Consumer }`。当 React 渲染 context 组件 Consumer 时，它将从组件树的上层中最接近的匹配的 Provider 读取当前的 context 值。
 
-Optionally accepts a default value to be passed to Consumers without a Provider ancestor.
+如果上层的组件树没有一个匹配的 Provider，而此时你需要渲染一个 Consumer 组件，那么你可以用到 `defaultValue` 。这有助于在不封装它们的情况下对组件进行测试。
 
 ### `Provider`
 
@@ -55,9 +55,9 @@ Optionally accepts a default value to be passed to Consumers without a Provider 
 <Provider value={/* some value */}>
 ```
 
-A React component that allows Consumers to subscribe to context changes.
+React 组件允许 Consumers 订阅 context 的改变。
 
-Accepts a `value` prop to be passed to Consumers that are descendants of this Provider. One Provider can be connected to many Consumers. Providers can be nested to override values deeper within the tree.
+接收一个 `value` 属性传递给 Provider 的后代 Consumers。一个 Provider 可以联系到多个 Consumers。Providers 可以被嵌套以覆盖组件树内更深层次的值。
 
 ### `Consumer`
 
@@ -67,19 +67,29 @@ Accepts a `value` prop to be passed to Consumers that are descendants of this Pr
 </Consumer>
 ```
 
-A React component that subscribes to context changes.
+一个可以订阅 context 变化的 React 组件。
 
-Requires a [function as a child](/docs/render-props.html#using-props-other-than-render). The function receives the current context value and returns a React node. All consumers are re-rendered whenever the Provider value changes. Changes are determined by comparing the new and old values using the same algorithm as [`Object.is`](//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description). (This can cause some issues when passing objects as `value`: see [Caveats](#caveats).)
+接收一个 [函数作为子节点](/docs/render-props.html#using-props-other-than-render). 函数接收当前 context 的值并返回一个 React 节点。传递给函数的 `value` 将等于组件树中上层 context 的最近的 Provider 的 `value` 属性。如果 context 没有 Provider ，那么 `value` 参数将等于被传递给 `createContext()` 的 `defaultValue` 。
 
-> Note
-> 
-> For more information about this pattern, see [render props](/docs/render-props.html).
 
-## Examples
 
-### Dynamic Context
+> 注意
+>
+> 关于此案例的更多信息, 请看 [render props](/docs/render-props.html).
 
-A more complex example with dynamic values for the theme:
+每当Provider的值发送改变时, 作为Provider后代的所有Consumers都会重新渲染。 从Provider到其后代的Consumers传播不受shouldComponentUpdate方法的约束，因此即使祖先组件退出更新时，后代Consumer也会被更新。
+
+通过使用与[Object.is](//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is#Description)相同的算法比较新值和旧值来确定变化。
+
+> 注意
+>
+>（这在传递对象作为 `value` 时会引发一些问题[Caveats](#caveats).）
+
+## 例子
+
+### 动态 Context
+
+主题的动态值，一个更加复杂的例子：
 
 **theme-context.js**
 `embed:context/theme-detailed-theme-context.js`
@@ -90,41 +100,54 @@ A more complex example with dynamic values for the theme:
 **app.js**
 `embed:context/theme-detailed-app.js`
 
-### Consuming Multiple Contexts
+### 父子耦合
 
-To keep context re-rendering fast, React needs to make each context consumer a separate node in the tree. 
+经常需要从组件树中某个深度嵌套的组件中更新 context。在这种情况下，可以通过 context 向下传递一个函数，以允许 Consumer 更新 context ：
+
+**theme-context.js**
+`embed:context/theme-nested-context.js`
+
+**theme-toggler-button.js**
+`embed:context/theme-nested-toggler-button.js`
+
+**app.js**
+`embed:context/app-nested.js`
+
+### 作用于多个上下文
+
+为了保持 context 快速进行二次渲染， React 需要使每一个 Consumer 在组件树中成为一个单独的节点。
 
 `embed:context/multiple-contexts.js`
 
-If two or more context values are often used together, you might want to consider creating your own render prop component that provides both.
+如果两个或者多个上下文的值经常被一起使用，也许你需要考虑你自己渲染属性的组件提供给它们。
 
-### Accessing Context in Lifecycle Methods
+### 在生命周期方法中访问 Context
 
-Accessing values from context in lifecycle methods is a relatively common use case. Instead of adding context to every lifecycle method, you just need to pass it as a prop, and then work with it just like you'd normally work with a prop.
+在生命周期方法中从上下文访问值是一种相对常见的用例。而不是将上下文添加到每个生命周期方法中，只需要将它作为一个 props 传递，然后像通常使用 props 一样去使用它。
 
 `embed:context/lifecycles.js`
 
-### Consuming Context with a HOC
+### 高阶组件中的 Context
 
-Some types of contexts are consumed by many components (e.g. theme or localization). It can be tedious to explicitly wrap each dependency with a `<Context.Consumer>` element. A [higher-order component](/docs/higher-order-components.html) can help with this.
+某些类型的上下文被许多组件（例如主题或者地点信息）共用。使用 `<Context.Consumer>` 元素显示地封装每个依赖项是冗余的。这里[higher-order component](/docs/higher-order-components.html)可以帮助我们解决这个问题。
 
-For example, a button component might consume a theme context like so:
+例如，一个按钮组件也许被作用于一个主题 context：
 
 `embed:context/higher-order-component-before.js`
 
-That's alright for a few components, but what if we wanted to use the theme context in a lot of places?
+这对于少量组件来说并没有毛病，但是如果我们想在很多地方使用主题上下文呢？
 
-We could create a higher-order component called `withTheme`:
+我们可以创建一个命名为 `withTheme` 高阶组件：
 
 `embed:context/higher-order-component.js`
 
-Now any component that depends on the theme context can easy subscribe to it using the `withTheme` function we've created:
+目前任何组件都依赖于主题 context，它们都可以很容易的使用我们创建的 `withTheme` 函数进行订阅。
 
 `embed:context/higher-order-component-usage.js`
 
-### Forwarding Refs to Context Consumers
+### 转发 Refs
 
-One issue with the render prop API is that refs don't automatically get passed to wrapped elements. To get around this, use `React.forwardRef`:
+一个关于渲染属性API的问题是 refs 不会自动的传递给被封装的元素。为了解决这个问题，使用 `React.forwardRef`：
 
 **fancy-button.js**
 `embed:context/forwarding-refs-fancy-button.js`
@@ -132,20 +155,19 @@ One issue with the render prop API is that refs don't automatically get passed t
 **app.js**
 `embed:context/forwarding-refs-app.js`
 
-## Caveats
+## 告诫
 
-Because context uses reference identity to determine when to re-render, there are some gotchas that could trigger unintentional renders in consumers when a provider's parent re-renders. For example, the code below will re-render all consumers every time the Provider re-renders because a new object is always created for `value`:
+因为 context 使用 `reference identity` 确定何时重新渲染，在 Consumer 中，当一个 Provider 的父节点重新渲染的时候，有一些问题可能触发意外的渲染。例如下面的代码，所有的 Consumner 在 Provider 重新渲染之时，每次都将重新渲染，因为一个新的对象总是被创建对应 Provider 里的 `value`：
 
 `embed:context/reference-caveats-problem.js`
 
 
-To get around this, lift the value into the parent's state:
+为了防止这样, 提升 `value` 到父节点的 state里:
 
 `embed:context/reference-caveats-solution.js`
 
-## Legacy API
+## 遗留 API
 
-> Note
-> 
-> React previously shipped with an experimental context API. The old API will be supported in all 16.x releases, but applications using it should migrate to the new version. The legacy API will be removed in a future major React version. Read the [legacy context docs here](/docs/legacy-context.html).
- 
+> 注意
+>
+> React 以前使用实验性的 context API运行，旧的API将会在16.x版本中得到支持，但使用到它的应用应该迁移到新版本。遗留的API将在未来的 React 版本中被移除。阅读[legacy context docs here](/docs/legacy-context.html)。

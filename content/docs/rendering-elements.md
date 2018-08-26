@@ -37,10 +37,7 @@ const element = <h1>Hello, world</h1>;
 
 ```js
 const element = <h1>Hello, world</h1>;
-ReactDOM.render(
-  element,
-  document.getElementById('root')
-);
+ReactDOM.render(element, document.getElementById('root'));
 ```
 
 [在 CodePen 上试试。](http://codepen.io/gaearon/pen/rrpgNB?editors=1010)
@@ -63,10 +60,7 @@ function tick() {
       <h2>It is {new Date().toLocaleTimeString()}.</h2>
     </div>
   );
-  ReactDOM.render(
-    element,
-    document.getElementById('root')
-  );
+  ReactDOM.render(element, document.getElementById('root'));
 }
 
 setInterval(tick, 1000);
