@@ -109,7 +109,7 @@ React 会在组件加载时将 DOM 元素传入 `current` 属性，在卸载时�
 
 #### 为类组件添加 Ref
 
-如果我们想要包装上面的 `CustomTextInput` ，来模拟挂载之后立即被点击的话，我们可以使用 ref 来访问自定义输入，并手动调用它的 `focusTexInput` 方法：
+如果我们想要包装上面的 `CustomTextInput` ，来模拟挂载之后立即被点击的话，我们可以使用 ref 来访问自定义输入，并手动调用它的 `focusTextInput` 方法：
 
 ```javascript{4,8,13}
 class AutoFocusTextInput extends React.Component {
