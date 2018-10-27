@@ -95,7 +95,7 @@ class MouseTracker extends React.Component {
 }
 ```
 
-现在 `<Mouse>` 组件封装了所有关于监听 `mousemove` 事件和存储鼠标 (x, y) 位置的行为，但其仍不失真正的可重用。
+现在 `<Mouse>` 组件封装了所有关于监听 `mousemove` 事件和存储鼠标 (x, y) 位置的行为，但其仍不是真正的可重用。
 
 例如，假设我们现在有一个在屏幕上跟随鼠标渲染一张猫的图片的 `<Cat>` 组件。我们可能使用 `<Cat mouse={{ x, y }}` prop 来告诉组件鼠标的坐标以让它知道图片应该在屏幕哪个位置。
 

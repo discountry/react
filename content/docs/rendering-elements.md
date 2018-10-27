@@ -35,10 +35,7 @@ const element = <h1>Hello, world</h1>;
 
 要将React元素渲染到根DOM节点中，我们通过把它们都传递给 `ReactDOM.render()` 的方法来将其渲染到页面上：
 
-```js
-const element = <h1>Hello, world</h1>;
-ReactDOM.render(element, document.getElementById('root'));
-```
+`embed:rendering-elements/render-an-element.js`
 
 [在 CodePen 上试试。](http://codepen.io/gaearon/pen/rrpgNB?editors=1010)
 
@@ -52,19 +49,7 @@ React 元素都是[immutable 不可变](https://en.wikipedia.org/wiki/Immutable_
 
 来看一下这个计时器的例子:
 
-```js{8-11}
-function tick() {
-  const element = (
-    <div>
-      <h1>Hello, world!</h1>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-  ReactDOM.render(element, document.getElementById('root'));
-}
-
-setInterval(tick, 1000);
-```
+`embed:rendering-elements/update-rendered-element.js`
 
 [在 CodePen 上试试。](http://codepen.io/gaearon/pen/gwoJZk?editors=0010)
 
@@ -86,4 +71,4 @@ React DOM 首先会比较元素内容先后的不同，而在渲染过程中只�
 
 即便我们每秒都创建了一个描述整个UI树的新元素，React DOM 也只会更新渲染文本节点中发生变化的内容。
 
-根据我们以往的经验，将界面视为一个个特定时刻的固定内容（就像一帧一帧的动画），而不是随时处于变化之中（而不是处于变化中的一整段动画），将会有利于我们理清开发思路，减少各种bugs。
+根据我们以往的经验，将界面视为一个个特定时刻的固定内容（就像一帧一帧的动画），而不是随时处于变化之中（而不是处于变化中的一整段动画），将会有利于我们理清开发思路，减少各种bug。
