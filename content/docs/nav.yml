@@ -103,6 +103,25 @@
       title: JavaScript 环境要求
     - id: glossary
       title: 术语表
+- title: Hooks (提案)
+  isOrdered: true
+  items:
+      - id: hooks-intro
+        title: Hooks 简介
+      - id: hooks-overview
+        title: Hooks 概览
+      - id: hooks-state
+        title: 使用 State Hook
+      - id: hooks-effect
+        title: 使用 Effect Hook
+      - id: hooks-rules
+        title: Hooks 规范
+      - id: hooks-custom
+        title: 自定义 Hooks
+      - id: hooks-reference
+        title: Hooks API 参考
+      - id: hooks-faq
+        title: Hooks FAQ
 - title: 贡献
   items:
   - id: how-to-contribute
