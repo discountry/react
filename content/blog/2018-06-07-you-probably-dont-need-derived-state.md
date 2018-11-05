@@ -3,44 +3,45 @@ title: "You Probably Don't Need Derived State"
 author: [bvaughn]
 ---
 
-React 16.4 included a [bugfix for getDerivedStateFromProps](/blog/2018/05/23/react-v-16-4.html#bugfix-for-getderivedstatefromprops) which caused some existing bugs in React components to reproduce more consistently. If this release exposed a case where your application was using an anti-pattern and didn't work properly after the fix, we're sorry for the churn. In this post, we will explain some common anti-patterns with derived state and our preferred alternatives.
+React 16.4  [修复了一个关于 getDerivedStateFromProps 的 bug](/blog/2018/05/23/react-v-16-4.html#bugfix-for-getderivedstatefromprops)。若这篇文章提及了你应用中正在使用的反模式，并在修复后导致了无法正确工作，我们对此感到抱歉。在这篇文章，我们将对在派生状态下普遍使用的反模式以及我们倾向的选择方案进行说明。
 
-For a long time, the lifecycle `componentWillReceiveProps` was the only way to update state in response to a change in props without an additional render. In version 16.3, [we introduced a replacement lifecycle, `getDerivedStateFromProps`](/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes) to solve the same use cases in a safer way. At the same time, we've realized that people have many misconceptions about how to use both methods, and we've found anti-patterns that result in subtle and confusing bugs. The `getDerivedStateFromProps` bugfix in 16.4 [makes derived state more predictable](https://github.com/facebook/react/issues/12898), so the results of misusing it are easier to notice.
+在很长的一段时间，生命周期 `componentWillReceiveProps` 是唯一的能够在 props 变更时更新状态而不触发渲染的唯一方式。在 16.3，[我们引入了一个替代的生命周期，`getDerivedStateFromProps`](https://reactjs.org/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes) 用以更安全的方式来解决同样的问题。同时，我们意识到有些用户可能会对如何使用这两个方法有很多误解，我们也发现了一些反模式会导致潜在的令人困惑的 bug。在 16.4 中修复的 `getDerivedStateFromProps` [使得派生状态会更容易预测](https://github.com/facebook/react/issues/12898)，因此一些错误的用例会更容易注意到。
 
-> Note
+> 注意
 >
-> All of the anti-patterns described in this post apply to both the older `componentWillReceiveProps` and the newer `getDerivedStateFromProps`.
+> 本文所提及的反模式同时应用了 `componentWillReceivedProps` 和 `getDerivedStateFromProps` 两个方法。
 
- This blog post will cover the following topics:
-* [When to use derived state](#when-to-use-derived-state)
-* [Common bugs when using derived state](#common-bugs-when-using-derived-state)
-  * [Anti-pattern: Unconditionally copying props to state](#anti-pattern-unconditionally-copying-props-to-state)
-  * [Anti-pattern: Erasing state when props change](#anti-pattern-erasing-state-when-props-change)
-* [Preferred solutions](#preferred-solutions)
-* [What about memoization?](#what-about-memoization)
+本文将涵盖以下主题：
+* [何时使用派生状态](#何时使用派生状态)
+* [使用派生状态的一些常见问题](#使用派生状态的一些常见问题)
+    * [反模式：无条件地将 props 拷贝到状态上](#反模式：无条件地将 props 拷贝到状态上)
+    * [反模式：当 props 更新时擦除状态](#反模式：当 props 更新时擦除状态)
+* [更好的解决方案](#更好的解决方案)
+* [记忆化（memoization）是否可行？](#记忆化（memoization）是否可行？)
 
-## When to Use Derived State
+## 何时使用派生状态
 
-`getDerivedStateFromProps` exists for only one purpose. It enables a component to update its internal state as the result of **changes in props**. Our previous blog post provided some examples, like [recording the current scroll direction based on a changing offset prop](/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props) or [loading external data specified by a source prop](/blog/2018/03/27/update-on-async-rendering.html#fetching-external-data-when-props-change).
+`getDerivedStateFromeProps` 存在仅有一个目的。其能够让组件在 **prop 变更时** 更新内部的状态。我们之前的博文提供了一些例子，例如[基于当前变更的偏移（offset）prop 记录当前的滚动方向](/blog/2018/03/27/update-on-async-rendering.html#updating-state-based-on-props) 或者 [通过资源 prop 加载额外的特定资源](/blog/2018/03/27/update-on-async-rendering.html#fetching-external-data-when-props-change)。 
 
-We did not provide many examples, because as a general rule, **derived state should be used sparingly**. All problems with derived state that we have seen can be ultimately reduced to either (1) unconditionally updating state from props or (2) updating state whenever props and state don't match. (We'll go over both in more detail below.)
+我们没有提供更多的例子，因为作为一个通用规则，**派生状态应谨慎使用**。我们所见过的所有的由派生状态导致的问题最终都可归结为（1）无条件的通过 props 来更新状态或（2）无论 props 是否和 状态匹配都更新状态。（我们将在接下来更为细致地探讨这两个问题。）
 
-* If you're using derived state to memoize some computation based only on the current props, you don't need derived state. See [What about memoization?](#what-about-memoization) below.
-* If you're updating derived state unconditionally or updating it whenever props and state don't match, your component likely resets its state too frequently. Read on for more details.
+* 若你仅通过当前的 props 使用派生状态来缓存一些计算操作，则没必要使用派生状态。可查看 [记忆化是否可行？](#what-about-memoization)一节。
+* 若你只是无条件的更新派生状态或无论 props 和状态是否匹配都进行更新，你的组件可能太过于频繁的重置它的内部状态。继续阅读了解更多细节。
 
-## Common Bugs When Using Derived State
+## 使用派生状态的一些常见问题 
 
-The terms ["controlled"](/docs/forms.html#controlled-components) and ["uncontrolled"](/docs/uncontrolled-components.html) usually refer to form inputs, but they can also describe where any component's data lives. Data passed in as props can be thought of as **controlled** (because the parent component _controls_ that data). Data that exists only in internal state can be thought of as **uncontrolled** (because the parent can't directly change it).
+术语 [“受控”](/docs/forms.html#controlled-components) 和 [“非受控”](/docs/uncontrolled-components.html) 通常指的是表单的输入框，但它们也可用于描述组件的数据的生命周期。作为 props 传递组件可以认为是 **受控**的（因为父组件_控制_那ß些数据）。仅存在于内部状态的数据则可以认为是**非受控的**（因为父组件无法直接改变它）。
 
-The most common mistake with derived state is mixing these two; when a derived state value is also updated by `setState` calls, there isn't a single source of truth for the data. The [external data loading example](/blog/2018/03/27/update-on-async-rendering.html#fetching-external-data-when-props-change) mentioned above may sound similar, but it's different in a few important ways. In the loading example, there is a clear source of truth for both the "source" prop and the "loading" state. When the source prop changes, the loading state should **always** be overridden. Conversely, the state is overridden only when the prop **changes** and is otherwise managed by the component.
+派生组件最常见的错误是混淆了这两者；当一个派生状态的值也能通过 `setState` 调用来更新时，之前在[额外的数据加载例子](/blog/2018/03/27/update-on-async-rendering.html#fetching-external-data-when-props-change)可能听起来有些类似，但在一些重要的方式上存在着差异。在加载的例子中，对于 "source" prop 和 "loading" 状态都有一个清晰的来源。当 source prop 发生改变，loading 状态则应当**永远**被重写。反过来，仅当 prop **发生改变**并且由组件管理时，状态才会被重写。
 
-Problems arise when any of these constraints are changed. This typically comes in two forms. Let's take a look at both.
+当这些约束的任何一条被改变都会引发问题。典型的情况是在两个表单下。让我们来看个例子。
 
-### Anti-pattern: Unconditionally copying props to state
+### 反模式：无条件地将 props 拷贝到状态上
 
-A common misconception is that `getDerivedStateFromProps` and `componentWillReceiveProps` are only called when props "change". These lifecycles are called any time a parent component rerenders, regardless of whether the props are "different" from before. Because of this, it has always been unsafe to _unconditionally_ override state using either of these lifecycles. **Doing so will cause state updates to be lost.**
+一个普遍的误解是 `getDerivedStateFromProps` 和 `componentWillReceiveProps` 仅在 props 改变时被调用。这些生命周期会在父组件重新渲染时被调用，无论其 props 是否和之前有不同。由于这一原因，总是_无条件_地使用这些生命周期重载状态是不安全的。**这么做可能会导致更新状态的丢失。**
 
-Let’s consider an example to demonstrate the problem. Here is a `EmailInput` component that "mirrors" an email prop in state:
+考虑一个描述了这一问题的例子。有一个将 email prop 复制到状态的 `EmailInput` 的组件：
+
 ```js
 class EmailInput extends Component {
   state = { email: this.props.email };
@@ -61,15 +62,15 @@ class EmailInput extends Component {
 }
 ```
 
-At first, this component might look okay. State is initialized to the value specified by props and updated when we type into the `<input>`. But if our component's parent rerenders, anything we've typed into the `<input>` will be lost! ([See this demo for an example.](https://codesandbox.io/s/m3w9zn1z8x)) This holds true even if we were to compare `nextProps.email !== this.state.email` before resetting.
+首先，该组件看起来没问题。状态通过特定的 prop 进行初始化并当我们在 `<input>` 中输入时进行更新。但如果我们组件的父元素重渲，任何我们在 `<input>` 中的输入都将丢失！（[查看这一例子。](https://codesandbox.io/s/m3w9zn1z8x)）即使我们在重置前对 `nextProps.email !== this.state.email` 进行比较，仍返回真。
 
-In this simple example, adding `shouldComponentUpdate` to rerender only when the email prop has changed could fix this. However in practice, components usually accept multiple props; another prop changing would still cause a rerender and improper reset. Function and object props are also often created inline, making it hard to implement a `shouldComponentUpdate` that reliably returns true only when a material change has happened. [Here is a demo that shows that happening.](https://codesandbox.io/s/jl0w6r9w59) As a result, `shouldComponentUpdate` is best used as a performance optimization, not to ensure correctness of derived state.
+在这一例子中，增加 `shouldComponentUpdate` 方法保证当且仅当 email prop 发生变更时才进行重渲可能能修复该问题。然而在实践中，组件通常可以接受多个 props；另一个 prop 的变更仍会导致重渲并进行错误的重置。函数和对象类型的 props 常通过内联的形式创建，使得其很难实现一个可靠的 `shouldComponentUpdate` 保证当且仅当元素变更时才返回真值。[这一例子描述了具体的内容。](https://codesandbox.io/s/jl0w6r9w59)最终，`shouldComponentUpdate` 最好用于性能优化，而不是保证派生状态的正确性。
 
-Hopefully it's clear by now why **it is a bad idea to unconditionally copy props to state**. Before reviewing possible solutions, let's look at a related problematic pattern: what if we were to only update the state when the email prop changes?
+希望现在对于为何**无条件地将 prop 复制到状态是个糟糕的理念**已经解释清楚了。在回顾可行的解决方案前，先来看一个相关的问题模式：要是我们仅在 email prop 发生变更时才更新如何？
 
-### Anti-pattern: Erasing state when props change
+### 反模式：当 props 更新时擦除状态
 
-Continuing the example above, we could avoid accidentally erasing state by only updating it when `props.email` changes:
+继续之前的例子，我们可以仅当 `props.email` 变更时进行更新来避免意外的擦除状态：
 
 ```js
 class EmailInput extends Component {
@@ -90,32 +91,33 @@ class EmailInput extends Component {
 }
 ```
 
-> Note
+> 注意
 >
-> Even though the example above shows `componentWillReceiveProps`, the same anti-pattern applies to `getDerivedStateFromProps`.
+> 即使之前的例子展示了 `componentWillReceiveProps`，其和使用 `getDerivedStateFromProps` 一样是反模式。
 
-We've just made a big improvement. Now our component will erase what we've typed only when the props actually change.
+我们做了一个巨大的提升。现在我们的组件仅当 props 真的改变时才会擦除我们的输入。
 
-There is still a subtle problem. Imagine a password manager app using the above input component. When navigating between details for two accounts with the same email, the input would fail to reset. This is because the prop value passed to the component would be the same for both accounts! This would be a surprise to the user, as an unsaved change to one account would appear to affect other accounts that happened to share the same email. ([See demo here.](https://codesandbox.io/s/mz2lnkjkrx))
+这仍然存在一个潜在的问题。想象一个使用了之前输入框组件的密码管理应用。当定位到了使用相同邮箱的两个账户，输入框将无法进行重设。这是由于两个账户传递给组件的值都是相同的！这可能会让用户感到诧异，由于碰巧使用了相同的邮箱，对于一个账户的不安全变更的出现会影响到其他账户。（[点击查看案例。](https://codesandbox.io/s/mz2lnkjkrx)）
 
-This design is fundamentally flawed, but it's also an easy mistake to make. ([I've made it myself!](https://twitter.com/brian_d_vaughn/status/959600888242307072)) Fortunately there are two alternatives that work better. The key to both is that **for any piece of data, you need to pick a single component that owns it as the source of truth, and avoid duplicating it in other components.** Let's take a look at each of the alternatives.
+这一设计存在潜在的缺陷，但却很容易犯。（[我自己也曾出错过！](https://twitter.com/brian_d_vaughn/status/959600888242307072)）幸运的是有两种替代方案效果更好。二者的关键在于 **对于数据的任何部分，你需要保证其是一个组件唯一数据源，并避免将其复制给其他组件。**现在来看一下每种替代的方案。
 
-## Preferred Solutions
+## 更好的解决方案
 
-### Recommendation: Fully controlled component
+### 推荐方案：完全受控组件
 
-One way to avoid the problems mentioned above is to remove state from our component entirely. If the email address only exists as a prop, then we don't have to worry about conflicts with state. We could even convert `EmailInput` to a lighter-weight functional component:
+一种可以避免之前提到的问题的方式是将状态从我们的组件中完全移除。如果邮箱地址仅作为 prop 存在，而后我们就不需要担心和状态产生冲突的问题。我们甚至可以将 `EmailInput` 变为一个轻量的函数组件：
+
 ```js
 function EmailInput(props) {
   return <input onChange={props.onChange} value={props.email} />;
 }
 ```
 
-This approach simplifies the implementation of our component, but if we still want to store a draft value, the parent form component will now need to do that manually. ([Click here to see a demo of this pattern.](https://codesandbox.io/s/7154w1l551))
+这一方法简化了我们的组件实现，但如果仍想要保存一个临时的值，现在需要父组件去手动进行调整。（[点击查看这一模式示例。](https://codesandbox.io/s/7154w1l551)）
 
-### Recommendation: Fully uncontrolled component with a `key`
+### 推荐方案：带 `key` 的完全不受控组件
 
-Another alternative would be for our component to fully own the "draft" email state. In that case, our component could still accept a prop for the _initial_ value, but it would ignore subsequent changes to that prop:
+另一个对于我们组件来说可行的替代方案是完全由我们的组件来“定义” email 状态。在这一情况下，我们的组件仍接受一个 prop 作为_初始_值，但其会忽略该 prop 可能的变更：
 
 ```js
 class EmailInput extends Component {
@@ -131,7 +133,7 @@ class EmailInput extends Component {
 }
 ```
 
-In order to reset the value when moving to a different item (as in our password manager scenario), we can use the special React attribute called `key`. When a `key` changes, React will [_create_ a new component instance rather than _update_ the current one](/docs/reconciliation.html#keys). Keys are usually used for dynamic lists but are also useful here. In our case, we could use the user ID to recreate the email input any time a new user is selected:
+为了保证当传入一个不同的内容时能重设该值（类似我们的密码管理器的场景），我们可以使用一个被称为 `key` 的特殊的 React 特性。当一个 `key` 变更时，React 将 [_创建_一个新的组件实例而不是更新当前组件](/docs/reconciliation.html#keys)。Keys 通常被用于动态列表但也适用于这里的场景。在我们的案例中，我们可以在任意时间上当新用户被选定时使用用户的 ID 重建邮件输入框：
 
 ```js
 <EmailInput
@@ -140,17 +142,17 @@ In order to reset the value when moving to a different item (as in our password 
 />
 ```
 
-Each time the ID changes, the `EmailInput` will be recreated and its state will be reset to the latest `defaultEmail` value. ([Click here to see a demo of this pattern.](https://codesandbox.io/s/6v1znlxyxn)) With this approach, you don't have to add `key` to every input. It might make more sense to put a `key` on the whole form instead. Every time the key changes, all components within the form will be recreated with a freshly initialized state.
+每次 ID 的变更，`EmailInput` 都会重新创建且它的内部状态将会被重设为最新的 `defaultEmail` 值。（[点击查看这一模式。](https://codesandbox.io/s/6v1znlxyxn)）通过这一方式，你不必给每个输入框添加一个 `key`。而给整个表单设置一个 `key` 似乎更有意义。每次 key 变更时，所有表单的内部组件将会重建并带有一个最新的初始值。
 
-In most cases, this is the best way to handle state that needs to be reset.
+在大多数场景下，这是最好的处理状态需要变更的方式。
 
-> Note
+> 注意
 >
-> While this may sound slow, the performance difference is usually insignificant. Using a key can even be faster if the components have heavy logic that runs on updates since diffing gets bypassed for that subtree.
+> 这一方是听上去可能比较慢，但性能上并没有明显的差异。如果该组件包含了繁重的逻辑如通过对比传递给子树的 prop 来进行更新等， 使用 key 甚至会更快。
 
-#### Alternative 1: Reset uncontrolled component with an ID prop
+#### 替代方案 1：通过 ID prop 重置非受控组件
 
-If `key` doesn't work for some reason (perhaps the component is very expensive to initialize), a workable but cumbersome solution would be to watch for changes to "userID" in `getDerivedStateFromProps`:
+若 `key` 在某些情况下不生效（可能是乳尖在初始化时非常耗时），一个可行但非常笨重的解决方案是在 `getDerivedStateFromeProps` 方法里监听 “userID” 的变更：
 
 ```js
 class EmailInput extends Component {
@@ -176,15 +178,19 @@ class EmailInput extends Component {
 }
 ```
 
-This also provides the flexibility to only reset parts of our component's internal state if we so choose. ([Click here to see a demo of this pattern.](https://codesandbox.io/s/rjyvp7l3rq))
+如果我们选择了这一方式，其也提供了一种灵活的方式来仅重置我们组件内部的部分状态。（[点击查看这一模式。](https://codesandbox.io/s/rjyvp7l3rq)）
 
 > Note
 >
 > Even though the example above shows `getDerivedStateFromProps`, the same technique can be used with `componentWillReceiveProps`.
 
-#### Alternative 2: Reset uncontrolled component with an instance method
+> 注意
+>
+> 即使之前的例子使用了 `getDerivedStateFromProps`，其同样也可以使用 `componentWillReceiveProps`。
 
-More rarely, you may need to reset state even if there's no appropriate ID to use as `key`. One solution is to reset the key to a random value or autoincrementing number each time you want to reset. One other viable alternative is to expose an instance method to imperatively reset the internal state:
+#### 替代方案 2：通过实例方法重置非受控组件
+
+更少见的是，即使没有合适的 ID 作为 `key`，你也需要重置状态。一种解决方案是重设 key 为一个随机值或每次设置一个你期望的自增的数字。另一种可行的替代方案是暴露一个实例方法来强制重置内部状态：
 
 ```js
 class EmailInput extends Component {
@@ -200,30 +206,30 @@ class EmailInput extends Component {
 }
 ```
 
-The parent form component could then [use a `ref` to call this method](/docs/glossary.html#refs). ([Click here to see a demo of this pattern.](https://codesandbox.io/s/l70krvpykl))
+父表单组件而后可以通过[使用 `ref` 来调用这一方法](/docs/glossary.html#refs)。([点击查看这一例子。](https://codesandbox.io/s/l70krvpykl))
 
-Refs can be useful in certain cases like this one, but generally we recommend you use them sparingly. Even in the demo, this imperative method is nonideal because two renders will occur instead of one.
+Ref 在特定的情况下非常有用，如这一场景，但通常我们推荐你尽量不要使用。甚至在这一情况，这一强制的方法并不理想，因为会引发两次渲染而不是一次。
 
 -----
 
-### Recap
+### 总结
 
-To recap, when designing a component, it is important to decide whether its data will be controlled or uncontrolled.
+作为概括，当在设计一个组件时，决定其数据是受控还是非受控非常关键。
 
-Instead of trying to **"mirror" a prop value in state**, make the component **controlled**, and consolidate the two diverging values in the state of some parent component. For example, rather than a child accepting a "committed" `props.value` and tracking a "draft" `state.value`, have the parent manage both `state.draftValue` and `state.committedValue` and control the child's value directly. This makes the data flow more explicit and predictable.
+让组件变得**可控**，以及在父组件中将两个不同的值进行合并，而不是仅仅尝试将**prop 的值“复制”到状态中**。例如，与其让子组件接受一个“提交”的 `props.value` 并追踪“变更(draft)”的 `state.value`，不如让父组件同时管理 `state.draftValue` 和 `state.committedValue` 并直接控制子组件的值。这让数据流更为直接和可预测。
 
-For **uncontrolled** components, if you're trying to reset state when a particular prop (usually an ID) changes, you have a few options:
-* **Recomendation: To reset _all internal state_, use the `key` attribute.**
-* Alternative 1: To reset _only certain state fields_, watch for changes in a special property (e.g. `props.userID`).
-* Alternative 2: You can also consider fall back to an imperative instance method using refs.
+对于**非受控**组件，如果你尝试当一个特殊的 prop（通常是 ID） 改变时重置状态，通常有以下一些选择：
+* **建议：使用 `key` 属性来重置_所有内部状态_。**
+* 方案1：监听一些特殊属性的变更（如：`props.userID`），重置_特定的状态_。
+* 方案2：可以考虑通过 refs 强制调用实例方法来进行刷新。
 
-## What about memoization?
+## 记忆化（memoization）是否可行？
 
-We've also seen derived state used to ensure an expensive value used in `render` is recomputed only when the inputs change. This technique is known as [memoization](https://en.wikipedia.org/wiki/Memoization).
+我们已经看到了派生状态被用于确保在 `render` 方法中仅当输入改变时进行重新计算。这一技术也被认为是 [记忆化](https://en.wikipedia.org/wiki/Memoization)。
 
-Using derived state for memoization isn't necessarily bad, but it's usually not the best solution. There is inherent complexity in managing derived state, and this complexity increases with each additional property. For example, if we add a second derived field to our component state then our implementation would need to separately track changes to both.
+对于记忆化来说，使用派生状态并不算糟糕，但通常来说也不算最佳的解决方案。在管理派生状态存在着内涵的复杂性，而这一复杂性随着增加的属性也在不断地提升。例如，如果我们给我们的组件增加了第二个派生状态，而后我们也将在分别跟踪这二者的变更。
 
-Let's look at an example of one component that takes one prop—a list of items—and renders the items that match a search query entered by the user. We could use derived state to store the filtered list:
+现在来看一个接受一个 props 的组件的例子-展示一系列内容的列表-并将与用户输入匹配的查询渲染出来。我们可以用派生状态来存储过滤后的列表：
 
 ```js
 class Example extends Component {
@@ -267,7 +273,7 @@ class Example extends Component {
 }
 ```
 
-This implementation avoids recalculating `filteredList` more often than necessary. But it is more complicated than it needs to be, because it has to separately track and detect changes in both props and state in order to properly update the filtered list. In this example, we could simplify things by using `PureComponent` and moving the filter operation into the render method: 
+该实现避免了更频繁地重复计算 `filteredList`。但其也更复杂，因为不得不单独地追踪和监测每一个 prop 和状态的变更以为了正确地更新过滤列表。在这一例子中，我们可以通过使用 `PureComponent` 以及将过滤操作放进渲染方法里来进行简化：
 
 ```js
 // PureComponents only rerender if at least one state or prop value changes.
@@ -299,7 +305,7 @@ class Example extends PureComponent {
 }
 ```
 
-The above approach is much cleaner and simpler than the derived state version. Occasionally, this won't be good enough—filtering may be slow for large lists, and `PureComponent` won't prevent rerenders if another prop were to change. To address both of these concerns, we could add a memoization helper to avoid unnecessarily re-filtering our list:
+之前提到的方法相较于派生状态的版本要更为的清晰和简单。有时，这对于大型列表来说这一方法就可能不那么好了有可能会比较慢，`PureComponent` 也有可能无法阻止重渲染若另外的 prop 发生了改变。为了处理这些问题，我们可以增加一个记忆化的帮助函数来避免不必要的重新过滤我们的列表项：
 
 ```js
 import memoize from "memoize-one";
@@ -323,7 +329,7 @@ class Example extends Component {
     const filteredList = this.filter(this.props.list, this.state.filterText);
 
     return (
-      <Fragment>
+      <Fragment> 
         <input onChange={this.handleChange} value={this.state.filterText} />
         <ul>{filteredList.map(item => <li key={item.id}>{item.text}</li>)}</ul>
       </Fragment>
@@ -332,16 +338,16 @@ class Example extends Component {
 }
 ```
 
-This is much simpler and performs just as well as the derived state version!
+这一实现则更为简单且和之前派生状态的版本行为一致！
 
-When using memoization, remember a couple of constraints:
+当在使用记忆化时，记住几点限制：
 
-1. In most cases, you'll want to **attach the memoized function to a component instance**. This prevents multiple instances of a component from resetting each other's memoized keys.
-1. Typically you'll want to use a memoization helper with a **limited cache size** in order to prevent memory leaks over time. (In the example above, we used `memoize-one` because it only caches the most recent arguments and result.)
-1. None of the implementations shown in this section will work if `props.list` is recreated each time the parent component renders. But in most cases, this setup is appropriate.
+1. 大多数场景，你想要**记忆函数来标记组件实例**。这一行为阻止了组件多个实例通过每一个不同的 key 进行重置。
+2. 典型地你想要用一个缓存函数来**限制缓存大小**以避免时不时地内存泄露。（在前一个例子中，我们使用了 `memoize-one`，因为它仅缓存最新的参数和结果。）
+3. 如果在每次父组件渲染时 `prop.list` 都重新创建，那么本节提到的所有方法都将不会起作用。但大多数场景下，这一设置是合理的。
 
-## In closing
+## 尾声
 
-In real world applications, components often contain a mix of controlled and uncontrolled behaviors. This is okay! If each value has a clear source of truth, you can avoid the anti-patterns mentioned above.
+真是世界的应用里，组件通常混合了受控和非受控的行为。这是没问题的！如果每一个值都只有一个清晰的来源，则可以避免之前提及的反模式。
 
-It is also worth re-iterating that `getDerivedStateFromProps` (and derived state in general) is an advanced feature and should be used sparingly because of this complexity. If your use case falls outside of these patterns, please share it with us on [GitHub](https://github.com/reactjs/reactjs.org/issues/new) or [Twitter](https://twitter.com/reactjs)!
+值得重申的是 `getDerivedStateFromProps`（通常是派生状态）是一个高级特性，由于其 复杂性应尽可能地避免使用。如果你在使用这些模式中出现了我们未曾提及的问题，可以通过 [Github](https://github.com/reactjs/reactjs.org/issues/new) 或 [Tiwtter](https://twitter.com/reactjs) 与我们分享！
