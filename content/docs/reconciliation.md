@@ -143,7 +143,7 @@ React会调整每个子节点，而非意识到可以完整保留`<li>Duke</li>`
 
 当索引用作key时，组件状态在重新排序时也会有问题。组件实例基于key进行更新和重用。如果key是索引，则item的顺序变化会改变key值。这将导致非受控组件的状态可能会以意想不到的方式混淆和更新。
 
-[这里](https://codepen.io/pen?&editors=0010)是在CodePen上使用索引作为键可能导致的问题的一个例子，[这里](https://codepen.io/pen?&editors=0010)是同一个例子的更新版本，展示了如何不使用索引作为键将解决这些reordering, sorting, 和 prepending的问题。
+[这里](https://reactjs.org/redirect-to-codepen/reconciliation/index-used-as-key)是在CodePen上使用索引作为键可能导致的问题的一个例子，[这里](https://reactjs.org/redirect-to-codepen/reconciliation/no-index-used-as-key)是同一个例子的更新版本，展示了如何不使用索引作为键将解决这些reordering, sorting, 和 prepending的问题。
 
 ## 权衡
 
