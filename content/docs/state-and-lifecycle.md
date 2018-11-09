@@ -7,6 +7,9 @@ prev: components-and-props.html
 next: handling-events.html
 ---
 
+生命周期图解
+![React 生命周期图解](https://upload-images.jianshu.io/upload_images/4118241-d979d05af0b7d4db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/488/format/webp)
+
 参考[该例子](/docs/rendering-elements.html#更新元素渲染)。
 
 到目前为止我们只学习了一种方法来更新UI。
