@@ -5,7 +5,7 @@ permalink: docs/hooks-intro.html
 next: hooks-overview.html
 ---
 
-*Hooks* are a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+*Hooks*是React v16.7.0-alpha中加入的新特性。它可以让你在class以外使用state和其他React特性。你可以在[这里](https://github.com/reactjs/rfcs/pull/68)看到关于它的一些讨论。
 
 ```js{4,5}
 import { useState } from 'react';
@@ -25,13 +25,13 @@ function Example() {
 }
 ```
 
-This new function `useState` is the first "Hook" we'll learn about, but this example is just a teaser. Don't worry if it doesn't make sense yet!
+`useState`这个方法是我们接触到的第一个"hook"。我们用它完成了一个最简单的组件，接下来我们会看到更多有趣的应用。
 
-**You can start learning Hooks [on the next page](/docs/hooks-overview.html).** On this page, we'll continue by explaining why we're adding Hooks to React and how they can help you write great applications.
+**你可以立即跳到[下一页](/docs/hooks-overview.html)开始学习Hooks。**在这一页，我们将继续解释为什么我们要在React中引入Hooks，以及它们将如何帮助你写出超棒的React应用。
 
-## Video Introduction
+## 视频介绍
 
-At React Conf 2018, Sophie Alpert and Dan Abramov introduced Hooks, followed by Ryan Florence demonstrating how to refactor an application to use them. Watch the video here:
+在React Conf 2018，Sophie Alpert 和 Dan Abramov介绍了Hooks，然后Ryan Florence演示了如何用它们重构我们的应用。你可以在这里看到这个视频：
 
 <br>
 
