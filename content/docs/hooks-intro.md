@@ -45,7 +45,7 @@ function Example() {
 * **100% 向后兼容** Hooks不包含任何爆炸性的更新。
 * **立即可用** Hooks现在已经包含在alpha版本中。而且我们期望在接受社区反馈后把他们加入到React 16.7版本中。
 
-**classes不会被移除** 你可以在这一页的[最后一节](#gradual-adoption-strategy) )读到更多关于Hooks的渐进策略。
+**classes不会被移除** 你可以在这一页的[最后一节](#gradual-adoption-strategy)读到更多关于Hooks的渐进策略。
 
 **Hooks不会影响你对React的理解** 恰恰相反，Hooks为React的这些概念提供了更直接的API。之后你将会看到，有了Hooks，你可以以一种更加强大的方式将props, state, context, refs 和生命周期整合起来。
 
