@@ -5,7 +5,7 @@ permalink: docs/hooks-intro.html
 next: hooks-overview.html
 ---
 
-*Hooks* are a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+*Hooks* 是React在React v16.7.0-alpha版本中加入的新特性。这一新特性可以让你在class之外使用state等React的特性。你可以在这[这里](https://github.com/reactjs/rfcs/pull/68)看到相关的讨论
 
 ```js{4,5}
 import { useState } from 'react';
