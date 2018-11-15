@@ -55,17 +55,17 @@ function Example() {
 
 Hooks解决了我们在React发布至今的五年来遇到的一系列看似不相关的问题。不论你是刚刚开始学习React，或是一直在用它，甚至你只是在使用与React具有相似组件模型的框架，你一定或多或少注意到这些问题。
 
-### 跨组件复用包含状态的逻辑十分困难
+### 跨组件复用stateful logic(包含状态的逻辑)十分困难
 
-React没有提供一种将可复用的行为“attach”到组件上的方式（比如redux的connect方法）。如果你已经使用了一段时间的React，你可能对[render props](/docs/render-props.html) 和 [高阶组件](/docs/higher-order-components.html)有一定的了解，它们的出现就是为了解决逻辑复用的问题。但是这些模式都要求你重新构造你的组件，这可能会非常麻烦。在很多典型的React组件中，你可以在React DevTool里看到我们的组件被层层叠叠的providers, consumers, 高阶组件, render props, 和其他抽象层包裹。当然你可以通过[筛选功能](https://github.com/facebook/react-devtools/pull/503)把它们全部都过滤掉，但是这种现象也指出了一些更深层次的问题：React需要一些更好的底层元素来复用含状态的逻辑
+React没有提供一种将可复用的行为“attach”到组件上的方式（比如redux的connect方法）。如果你已经使用了一段时间的React，你可能对[render props](/docs/render-props.html) 和 [高阶组件](/docs/higher-order-components.html)有一定的了解，它们的出现就是为了解决逻辑复用的问题。但是这些模式都要求你重新构造你的组件，这可能会非常麻烦。在很多典型的React组件中，你可以在React DevTool里看到我们的组件被层层叠叠的providers, consumers, 高阶组件, render props, 和其他抽象层包裹。当然你可以通过[筛选功能](https://github.com/facebook/react-devtools/pull/503)把它们全部都过滤掉，但是这种现象也指出了一些更深层次的问题：React需要一些更好的底层元素来复用stateful logic.
 
-With Hooks, you can extract stateful logic from a component so it can be tested independently and reused. **Hooks allow you to reuse stateful logic without changing your component hierarchy.** This makes it easy to share Hooks among many components or with the community.
+使用Hooks，你可以在将含有state的逻辑从组件中抽象出来，这将可以让这些逻辑容易被测试。同时，**Hooks可以帮助你在不重写组件结构的情况下复用这些逻辑。** 这样这些逻辑就可以跨组件复用，甚至你可以将他们分享到社区中。
 
-We'll discuss this more in [Building Your Own Hooks](/docs/hooks-custom.html).
+我们将在[自定义Hooks](/docs/hooks-custom.html)中继续这一部分的讨论。
 
-### Complex components become hard to understand
+### 复杂的组件难以理解
 
-We've often had to maintain components that started out simple but grew into an unmanageable mess of stateful logic and side effects. Each lifecycle method often contains a mix of unrelated logic. For example, components might perform some data fetching in `componentDidMount` and `componentDidUpdate`. However, the same `componentDidMount` method might also contain some unrelated logic that sets up event listeners, with cleanup performed in `componentWillUnmount`. Mutually related code that changes together gets split apart, but completely unrelated code ends up combined in a single method. This makes it too easy to introduce bugs and inconsistencies.
+我们在刚开始构建我们的组件时它们往往很简单，然而随着开发的进展它们会变得越来越大、越来越混乱，各种逻辑在组件中散落的到处都是。每个生命周期钩子中都包含了一堆互不相关的逻辑。比如我们常常在`componentDidMount` 和 `componentDidUpdate` 中拉取数据，同时`compnentDidMount` 方法可能又包含一些不相干的逻辑，比如设置事件监听（之后需要在 `componentWillUnmount` 中清除）。最终的结果是强相关的代码被分离，反而是不相关的代码被组合在了一起。这显然会导致大量错误。
 
 In many cases it's not possible to break these components into smaller ones because the stateful logic is all over the place. It's also difficult to test them. This is one of the reasons many people prefer to combine React with a separate state management library. However, that often introduces too much abstraction, requires you to jump between different files, and makes reusing components more difficult.
 
