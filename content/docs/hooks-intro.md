@@ -67,15 +67,15 @@ React没有提供一种将可复用的行为“attach”到组件上的方式（
 
 我们在刚开始构建我们的组件时它们往往很简单，然而随着开发的进展它们会变得越来越大、越来越混乱，各种逻辑在组件中散落的到处都是。每个生命周期钩子中都包含了一堆互不相关的逻辑。比如我们常常在`componentDidMount` 和 `componentDidUpdate` 中拉取数据，同时`compnentDidMount` 方法可能又包含一些不相干的逻辑，比如设置事件监听（之后需要在 `componentWillUnmount` 中清除）。最终的结果是强相关的代码被分离，反而是不相关的代码被组合在了一起。这显然会导致大量错误。
 
-In many cases it's not possible to break these components into smaller ones because the stateful logic is all over the place. It's also difficult to test them. This is one of the reasons many people prefer to combine React with a separate state management library. However, that often introduces too much abstraction, requires you to jump between different files, and makes reusing components more difficult.
+在许多情况下，我们也不太可能将这些组件分解成更小的组件，因为stateful logic到处都是。测试它们也很困难。这是许多人喜欢将React与单独的状态管理库结合使用的原因之一。然而，这通常会引入太多的抽象，需要在不同的文件之间跳转，并且使得重用组件更加困难。
 
-To solve this, **Hooks let you split one component into smaller functions based on what pieces are related (such as setting up a subscription or fetching data)**, rather than forcing a split based on lifecycle methods. You may also opt into managing the component's local state with a reducer to make it more predictable.
+为了解决这个问题，**Hooks允许您根据相关部分(例如设置订阅或获取数据)将一个组件分割成更小的函数**，而不是强制基于生命周期方法进行分割。您还可以选择使用一个reducer来管理组件的本地状态，以使其更加可预测。
 
-We'll discuss this more in [Using the Effect Hook](/docs/hooks-effect.html#tip-use-multiple-effects-to-separate-concerns).
+我们将在[使用Effect Hook](/docs/hooks-effect.html#tip-use-multiple-effects-to-separate-concerns)中继续这一部分的讨论。
 
-### Classes confuse both people and machines
+### 不止是用户，机器也对Classes难以理解
 
-In our observation, classes are the biggest barrier to learning React. You have to understand how `this` works in JavaScript, which is very different from how it works in most languages. You have to remember to bind the event handlers. Without unstable [syntax proposals](https://babeljs.io/docs/en/babel-plugin-transform-class-properties/), the code is very verbose. People can understand props, state, and top-down data flow perfectly well but still struggle with classes. The distinction between function and class components in React and when to use each one leads to disagreements even between experienced React developers.
+据我们观察，classes是学习React的最大障碍。您必须了解`this`如何在JavaScript中工作，这与它在大多数语言中的工作方式非常不同。必须记住绑定事件处理程序。没有稳定的[语法提案](https://babeljs.io/docs/en/babel-plugin-transform-class-properties/)，代码非常冗长。尽管人们可以很好地理解props、state和自顶向下的数据流，但仍然要与类做斗争。React中功能和类组件的区别以及何时使用每种组件都会导致有经验的React开发人员之间的分歧。
 
 Additionally, React has been out for about five years, and we want to make sure it stays relevant in the next five years. As [Svelte](https://svelte.technology/), [Angular](https://angular.io/), [Glimmer](https://glimmerjs.com/), and others show, [ahead-of-time compilation](https://en.wikipedia.org/wiki/Ahead-of-time_compilation) of components has a lot of future potential. Especially if it's not limited to templates. Recently, we've been experimenting with [component folding](https://github.com/facebook/react/issues/7323) using [Prepack](https://prepack.io/), and we've seen promising early results. However, we found that class components can encourage unintentional patterns that make these optimizations fall back to a slower path. Classes present issues for today's tools, too. For example, classes don't minify very well, and they make hot reloading flaky and unreliable. We want to present an API that makes it more likely for code to stay on the optimizable path.
 
