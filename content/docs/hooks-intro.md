@@ -79,18 +79,19 @@ React没有提供一种将可复用的行为“attach”到组件上的方式（
 
 除此以外，React已经发布了五年，我们还想在未来的五年让他保持稳定。就像在[Svelte](https://svelte.technology/), [Angular](https://angular.io/), [Glimmer](https://glimmerjs.com/)和其他框架中展示的那样，组件的提前编译潜力巨大。尤其是在它不局限于模板的时候。最近我们在测试使用[Prepack](https://prepack.io/)来进行[component folding](https://github.com/facebook/react/issues/7323)，而且我们已经初步看到了成果。然而我们发现class组件可能会导致一些让我们做的这些优化白费的编码模式。类也为今天的工具带来了不少的issue。比如，classes不能很好的被minify，同时他们也造成了太多不必要的组件更新。我们想要提供一种便于优化的API。
 
-To solve these problems, **Hooks let you use more of React's features without classes.** Conceptually, React components have always been closer to functions. Hooks embrace functions, but without sacrificing the practical spirit of React. Hooks provide access to imperative escape hatches and don't require you to learn complex functional or reactive programming techniques.
+为了解决这些问题，**Hooks让你可以在classes之外使用更多React的新特性。** 从概念上讲，React组件也是更接近于函数的。Hooks基于函数，但是并不会修改React的基本概念。Hooks在不需要您学习复杂的函数式编程的情况下，为您提供了逃离这些问题的途径。
 
 >Examples
 >
->[Hooks at a Glance](/docs/hooks-overview.html) is a good place to start learning Hooks.
+>您可以从[Hooks概览](/docs/hooks-overview.html)开始，快速地学习Hooks。
 
-## Gradual Adoption Strategy
+## 渐进策略
 
->**TLDR: There are no plans to remove classes from React.**
+>**太长不看版: 我们完全没有把classes从React中移除的打算。**
 
-We know that React developers are focused on shipping products and don't have time to look into every new API that's being released. Hooks are very new, and it might be better to wait for more examples and tutorials before considering learning or adopting them.
+我们知道React开发者都非常忙。你们可能没有时间去研究我们一个发布的新API。Hooks还非常新，也许你可以等待出现了更多关于它们的示例和教程之后再来学习。
 
+我们也
 We also understand that the bar for adding a new primitive to React is extremely high. For curious readers, we have prepared a [detailed RFC](https://github.com/reactjs/rfcs/pull/68) that dives into motivation with more details, and provides extra perspective on the specific design decisions and related prior art.
 
 **Crucially, Hooks work side-by-side with existing code so you can adopt them gradually.** We are sharing this experimental API to get early feedback from those in the community who are interested in shaping the future of React — and we will iterate on Hooks in the open.
