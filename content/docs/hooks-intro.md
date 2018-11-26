@@ -79,26 +79,26 @@ React没有提供一种将可复用的行为“attach”到组件上的方式（
 
 除此以外，React已经发布了五年，我们还想在未来的五年让他保持稳定。就像在[Svelte](https://svelte.technology/), [Angular](https://angular.io/), [Glimmer](https://glimmerjs.com/)和其他框架中展示的那样，组件的提前编译潜力巨大。尤其是在它不局限于模板的时候。最近我们在测试使用[Prepack](https://prepack.io/)来进行[component folding](https://github.com/facebook/react/issues/7323)，而且我们已经初步看到了成果。然而我们发现class组件可能会导致一些让我们做的这些优化白费的编码模式。类也为今天的工具带来了不少的issue。比如，classes不能很好的被minify，同时他们也造成了太多不必要的组件更新。我们想要提供一种便于优化的API。
 
-To solve these problems, **Hooks let you use more of React's features without classes.** Conceptually, React components have always been closer to functions. Hooks embrace functions, but without sacrificing the practical spirit of React. Hooks provide access to imperative escape hatches and don't require you to learn complex functional or reactive programming techniques.
+为了解决这些问题，**Hooks让你可以在classes之外使用更多React的新特性。** 从概念上讲，React组件也是更接近于函数的。Hooks基于函数，但是并不会修改React的基本概念。Hooks在不需要您学习复杂的函数式编程的情况下，为您提供了逃离这些问题的途径。
 
 >Examples
 >
->[Hooks at a Glance](/docs/hooks-overview.html) is a good place to start learning Hooks.
+>您可以从[Hooks概览](/docs/hooks-overview.html)开始，快速地学习Hooks。
 
-## Gradual Adoption Strategy
+## 渐进策略
 
->**TLDR: There are no plans to remove classes from React.**
+>**太长不看版: 我们完全没有把classes从React中移除的打算。**
 
-We know that React developers are focused on shipping products and don't have time to look into every new API that's being released. Hooks are very new, and it might be better to wait for more examples and tutorials before considering learning or adopting them.
+我们知道React开发者都非常忙。你们可能没有时间去研究我们一个发布的新API。Hooks还非常新，也许你可以等待出现了更多关于它们的示例和教程之后再来学习。
 
-We also understand that the bar for adding a new primitive to React is extremely high. For curious readers, we have prepared a [detailed RFC](https://github.com/reactjs/rfcs/pull/68) that dives into motivation with more details, and provides extra perspective on the specific design decisions and related prior art.
+我们也理解添加新的底层API的门槛非常的高。对于感到好奇的读者，我们准备了一份[详细的RFC](https://github.com/reactjs/rfcs/pull/68)来提供更多我们设计Hook的细节和动机，我们设计Hooks时的独特视角，以及更多细节。
 
-**Crucially, Hooks work side-by-side with existing code so you can adopt them gradually.** We are sharing this experimental API to get early feedback from those in the community who are interested in shaping the future of React — and we will iterate on Hooks in the open.
+**最重要的是，Hooks与现有的代码可以同时工作，所以你完全可以逐步采用它们。** 我们正在分享这个API，以便得到那些对React的未来感兴趣的人们的反馈——我们将在开放的基础上开发Hooks。
 
-Finally, there is no rush to migrate to Hooks. We recommend avoiding any "big rewrites", especially for existing, complex class components. It takes a bit of a mindshift to start "thinking in Hooks". In our experience, it's best to practice using Hooks in new and non-critical components first, and ensure that everybody on your team feels comfortable with them. After you give Hooks a try, please feel free to [send us feedback](https://github.com/facebook/react/issues/new), positive or negative.
+最后，您没有必要着急迁移到Hooks。我们建议避免任何“大范围重构”，尤其是对已有的、复杂的class组件。“Thinking in Hooks”需要您进行一些思想上的切换。在我们的经验中，最佳实践是先在新的、非关键性的代码中试用Hooks，并且保证团队里的所有人都喜欢它们。在你试用过Hooks之后，请一定要来[这里](https://github.com/facebook/react/issues/new)给我们提供建议或是意见，我们都非常欢迎。
 
-We intend for Hooks to cover all existing use cases for classes, but **we will keep supporting class components for the foreseeable future.** At Facebook, we have tens of thousands of components written as classes, and we have absolutely no plans to rewrite them. Instead, we are starting to use Hooks in the new code side by side with classes.
+我们打算用钩子覆盖类的所有现有用例，但是在可预见的将来，我们将继续支持类组件。**在Facebook，我们有成千上万的组件被写成类，我们绝对没有重写它们的计划。相反，我们开始在新代码中与类一起使用钩子。
 
-## Next Steps
+## 下一步
 
-By the end of this page, you should have a rough idea of what problems Hooks are solving, but many details are probably unclear. Don't worry! **Let's now go to [the next page](/docs/hooks-overview.html) where we start learning about Hooks by example.**
+在这一页的结尾，你应该对Hooks解决了什么样的问题有了一个初步的了解，但是许多细节你可能还不那么清楚。不过不要担心！**让我们去到[下一页](/docs/hooks-overview.html)。在那里我们将会学到更多关于Hooks的例子。** 
