@@ -8,7 +8,7 @@
 
 本文档与 React 官方文档保持同步，请认准页脚**印记中文**的标识。不要被网络上一些盗用的过期文档误导。
 
-**官网地址：**[https://doc.react-china.org/](https://doc.react-china.org/)
+**官网地址：**[https://react.docschina.org/](https://react.docschina.org/)
 
 如果你遇到网络问题，请移步：
 
