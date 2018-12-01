@@ -6,9 +6,9 @@ next: hooks-rules.html
 prev: hooks-intro.html
 ---
 
-*Hooks* are a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+*Hooks* 是 React v16.7.0-alpha 中加入的新特性。它可以让你在 class 以外使用 state 和其他 React 特性。你可以在[这里](https://github.com/reactjs/rfcs/pull/68)看到关于它的一些讨论。
 
-The *Effect Hook* lets you perform side effects in function components:
+*Effect Hook* 可以让你在函数组件中执行一些具有 side effect（副作用）的操作：
 
 ```js{1,6-10}
 import { useState, useEffect } from 'react';
@@ -16,9 +16,9 @@ import { useState, useEffect } from 'react';
 function Example() {
   const [count, setCount] = useState(0);
 
-  // Similar to componentDidMount and componentDidUpdate:
+  // 与 componentDidMount 和 componentDidUpdate 类似:
   useEffect(() => {
-    // Update the document title using the browser API
+    // 通过浏览器自带的 API 更新页面标题
     document.title = `You clicked ${count} times`;
   });
 
@@ -33,24 +33,25 @@ function Example() {
 }
 ```
 
-This snippet is based on the [counter example from the previous page](/docs/hooks-state.html), but we added a new feature to it: we set the document title to a custom message including the number of clicks.
+这段代码基于[前一页的计数器示例](/docs/hook-state.html)，但是我们添加了一个新特性:我们将文档标题设置为包含单击次数的自定义消息。
 
-Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects. Whether or not you're used to calling these operations "side effects" (or just "effects"), you've likely performed them in your components before.
+获取数据、设置订阅和手动更改 React 组件中的 DOM 都是副作用的例子。不管您是否习惯将这些操作称为什么，您以前都可能在组件中执行过这些操作。
 
 >Tip
 >
->If you're familiar with React class lifecycle methods, you can think of `useEffect` Hook as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` combined.
+> 如果你熟悉 class 组件中的生命周期方法，你可以把 `useEffect` Hooks 视作 `componentDidMount`、`componentDidUpdate` 和 `componentWillUnmount` 的结合。
 
-There are two common kinds of side effects in React components: those that don't require cleanup, and those that do. Let's look at this distinction in more detail.
+React 组件中的 side effects 大致可以分为两种：一种是不需要手动清理（cleanup）的，一种是需要的。让我们看看这部分的细节。
 
-## Effects Without Cleanup
+## 不需要清理的 effects
 
-Sometimes, we want to **run some additional code after React has updated the DOM.** Network requests, manual DOM mutations, and logging are common examples of effects that don't require a cleanup. We say that because we can run them and immediately forget about them. Let's compare how classes and Hooks let us express such side effects.
+有时我们想要 **在 React 更新过 DOM 之后执行一些额外的操作。** 比如网络请求、手动更新 DOM 、以及打印日志都是常见的不需要清理的 effects。让我们比较一下我们在 classes 和 Hooks 中如何做到这些。
 
-### Example Using Classes
+### 使用 Class 的例子
 
-In React class components, the `render` method itself shouldn't cause side effects. It would be too early -- we typically want to perform our effects *after* React has updated the DOM.
+在 class 组件中，`render` 方法本身不应该导致 side effects。`render` 方法太早了————我们通常会在 React 更新过 DOM *之后* 再执行 effect。
 
+这也是我们在 class 组件中，把 side effects 放在 `componentDidMount` 和 `componentDidUpdate` 中的原因。回到我们的例子上，在这个例子中，我们在 React 更新 DOM 之后立刻更新 document title
 This is why in React classes, we put side effects into `componentDidMount` and `componentDidUpdate`. Coming back to our example, here is a React counter class component that updates the document title right after React makes changes to the DOM:
 
 ```js{9-15}
