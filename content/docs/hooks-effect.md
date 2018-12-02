@@ -51,9 +51,7 @@ React 组件中的 side effects 大致可以分为两种：一种是不需要手
 
 在 class 组件中，`render` 方法本身不应该导致 side effects。`render` 方法太早了————我们通常会在 React 更新过 DOM *之后* 再执行 effect。
 
-这也是我们在 class 组件中，把 side effects 放在 `componentDidMount` 和 `componentDidUpdate` 中的原因。回到我们的例子上，在这个例子中，我们在 React 更新 DOM 之后立刻更新 document title
-This is why in React classes, we put side effects into `componentDidMount` and `componentDidUpdate`. Coming back to our example, here is a React counter class component that updates the document title right after React makes changes to the DOM:
-
+这也是我们在 class 组件中，把 side effects 放在 `componentDidMount` 和 `componentDidUpdate` 中的原因。回到我们的例子上，在这个例子中，我们在 React 更新 DOM 之后立刻更新 document title ：
 ```js{9-15}
 class Example extends React.Component {
   constructor(props) {
@@ -84,15 +82,15 @@ class Example extends React.Component {
 }
 ```
 
-Note how **we have to duplicate the code between these two lifecycle methods in class.**
+注意 **我们 class 组件中需要在两个生命周期中重复这段代码。**
 
-This is because in many cases we want to perform the same side effect regardless of whether the component just mounted, or if it has been updated. Conceptually, we want it to happen after every render -- but React class components don't have a method like this. We could extract a separate method but we would still have to call it in two places.
+这是因为在很多时候，我们想要执行相同的 side effect，不管组件是刚刚挂载，或是刚刚更新。从概念上讲，我们想要它在每次 render 之后执行————尽管 React class 组件并不包含这样的方法。就算我们把这个公用的 side effect 抽象出来，我们依旧需要在两个地方分别调用它。
 
-Now let's see how we can do the same with the `useEffect` Hook.
+现在让我们来看看我们用 `useEffect` Hook，如何做到这些。 
 
-### Example Using Hooks
+### 使用 Hooks的例子
 
-We've already seen this example at the top of this page, but let's take a closer look at it:
+我们已经在这一页的顶部看过了这个例子，不过让我们再仔细地研究一下：
 
 ```js{1,6-8}
 import { useState, useEffect } from 'react';
@@ -115,11 +113,11 @@ function Example() {
 }
 ```
 
-**What does `useEffect` do?** By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing the DOM updates. In this effect, we set the document title, but we could also perform data fetching or call some other imperative API.
+**`useEffect` 做了什么？** 通过这个 Hook，React 知道你想要这个组件在每次 render 之后做些事情。React 会记录下你传给 `useEffect` 的这个方法（我们可以把它看做我们的 `effect` ），然后在进行了 DOM 更新之后调用这个方法。在这个 effect 中，我们设置 document title，但我们同样也可以进行数据获取或是调用其它必要的 API。
 
-**Why is `useEffect` called inside a component?** Placing `useEffect` inside the component lets us access the `count` state variable (or any props) right from the effect. We don't need a special API to read it -- it's already in the function scope. Hooks embrace JavaScript closures and avoid introducing React-specific APIs where JavaScript already provides a solution.
+**为什么 `useEffect` 在组件内部调用？** 将 `useEffect` 放在一个组件内部，可以让我们在 effect 中，即可获得对 `count` state（或其它 props）的访问，而不是使用一个特殊的 API 去获取它。Hooks 使用了 JavaScript 的闭包，从而避免了引入 React 特有的 API 来解决 JavaScript 已经提供解决方案。
 
-**Does `useEffect` run after every render?** Yes! By default, it runs both after the first render *and* after every update. (We will later talk about [how to customize this](#tip-optimizing-performance-by-skipping-effects).) Instead of thinking in terms of "mounting" and "updating", you might find it easier to think that effects happen "after render". React guarantees the DOM has been updated by the time it runs the effects.
+**`useEffect` 是不是在每次 render 之后都会调用？** 是的！默认情况下，它会在第一次 render *和* 之后的每次 update 后运行。（我们会在之后讨论如何[优化](#tip-optimizing-performance-by-skipping-effects)。）比起 “mounting” 和 “updating”，effect 在“每次 render”之后调用，想必会更容易理解。React 保证每次运行 effects 之前 DOM 已经更新了。
 
 ### Detailed Explanation
 
