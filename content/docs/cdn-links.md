@@ -6,32 +6,32 @@ prev: add-react-to-an-existing-app.html
 next: hello-world.html
 ---
 
-The UMD builds of React and ReactDOM are available over a CDN.
+可以通过 CDN 获得 React 和 ReactDOM 的 UMD 版本。
 
 ```html
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 ```
 
-The versions above are only meant for development, and are not suitable for production. Minified and optimized production versions of React are available at:
+上述版本仅用于开发环境，不适合用于生产环境。React 的压缩和优化之后的生产环境版本链接如下：
 
 ```html
 <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 ```
 
-To load a specific version of `react` and `react-dom`, replace `16` with the version number.
+如果需要加载指定版本的 `react` 和 `react-dom`，可以把 `16` 替换成需要加载的版本号。
 
-### Why the `crossorigin` Attribute?
+### 为什么要使用 `crossorigin` 属性?
 
-If you serve React from a CDN, we recommend to keep the [`crossorigin`](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) attribute set:
+如果你通过 CDN 的方式引入 React, 我们建议你设置 [`crossorigin`](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes) 属性：
 
 ```html
 <script crossorigin src="..."></script>
 ```
 
-We also recommend to verify that the CDN you are using sets the `Access-Control-Allow-Origin: *` HTTP header:
+我们同时建议你设置 `Access-Control-Allow-Origin: *` HTTP请求头来验证 CDN：
 
 ![Access-Control-Allow-Origin: *](../images/docs/cdn-cors-header.png)
 
-This enables a better [error handling experience](/blog/2017/07/26/error-handling-in-react-16.html) in React 16 and later.
+这样可以在 React 的16及以上的版本中有更好的 [错误处理体验](/blog/2017/07/26/error-handling-in-react-16.html)。
