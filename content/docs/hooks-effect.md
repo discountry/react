@@ -119,9 +119,9 @@ function Example() {
 
 **`useEffect` 是不是在每次 render 之后都会调用？** 是的！默认情况下，它会在第一次 render *和* 之后的每次 update 后运行。（我们会在之后讨论如何[优化](#tip-optimizing-performance-by-skipping-effects)。）比起 “mounting” 和 “updating”，effect 在“每次 render”之后调用，想必会更容易理解。React 保证每次运行 effects 之前 DOM 已经更新了。
 
-### Detailed Explanation
+### 细节解释
 
-Now that we know more about effects, these lines should make sense:
+现在我们来看看下面这几行代码的作用：
 
 ```js
 function Example() {
@@ -132,13 +132,13 @@ function Example() {
   });
 ```
 
-We declare the `count` state variable, and then we tell React we need to use an effect. We pass a function to the `useEffect` Hook. This function we pass *is* our effect. Inside our effect, we set the document title using the `document.title` browser API. We can read the latest `count` inside the effect because it's in the scope of our function. When React renders our component, it will remember the effect we used, and then run our effect after updating the DOM. This happens for every render, including the first one.
+我们声明了 `count` state，然后我们告诉 React 我们将会用到一个 effect。我们将一个函数传递给 `useEffct` Hook。我们传递的这个方法 *就是* 我们的 effect（副作用）。在这个 effect 里，我们使用 `document.title` API 设置了 document title。同时，由于 effect 在这个函数的作用域内，我们也可以在 effect 中读取到最新的 `count`。当 React 渲染组件时，它会记录下我们使用的 effect，然后再更新完 DOM 后调用它。这发生在每一次 render 之后，包括最开始的一次。
 
-Experienced JavaScript developers might notice that the function passed to `useEffect` is going to be different on every render. This is intentional. In fact, this is what lets us read the `count` value from inside the effect without worrying about it getting stale. Every time we re-render, we schedule a _different_ effect, replacing the previous one. In a way, this makes the effects behave more like a part of the render result -- each effect "belongs" to a particular render. We will see more clearly why this is useful [later on this page](#explanation-why-effects-run-on-each-update).
+有经验的 JavaScript 开发者也许已经发现，在每次 render 的时候，我们传递给 `useEffect` 的方法都是全新的。这是故意的。事实上，这正是我们可以在 effect 内部读取到 `count` 值，并且不用担心 `count` 值过期的原因。每当我们重新 render 的时候，我们都会使用一个 _不同的_ effect，替换掉之前的哪一个。在某种程度上，这使得 effect 表现得更像是 render 结果的一部分————每个 effect “属于”一个特定的 render。我们会在[这一节的后面](#explanation-why-effects-run-on-each-update)更清晰地了解到这么做的作用。
 
 >Tip
 >
->Unlike `componentDidMount` or `componentDidUpdate`, effects scheduled with `useEffect` don't block the browser from updating the screen. This makes your app feel more responsive. The majority of effects don't need to happen synchronously. In the uncommon cases where they do (such as measuring the layout), there is a separate [`useLayoutEffect`](/docs/hooks-reference.html#uselayouteffect) Hook with an API identical to `useEffect`.
+> 不像 `componentDidMount` 或者 `componentDidUpdate`，`useEffect` 中使用的 effect 并不会阻滞浏览器渲染页面。这让你的 app 看起来更加流畅。尽管大多数 effect 不需要同步调用。但是在一些不常见的情况下你也许需要他们同步调用（比如计算元素尺寸），我们提供了一个单独的 [`useLayoutEffect`](/docs/hooks-reference.html#uselayouteffect) 来达成这样的效果。它的 API 和 `useEffect` 是相同的。
 
 ## Effects with Cleanup
 
