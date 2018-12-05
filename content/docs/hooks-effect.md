@@ -140,13 +140,13 @@ function Example() {
 >
 > 不像 `componentDidMount` 或者 `componentDidUpdate`，`useEffect` 中使用的 effect 并不会阻滞浏览器渲染页面。这让你的 app 看起来更加流畅。尽管大多数 effect 不需要同步调用。但是在一些不常见的情况下你也许需要他们同步调用（比如计算元素尺寸），我们提供了一个单独的 [`useLayoutEffect`](/docs/hooks-reference.html#uselayouteffect) 来达成这样的效果。它的 API 和 `useEffect` 是相同的。
 
-## Effects with Cleanup
+## 需要清理的 Effect
 
-Earlier, we looked at how to express side effects that don't require any cleanup. However, some effects do. For example, **we might want to set up a subscription** to some external data source. In that case, it is important to clean up so that we don't introduce a memory leak! Let's compare how we can do it with classes and with Hooks.
+我们刚刚看过了如何书写不需要清理的 side effect。然而，还有一些 effects 需要清理。比如，**我们可能会需要从一些外部数据源获取数据**。在这种情况下，我们就要确保我们进行了清理，以避免内存泄漏。我们还是来比较一下 class 和 Hooks。
 
-### Example Using Classes
+### 使用 Class 的例子
 
-In a React class, you would typically set up a subscription in `componentDidMount`, and clean it up in `componentWillUnmount`. For example, let's say we have a `ChatAPI` module that lets us subscribe to a friend's online status. Here's how we might subscribe and display that status using a class:
+在 React class 中，典型的做法是在 `componentDidMount` 里创建订阅，然后在 `componentWillUnmount` 中清除它。比如说我们假设我们有一个 `ChatAPI` 模块，可以让我们获取朋友的在线状态。我们使用 class 一般是这么做的：
 
 ```js{8-26}
 class FriendStatus extends React.Component {
@@ -185,15 +185,15 @@ class FriendStatus extends React.Component {
 }
 ```
 
-Notice how `componentDidMount` and `componentWillUnmount` need to mirror each other. Lifecycle methods force us to split this logic even though conceptually code in both of them is related to the same effect.
+注意 `componentDidMount` 和 `componentWillUnmount` 中我们需要重复同一段代码。生命周期要求我们不得不拆分这段逻辑，就算从概念上讲他们是从属于同一个 effect 的。
 
 >Note
 >
->Eagle-eyed readers may notice that this example also needs a `componentDidUpdate` method to be fully correct. We'll ignore this for now but will come back to it in a [later section](#explanation-why-effects-run-on-each-update) of this page.
+> 细心的读者也许已经注意到，这段例子需要一个 `componentDidUpdate` 方法才能是完全正确的。不过我们在这里暂时忽略这一点。我们将在[后文](#explanation-why-effects-run-on-each-update)继续讨论这一内容。
 
-### Example Using Hooks
+### 使用 Hooks 的例子
 
-Let's see how we could write this component with Hooks.
+让我们来看看使用 Hooks 如何书写这个组件。
 
 You might be thinking that we'd need a separate effect to perform the cleanup. But code for adding and removing a subscription is so tightly related that `useEffect` is designed to keep it together. If your effect returns a function, React will run it when it is time to clean up:
 
