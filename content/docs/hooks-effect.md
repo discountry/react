@@ -6,9 +6,9 @@ next: hooks-rules.html
 prev: hooks-intro.html
 ---
 
-*Hooks* are a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+*Hooks* 是 React v16.7.0-alpha 中加入的新特性。它可以让你在 class 以外使用 state 和其他 React 特性。你可以在[这里](https://github.com/reactjs/rfcs/pull/68)看到关于它的一些讨论。
 
-The *Effect Hook* lets you perform side effects in function components:
+*Effect Hook* 可以让你在函数组件中执行一些具有 side effect（副作用）的操作：
 
 ```js{1,6-10}
 import { useState, useEffect } from 'react';
@@ -16,9 +16,9 @@ import { useState, useEffect } from 'react';
 function Example() {
   const [count, setCount] = useState(0);
 
-  // Similar to componentDidMount and componentDidUpdate:
+  // 与 componentDidMount 和 componentDidUpdate 类似:
   useEffect(() => {
-    // Update the document title using the browser API
+    // 通过浏览器自带的 API 更新页面标题
     document.title = `You clicked ${count} times`;
   });
 
@@ -33,26 +33,25 @@ function Example() {
 }
 ```
 
-This snippet is based on the [counter example from the previous page](/docs/hooks-state.html), but we added a new feature to it: we set the document title to a custom message including the number of clicks.
+这段代码基于[前一页的计数器示例](/docs/hook-state.html)，但是我们添加了一个新特性:我们将文档标题设置为包含单击次数的自定义消息。
 
-Data fetching, setting up a subscription, and manually changing the DOM in React components are all examples of side effects. Whether or not you're used to calling these operations "side effects" (or just "effects"), you've likely performed them in your components before.
+获取数据、设置订阅和手动更改 React 组件中的 DOM 都是副作用的例子。不管您是否习惯将这些操作称为什么，您以前都可能在组件中执行过这些操作。
 
 >Tip
 >
->If you're familiar with React class lifecycle methods, you can think of `useEffect` Hook as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` combined.
+> 如果你熟悉 class 组件中的生命周期方法，你可以把 `useEffect` Hooks 视作 `componentDidMount`、`componentDidUpdate` 和 `componentWillUnmount` 的结合。
 
-There are two common kinds of side effects in React components: those that don't require cleanup, and those that do. Let's look at this distinction in more detail.
+React 组件中的 side effects 大致可以分为两种：一种是不需要手动清理（cleanup）的，一种是需要的。让我们看看这部分的细节。
 
-## Effects Without Cleanup
+## 不需要清理的 effects
 
-Sometimes, we want to **run some additional code after React has updated the DOM.** Network requests, manual DOM mutations, and logging are common examples of effects that don't require a cleanup. We say that because we can run them and immediately forget about them. Let's compare how classes and Hooks let us express such side effects.
+有时我们想要 **在 React 更新过 DOM 之后执行一些额外的操作。** 比如网络请求、手动更新 DOM 、以及打印日志都是常见的不需要清理的 effects。让我们比较一下我们在 classes 和 Hooks 中如何做到这些。
 
-### Example Using Classes
+### 使用 Class 的例子
 
-In React class components, the `render` method itself shouldn't cause side effects. It would be too early -- we typically want to perform our effects *after* React has updated the DOM.
+在 class 组件中，`render` 方法本身不应该导致 side effects。`render` 方法太早了————我们通常会在 React 更新过 DOM *之后* 再执行 effect。
 
-This is why in React classes, we put side effects into `componentDidMount` and `componentDidUpdate`. Coming back to our example, here is a React counter class component that updates the document title right after React makes changes to the DOM:
-
+这也是我们在 class 组件中，把 side effects 放在 `componentDidMount` 和 `componentDidUpdate` 中的原因。回到我们的例子上，在这个例子中，我们在 React 更新 DOM 之后立刻更新 document title ：
 ```js{9-15}
 class Example extends React.Component {
   constructor(props) {
@@ -83,15 +82,15 @@ class Example extends React.Component {
 }
 ```
 
-Note how **we have to duplicate the code between these two lifecycle methods in class.**
+注意 **我们 class 组件中需要在两个生命周期中重复这段代码。**
 
-This is because in many cases we want to perform the same side effect regardless of whether the component just mounted, or if it has been updated. Conceptually, we want it to happen after every render -- but React class components don't have a method like this. We could extract a separate method but we would still have to call it in two places.
+这是因为在很多时候，我们想要执行相同的 side effect，不管组件是刚刚挂载，或是刚刚更新。从概念上讲，我们想要它在每次 render 之后执行————尽管 React class 组件并不包含这样的方法。就算我们把这个公用的 side effect 抽象出来，我们依旧需要在两个地方分别调用它。
 
-Now let's see how we can do the same with the `useEffect` Hook.
+现在让我们来看看我们用 `useEffect` Hook，如何做到这些。 
 
-### Example Using Hooks
+### 使用 Hooks的例子
 
-We've already seen this example at the top of this page, but let's take a closer look at it:
+我们已经在这一页的顶部看过了这个例子，不过让我们再仔细地研究一下：
 
 ```js{1,6-8}
 import { useState, useEffect } from 'react';
@@ -114,15 +113,15 @@ function Example() {
 }
 ```
 
-**What does `useEffect` do?** By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our "effect"), and call it later after performing the DOM updates. In this effect, we set the document title, but we could also perform data fetching or call some other imperative API.
+**`useEffect` 做了什么？** 通过这个 Hook，React 知道你想要这个组件在每次 render 之后做些事情。React 会记录下你传给 `useEffect` 的这个方法（我们可以把它看做我们的 `effect` ），然后在进行了 DOM 更新之后调用这个方法。在这个 effect 中，我们设置 document title，但我们同样也可以进行数据获取或是调用其它必要的 API。
 
-**Why is `useEffect` called inside a component?** Placing `useEffect` inside the component lets us access the `count` state variable (or any props) right from the effect. We don't need a special API to read it -- it's already in the function scope. Hooks embrace JavaScript closures and avoid introducing React-specific APIs where JavaScript already provides a solution.
+**为什么 `useEffect` 在组件内部调用？** 将 `useEffect` 放在一个组件内部，可以让我们在 effect 中，即可获得对 `count` state（或其它 props）的访问，而不是使用一个特殊的 API 去获取它。Hooks 使用了 JavaScript 的闭包，从而避免了引入 React 特有的 API 来解决 JavaScript 已经提供解决方案。
 
-**Does `useEffect` run after every render?** Yes! By default, it runs both after the first render *and* after every update. (We will later talk about [how to customize this](#tip-optimizing-performance-by-skipping-effects).) Instead of thinking in terms of "mounting" and "updating", you might find it easier to think that effects happen "after render". React guarantees the DOM has been updated by the time it runs the effects.
+**`useEffect` 是不是在每次 render 之后都会调用？** 是的！默认情况下，它会在第一次 render *和* 之后的每次 update 后运行。（我们会在之后讨论如何[优化](#tip-optimizing-performance-by-skipping-effects)。）比起 “mounting” 和 “updating”，effect 在“每次 render”之后调用，想必会更容易理解。React 保证每次运行 effects 之前 DOM 已经更新了。
 
-### Detailed Explanation
+### 细节解释
 
-Now that we know more about effects, these lines should make sense:
+现在我们来看看下面这几行代码的作用：
 
 ```js
 function Example() {
@@ -133,21 +132,21 @@ function Example() {
   });
 ```
 
-We declare the `count` state variable, and then we tell React we need to use an effect. We pass a function to the `useEffect` Hook. This function we pass *is* our effect. Inside our effect, we set the document title using the `document.title` browser API. We can read the latest `count` inside the effect because it's in the scope of our function. When React renders our component, it will remember the effect we used, and then run our effect after updating the DOM. This happens for every render, including the first one.
+我们声明了 `count` state，然后我们告诉 React 我们将会用到一个 effect。我们将一个函数传递给 `useEffct` Hook。我们传递的这个方法 *就是* 我们的 effect（副作用）。在这个 effect 里，我们使用 `document.title` API 设置了 document title。同时，由于 effect 在这个函数的作用域内，我们也可以在 effect 中读取到最新的 `count`。当 React 渲染组件时，它会记录下我们使用的 effect，然后再更新完 DOM 后调用它。这发生在每一次 render 之后，包括最开始的一次。
 
-Experienced JavaScript developers might notice that the function passed to `useEffect` is going to be different on every render. This is intentional. In fact, this is what lets us read the `count` value from inside the effect without worrying about it getting stale. Every time we re-render, we schedule a _different_ effect, replacing the previous one. In a way, this makes the effects behave more like a part of the render result -- each effect "belongs" to a particular render. We will see more clearly why this is useful [later on this page](#explanation-why-effects-run-on-each-update).
+有经验的 JavaScript 开发者也许已经发现，在每次 render 的时候，我们传递给 `useEffect` 的方法都是全新的。这是故意的。事实上，这正是我们可以在 effect 内部读取到 `count` 值，并且不用担心 `count` 值过期的原因。每当我们重新 render 的时候，我们都会使用一个 _不同的_ effect，替换掉之前的哪一个。在某种程度上，这使得 effect 表现得更像是 render 结果的一部分————每个 effect “属于”一个特定的 render。我们会在[这一节的后面](#explanation-why-effects-run-on-each-update)更清晰地了解到这么做的作用。
 
 >Tip
 >
->Unlike `componentDidMount` or `componentDidUpdate`, effects scheduled with `useEffect` don't block the browser from updating the screen. This makes your app feel more responsive. The majority of effects don't need to happen synchronously. In the uncommon cases where they do (such as measuring the layout), there is a separate [`useLayoutEffect`](/docs/hooks-reference.html#uselayouteffect) Hook with an API identical to `useEffect`.
+> 不像 `componentDidMount` 或者 `componentDidUpdate`，`useEffect` 中使用的 effect 并不会阻滞浏览器渲染页面。这让你的 app 看起来更加流畅。尽管大多数 effect 不需要同步调用。但是在一些不常见的情况下你也许需要他们同步调用（比如计算元素尺寸），我们提供了一个单独的 [`useLayoutEffect`](/docs/hooks-reference.html#uselayouteffect) 来达成这样的效果。它的 API 和 `useEffect` 是相同的。
 
-## Effects with Cleanup
+## 需要清理的 Effect
 
-Earlier, we looked at how to express side effects that don't require any cleanup. However, some effects do. For example, **we might want to set up a subscription** to some external data source. In that case, it is important to clean up so that we don't introduce a memory leak! Let's compare how we can do it with classes and with Hooks.
+我们刚刚看过了如何书写不需要清理的 side effect。然而，还有一些 effects 需要清理。比如，**我们可能会需要从一些外部数据源获取数据**。在这种情况下，我们就要确保我们进行了清理，以避免内存泄漏。我们还是来比较一下 class 和 Hooks。
 
-### Example Using Classes
+### 使用 Class 的例子
 
-In a React class, you would typically set up a subscription in `componentDidMount`, and clean it up in `componentWillUnmount`. For example, let's say we have a `ChatAPI` module that lets us subscribe to a friend's online status. Here's how we might subscribe and display that status using a class:
+在 React class 中，典型的做法是在 `componentDidMount` 里创建订阅，然后在 `componentWillUnmount` 中清除它。比如说我们假设我们有一个 `ChatAPI` 模块，可以让我们获取朋友的在线状态。我们使用 class 一般是这么做的：
 
 ```js{8-26}
 class FriendStatus extends React.Component {
@@ -186,17 +185,17 @@ class FriendStatus extends React.Component {
 }
 ```
 
-Notice how `componentDidMount` and `componentWillUnmount` need to mirror each other. Lifecycle methods force us to split this logic even though conceptually code in both of them is related to the same effect.
+注意 `componentDidMount` 和 `componentWillUnmount` 中我们需要重复同一段代码。生命周期要求我们不得不拆分这段逻辑，就算从概念上讲他们是从属于同一个 effect 的。
 
 >Note
 >
->Eagle-eyed readers may notice that this example also needs a `componentDidUpdate` method to be fully correct. We'll ignore this for now but will come back to it in a [later section](#explanation-why-effects-run-on-each-update) of this page.
+> 细心的读者也许已经注意到，这段例子需要一个 `componentDidUpdate` 方法才能是完全正确的。不过我们在这里暂时忽略这一点。我们将在[后文](#explanation-why-effects-run-on-each-update)继续讨论这一内容。
 
-### Example Using Hooks
+### 使用 Hooks 的例子
 
-Let's see how we could write this component with Hooks.
+让我们来看看使用 Hooks 如何书写这个组件。
 
-You might be thinking that we'd need a separate effect to perform the cleanup. But code for adding and removing a subscription is so tightly related that `useEffect` is designed to keep it together. If your effect returns a function, React will run it when it is time to clean up:
+你有可能以为我们依旧需要使用单独的 effect 来执行清理。但是添加和删除订阅的代码是如此的紧密相关，因此 `useEffect` 选择将它们保存在一起。如果你的 effect 返回了一个函数，React 将会在清理时运行它：
 
 ```js{10-16}
 import { useState, useEffect } from 'react';
@@ -210,7 +209,7 @@ function FriendStatus(props) {
 
   useEffect(() => {
     ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
-    // Specify how to clean up after this effect:
+    // 明确在这个 effect 之后如何清理它
     return function cleanup() {
       ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
     };
@@ -223,17 +222,17 @@ function FriendStatus(props) {
 }
 ```
 
-**Why did we return a function from our effect?** This is the optional cleanup mechanism for effects. Every effect may return a function that cleans up after it. This lets us keep the logic for adding and removing subscriptions close to each other. They're part of the same effect!
+**我们为什么在 effect 中返回一个函数** 这是一种可选的清理机制。每个 effect 都可以返回一个用来在晚些时候清理它的函数。这让我们让添加和移除订阅的逻辑彼此靠近。它们是同一个 effect 的一部分！
 
-**When exactly does React clean up an effect?** React performs the cleanup when the component unmounts. However, as we learned earlier, effects run for every render and not just once. This is why React *also* cleans up effects from the previous render before running the effects next time. We'll discuss [why this helps avoid bugs](#explanation-why-effects-run-on-each-update) and [how to opt out of this behavior in case it creates performance issues](#tip-optimizing-performance-by-skipping-effects) later below.
+**React 究竟在什么时候清理 effect？** React 在每次组件 unmount 的时候执行清理。然而，正如我们之前了解的那样，effect 会在每次 render 时运行，而不是仅仅运行一次。这也就是为什么 React *也* 会在下次运行 effect 之后清理上一次 render 中的 effect。我们会在接下来讨论[为什么这可以帮助避免 bug](#explanation-why-effects-run-on-each-update) 以及[如何有选择的运行 effect 以避免出现性能问题](#tip-optimizing-performance-by-skipping-effects)
 
 >Note
 >
->We don't have to return a named function from the effect. We called it `cleanup` here to clarify its purpose, but you could return an arrow function or call it something different.
+> 我们没必要在 effect 中返回一个具名函数。我们在这里称它为 `清理` 就可以表明它的目的，但你也可以返回一个箭头函数或者给它起一个名字。
 
-## Recap
+## 小结
 
-We've learned that `useEffect` lets us express different kinds of side effects after a component renders. Some effects might require cleanup so they return a function:
+我们现在知道 `useEffect` 让我们可以在每次组件 render 之后调用不同种类的 side effect。其中的一些可能会需要被清理，所以它们返回一个函数：
 
 ```js
   useEffect(() => {
@@ -244,7 +243,7 @@ We've learned that `useEffect` lets us express different kinds of side effects a
   });
 ```
 
-Other effects might not have a cleanup phase, and don't return anything.
+其他的一些并不需要清理操作，所以它们并不返回任何东西。
 
 ```js
   useEffect(() => {
@@ -252,21 +251,21 @@ Other effects might not have a cleanup phase, and don't return anything.
   });
 ```
 
-The Effect Hook unifies both use cases with a single API.
+Effect Hook 使用一个 API 使这两者获得了统一。
 
 -------------
 
-**If you feel like you have a decent grasp on how the Effect Hook works, or if you feel overwhelmed, you can jump to the [next page about Rules of Hooks](/docs/hooks-rules.html) now.**
+**不论你觉得对 Effect Hook 的工作方式有了很好的了解，或者你还是觉得有些迷惑，你都可以在这里跳转到 [下一页](/docs/hooks-rules.html)**
 
 -------------
 
-## Tips for Using Effects
+## 使用 Effect 的 Tips
 
-We'll continue this page with an in-depth look at some aspects of `useEffect` that experienced React users will likely be curious about. Don't feel obligated to dig into them now. You can always come back to this page to learn more details about the Effect Hook.
+在这一页我们将会继续深入探讨关于 `useEffect` 的细节。有经验的 React 用户或许会对这部分内容感兴趣，不过你也可以先去看看其他 Hook 的使用方法。你可以随时返回这个页面以了解 Effect Hook 的更多细节。
 
-### Tip: Use Multiple Effects to Separate Concerns
+### Tip: 使用多个 Effect 以实现关注点分离
 
-One of the problems we outlined in the [Motivation](/docs/hooks-intro.html#complex-components-become-hard-to-understand) for Hooks is that class lifecycle methods often contain unrelated logic, but related logic gets broken up into several methods. Here is a component that combines the counter and the friend status indicator logic from the previous examples:
+我们在 Hook 的[动机](/docs/hooks-intro.html#complex-components-become-hard-to-understand)中提到的一个问题是 class 的生命周期函数常常包含不相关的逻辑，同时相关的逻辑被拆分进不同的方法。这里有一个结合了之前的计数器和朋友状态指示器逻辑的组件：
 
 ```js
 class FriendStatusWithCounter extends React.Component {
@@ -303,9 +302,9 @@ class FriendStatusWithCounter extends React.Component {
   // ...
 ```
 
-Note how the logic that sets `document.title` is split between `componentDidMount` and `componentDidUpdate`. The subscription logic is also spread between `componentDidMount` and `componentWillUnmount`. And `componentDidMount` contains code for both tasks.
+注意这里设置 `document.title` 的代码被拆分到了 `componentDidMount` 和 `componentDidUpdate` 中。订阅的逻辑也分散到了 `componentDidMount` 和 `componentWillUnmount` 中。而 `componentDidMount` 包含了这两部分的代码。
 
-So, how can Hooks solve this problem? Just like [you can use the *State* Hook more than once](/docs/hooks-state.html#tip-using-multiple-state-variables), you can also use several effects. This lets us separate unrelated logic into different effects:
+所以 Hooks 要如何解决这一问题呢？就像[你可以不止一次使用 *State* Hooks](/docs/hooks-state.html#tip-using-multiple-state-variables) 中说的一样，你同样可以使用多个 effects。这让我们可以把不相关的逻辑分离到不同的 effect 里：
 
 ```js{3,8}
 function FriendStatusWithCounter(props) {
@@ -329,7 +328,7 @@ function FriendStatusWithCounter(props) {
 }
 ```
 
-**Hooks lets us split the code based on what it is doing** rather than a lifecycle method name. React will apply *every* effect used by the component, in the order they were specified.
+**Hook 让我们根据代码的作用将它们拆分** 而不是根据生命周期。React 将会按照指定的顺序应用 *每个* effect。
 
 ### Explanation: Why Effects Run on Each Update
 
