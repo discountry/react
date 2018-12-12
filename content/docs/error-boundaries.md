@@ -11,7 +11,7 @@ permalink: docs/error-boundaries.html
 
 部分 UI 的异常不应该破坏了整个应用。为了解决 React 用户的这一问题，React 16 引入了一种称为 “错误边界” 的新概念。
 
-错误边界是**用于捕获其子组件树 JavaScript 异常，记录错误并展示一个回退的 UI** 的 React 组件，而不是整个组件树的异常。错误组件在渲染期间，生命周期方法内，以及整个组件树构造函数内捕获错误。
+错误边界是**用于捕获其子组件树 JavaScript 异常，记录错误并展示一个回退的 UI** 的 React 组件，而不是整个组件树的异常。错误边界在渲染期间、生命周期方法内、以及整个组件树构造函数内捕获错误。
 
 > 注意
 
@@ -69,7 +69,7 @@ class ErrorBoundary extends React.Component {
 ```js
 //...
 componentDidCatch(error, info) {
-  
+
   /* Example stack information:
      in ComponentThatThrows (created by App)
      in ErrorBoundary (created by App)
@@ -151,7 +151,7 @@ class MyComponent extends React.Component {
     super(props);
     this.state = { error: null };
   }
-  
+
   handleClick = () => {
     try {
       // Do something that could throw
