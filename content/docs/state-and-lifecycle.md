@@ -251,11 +251,9 @@ class Clock extends React.Component {
   }
 ```
 
-注意我们如何在 `this` 中保存定时器ID。
+注意我们是将定时器ID保存在 `this` 中的。
 
-虽然 `this.props` 由React本身设置以及`this.state` 具有特殊的含义，但如果需要存储不用于视觉输出的东西，则可以手动向类中添加其他字段。
-
-如果你不在 `render()` 中使用某些东西，它就不应该在状态中。
+尽管 `this.props` 是由React本身安装的以及`this.state` 有特殊的含义，如果你需要存储的东西不在数据流中，你可以随意手动向类中添加其他字段（比如定时器ID）。
 
 我们将在 `componentWillUnmount()`生命周期钩子中卸载计时器：
 
