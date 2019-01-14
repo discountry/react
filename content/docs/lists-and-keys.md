@@ -131,15 +131,17 @@ const todoItems = todos.map((todo, index) =>
 ```
 
 
-如果列表可以重新排序，我们不建议使用索引来进行排序，因为这会导致渲染变得很慢。如果你想要了解更多，请点击[深度解析key的必要性](/docs/reconciliation.html#递归子节点)
+如果列表项目的顺序可能会变化，我们不建议使用索引来用作键值，因为这样做会导致性能的负面影响，还可能引起组件状态问题。如果你想要了解更多，请点击[深度解析key的必要性](/docs/reconciliation.html#递归子节点)。如果你选择不指定显式的键值，那么React将默认使用索引用作为列表项目的键值。
+
+这里有一篇文章 [in-depth explanation about why keys are necessary](https://reactjs.org/docs/reconciliation.html#recursing-on-children) ，要是你有兴趣了解更多的话。
 
 ### 用keys提取组件
 
-元素的key只有在它和它的兄弟节点对比时才有意义。
+元素的key只有放在其环绕数组的上下文中才有意义。
 
 比方说，如果你提取出一个`ListItem`组件，你应该把key保存在数组中的这个`<ListItem />`元素上，而不是放在`ListItem`组件中的`<li>`元素上。
 
-**错误的示范**
+**示范：不正确的使用键的方式**
 
 ```javascript{4,5,14,15}
 function ListItem(props) {
@@ -173,7 +175,7 @@ ReactDOM.render(
 ```
 
 
-**key的正确使用方式**
+**示范：正确的使用键的方式**
 
 ```javascript{2,3,9,10}
 function ListItem(props) {
@@ -204,9 +206,9 @@ ReactDOM.render(
 
 [在 CodePen 上试试。](https://codepen.io/rthor/pen/QKzJKG?editors=0010)
 
-当你在`map()`方法的内部调用元素时，你最好随时记得为每一个元素加上一个独一无二的`key`。
+一个好的大拇指法则：元素位于`map()`方法内时需要设置键属性。
 
-### 元素的key在他的兄弟元素之间应该唯一
+### 键（key）只是在兄弟之间必须唯一
 
 数组元素中使用的key在其兄弟之间应该是独一无二的。然而，它们不需要是全局唯一的。当我们生成两个不同的数组时，我们可以使用相同的键
 
@@ -248,7 +250,7 @@ ReactDOM.render(
 
 [在 CodePen 上试试。](https://codepen.io/gaearon/pen/NRZYGN?editors=0010)
 
-key会作为给React的提示，但不会传递给你的组件。如果您的组件中需要使用和`key`相同的值，请将其作为属性传递：
+key会作为给React的提示，但不会传递给你的组件。如果您的组件中需要使用和`key`相同的值，请用其他属性名显式传递这个值：
 
 ```js{3,4}
 const content = posts.map((post) =>
