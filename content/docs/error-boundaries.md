@@ -13,16 +13,15 @@ permalink: docs/error-boundaries.html
 
 错误边界是**用于捕获其子组件树 JavaScript 异常，记录错误并展示一个回退的 UI** 的 React 组件，而不是整个组件树的异常。错误边界在渲染期间、生命周期方法内、以及整个组件树构造函数内捕获错误。
 
-> 注意
-
+> 注意：
+>
 > 错误边界**无法**捕获如下错误:
-
 > * 事件处理 （[了解更多](https://reactjs.org/docs/error-boundaries.html#how-about-event-handlers)）
 > * 异步代码 （例如 `setTimeout` 或 `requestAnimationFrame` 回调函数）
 > * 服务端渲染
 > * 错误边界自身抛出来的错误 （而不是其子组件）
 
-如果一个类组件定义了一个名为 `componentDidCatch(error, info):` 的新方法，则其成为一个错误边界：
+一个类组件变成一个错误边界。如果它定义了生命周期方法 [`static getDerivedStateFromError()`](https://reactjs.org/docs/react-component.html#static-getderivedstatefromerror)或者[`componentDidCatch()`](https://reactjs.org/docs/react-component.html#componentdidcatch)中的任意一个或两个。当一个错误被扔出后，使用`static getDerivedStateFromError()`渲染一个退路UI。使用`componentDidCatch()`去记录错误信息。
 
 ```js{7-12,15-18}
 class ErrorBoundary extends React.Component {
@@ -31,9 +30,12 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false };
   }
 
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
   componentDidCatch(error, info) {
-    // Display fallback UI
-    this.setState({ hasError: true });
     // You can also log the error to an error reporting service
     logErrorToMyService(error, info);
   }
@@ -43,7 +45,8 @@ class ErrorBoundary extends React.Component {
       // You can render any custom fallback UI
       return <h1>Something went wrong.</h1>;
     }
-    return this.props.children;
+
+    return this.props.children; 
   }
 }
 ```
@@ -56,9 +59,9 @@ class ErrorBoundary extends React.Component {
 </ErrorBoundary>
 ```
 
-`componentDidCatch()` 方法机制类似于 JavaScript `catch {}`，但是针对组件。仅有类组件可以成为错误边界。实际上，大多数时间你仅想要定义一个错误边界组件并在你的整个应用中使用。
+错误边界工作机制类似于JavaScript `catch {}`，只是应用于组件。仅有类组件可以成为错误边界。实践中，大多数时间，你希望定义一个错误边界组件一次并将它贯穿你的整个应用。
 
-注意**错误边界仅可以捕获其子组件的错误**。错误边界无法捕获其自身的错误。如果一个错误边界无法渲染错误信息，则错误会向上冒泡至最接近的错误边界。这也类似于 JavaScript 中 catch {} 的工作机制。
+注意**错误边界仅可以捕获组件树种比他低的组件的错误**。错误边界无法捕获其自身的错误。如果一个错误边界无法渲染错误信息，则错误会向上冒泡至最接近的错误边界。这也类似于 JavaScript 中 `catch {}` 的工作机制。
 
 ### componentDidCatch 参数
 
