@@ -23,7 +23,7 @@ permalink: docs/error-boundaries.html
 
 一个类组件变成一个错误边界。如果它定义了生命周期方法 [`static getDerivedStateFromError()`](https://reactjs.org/docs/react-component.html#static-getderivedstatefromerror)或者[`componentDidCatch()`](https://reactjs.org/docs/react-component.html#componentdidcatch)中的任意一个或两个。当一个错误被扔出后，使用`static getDerivedStateFromError()`渲染一个退路UI。使用`componentDidCatch()`去记录错误信息。
 
-```js{7-12,15-18}
+```js{6-14,17-20}
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -61,7 +61,7 @@ class ErrorBoundary extends React.Component {
 
 错误边界工作机制类似于JavaScript `catch {}`，只是应用于组件。仅有类组件可以成为错误边界。实践中，大多数时间，你希望定义一个错误边界组件一次并将它贯穿你的整个应用。
 
-注意**错误边界仅可以捕获组件树种比他低的组件的错误**。错误边界无法捕获其自身的错误。如果一个错误边界无法渲染错误信息，则错误会向上冒泡至最接近的错误边界。这也类似于 JavaScript 中 `catch {}` 的工作机制。
+注意**错误边界仅可以捕获组件在树中比他低的组件的错误**。错误边界无法捕获其自身的错误。如果一个错误边界无法渲染错误信息，则错误会向上冒泡至最接近的错误边界。这也类似于 JavaScript 中 `catch {}` 的工作机制。
 
 ### componentDidCatch 参数
 
