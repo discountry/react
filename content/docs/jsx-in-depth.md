@@ -51,13 +51,13 @@ React.createElement(
 
 ## 指定 React 元素类型
 
-JSX 的标签名决定了 React 元素的类型。
+JSX 的标签的第一部分决定了 React 元素的类型。
 
-大写开头的 JSX 标签表示一个 React 组件。这些标签将会被编译为同名变量并被引用，所以如果你使用了 `<Foo />` 表达式，则必须在作用域中先声明 `Foo` 变量。
+首字母大写的类型表示 JSX 标签引用到一个 React 组件。这些标签将会被编译为直接引用同名变量，所以如果你使用了 `<Foo />` JSX 表达式，则 `Foo` 必须在作用域中。
 
-### React 必须声明
+### React 必须在作用域中
 
-由于 JSX 编译后会调用 `React.createElement` 方法，所以在你的 JSX 代码中必须首先声明 `React` 变量。
+由于 JSX 编译成`React.createElement`方法的调用，所以在你的 JSX 代码中，`React`库必须也始终在作用域中。
 
 比如，下面两个导入都是必须的，尽管 `React` 和 `CustomButton` 都没有在代码中被直接调用。
 
@@ -66,14 +66,14 @@ import React from 'react';
 import CustomButton from './CustomButton';
 
 function WarningButton() {
-  // 返回 React.createElement(CustomButton, {color: 'red'}, null);
+  // return React.createElement(CustomButton, {color: 'red'}, null);
   return <CustomButton color="red" />;
 }
 ```
 
-如果你使用 `<script>` 加载 React，它将作用于全局。
+如果你没有使用JavaScript 打捆机，而是从`<script>`标签加载React，它已经在作用域中，以`React`全局变量的形式。
 
-### 点表示法
+### 点表示法用于JSX类型
 
 你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 `MyComponents.DatePicker` 的组件，你可以直接在 JSX 中使用它：
 
@@ -91,9 +91,9 @@ function BlueDatePicker() {
 }
 ```
 
-### 首字母大写
+### 用户定义组件必须首字母大写
 
-当元素类型以小写字母开头时，它表示一个内置的组件，如 `<div>` 或 `<span>`，并将字符串 'div' 或 'span' 传 递给 `React.createElement`。 以大写字母开头的类型，如 `<Foo />` 编译为 `React.createElement(Foo)`，并且它正对应于你在 JavaScript 文件中定义或导入的组件。
+当元素类型以小写字母开头时，它表示一个内置的组件，如 `<div>` 或 `<span>`，将导致字符串 `'div'` 或 `'span'` 传递给 `React.createElement`。 以大写字母开头的类型，如 `<Foo />` 编译为 `React.createElement(Foo)`，并且它正对应于你在 JavaScript 文件中定义或导入的组件。
 
 我们建议用大写开头命名组件。如果你的组件以小写字母开头，请在 JSX 中使用之前其赋值给大写开头的变量。
 
@@ -133,7 +133,7 @@ function HelloWorld() {
 
 ### 在运行时选择类型
 
-你不能使用表达式来作为 React 元素的标签。如果你的确想通过表达式来确定 React 元素的类型，请先将其赋值给大写开头的变量。这种情况一般会在你想通过属性值条件渲染组件时出现：
+你不能使用一个通用的表达式来作为 React 元素的标签。如果你的确想使用一个通用的表达式来确定 React 元素的类型，请先将其赋值给大写开头的变量。这种情况一般发生于当你想基于属性值渲染不同的组件时：
 
 ```js{10,11}
 import React from 'react';
