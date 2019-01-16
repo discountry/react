@@ -184,16 +184,41 @@ Chrome浏览器内：
 
 目前浏览器中仅有Chrome，Edge和IE支持此特性，但是我们使用此标准[用户Timing API](https://developer.mozilla.org/en-US/docs/Web/API/User_Timing_API)，因此我们期待更多的浏览器对其添加支持。
 
+## 虚拟化长列表
 
-## 避免重复渲染
+If your application renders long lists of data (hundreds or thousands of rows), we recommended using a technique known as “windowing”. This technique only renders a small subset of your rows at any given time, and can dramatically reduce the time it takes to re-render the components as well as the number of DOM nodes created.
+
+[react-window](https://react-window.now.sh/) and [react-virtualized](https://bvaughn.github.io/react-virtualized/) are popular windowing libraries. They provide several reusable components for displaying lists, grids, and tabular data. You can also create your own windowing component, like [Twitter did](https://medium.com/@paularmstrong/twitter-lite-and-high-performance-react-progressive-web-apps-at-scale-d28a00e780a3), if you want something more tailored to your application’s specific use case.
+
+## 避免协调
 
 React在渲染出的UI内部建立和维护了一个内层的实现方式，它包括了从组件返回的React元素。这种实现方式使得React避免了一些不必要的创建和关联DOM节点，因为这样做可能比直接操作JavaScript对象更慢一些。有时它被称之为“虚拟DOM”，但是它其实和React Native的工作方式是一样的。
 
 当一个组件的`props`或者`state`改变时，React通过比较新返回的元素和之前渲染的元素来决定是否有必要更新实际的DOM。当他们不相等时，React会更新DOM。
 
+You can now visualize these re-renders of the virtual DOM with React DevTools:
+
+- [Chrome Browser Extension](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+- [Firefox Browser Extension](https://addons.mozilla.org/en-GB/firefox/addon/react-devtools/)
+- [Standalone Node Package](https://www.npmjs.com/package/react-devtools)
+
+In the developer console select the **Highlight Updates** option in the **React** tab:
+
+[![How to enable highlight updates](https://reactjs.org/static/devtools-highlight-updates-97eda4825de476af4515435a0c36ca78-acf85.png)](https://reactjs.org/static/devtools-highlight-updates-97eda4825de476af4515435a0c36ca78-a62e3.png)
+
+Interact with your page and you should see colored borders momentarily appear around any components that have re-rendered. This lets you spot re-renders that were not necessary. You can learn more about this React DevTools feature from this [blog post](https://blog.logrocket.com/make-react-fast-again-part-3-highlighting-component-updates-6119e45e6833) from [Ben Edelstein](https://blog.logrocket.com/@edelstein).
+
+Consider this example:
+
+![React DevTools Highlight Updates example](https://reactjs.org/highlight-updates-example-7a42123e91b1b460b1a65605d6ff0d2b.gif)
+
+Note that when we’re entering a second todo, the first todo also flashes on the screen on every keystroke. This means it is being re-rendered by React together with the input. This is sometimes called a “wasted” render. We know it is unnecessary because the first todo content has not changed, but React doesn’t know this.
+
+Even though React only updates the changed DOM nodes, re-rendering still takes some time. In many cases it’s not a problem, but if the slowdown is noticeable, you can speed all of this up by overriding the lifecycle function `shouldComponentUpdate`, which is triggered before the re-rendering process starts. The default implementation of this function returns `true`, leaving React to perform the update:
+
 在一些情况下，你的组件可以通过重写这个生命周期函数`shouldComponentUpdate`来提升速度， 它是在重新渲染过程开始前触发的。 这个函数默认返回`true`，可使React执行更新：
 
-```javascript
+```js
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
@@ -201,7 +226,9 @@ shouldComponentUpdate(nextProps, nextState) {
 
 如果你知道在某些情况下你的组件不需要更新，你可以在`shouldComponentUpdate`内返回`false`来跳过整个渲染进程，该进程包括了对该组件和之后的内容调用`render()`指令。
 
-## shouldComponentUpdate应用
+In most cases, instead of writing `shouldComponentUpdate()` by hand, you can inherit from [`React.PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent). It is equivalent to implementing `shouldComponentUpdate()` with a shallow comparison of current and previous props and state.
+
+## shouldComponentUpdate实战
 
 这是一个组件的子树。对其中每个组件来说，`SCU`表明了`shouldComponentUpdate`的返回内容，`vDOMEq`表明了待渲染的React元素与原始元素是否相等，最后，圆圈的颜色表明这个组件是否需要重新渲染。
 
@@ -219,7 +246,7 @@ shouldComponentUpdate(nextProps, nextState) {
 
 如果想让组件只在`props.color`或者`state.count`的值变化时重新渲染，你可以像下面这样设定`shouldComponentUpdate`：
 
-```javascript
+```js
 class CounterButton extends React.Component {
   constructor(props) {
     super(props);
@@ -269,11 +296,11 @@ class CounterButton extends React.PureComponent {
 }
 ```
 
-大部分情况下，你可以使用`React.PureComponent`而不必写你自己的`shouldComponentUpdate`，它只做一个浅比较。但是由于浅比较会忽略属性或状态**突变**的情况，此时你不能使用它。
+大部分时候，你可以使用`React.PureComponent`而不必写你自己的`shouldComponentUpdate`，它只做一个浅比较。如果属性或状态可以以浅比较会错失的方式变化，此时你不能使用它。
 
 对于更复杂的数据结构这可能成为一个问题。例如，假设你想要一个`ListOfWords`组件来渲染一个逗号分隔的单词列表，并使用一个带了点击按钮名字叫`WordAdder`的父组件来给子列表添加一个单词。以下代码*并不正确*： 
 
-```javascript
+```js
 class ListOfWords extends React.PureComponent {
   render() {
     return <div>{this.props.words.join(',')}</div>;
@@ -313,7 +340,7 @@ class WordAdder extends React.Component {
 
 避免此类问题最简单的方式是避免使用值可能会**突变**的属性或状态。例如，上面例子中的`handleClick`应该用`concat`重写成：
 
-```javascript
+```js
 handleClick() {
   this.setState(prevState => ({
     words: prevState.words.concat(['marklar'])
@@ -321,7 +348,7 @@ handleClick() {
 }
 ```
 
-ES6支持数组的[spread语法](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator)可以让它变得更容易。如果你使用的是`Create React App`，那么此语法默认可用。
+ES6支持数组的[展开语法](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator)可以让它变得更容易。如果你使用的是`Create React App`，那么此语法默认可用。
 
 ```js
 handleClick() {
@@ -339,7 +366,7 @@ function updateColorMap(colormap) {
 }
 ```
 
-想要实现代码而不污染原始对象，我们可以使用[Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)方法：
+想要实现代码而不突变原始对象，我们可以使用[Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)方法：
 
 ```js
 function updateColorMap(colormap) {
@@ -347,9 +374,9 @@ function updateColorMap(colormap) {
 }
 ```
 
-`updateColorMap`现在会返回一个新对象，而不会改变之前的旧对象。`Object.assign`在ES6中，需要`polyfill`支持。
+`updateColorMap`现在会返回一个新对象，而不会突变之前的旧对象。`Object.assign`在ES6中，需要`polyfill`支持。
 
-有一个JavaScript提议来添加[对象spread属性](https://github.com/sebmarkbage/ecmascript-rest-spread)以便不会突然变化的更新对象：
+有一个JavaScript提议来添加[对象展开属性](https://github.com/sebmarkbage/ecmascript-rest-spread)以使其更容易地更新对象并且不会突变对象：
 
 ```js
 function updateColorMap(colormap) {
@@ -357,7 +384,7 @@ function updateColorMap(colormap) {
 }
 ```
 
-如果使用`Create React App`，默认情况下 `Object.assign`和spread对象都可以使用。
+如果使用`Create React App`，默认情况下 `Object.assign`和对象展开语法都可以使用。
 
 ## 使用不可突变的数据结构
 
@@ -367,9 +394,9 @@ function updateColorMap(colormap) {
 * *持久性*:可以使用原始集合和一个突变来创建新的集合。原始集合在新集合创建后仍然可用。
 * *结构共享*:新集合尽可能多的使用原始集合的结构来创建，以便将复制操作降至最少从而提升性能。
 
-不可突变数据使得变化跟踪很方便。每个变化都会导致产生一个新的对象，因此我们只需检查索引对象是否改变。例如，在这个常见的JavaScript代码中：
+不可突变性使得跟踪改变很方便。每个变化都会导致产生一个新的对象，因此我们只需检查对象的引用是否有改变。例如，在这个常规的JavaScript代码中：
 
-```javascript
+```js
 const x = { foo: 'bar' };
 const y = x;
 y.foo = 'baz';
@@ -385,8 +412,8 @@ const y = x.set('foo', 'baz');
 x === y; // false
 ```
 
-在这个例子中，`x`突变后返回了一个新的索引，因此我们可以安全的确认`x`被改变了。
+在这个例子中，`x`突变后返回了一个新的引用，因此我们可以安全的确认`x`被改变了。
 
 还有两个库可以帮助我们使用不可突变数据：[seamless-immutable](https://github.com/rtfeldman/seamless-immutable) 和[immutability-helper](https://github.com/kolodny/immutability-helper)。
 
-实现`shouldComponentUpdate`时，不可突变的数据结构帮助我们轻松的追踪对象变化。这通常可以提供一个不错的性能提升。
+不可突变的数据结构帮助我们轻松地在对象上追踪变化，我们只需要实现`shouldComponentUpdate`。这通常可以提供一个不错的性能提升。
