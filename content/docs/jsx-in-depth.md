@@ -15,7 +15,7 @@ redirect_from:
 
 本质上来讲，JSX 只是为 `React.createElement(component, props, ...children) ` 方法提供的语法糖。比如下面的代码：
 
-```js
+```jsx
 <MyButton color="blue" shadowSize={2}>
   Click Me
 </MyButton>
@@ -23,7 +23,7 @@ redirect_from:
 
 编译为：
 
-```js
+```jsx
 React.createElement(
   MyButton,
   {color: 'blue', shadowSize: 2},
@@ -33,13 +33,13 @@ React.createElement(
 
 如果没有子代，你还可以使用自闭合标签，比如：
 
-```js
+```jsx
 <div className="sidebar" />
 ```
 
 编译为：
 
-```js
+```jsx
 React.createElement(
   'div',
   {className: 'sidebar'},
@@ -61,7 +61,7 @@ JSX 的标签的第一部分决定了 React 元素的类型。
 
 比如，下面两个导入都是必须的，尽管 `React` 和 `CustomButton` 都没有在代码中被直接调用。
 
-```js{1,2,5}
+```jsx{1,2,5}
 import React from 'react';
 import CustomButton from './CustomButton';
 
@@ -77,7 +77,7 @@ function WarningButton() {
 
 你还可以使用 JSX 中的点表示法来引用 React 组件。你可以方便地从一个模块中导出许多 React 组件。例如，有一个名为 `MyComponents.DatePicker` 的组件，你可以直接在 JSX 中使用它：
 
-```js{10}
+```jsx{10}
 import React from 'react';
 
 const MyComponents = {
@@ -99,7 +99,7 @@ function BlueDatePicker() {
 
 例如，下面的代码将无法按预期运行：
 
-```js{3,4,10,11}
+```jsx{3,4,10,11}
 import React from 'react';
 
 // 错误！组件名应该首字母大写:
@@ -116,7 +116,7 @@ function HelloWorld() {
 
 为了解决这个问题，我们将 `hello` 重命名为 `Hello`，然后使用 `<Hello />` 引用：
 
-```js{3,4,10,11}
+```jsx{3,4,10,11}
 import React from 'react';
 
 // 正确！组件名应该首字母大写:
@@ -135,7 +135,7 @@ function HelloWorld() {
 
 你不能使用一个通用的表达式来作为 React 元素的标签。如果你的确想使用一个通用的表达式来确定 React 元素的类型，请先将其赋值给大写开头的变量。这种情况一般发生于当你想基于属性值渲染不同的组件时：
 
-```js{10,11}
+```jsx{10,11}
 import React from 'react';
 import { PhotoStory, VideoStory } from './stories';
 
@@ -152,7 +152,7 @@ function Story(props) {
 
 要解决这个问题，我们需要先将类型赋值给大写开头的变量。
 
-```js{10-12}
+```jsx{10-12}
 import React from 'react';
 import { PhotoStory, VideoStory } from './stories';
 
@@ -168,23 +168,23 @@ function Story(props) {
 }
 ```
 
-## 属性
+## JSX的属性(Props)
 
 在 JSX 中有几种不同的方式来指定属性。
 
-### 使用 JavaScript 表达式
+### 使用 JavaScript 表达式作为属性
 
-你可以传递任何 `{}` 包裹的 JavaScript 表达式作为一个属性值。例如，在这个 JSX 中：
+你可以传递JavaScript 表达式作为一个属性，再用大括号`{}`括起来。例如，在这个 JSX 中：
 
-```js
+```jsx
 <MyComponent foo={1 + 2 + 3 + 4} />
 ```
 
 对于 `MyComponent`来说， `props.foo` 的值为 10，这是 `1 + 2 + 3 + 4` 表达式计算得出的。
 
-`if` 语句和 `for` 循环在 JavaScript 中不是表达式，因此它们不能直接在 JSX 中使用，但是你可以将它们放在周围的代码中。
+`if` 语句和 `for` 循环在 JavaScript 中不是表达式，因此它们不能直接在 JSX 中使用，但是你可以将它们放在周围的代码中。例如：
 
-```js{3-7}
+```jsx{3-7}
 function NumberDescriber(props) {
   let description;
   if (props.number % 2 == 0) {
@@ -202,15 +202,15 @@ function NumberDescriber(props) {
 
 你可以将字符串常量作为属性值传递。下面这两个 JSX 表达式是等价的：
 
-```js
+```jsx
 <MyComponent message="hello world" />
 
 <MyComponent message={'hello world'} />
 ```
 
-当传递一个字符串常量时，该值会被解析为HTML非转义字符串，所以下面两个 JSX 表达式是相同的：
+当传递一个字符串常量时，该值为HTML非转义的，所以下面两个 JSX 表达式是相同的：
 
-```js
+```jsx
 <MyComponent message="&lt;3" />
 
 <MyComponent message={'<3'} />
@@ -218,11 +218,11 @@ function NumberDescriber(props) {
 
 这种行为通常是无意义的，提到它只是为了完整性。
 
-### 默认为 True
+### 属性默认为“True”
 
 如果你没有给属性传值，它默认为 `true`。因此下面两个 JSX 是等价的：
 
-```js
+```jsx
 <MyTextBox autocomplete />
 
 <MyTextBox autocomplete={true} />
@@ -230,11 +230,11 @@ function NumberDescriber(props) {
 
 一般情况下，我们不建议这样使用，因为它会与 [ES6 对象简洁表示法](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Object_initializer#New_notations_in_ECMAScript_2015) 混淆。比如 `{foo}` 是 `{foo: foo}` 的简写，而不是 `{foo: true}`。这里能这样用，是因为它符合 HTML 的做法。
 
-### 扩展属性
+### 展开属性
 
-如果你已经有了个 `props` 对象，并且想在 JSX 中传递它，你可以使用 `...` 作为扩展操作符来传递整个属性对象。下面两个组件是等效的：
+如果你已经有了个 `props` 对象，并且想在 JSX 中传递它，你可以使用 `...` 作为“展开(spread)”操作符来传递整个属性对象。下面两个组件是等效的：
 
-```js{7}
+```jsx{7}
 function App1() {
   return <Greeting firstName="Ben" lastName="Hector" />;
 }
@@ -245,17 +245,39 @@ function App2() {
 }
 ```
 
-当你构建通用容器时，扩展属性会非常有用。然而，这样做也可能让很多不相关的属性，传递到不需要它们的组件中使代码变得混乱。我们建议你谨慎使用此语法。
+You can also pick specific props that your component will consume while passing all other props using the spread operator.
 
-## 子代
+```jsx
+const Button = props => {
+  const { kind, ...other } = props;
+  const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton";
+  return <button className={className} {...other} />;
+};
 
-在包含开始和结束标签的 JSX 表达式中，标记之间的内容作为特殊的参数传递：`props.children`。有几种不同的方法来传递子代：
+const App = () => {
+  return (
+    <div>
+      <Button kind="primary" onClick={() => console.log("clicked!")}>
+        Hello World!
+      </Button>
+    </div>
+  );
+};
+```
 
-### 字符串常量
+In the example above, the `kind` prop is safely consumed and *is not* passed on to the `<button>` element in the DOM. All other props are passed via the `...other`object making this component really flexible. You can see that it passes an `onClick` and `children` props.
+
+展开属性非常有用。但是他们也容易传递不必要的属性给组件，而组件并不需要这些多余属性。或者传递无效的HTML熟悉给DOM。我们建议你谨慎使用此语法。
+
+## JSX中的子代
+
+在既包含开始标签又包含结束标签的 JSX 表达式中，这两个标签之间的内容被传递为专门的属性：`props.children`。有几种不同的方法来传递子代：
+
+### 字符串字面量
 
 你可以在开始和结束标签之间放入一个字符串，则 `props.children` 就是那个字符串。这对于许多内置 HTML 元素很有用。例如：
 
-```js
+```jsx
 <MyComponent>Hello world!</MyComponent>
 ```
 
@@ -267,7 +289,7 @@ function App2() {
 
 JSX 会移除空行和开始与结尾处的空格。标签邻近的新行也会被移除，字符串常量内部的换行会被压缩成一个空格，所以下面这些都等价：
 
-```js
+```jsx
 <div>Hello World</div>
 
 <div>
@@ -285,18 +307,19 @@ JSX 会移除空行和开始与结尾处的空格。标签邻近的新行也会�
 </div>
 ```
 
-### JSX
+### JSX子代
 
-你可以通过子代嵌入更多的 JSX 元素，这对于嵌套显示组件非常有用：
+你可以提供更多个 JSX 元素作为子代，这对于嵌套显示组件非常有用：
 
-```js
+```jsx
 <MyContainer>
   <MyFirstComponent />
   <MySecondComponent />
 </MyContainer>
 ```
 
-你可以混合不同类型的子元素，同时用字符串常量和 JSX 子元素，这是 JSX 类似 HTML 的另一种形式，这在 JSX 和 HTML 中都是有效的：
+你可以混合不同类型的子代，同时使用字符串字面量和 JSX子代，这是 JSX 类似 HTML 的另一种形式，这在 JSX 和 HTML 中都是有效的：
+
 ```html
 <div>
   Here is a list:
@@ -307,11 +330,11 @@ JSX 会移除空行和开始与结尾处的空格。标签邻近的新行也会�
 </div>
 ```
 
-React 组件也可以通过数组的形式返回多个元素：
+React 组件也可以返回包含多个元素的一个数组：
 
-```js
+```jsx
 render() {
-  // 不需要使用额外的元素包裹数组中的元素
+  // 不需要使用额外的元素包裹数组中的元素！
   return [
     // 不要忘记 key :)
     <li key="A">First item</li>,
@@ -321,11 +344,11 @@ render() {
 }
 ```
 
-### JavaScript 表达式
+### JavaScript 表达式作为子代
 
 你可以将任何 `{}` 包裹的 JavaScript 表达式作为子代传递。例如，下面这些表达式是等价的：
 
-```js
+```jsx
 <MyComponent>foo</MyComponent>
 
 <MyComponent>{'foo'}</MyComponent>
@@ -333,7 +356,7 @@ render() {
 
 这对于渲染任意长度的 JSX 表达式的列表很有用。例如，下面将会渲染一个 HTML 列表：
 
-```js{2,9}
+```jsx{2,9}
 function Item(props) {
   return <li>{props.message}</li>;
 }
@@ -350,17 +373,17 @@ function TodoList() {
 
 JavaScript 表达式可以与其他类型的子代混合使用。这通常对于字符串模板非常有用：
 
-```js{2}
+```jsx{2}
 function Hello(props) {
   return <div>Hello {props.addressee}!</div>;
 }
 ```
 
-### 函数
+### 函数作为子代
 
-通常情况下，插入 JSX 中的 JavaScript 表达式将被认作字符串、React 元素或这些内容的列表。然而，`props.children` 可以像其它属性一样传递任何数据，而不仅仅是 React 元素。例如，如果你使用自定义组件，则可以将调用 `props.children` 来获得传递的子代：
+通常情况下，插入 JSX 中的 JavaScript 表达式将被认作字符串、React 元素或这些的一个列表。然而，`props.children` 可以像其它属性一样传递任何种类的数据，而不仅仅是 React 知道如何去渲染的数据种类。例如，如果你有一个自定义组件，你能使其取一个回调作为`props.children`：
 
-```js{4,13}
+```jsx{4,13}
 // Calls the children callback numTimes to produce a repeated component
 function Repeat(props) {
   let items = [];
@@ -379,13 +402,13 @@ function ListOfTenThings() {
 }
 ```
 
-传递给自定义组件的子代可以是任何元素，只要该组件在 React 渲染前将其转换成 React 能够理解的东西。这个用法并不常见，但当你想扩展 JSX 时可以使用。
+传递给自定义组件的子代可以是任何东西，只要该组件在 React 渲染前将其转换成 React 能够理解的东西。这个用法并不常见，但当你想扩展 JSX 时可以使用。
 
 ### 布尔值、Null 和 Undefined 被忽略
 
-`false`、`null`、`undefined` 和 `true` 都是有效的子代，但它们不会直接被渲染。下面的表达式是等价的：
+`false`、`null`、`undefined` 和 `true` 都是有效的子代，只是它们不会被渲染。下面的JSX表达式将渲染为相同的东西：
 
-```js
+```jsx
 <div />
 
 <div></div>
@@ -401,16 +424,16 @@ function ListOfTenThings() {
 
 这在根据条件来确定是否渲染React元素时非常有用。以下的JSX只会在`showHeader`为`true`时渲染`<Header />`组件。
 
-```js{2}
+```jsx{2}
 <div>
   {showHeader && <Header />}
   <Content />
 </div>
 ```
 
-值得注意的是，JavaScript 中的一些 ["falsy" 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)(比如数字`0`)，它们依然会被渲染。例如，下面的代码不会像你预期的那样运行，因为当 `props.message` 为空数组时，它会打印`0`:
+一个告诫是JavaScript中的一些 ["falsy" 值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy)(比如数字`0`)，它们依然会被React渲染。例如，下面的代码不会像你预期的那样运行，因为当 `props.message` 为空数组时，它会打印`0`:
 
-```js{2}
+```jsx{2}
 <div>
   {props.messages.length &&
     <MessageList messages={props.messages} />
@@ -420,7 +443,7 @@ function ListOfTenThings() {
 
 要解决这个问题，请确保 `&&` 前面的表达式始终为布尔值：
 
-```js{2}
+```jsx{2}
 <div>
   {props.messages.length > 0 &&
     <MessageList messages={props.messages} />
@@ -430,7 +453,7 @@ function ListOfTenThings() {
 
 相反，如果你想让类似 `false`、`true`、`null` 或 `undefined` 出现在输出中，你必须先把它[转换成字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion) :
 
-```js{2}
+```jsx{2}
 <div>
   My JavaScript variable is {String(myVariable)}.
 </div>
