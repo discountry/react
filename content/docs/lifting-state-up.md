@@ -167,6 +167,7 @@ class TemperatureInput extends React.Component {
 
   render() {
     const temperature = this.state.temperature;
+    // ...  
 ```
 
 但是，我们想要的是这两个输入能保持同步。当我们更新摄氏输入（Celsius）时，华氏度（Fahrenheit ）这个框应该能显示转换后的的温度数值，反之亦然。
@@ -177,12 +178,13 @@ class TemperatureInput extends React.Component {
 
 让我们一步一步来分析如何操作。
 
-首先，我们在 `TemperatureInput` 组件中将 `this.state.temperature` 替换为 `this.props.temperature` 。从现在开始，我们假定 `this.props.temperature` 属性已经存在了，不过之后仍然需要将数据从 `Calculator` 组件中传进去。
+首先，我们在 `TemperatureInput` 组件中将 `this.state.temperature` 替换为 `this.props.temperature` 。现在，先假定 `this.props.temperature` 值已经存在，将来我们需要从 `Calculator` 组件中传入。
 
 ```js{3}
   render() {
     // 之前的代码: const temperature = this.state.temperature;
     const temperature = this.props.temperature;
+    // ...
 ```
 
 我们首先知道[props是只读的](/docs/components-and-props.html#props-are-read-only)
@@ -190,19 +192,22 @@ class TemperatureInput extends React.Component {
 
 在React中，这个问题通常是通过让组件“受控”来解决。就像 `<input>` 能够接受 `value` 和 `onChange` 这两个prop属性值，自定义组件 `TemperatureInput` 也能接受来自 `Calculator` 父组件的 `temperature` 变量和 `onTemperatureChange` 方法作为props属性值。
 
-做完这些，当 `TemperatureInput` 组件更新它的温度数值时，就会调用 `this.props.onTemperatureChange` 方法。
+做完这些，当 `TemperatureInput` 组件希望更新温度时，就会调用 `this.props.onTemperatureChange`。
 
 ```js{3}
   handleChange(e) {
     // 之前的代码: this.setState({temperature: e.target.value});
     this.props.onTemperatureChange(e.target.value);
+    // ...
 ```
 
-需要指出的是，我们现在定义的 `temperature` 和 `onTemperatureChange` 这些prop属性的命名没有特殊含义，我们也可以起个其他任何的名字，像是`value`和`onChange`这些只是命名习惯罢了。
+> 注意：
+> 
+> `temperature` 和 `onTemperatureChange` 这些prop属性的命名没有特殊含义，我们也可以起个其他任何的名字，像是`value`和`onChange`这些只是命名习惯罢了。
 
-`onTemperatureChange` 和 `temperature` 两个 props 属性均由父组件 `Calculator` 提供。父组件可以通过自身的方法来响应状态数据的改变，从而使用新的值来重新渲染两个输入框组件。不过我们先放着，最后再来修改它。
+`onTemperatureChange`加上`temperature`一起的两个属性（prop）由父组件`Calculator`提供。父组件处理变化只需通过改变其自身的状态，从而使用新的值来重新渲染两个输入框组件。很快我们将重新改写`Calculator`。
 
-在我们改写 `Calculator` 组件之前，我们先花点时间总结下 `TemperatureInput` 组件的改变。我们将其自身的 state 从组件中移除，使用 `this.props.temperature` 替代 `this.state.temperature` ，当我们想要响应数据改变时，使用父组件提供的 `this.props.onTemperatureChange()` 而不是`this.setState()` 方法：
+在我们改写`Calculator`组件之前，我们先花点时间总结下`TemperatureInput`组件的变化。我们将其自身的 state 从组件中移除，使用 `this.props.temperature` 替代 `this.state.temperature`。当我们想要响应数据改变时，现在是调用由`Calculator`提供的`this.props.onTemperatureChange()` 而不是`this.setState()`：
 
 ```js{8,12}
 class TemperatureInput extends React.Component {
@@ -229,9 +234,9 @@ class TemperatureInput extends React.Component {
 }
 ```
 
-现在让我们来看看 `Calculator` 组件。
+现在让我们来转向 `Calculator` 组件。
 
-我们将会在它的 state 中存储之前输入框组件的 `temperature` 和 `scale` 值，这是从输入框组件中“提升”上来的 state，它将会成为两个输入框组件的“数据源”。这是我们所需要的能够重新渲染并且表示两个不同输入组件的最基本的数据。
+我们将会保存当前输入的`temperature`和`scale`值到它的局部状态（state）中，这是从输入框组件状态中“提升”上来的，它将会用作两个输入框共同的的“数据源”。这是我们为了渲染两个输入框组件需要知道的所有数据最精简表达。
 
 举个例子，假如我们在摄氏度输入框中输入37，那么 `Calculator` 的 state 就是：
 
@@ -251,8 +256,7 @@ class TemperatureInput extends React.Component {
 }
 ```
 
-其实我们可以一起保存两个输入的值，但这么做似乎没有必要。保存最近
-改变的值和所需标识的温标单位就足够了。我们可以只需基于当前的 `temperature` 和 `scale` 计算出另一个输入框中的值。
+我们可以一起保存两个输入的值，但这么做似乎没有必要。保存最新输入的温度和温度单位就足够了。我们可以只需基于当前的 `temperature` 和 `scale` 计算出另一个输入框中的值。
 
 现在这两个输入框中的值能保持同步了，因为它们使用的是通过同一个 state 计算出来的值。
 
@@ -299,29 +303,29 @@ class Calculator extends React.Component {
 
 [在 Codepen 上试试。](http://codepen.io/valscion/pen/jBNjja?editors=0010)
 
-现在，无论你编辑哪一个输入框，`Calculator` 组件中 `this.state.temperature` 和 `this.state.scale` 都会更新。其中之一的输入框得到用户原样输入的值，另一个输入框总是显示基于这个值计算出的结果。
+现在，无论你编辑哪一个输入框，`Calculator` 组件中 `this.state.temperature` 和 `this.state.scale` 都会更新。向其中一个输入框输入值，另一个输入框总是基于这个值显示计算结果。
 
 让我们梳理下编辑输入框时所发生的一系列活动：
 
-* React在DOM原生组件`<input>`上调用指定的`onChange`函数。在本例中，指的是`TemperatureInput`组件上的`handleChange`函数。
-* `TemperatureInput`组件的`handleChange`函数会在值发生变化时调用`this.props.onTemperatureChange()`函数。这些props属性，像`onTemperatureChange`都是由父组件`Calculator`提供的。
-* 当最开始渲染时，`Calculator`组件把内部的`handleCelsiusChange`方法指定给摄氏输入组件`TemperatureInput`的`onTemperatureChange`方法，并且把`handleFahrenheitChange`方法指定给华氏输入组件`TemperatureInput`的`onTemperatureChange`。两个`Calculator`内部的方法都会在相应输入框被编辑时被调用。
-* 在这些方法内部，`Calculator`组件会让React使用编辑输入的新值和当前输入框的温标来调用`this.setState()`方法来重渲染自身。
-* React会调用`Calculator`组件的`render`方法来识别UI界面的样子。基于当前温度和温标，两个输入框的值会被重新计算。温度转换就是在这里被执行的。
-* 接着React会使用`Calculator`指定的新props来分别调用`TemperatureInput`组件，React也会识别出子组件的UI界面。
-* React DOM 会更新DOM来匹配对应的值。我们编辑的输入框获取新值，而另一个输入框则更新经过转换的温度值。
+* React在DOM的`<input>`上调用被指定为`onChange`的函数。在本例中，是`TemperatureInput`组件上的`handleChange`函数。
+* `TemperatureInput`组件的`handleChange`函数会用新输入值调用`this.props.onTemperatureChange()`函数。输入框组件的属性，包括`onTemperatureChange`都是由父组件`Calculator`提供的。
+* 当最开始渲染时，`Calculator`组件的`handleCelsiusChange`方法被指定给摄氏温度输入组件`TemperatureInput`的`onTemperatureChange`方法，同时把`handleFahrenheitChange`方法指定给华氏输入组件`TemperatureInput`的`onTemperatureChange`方法。所以`Calculator`组件的两个方法都会在相应输入框被编辑时被调用。
+* 在这些方法内部，`Calculator`组件会使用编辑输入的新值和当前输入框的温度单位来让React调用`this.setState()`方法来重渲染自身。
+* React调用`Calculator`组件的`render`方法来识别UI界面的样子。基于当前值和激活的温度单位，两个输入框的值会被重新计算。温度转换就是在这里被执行的。
+* React使用由`Calculator`指定的新props来调用各个`TemperatureInput`组件的`render`方法，React也会识别出子组件的UI界面。
+* React调用`BoilingVerdict`组件的`render`方法，传递摄氏温度作为它的属性。
+* React DOM 会用沸腾裁决更新DOM来匹配渴望的输入值。我们编辑的输入框获取新值，而另一个输入框则用经过转换的温度值进行更新。
 
 一切更新都是经过同样的步骤，因而输入框能保持同步的。
 
 ## 经验教训
 
-在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。此时，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的父组件中。你应该在应用中保持 [自上而下的数据流](/docs/state-and-lifecycle.html#数据自顶向下流动)，而不是尝试在不同组件中同步状态。
+在React应用中，对应任何可变数据理应只有一个单一“数据源”。通常，状态都是首先添加在需要渲染数据的组件中。然后，如果另一个组件也需要这些数据，你可以将数据提升至离它们最近的共同祖先中。你应该依赖 [自上而下的数据流](/docs/state-and-lifecycle.html#数据自顶向下流动)，而不是尝试在不同组件中同步状态。
 
-状态提升比双向绑定方式要写更多的“模版代码”，但带来的好处是，你也可以更快地寻找和定位bug的工作。因为哪个组件保有状态数据，也只有它自己能够操作这些数据，发生bug的范围就被大大地减小了。此外，你也可以使用自定义逻辑来拒绝或者更改用户的输入。
+状态提升要写更多的“炉墙代码”，比起双向绑定方式，但带来的好处是，你也可以花更少的工作量找到和隔离bug。因为任何*生活*在某些组件中的状态数据，也只有该组件它自己能够操作这些数据，发生bug的表面积就被大大地减小了。此外，你也可以使用自定义逻辑来拒绝（reject）或转换（transform）用户的输入。
 
-如果某些数据可以由props或者state提供，那么它很有可能不应该在state中出现。举个例子，我们仅仅保存最新的编辑过的`temperature`和`scale`值，而不是同时保存 `celsiusValue` 和 `fahrenheitValue` 。另一个输入框中的值总是可以在 `render()` 函数中由这些保存的数据计算出来。这样我们可以根据同一个用户输入精准计算出两个需要使用的数据。
+如果某些数据可以由props或者state推导出来，那么它很有可能不应该在state中出现。举个例子，我们没有同时保存 `celsiusValue` 和 `fahrenheitValue`，而只是保存最新编辑的`temperature`和它的`scale`值。另一个输入框中的值总是可以在 `render()` 函数中由这些保存的数据计算出来。这样我们在不损失任何用户输入精度的情况下，可以对另一字段清除或应用四舍五入。
 
 当你在开发UI界面遇到问题时，你可以使用 [React 开发者工具](https://github.com/facebook/react-devtools)来检查props属性，并且可以点击查看组件树，直到你找到负责目前状态更新的组件。这能让你到追踪到产生 bug 的源头。
 
-
-<img src="../images/docs/react-devtools-state.gif" alt="Monitoring State in React DevTools" width="100%">
+<img src="https://reactjs.org/react-devtools-state-ef94afc3447d75cdc245c77efb0d63be.gif" alt="Monitoring State in React DevTools" width="100%">
