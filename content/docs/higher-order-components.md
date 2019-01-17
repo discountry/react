@@ -4,7 +4,7 @@ title: 高阶组件
 permalink: docs/higher-order-components.html
 ---
 
-高阶组件（HOC）是react中对组件逻辑进行重用的高级技术。但高阶组件本身并不是React API。它只是一种模式，这种模式是由react自身的组合性质必然产生的。
+高阶组件（HOC）是react中的高级技术，用来重用组件逻辑。但高阶组件本身并不是React API。它只是一种模式，这种模式是由react自身的组合性质必然产生的。
 
 具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件**
 
@@ -12,45 +12,45 @@ permalink: docs/higher-order-components.html
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
 ```
 
-对比组件将props属性转变成UI，高阶组件则是将一个组件转换成另一个新组件。
+对比组件将props属性转变成UI，高阶组件则是将一个组件转换成另一个组件。
 
 高阶组件在React第三方库中很常见，比如Redux的[`connect`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)方法和Relay的[`createContainer`](https://facebook.github.io/relay/docs/api-reference-relay.html#createcontainer-static-method).
 
-在本文档中，我们将会讨论为什么高阶组件很有作用，以及该如何实现一个高阶组件。
+在本文档中，我们将会讨论为什么高阶组件很有用，以及该如何实现一个自己的高阶组件。
 
-## 使用高阶组件（HOC）解决交叉问题
+## 使用高阶组件（HOC）解决横切关注点
 
 > **注意**
 >
-> 我们曾经介绍了混入（mixins）技术来解决交叉问题。现在我们意识到混入（mixins）技术产生的问题要比带来的价值大。[更多资料](/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
+> 我们曾经介绍了混入（mixins）技术来解决横切关注点。现在我们意识到混入（mixins）技术产生的问题要比带来的价值大。[更多资料](/blog/2016/07/13/mixins-considered-harmful.html)介绍了为什么我们要移除混入（mixins）技术以及如何转换你已经使用了混入（mixins）技术的组件。
 
-在React中，组件是代码复用的主要单元。然而你会发现，一些模式并不适用传统的组件。
+在React中，组件是代码复用的主要单元。然而你会发现，一些模式用传统的组件并不直白。
 
 例如，假设你有一个`CommentList`组件，该组件从外部数据源订阅数据并渲染评论列表：
 
 ```js
 class CommentList extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      // "DataSource" 就是全局的数据源
+      // "DataSource" is some global data source
       comments: DataSource.getComments()
     };
   }
 
   componentDidMount() {
-    // 添加事件处理函数订阅数据
+    // Subscribe to changes
     DataSource.addChangeListener(this.handleChange);
   }
 
   componentWillUnmount() {
-    // 清除事件处理函数
+    // Clean up listener
     DataSource.removeChangeListener(this.handleChange);
   }
 
   handleChange() {
-    // 任何时候数据发生改变就更新组件
+    // Update component state whenever the data source changes
     this.setState({
       comments: DataSource.getComments()
     });
@@ -100,13 +100,13 @@ class BlogPost extends React.Component {
 }
 ```
 
-`CommentList` 和 `BlogPost` 组件并不相同 —— 他们调用了 `DataSource` 的不同方法获取数据，并且他们渲染的输出结果也不相同。但是，他们的大部分实现逻辑是一样的：
+`CommentList` 和 `BlogPost` 组件并不相同————他们调用了 `DataSource` 的不同方法，并且他们渲染的输出也不相同。但是，他们的大部分实现是一样的：
 
-- 挂载组件时， 向 `DataSource` 添加一个监听函数。
-- 在监听函数内， 每当数据源发生变化，都是调用 `setState`函数设置新数据。
-- 卸载组件时， 移除监听函数。
+- 挂载组件时， 向 `DataSource` 添加一个改变监听器。
+- 在监听器内， 每当数据源发生改变，调用`setState`。
+- 卸载组件时， 移除改变监听器。
 
-设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且能对所有的组件使用，这就是高阶组件的精华所在。
+设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且许多组件都能共享，这就是高阶组件的精华所在。
 
 我们写一个函数，该函数能够创建类似 `CommonList` 和 `BlogPost` 从 `DataSource` 数据源订阅数据的组件 。该函数接受一个子组件作为其中的一个参数，并从数据源订阅数据作为props属性传入子组件。我们把这个函数取个名字 `withSubscription`：
 
@@ -122,9 +122,11 @@ const BlogPostWithSubscription = withSubscription(
 );
 ```
 
-第一个参数是包裹组件（wrapped component），第二个参数会从 `DataSource`和当前props（译者注：根据代码示例，这里应该是高阶组件的props属性）属性中检索应用需要的数据。
+第一个参数是包裹组件（wrapped component），第二个参数会从 `DataSource`和当前props属性中检索应用需要的数据。
 
-当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` props属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
+> 译者注：根据代码示例，这里应该是高阶组件的props属性
+
+当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` 属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
 
 ```js{31}
 // 函数接受一个组件参数……
@@ -163,38 +165,38 @@ function withSubscription(WrappedComponent, selectData) {
 }
 ```
 
-注意，高阶组件既不会修改input原组件，也不会使用继承复制input原组件的行为。相反，高阶组件是通过将原组件 *包裹（wrapping）* 在容器组件（container component）里面的方式来 *组合（composes）* 使用原组件。高阶组件就是一个没有副作用的纯函数。
+注意，高阶组件既不会修改输入组件，也不会使用继承复制它的行为。相反，高阶组件是将原组件通过 *包裹（wrapping）* 在容器组件里面的方式来 *组合（composes）*。高阶组件就是一个没有副作用的纯函数。
 
-就是这样！包裹组件接收容器组件的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而包裹组件也不关心数据来自何处。
+就是这样！包裹组件接收容器的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而包裹组件也不关心数据来自何处。
 
-因为 `withSubscription` 就是一个普通函数，你可以添加任意数量的参数。例如，你或许会想使 `data` 属性可配置化，使高阶组件和包裹组件进一步隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源的参数。这些都可以实现，因为高阶组件可以完全控制新组件的定义。
+因为 `withSubscription` 就是一个普通函数，你可以按需添加可多可少的参数。例如，你或许会想使 `data` 属性的名字是可配置的，进一步使高阶组件和包裹组件隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源。这些都可以的，因为高阶组件充分地控制新组件定义的方式。
 
-和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于 props 属性的。这就使为组件切换一个 HOC 变得非常轻松，只要保证备选的几种高阶组件向包裹组件提供是相同类型的 props 属性即可。就像上述这个例子中，在为组件切换数据源时，就会显得非常有用。
+和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于 props 属性的。这使组件更换高阶组件变得轻松，只要他们提供相同的 props 属性给包裹组件即可。这可以用于你改变获取数据的库时，举例来说。
 
 ## 不要改变原始组件，使用组合
 
-不要在高阶组件内部修改（或以其它方式修改）原组件的原型属性。
+抵制诱惑，不要修改一个组件的原型（或以其它方式修改组件），在高阶组件内部。
 
 ```js
 function logProps(InputComponent) {
-  InputComponent.prototype.componentWillReceiveProps(nextProps) {
+  InputComponent.prototype.componentWillReceiveProps = function(nextProps) {
     console.log('Current props: ', this.props);
     console.log('Next props: ', nextProps);
-  }
-  // 我们返回的原始组件实际上已经
-  // 被修改了。
+  };
+  // The fact that we're returning the original input is a hint that it has
+  // been mutated.
   return InputComponent;
 }
 
-// EnhancedComponent会记录下所有的props属性
+// EnhancedComponent will log whenever props are received
 const EnhancedComponent = logProps(InputComponent);
 ```
 
-上面的示例有一些问题。首先就是，input组件不能够脱离增强型组件（enhanced component）被重用。更关键的一点是，如果你用另一个高阶组件来转变 `EnhancedComponent` ，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件（即EnhancedComponent）转换的功能就会被覆盖。这样的高阶组件（修改原型的高阶组件）对没有生命周期函数的无状态函数式组件也是无效的。
+上面的示例有一些问题。首先就是，输入组件不能够脱离增强型组件（enhanced component）被重用。更关键的一点是，如果你用另一个高阶组件来转变 `EnhancedComponent` ，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件的功能就会被覆盖。这样的高阶组件对没有生命周期方法的函数式组件也是无效的。
 
-更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的具体实现，才能避免与其它高阶组件的冲突。
+更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的实现方式，才能避免与其它高阶组件的冲突。
 
-不应该修改原组件，高阶组件应该使用组合技术，将input组件包含到容器组件中：
+不应该修改原组件，高阶组件应该使用组合技术，将输入组件包裹到容器组件中：
 
 ```js
 function logProps(WrappedComponent) {
@@ -211,9 +213,9 @@ function logProps(WrappedComponent) {
 }
 ```
 
-这个组合型高阶组件（译者注：即上面示例高阶组件）和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和无状态函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至它自身也是可组合的。
+这个组合型高阶组件（译者注：即上面示例高阶组件）和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至它自身也是可组合的。
 
-你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是专注于在高层次和低层次关注点之间进行责任划分的策略的一部分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给展示组件。而展示组件则负责处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
+你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是专注于在高层次和低层次关注点之间进行责任划分的策略的一部分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给组件。组件处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
 
 ## 约定：将不相关的props属性传递给包裹组件
 
