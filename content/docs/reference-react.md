@@ -145,17 +145,17 @@ React.createElement(
 )
 ```
 
-根据给定的类型创建并返回新的 [`React element`](/docs/rendering-elements.html) 。参数type既可以是一个html标签名称字符串(例如`'div'` 或 `'span'` )，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或一个函数)。
+创建并返回给定类型的新 [`React element`](/docs/rendering-elements.html) 。参数type既可以是一个标签名称字符串(例如`'div'` 或 `'span'` )，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或一个函数)，或者一个[React fragment](https://reactjs.org/docs/react-api.html#reactfragment) 类型。
 
 `React.DOM` 提供了DOM组件的 `React.createElement()` 的便捷包装。举个例子，`React.DOM.a(...)` 是 `React.createELement('a', ...)` 的一个便捷包装。这个用法被认为是过时的，我们推荐您使用JSX，或者直接使用 `React.createElement()` 。
 
-用 [`JSX`](/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html) 了解更多。
+用 [`JSX`](/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()`。参阅 [`React Without JSX`](/docs/react-without-jsx.html) 了解更多。
 
-* * *
+------
 
 ### `cloneElement()`
 
-```
+```js
 React.cloneElement(
   element,
   [props],
@@ -163,7 +163,7 @@ React.cloneElement(
 )
 ```
 
-以 `element` 作为起点，克隆并返回一个新的React元素(React Element)。生成的元素将会拥有原始元素props与新props的浅合并。新的子级会替换现有的子级。来自原始元素的 `key` 和 `ref` 将会保留。
+克隆并返回一个新的React元素(React Element)，使用 `element` 作为起点。生成的元素将会拥有原始元素props与新props的浅合并。新的子级会替换现有的子级。来自原始元素的 `key` 和 `ref` 将会保留。
 
 `React.cloneElement()` 几乎相当于：
 
@@ -171,11 +171,11 @@ React.cloneElement(
 <element.type {...element.props} {...props}>{children}</element.type>
 ```
 
-然而，它也保留了 `ref`。这意味着，如果你通过 `ref` 获取到子级组件时，不会一不小心从祖先组件里窃取了它。你将获得与你新元素相同的 `ref` 。
+然而，它也保留了全部的 `ref`。这意味着，如果你通过 `ref` 获取到孩子时，不会偶然从祖先组件里窃取了它。你将获得同一个`ref`附着到你的新元素。
 
-这个API是一个替换已弃用的 `React.addons.cloneWithProps()` 的方案。
+引入这个API用来替换已弃用的 `React.addons.cloneWithProps()`。
 
-* * *
+------
 
 ### `createFactory()`
 
