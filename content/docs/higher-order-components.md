@@ -171,7 +171,7 @@ function withSubscription(WrappedComponent, selectData) {
 
 因为 `withSubscription` 就是一个普通函数，你可以按需添加可多可少的参数。例如，你或许会想使 `data` 属性的名字是可配置的，以进一步从被包裹的组件隔离高阶组件。或者你想要接收一个参数用于配置 `shouldComponentUpdate`，或配置数据源。所有的这些都是可以的，因为高阶组件充分地控制新组件定义的方式。
 
-和普通组件一样，`withSubscription` 和被包裹的组件之间的合约是完全基于 props 属性的。这使得易于替换一个高阶组件到另一个，只要他们提供相同的 props 属性给被包裹的组件即可。这可以用于你改变获取数据的库时，举例来说。
+和普通组件一样，`withSubscription` 和被包裹的组件之间的合约是完全基于props属性的。这使得易于替换一个高阶组件到另一个，只要他们提供相同的props属性给被包裹的组件即可。这可以用于你改变获取数据的库时，举例来说。
 
 ## 不要改变原始组件，使用组合
 
@@ -206,34 +206,34 @@ function logProps(WrappedComponent) {
       console.log('Next props: ', nextProps);
     }
     render() {
-      // 用容器组件组合包裹组件且不修改包裹组件，这才是正确的打开方式。
+      // 用容器包裹输入组件，不要修改它，漂亮！
       return <WrappedComponent {...this.props} />;
     }
   }
 }
 ```
 
-这个组合型高阶组件（译者注：即上面示例高阶组件）和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至它自身也是可组合的。
+这个高阶组件和那个更改型版本有着同样的功能，但却避免了潜在的冲突。它对类组件和函数式组件适用性同样好。而且，因为它是纯函数，它是可组合的，可以和其它高阶组件，甚至和它自身组合。
 
-你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是专注于在高层次和低层次关注点之间进行责任划分的策略的一部分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给组件。组件处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
+你可能发现了高阶组件和**容器组件**模式的相似之处。容器组件是专注于在高层和低层关注之间进行责任分离的策略的一部分。容器管理的事情诸如订阅和状态，传递props属性给某些组件。这些组件处理渲染UI等事情。高阶组件使用容器作为他们实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
 
-## 约定：将不相关的props属性传递给包裹组件
+## 约定：贯穿传递不相关props属性给被包裹的组件
 
-高阶组件给组件添加新特性。他们不应该大幅修改原组件的接口（译者注：应该就是props属性）。预期，从高阶组件返回的组件应该与原包裹的组件具有类似的接口。
+高阶组件添加了一些特性到一个组件，他们不应该大幅修改它的合约。被期待的是，从高阶组件返回的那个组件与被包裹的组件具有类似的接口。
 
-高阶组件应该传递与它要实现的功能点无关的props属性。大多数高阶组件都包含一个如下的render函数：
+高阶组件应该贯穿传递与它专业关注无关的props属性。大多数高阶组件都包含类似如下的渲染方法：
 
 ```js
 render() {
-  // 过滤掉与高阶函数功能相关的props属性，
-  // 不再传递
+  // 过滤掉专用于这个阶组件的props属性，
+  // 不应该被贯穿传递
   const { extraProp, ...passThroughProps } = this.props;
 
-  // 向包裹组件注入props属性，一般都是高阶组件的state状态
-  // 或实例方法
+  // 向被包裹的组件注入props属性，这些一般都是状态值或
+  // 实例方法
   const injectedProp = someStateOrInstanceMethod;
 
-  // 向包裹组件传递props属性
+  // 向被包裹的组件传递props属性
   return (
     <WrappedComponent
       injectedProp={injectedProp}
@@ -243,42 +243,42 @@ render() {
 }
 ```
 
-这种约定能够确保高阶组件最大程度的灵活性和可重用性。
+这个约定帮助确保高阶组件最大程度的灵活性和可重用性。
 
-## 约定：最大化使用组合
+## 约定：最大化的组合性
 
-并不是所有的高阶组件看起来都是一样的。有时，它们仅仅接收一个参数，即包裹组件：
+并不是所有的高阶组件看起来都是一样的。有时，它们仅接收单独一个参数，即被包裹的组件：
 
 ```js
 const NavbarWithRouter = withRouter(Navbar);
 ```
 
-一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，可配置对象用于指定组件的数据依赖关系：
+一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，一个`config`对象用于指定组件的数据依赖：
 
 ```js
 const CommentWithRelay = Relay.createContainer(Comment, config);
 ```
 
-大部分常见高阶组件的函数签名如下所示：
+高阶组件最常见签名如下所示：
 
 ```js
 // React Redux's `connect`
 const ConnectedComment = connect(commentSelector, commentActions)(Comment);
 ```
 
-*这是什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
+*什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
 
 ```js
 // connect是一个返回函数的函数（译者注：就是个高阶函数）
 const enhance = connect(commentListSelector, commentListActions);
-// 返回的函数就是一个高阶组件，该高阶组件返回一个与Redux store
-// 关联起来的新组件
+// 返回的函数就是一个高阶组件，该高阶组件返回一个组件被连接
+// 到Redux store
 const ConnectedComment = enhance(CommentList);
 ```
 
 换句话说，`connect` 是一个返回高阶组件的高阶函数！
 
-这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， `Component => Component`.输入和输出类型相同的函数是很容易组合在一起。
+这种形式有点让人迷惑，有点多余，但是它有一个有用的性质。那就是，单独一个参数的高阶组件，类似 `connect` 函数返回的，签名是`Component => Component`。输入和输出类型相同的函数确实是很容易组合在一起。
 
 <!-- 对以下代码的个人理解：第一段代码对初始组件进行了两次包装；第二段代码就是函数的柯里化 -->
 
@@ -286,18 +286,17 @@ const ConnectedComment = enhance(CommentList);
 // 不要这样做……
 const EnhancedComponent = withRouter(connect(commentSelector)(WrappedComponent))
 
-// ……你可以使用一个功能组合工具
+// ……你可以使用一个函数组合工具
 // compose(f, g, h) 和 (...args) => f(g(h(...args)))是一样的
 const enhance = compose(
-  // 这些都是单参数的高阶组件
+  // 这些都是单独一个参数的高阶组件
   withRouter,
   connect(commentSelector)
 )
 const EnhancedComponent = enhance(WrappedComponent)
 ```
 
-
-（`connect`函数产生的高阶组件和其它增强型高阶组件具有同样的被用作装饰器的能力。）
+（这个同样的性质也允许`connect`函数和其它增强型高阶组件被用作装饰器，这是一个试验JavaScript建议。）
 
 包括lodash（比如说[`lodash.flowRight`](https://lodash.com/docs/#flowRight)）, [`Redux`](http://redux.js.org/docs/api/compose.html) 和 [`Ramda`](http://ramdajs.com/docs/#compose)在内的许多第三方库都提供了类似`compose`功能的函数。
 
