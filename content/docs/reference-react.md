@@ -1,6 +1,6 @@
 ---
 id: react-api
-title: React 高阶 API
+title: React 顶层 API
 layout: docs
 category: Reference
 permalink: docs/react-api.html
@@ -13,7 +13,7 @@ redirect_from:
   - "docs/top-level-api-zh-CN.html"
 ---
 
-`react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些高阶API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'` 。如果你使用ES5，你可以使用 `var React = require('react')` 。
+`react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些顶层API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'` 。如果你使用ES5，你可以使用 `var React = require('react')` 。
 
 ## 概览
 
@@ -26,6 +26,10 @@ React 组件可以让你把UI分割为独立、可复用的片段，并将每一
 
 如果不用ES6类，你可以使用 `create-react-class` 模块。参阅 [Using React without JSX](/docs/react-without-es6.html) 了解更多信息。
 
+React components can also be defined as functions which can be wrapped:
+
+- [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo)
+
 ### Creating React Elements
 
 推荐 [使用JSX](/docs/introducing-jsx.html) 描述你的UI外观。每个JSX元素仅是调用 [`React.createElement`](#createelement) 的语法糖。如果使用了JSX，你通常不会直接调用以下方法。
@@ -37,7 +41,7 @@ React 组件可以让你把UI分割为独立、可复用的片段，并将每一
 
 ### Transforming Elements
 
-`React` 同时也提供了其他API：
+`React` 提供了几个API用于操纵元素：
 
 - [`cloneElement()`](#cloneelement)
 - [`isValidElement()`](#isvalidelement)
@@ -49,11 +53,19 @@ React 组件可以让你把UI分割为独立、可复用的片段，并将每一
 
 - [`React.Fragment`](#reactfragment)
 
-### Other
+### Refs
 
-- [`React.forwardRef`](#reactforwardref)
+- [`React.createRef`](https://reactjs.org/docs/react-api.html#reactcreateref)
+- [`React.forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref)
 
-* * *
+### Suspense
+
+Suspense lets components “wait” for something before rendering. Today, Suspense only supports one use case: [loading components dynamically with `React.lazy`](https://reactjs.org/docs/code-splitting.html#reactlazy). In the future, it will support other use cases like data fetching.
+
+- [`React.lazy`](https://reactjs.org/docs/react-api.html#reactlazy)
+- [`React.Suspense`](https://reactjs.org/docs/react-api.html#reactsuspense)
+
+------
 
 ## Reference
 
@@ -69,23 +81,59 @@ class Greeting extends React.Component {
 }
 ```
 
-有关 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/docs/react-component.html)。
+有关基类 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/docs/react-component.html)。
 
-* * *
+------
 
 ### `React.PureComponent`
 
-`React.PureComponent` 与 [`React.Component`](#react.component) 几乎完全相同，但 `React.PureComponent` 通过prop和state的浅对比来实现 [`shouldComponentUpdate()`](/docs/react-component.html#shouldcomponentupdate)。
+`React.PureComponent` 类似于 [`React.Component`](#react.component)。它们的不同之处在于[`React.Component`](https://reactjs.org/docs/react-api.html#reactcomponent) 没有实现 [`shouldComponentUpdate()`](https://reactjs.org/docs/react-component.html#shouldcomponentupdate)，但是 `React.PureComponent`实现了它。采用对属性和状态用浅比较的方式。
 
 如果React组件的 `render()` 函数在给定相同的props和state下渲染为相同的结果，在某些场景下你可以使用 `React.PureComponent` 来提升性能。
 
-> Note
-
-> `React.PureComponent` 的 `shouldComponentUpdate()` 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不一致而产生错误的否定判断(表现为对象深层的数据已改变视图却没有更新, 原文：false-negatives)。当你期望只拥有简单的props和state时，才去继承 `PureComponent` ，或者在你知道深层的数据结构已经发生改变时使用 [`forceUpate()`](/docs/react-component.html#forceupdate) 。或者，考虑使用 [不可变对象](https://facebook.github.io/immutable-js/) 来促进嵌套数据的快速比较。
+> 注意
+> 
+> `React.PureComponent` 的 `shouldComponentUpdate()` 只会对对象进行浅对比。如果对象包含复杂的数据结构，它可能会因深层的数据不同而产生漏报判断。仅当你知道拥有的是简单的属性和状态时，才去继承 `PureComponent`，或者在你知道深层的数据结构已经发生改变时使用 [`forceUpate()`](/docs/react-component.html#forceupdate)。或者，考虑使用 [不可变对象](https://facebook.github.io/immutable-js/) 来促进嵌套数据的快速比较。
 >
-> 此外,`React.PureComponent` 的 `shouldComponentUpdate()` 会忽略整个组件的子级。请确保所有的子级组件也是"Pure"的。
+> 此外,`React.PureComponent` 的 `shouldComponentUpdate()` 会略过为整个组件的子树更新属性。请确保所有的子级组件也是"纯"的。
 
-* * *
+------
+
+### `React.memo`
+
+```js
+const MyComponent = React.memo(function MyComponent(props) {
+  /* render using props */
+});
+```
+
+`React.memo` is a [higher order component](https://reactjs.org/docs/higher-order-components.html). It’s similar to [`React.PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) but for function components instead of classes.
+
+If your function component renders the same result given the same props, you can wrap it in a call to `React.memo` for a performance boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered result.
+
+By default it will only shallowly compare complex objects in the props object. If you want control over the comparison, you can also provide a custom comparison function as the second argument.
+
+```js
+function MyComponent(props) {
+  /* render using props */
+}
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+export default React.memo(MyComponent, areEqual);
+```
+
+This method only exists as a **performance optimization.** Do not rely on it to “prevent” a render, as this can lead to bugs.
+
+> Note
+>
+> Unlike the [`shouldComponentUpdate()`](https://reactjs.org/docs/react-component.html#shouldcomponentupdate) method on class components, the `areEqual` function returns `true` if the props are equal and `false` if the props are not equal. This is the inverse from `shouldComponentUpdate`.
+
+------
 
 ### `createElement()`
 
