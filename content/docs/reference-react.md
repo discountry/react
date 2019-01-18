@@ -13,7 +13,7 @@ redirect_from:
   - "docs/top-level-api-zh-CN.html"
 ---
 
-`react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些顶层API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'` 。如果你使用ES5，你可以使用 `var React = require('react')` 。
+`react` 是React库的入口点。如果你通过 `<script>` 标签加载React，这些顶层API可用于 `React` 全局。如果你使用ES6，你可以使用 `import React from 'react'`。如果你使用ES5，你可以使用 `var React = require('react')` 。
 
 ## 概览
 
@@ -65,7 +65,7 @@ Suspense lets components “wait” for something before rendering. Today, Suspe
 - [`React.lazy`](https://reactjs.org/docs/react-api.html#reactlazy)
 - [`React.Suspense`](https://reactjs.org/docs/react-api.html#reactsuspense)
 
-------
+* * *
 
 ## Reference
 
@@ -83,7 +83,7 @@ class Greeting extends React.Component {
 
 有关基类 `React.Component` 的方法和属性列表，请参阅 [`React.Component API Reference`](/docs/react-component.html)。
 
-------
+* * *
 
 ### `React.PureComponent`
 
@@ -97,7 +97,7 @@ class Greeting extends React.Component {
 >
 > 此外,`React.PureComponent` 的 `shouldComponentUpdate()` 会略过为整个组件的子树更新属性。请确保所有的子级组件也是"纯"的。
 
-------
+* * *
 
 ### `React.memo`
 
@@ -133,7 +133,7 @@ This method only exists as a **performance optimization.** Do not rely on it to 
 >
 > Unlike the [`shouldComponentUpdate()`](https://reactjs.org/docs/react-component.html#shouldcomponentupdate) method on class components, the `areEqual` function returns `true` if the props are equal and `false` if the props are not equal. This is the inverse from `shouldComponentUpdate`.
 
-------
+* * *
 
 ### `createElement()`
 
@@ -151,7 +151,7 @@ React.createElement(
 
 用 [`JSX`](/docs/introducing-jsx.html) 编写的代码会被转换成用 `React.createElement()` 实现。如果使用了JSX，你通常不会直接调用 `React.createElement()`。参阅 [`React Without JSX`](/docs/react-without-jsx.html) 了解更多。
 
-------
+* * *
 
 ### `cloneElement()`
 
@@ -175,7 +175,7 @@ React.cloneElement(
 
 引入这个API用来替换已弃用的 `React.addons.cloneWithProps()`。
 
-------
+* * *
 
 ### `createFactory()`
 
@@ -189,7 +189,7 @@ React.createFactory(type)
 
 如果使用了JSX，你通常不会直接调用`React.createFactory()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html)了解更多 。
 
-------
+* * *
 
 ### `isValidElement()`
 
@@ -199,7 +199,7 @@ React.isValidElement(object)
 
 验证对象是否是一个React元素。返回 `true` 或 `false` 。
 
-------
+* * *
 
 ### `React.Children`
 
@@ -257,7 +257,7 @@ React.Children.toArray(children)
 >
 > 当扁平化子代列表时，`React.Children.toArray()` 改变key来保留嵌套数组的语义。也就是说，`toArray` 会给被返回的数组中的每个键加上前缀。这样每个元素的键会应用作用域到它的输入数组。
 
-------
+* * *
 
 ### `React.Fragment`
 
@@ -274,75 +274,42 @@ render() {
 }
 ```
 
-You can also use it with the shorthand `<></>` syntax. For more information, see [React v16.2.0: Improved Support for Fragments](https://reactjs.org/blog/2017/11/28/react-v16.2.0-fragment-support.html).
+You can also use it with the shorthand `<></>` syntax. For more information, see [React v16.2.0: Improved Support for Fragments](/blog/2017/11/28/react-v16.2.0-fragment-support.html).
 
 ### `React.createRef`
 
-`React.createRef` creates a [ref](https://reactjs.org/docs/refs-and-the-dom.html) that can be attached to React elements via the ref attribute.
-
-```js
-class MyComponent extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.inputRef = React.createRef();
-  }
-
-  render() {
-    return <input type="text" ref={this.inputRef} />;
-  }
-
-  componentDidMount() {
-    this.inputRef.current.focus();
-  }
-}
-```
-
-
+`React.createRef` creates a [ref](/docs/refs-and-the-dom.html) that can be attached to React elements via the ref attribute.
+`embed:16-3-release-blog-post/create-ref-example.js`
 
 ### `React.forwardRef`
 
-`React.forwardRef` creates a React component that forwards the [ref](https://reactjs.org/docs/refs-and-the-dom.html) attribute it receives to another component below in the tree. This technique is not very common but is particularly useful in two scenarios:
+`React.forwardRef` creates a React component that forwards the [ref](/docs/refs-and-the-dom.html) attribute it receives to another component below in the tree. This technique is not very common but is particularly useful in two scenarios:
 
-- [Forwarding refs to DOM components](https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components)
-- [Forwarding refs in higher-order-components](https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components)
+* [Forwarding refs to DOM components](/docs/forwarding-refs.html#forwarding-refs-to-dom-components)
+* [Forwarding refs in higher-order-components](/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components)
 
 `React.forwardRef` accepts a rendering function as an argument. React will call this function with `props` and `ref` as two arguments. This function should return a React node.
 
-
-
-```js
-const FancyButton = React.forwardRef((props, ref) => (
-  <button ref={ref} className="FancyButton">
-    {props.children}
-  </button>
-));
-
-// You can now get a ref directly to the DOM button:
-const ref = React.createRef();
-<FancyButton ref={ref}>Click me!</FancyButton>;
-```
-
-
+`embed:reference-react-forward-ref.js`
 
 In the above example, React passes a `ref` given to `<FancyButton ref={ref}>` element as a second argument to the rendering function inside the `React.forwardRef` call. This rendering function passes the `ref` to the `<button ref={ref}>` element.
 
 As a result, after React attaches the ref, `ref.current` will point directly to the `<button>` DOM element instance.
 
-For more information, see [forwarding refs](https://reactjs.org/docs/forwarding-refs.html).
+For more information, see [forwarding refs](/docs/forwarding-refs.html).
 
 ### `React.lazy`
 
-`React.lazy()` lets you define a component that is loaded dynamically. This helps reduce the bundle size to delay loading components that aren’t used during the initial render.
+`React.lazy()` lets you define a component that is loaded dynamically. This helps reduce the bundle size to delay loading components that aren't used during the initial render.
 
-You can learn how to use it from our [code splitting documentation](https://reactjs.org/docs/code-splitting.html#reactlazy). You might also want to check out [this article](https://medium.com/@pomber/lazy-loading-and-preloading-components-in-react-16-6-804de091c82d) explaining how to use it in more detail.
+You can learn how to use it from our [code splitting documentation](/docs/code-splitting.html#reactlazy). You might also want to check out [this article](https://medium.com/@pomber/lazy-loading-and-preloading-components-in-react-16-6-804de091c82d) explaining how to use it in more detail.
 
 ```js
 // This component is loaded dynamically
 const SomeComponent = React.lazy(() => import('./SomeComponent'));
 ```
 
-Note that rendering `lazy` components requires that there’s a `<React.Suspense>` component higher in the rendering tree. This is how you specify a loading indicator.
+Note that rendering `lazy` components requires that there's a `<React.Suspense>` component higher in the rendering tree. This is how you specify a loading indicator.
 
 > **Note**
 >
@@ -368,10 +335,10 @@ function MyComponent() {
 }
 ```
 
-It is documented in our [code splitting guide](https://reactjs.org/docs/code-splitting.html#reactlazy). Note that `lazy` components can be deep inside the `Suspense` tree — it doesn’t have to wrap every one of them. The best practice is to place `<Suspense>` where you want to see a loading indicator, but to use `lazy()` wherever you want to do code splitting.
+It is documented in our [code splitting guide](/docs/code-splitting.html#reactlazy). Note that `lazy` components can be deep inside the `Suspense` tree -- it doesn't have to wrap every one of them. The best practice is to place `<Suspense>` where you want to see a loading indicator, but to use `lazy()` wherever you want to do code splitting.
 
-While this is not supported today, in the future we plan to let `Suspense` handle more scenarios such as data fetching. You can read about this in [our roadmap](https://reactjs.org/blog/2018/11/27/react-16-roadmap.html).
+While this is not supported today, in the future we plan to let `Suspense` handle more scenarios such as data fetching. You can read about this in [our roadmap](/blog/2018/11/27/react-16-roadmap.html).
 
-> Note:
+>Note:
 >
-> `React.lazy()` and `<React.Suspense>` are not yet supported by `ReactDOMServer`. This is a known limitation that will be resolved in the future.
+>`React.lazy()` and `<React.Suspense>` are not yet supported by `ReactDOMServer`. This is a known limitation that will be resolved in the future.
