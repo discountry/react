@@ -183,13 +183,13 @@ React.cloneElement(
 React.createFactory(type)
 ```
 
-根据给定的类型返回一个创建React元素的函数。类似 [`React.createElement`](#createElement) ，参数type既可以一个html标签名称字符串，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或时一个函数)。
+返回一个函数，此函数创建给定类型的React元素。类似 [`React.createElement`](#createElement)，类型参数既可以是一个标签名称字符串(such as `'div'` or `'span'`)，也可以是一个 [`React component`](/docs/components-and-props.html) 类型(一个类或一个函数)，或者一个[React fragment](https://reactjs.org/docs/react-api.html#reactfragment)类型。
 
-这个方法过时了，我们推荐你使用JSX或直接使用 `React.createElement()` 来替代它。
+这个方法被认为是遗留的，我们鼓励你使用JSX或直接使用 `React.createElement()` 来替代它。
 
-如果使用了JSX，你通常不会直接调用 `React.createFactory()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html)了解更多 。
+如果使用了JSX，你通常不会直接调用`React.createFactory()` 。参阅 [`React Without JSX`](/docs/react-without-jsx.html)了解更多 。
 
-* * *
+------
 
 ### `isValidElement()`
 
@@ -199,7 +199,7 @@ React.isValidElement(object)
 
 验证对象是否是一个React元素。返回 `true` 或 `false` 。
 
-* * *
+------
 
 ### `React.Children`
 
@@ -211,7 +211,11 @@ React.isValidElement(object)
 React.Children.map(children, function[(thisArg)])
 ```
 
-在包含在 `children` 里的每个子级上调用函数，调用的函数的 `this` 设置为 `thisArg` 。如果 `children` 是一个嵌套的对象或数组，它将被遍历。如果 `children` 是 `null` 或 `undefined` ，返回 `null` 或 `undefined` 而不是一个空数组。
+在包含在 `children` 里的每个直接孩子上调用一个函数，并且`this` 设置为 `thisArg` 。如果 `children` 是一个数组它将被遍历，函数将被调用为每个数组中的孩子。如果 `children` 是 `null` 或 `undefined` ，这个方法将返回 `null` 或 `undefined` 而不是一个数组。
+
+> 注意
+>
+> 如果 `children` 是一个 `Fragment`，它将被当作单独一个孩子，不会被遍历。
 
 #### `React.Children.forEach`
 
@@ -227,7 +231,7 @@ React.Children.forEach(children, function[(thisArg)])
 React.Children.count(children)
 ```
 
-返回 `children` 中的组件总数，相等于传给 `map` 或 `forEach` 时，回调函数被调用次数。
+返回 `children` 中的组件总数，等于传给 `map` 或 `forEach` 的回调函数被调用的次数。
 
 #### `React.Children.only`
 
@@ -235,7 +239,11 @@ React.Children.count(children)
 React.Children.only(children)
 ```
 
-返回`children`里仅有的子级。否则抛出异常。
+验证`children`只有唯一一个孩子（React元素）并返回它。否则这个方法扔抛出一个错误。
+
+> 注意
+>
+> `React.Children.only()` 不接受 the return value of [`React.Children.map()`](https://reactjs.org/docs/react-api.html#reactchildrenmap) 因为它是一个数组而不是一个React元素。
 
 #### `React.Children.toArray`
 
@@ -243,19 +251,19 @@ React.Children.only(children)
 React.Children.toArray(children)
 ```
 
-返回以赋key给每个子级 `child` 的扁平数组形式来组成不透明的 `children` 数据结构。如果你打算在你的渲染方法里操纵子级集合这很有用，特别是你想在 `this.props.children` 传下之前对它重新排序或切割。
+返回`children` 不透明的数据结构作为一个扁平数组，并将键赋给每个孩子。一个用途是当你打算在渲染方法里操纵子代集合时，特别是你想在 `this.props.children` 传下它之前对它重新排序或切片。
 
-> Note:
+> 注意
 >
-> 当children是扁平列表时，`React.Children.toArray()` 改变key来保留嵌套数组的语义。也就是说，为了在展开时保留嵌套数组的语义，`toArray` 会自动的给数组中每个 key 加了上前缀，以便将每个元素的key被限定到包含它的输入数组。
+> 当扁平化子代列表时，`React.Children.toArray()` 改变key来保留嵌套数组的语义。也就是说，`toArray` 会给被返回的数组中的每个键加上前缀。这样每个元素的键会应用作用域到它的输入数组。
 
-* * *
+------
 
 ### `React.Fragment`
 
-The `React.Fragment` component lets you return multiple elements in a `render()` method without creating an additional DOM element:
+`React.Fragment` 组件让你在一个`render()` 方法中返回多个元素，而不用创造一个额外的 DOM 元素：
 
-```javascript
+```js
 render() {
   return (
     <React.Fragment>
@@ -266,11 +274,104 @@ render() {
 }
 ```
 
-You can also use it with the shorthand `<></>` syntax. For more information, see [React v16.2.0: Improved Support for Fragments](/blog/2017/11/28/react-v16.2.0-fragment-support.html).
+You can also use it with the shorthand `<></>` syntax. For more information, see [React v16.2.0: Improved Support for Fragments](https://reactjs.org/blog/2017/11/28/react-v16.2.0-fragment-support.html).
+
+### `React.createRef`
+
+`React.createRef` creates a [ref](https://reactjs.org/docs/refs-and-the-dom.html) that can be attached to React elements via the ref attribute.
+
+```js
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.inputRef = React.createRef();
+  }
+
+  render() {
+    return <input type="text" ref={this.inputRef} />;
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+}
+```
+
+
 
 ### `React.forwardRef`
 
-`React.forwardRef` accepts a render function that receives `props` and `ref` parameters and returns a React node. Ref forwarding is a technique for passing a [ref](/docs/refs-and-the-dom.html) through a component to one of its descendants. This technique can be particularly useful with [higher-order components](/docs/higher-order-components.html):
-`embed:reference-react-forward-ref.js`
+`React.forwardRef` creates a React component that forwards the [ref](https://reactjs.org/docs/refs-and-the-dom.html) attribute it receives to another component below in the tree. This technique is not very common but is particularly useful in two scenarios:
 
-For more information, see [forwarding refs](/docs/forwarding-refs.html).
+- [Forwarding refs to DOM components](https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-to-dom-components)
+- [Forwarding refs in higher-order-components](https://reactjs.org/docs/forwarding-refs.html#forwarding-refs-in-higher-order-components)
+
+`React.forwardRef` accepts a rendering function as an argument. React will call this function with `props` and `ref` as two arguments. This function should return a React node.
+
+
+
+```js
+const FancyButton = React.forwardRef((props, ref) => (
+  <button ref={ref} className="FancyButton">
+    {props.children}
+  </button>
+));
+
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef();
+<FancyButton ref={ref}>Click me!</FancyButton>;
+```
+
+
+
+In the above example, React passes a `ref` given to `<FancyButton ref={ref}>` element as a second argument to the rendering function inside the `React.forwardRef` call. This rendering function passes the `ref` to the `<button ref={ref}>` element.
+
+As a result, after React attaches the ref, `ref.current` will point directly to the `<button>` DOM element instance.
+
+For more information, see [forwarding refs](https://reactjs.org/docs/forwarding-refs.html).
+
+### `React.lazy`
+
+`React.lazy()` lets you define a component that is loaded dynamically. This helps reduce the bundle size to delay loading components that aren’t used during the initial render.
+
+You can learn how to use it from our [code splitting documentation](https://reactjs.org/docs/code-splitting.html#reactlazy). You might also want to check out [this article](https://medium.com/@pomber/lazy-loading-and-preloading-components-in-react-16-6-804de091c82d) explaining how to use it in more detail.
+
+```js
+// This component is loaded dynamically
+const SomeComponent = React.lazy(() => import('./SomeComponent'));
+```
+
+Note that rendering `lazy` components requires that there’s a `<React.Suspense>` component higher in the rendering tree. This is how you specify a loading indicator.
+
+> **Note**
+>
+> Using `React.lazy`with dynamic import requires Promises to be available in the JS environment. This requires a polyfill on IE11 and below.
+
+### `React.Suspense`
+
+`React.Suspense` let you specify the loading indicator in case some components in the tree below it are not yet ready to render. Today, lazy loading components is the **only** use case supported by `<React.Suspense>`:
+
+```js
+// This component is loaded dynamically
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+  return (
+    // Displays <Spinner> until OtherComponent loads
+    <React.Suspense fallback={<Spinner />}>
+      <div>
+        <OtherComponent />
+      </div>
+    </React.Suspense>
+  );
+}
+```
+
+It is documented in our [code splitting guide](https://reactjs.org/docs/code-splitting.html#reactlazy). Note that `lazy` components can be deep inside the `Suspense` tree — it doesn’t have to wrap every one of them. The best practice is to place `<Suspense>` where you want to see a loading indicator, but to use `lazy()` wherever you want to do code splitting.
+
+While this is not supported today, in the future we plan to let `Suspense` handle more scenarios such as data fetching. You can read about this in [our roadmap](https://reactjs.org/blog/2018/11/27/react-16-roadmap.html).
+
+> Note:
+>
+> `React.lazy()` and `<React.Suspense>` are not yet supported by `ReactDOMServer`. This is a known limitation that will be resolved in the future.
