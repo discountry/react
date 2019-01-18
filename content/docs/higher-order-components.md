@@ -106,9 +106,9 @@ class BlogPost extends React.Component {
 - 在监听器内， 每当数据源发生改变时，调用`setState`。
 - 卸载组件时， 移除改变监听器。
 
-设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们希望一个抽象允许我们定义这种逻辑，在单个地方，并且许多组件都可以共享它，这就是高阶组件的杰出所在。
+设想一下，在一个大型的应用中，这种从`DataSource`订阅数据并调用`setState`的模式将会一次又一次的发生。我们希望一个抽象允许我们定义这种逻辑，在单个地方，并且许多组件都可以共享它，这就是高阶组件的杰出所在。
 
-我们可以写一个创建组件的函数，创建的组件类似 `CommonList` 和 `BlogPost`一样订阅到`DataSource`。该函数接受它的参数之一作为一个子组件，子组件又接受订阅的数据作为一个属性(prop)。让我们称这个函数为`withSubscription`：
+我们可以写一个创建组件的函数，创建的组件类似`CommonList`和`BlogPost`一样订阅到`DataSource`。该函数接受它的参数之一作为一个子组件，子组件又接受订阅的数据作为一个属性(prop)。让我们称这个函数为`withSubscription`：
 
 ```js
 const CommentListWithSubscription = withSubscription(
@@ -165,7 +165,7 @@ function withSubscription(WrappedComponent, selectData) {
 }
 ```
 
-注意，高阶组件既不会修改输入组件，也不会使用继承拷贝它的行为。而是，高阶组件*组合（composes）*原始组件，通过用一个容器组件*包裹（wrapping）*原始组件。高阶组件就是一个没有副作用的纯函数。
+注意，高阶组件既不会修改输入组件，也不会使用继承拷贝它的行为。而是，高阶组件 *组合（composes）* 原始组件，通过用一个容器组件 *包裹着（wrapping）* 原始组件。高阶组件就是一个没有副作用的纯函数。
 
 就是这样！被包裹的组件接收容器的所有props属性以及一个新属性`data`用于渲染输出。高阶组件并不关心数据使用的方式和原因，而被包裹的组件也不关心数据来自何处。
 
@@ -221,7 +221,7 @@ function logProps(WrappedComponent) {
 
 高阶组件添加了一些特性到一个组件，他们不应该大幅修改它的合约。被期待的是，从高阶组件返回的那个组件与被包裹的组件具有类似的接口。
 
-高阶组件应该贯穿传递与它专业关注无关的props属性。大多数高阶组件都包含类似如下的渲染方法：
+高阶组件应该贯穿传递与它专门关注无关的props属性。大多数高阶组件都包含类似如下的渲染方法：
 
 ```js
 render() {
@@ -302,9 +302,9 @@ const EnhancedComponent = enhance(WrappedComponent)
 
 ## 约定：包装显示名字以便于调试
 
-高阶组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个好的名字，确保能够识别出它是由高阶组件创建的新组件还是普通的组件。
+高阶组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个显示名字，传达它是一个高阶组件的结果。
 
-最常用的技术就是将包裹组件的名字包装在显示名字中。所以，如果你的高阶组件名字是 `withSubscription`，且包裹组件的显示名字是 `CommentList`，那么就是用 `WithSubscription(CommentList)`这样的显示名字：
+最常用的技术是包裹显示名字给被包裹的组件。所以，如果你的高阶组件名字是 `withSubscription`，且被包裹的组件的显示名字是 `CommentList`，那么就是用 `WithSubscription(CommentList)`这样的显示名字：
 
 ```js
 function withSubscription(WrappedComponent) {
@@ -318,38 +318,37 @@ function getDisplayName(WrappedComponent) {
 }
 ```
 
+## 告诫
 
-## 注意事项
+如果你是React新手，你要知道高阶组件自身也有一些不是太明显的告诫。
 
-如果你是React新手，你要知道高阶组件自身也有一些不是太明显的使用注意事项。
+### 不要在render方法内使用高阶组件
 
-### 不要在render函数中使用高阶组件
+React的差分算法（称为协调）使用组件标识确定是否更新现有的子树或扔掉它并重新挂载一个新的。如果`render`方法返回的组件和前一次渲染返回的组件是完全相同的(`===`)，React就递归地更新子树，这是通过差分它和新的那个完成。如果它们不相等，前一个子树被完全卸载掉。
 
-React使用的差异算法（称为协调）使用组件标识确定是否更新现有的子对象树或丢掉现有的子树并重新挂载。如果render函数返回的组件和之前render函数返回的组件是相同的，React就递归地比较新子对象树和旧的子对象树的差异，并更新旧的子对象树。如果它们不相等，就会完全卸载掉旧的子对象树。
-
-一般而言，你不需要考虑这些细节东西。但是它对高阶函数的使用有影响，那就是你不能在组件的render函数中调用高阶函数：
+一般而言，你不需要考虑差分算法的原理。但是它和高阶函数有关。因为它意味着你不能在组件的`render`方法之内应用高阶函数到组件：
 
 ```js
 render() {
-  // 每一次render函数调用都会创建一个新的EnhancedComponent实例
+  // 每一次渲染，都会创建一个新的EnhancedComponent版本
   // EnhancedComponent1 !== EnhancedComponent2
   const EnhancedComponent = enhance(MyComponent);
-  // 每一次都会使子对象树完全被卸载或移除
+  // 那引起每一次都会使子对象树完全被卸载/重新加载
   return <EnhancedComponent />;
 }
 ```
 
-这里产生的问题不仅仅是性能问题 —— 还有，重新加载一个组件会引起原有组件的所有状态和子组件丢失。
+这里产生的问题不仅仅是性能问题——还有，重新加载一个组件会引起原有组件的状态和它的所有子组件丢失。
 
-相反，在组件定义外使用高阶组件，可以使新组件只出现一次定义。在渲染的整个过程中，保证都是同一个组件。无论在任何情况下，这都是最好的使用方式。
+相反，应用高阶组件在组件定义的外面，可以使结果组件只创建一次。那么，它的标识将都是一致的遍及多次渲染。这通常是你想要的，无论如何。
 
-在很少的情况下，你可能需要动态的调用高阶组件。那么你就可以在组件的构造函数或生命周期函数中调用。
+在很少的情况下，你可能需要动态的应用高阶组件。你也可以在组件的生命周期方法或构造函数中操作。
 
 ### 必须将静态方法做拷贝
 
-有时，给组件定义静态方法是十分有用的。例如，Relay的容器就开放了一个静态方法 `getFragment`便于组合GraphQL的代码片段。
+有时，在React组件上定义静态方法是十分有用的。例如，Relay容器就暴露一个静态方法`getFragment`便于组合GraphQL的代码片段。
 
-当使用高阶组件包装组件，原始组件被容器组件包裹，也就意味着新组件会丢失原始组件的所有静态方法。
+当你应用一个高阶组件到一个组件时，尽管，原始组件被包裹于一个容器组件内，也就意味着新组件会没有原始组件的任何静态方法。
 
 ```js
 // 定义静态方法
@@ -361,7 +360,7 @@ const EnhancedComponent = enhance(WrappedComponent);
 typeof EnhancedComponent.staticMethod === 'undefined' // true
 ```
 
-解决这个问题的方法就是，将原始组件的所有静态方法全部拷贝给新组件：
+为解决这个问题，在返回之前，将原始组件的方法拷贝给容器：
 
 ```js
 function enhance(WrappedComponent) {
@@ -386,21 +385,19 @@ function enhance(WrappedComponent) {
 另外一个可能的解决方案就是分别导出组件自身的静态方法。
 
 ```js
-// 替代……
+// Instead of...
 MyComponent.someFunction = someFunction;
 export default MyComponent;
 
-// ……分别导出……
+// ...export the method separately...
 export { someFunction };
 
-// ……在要使用的组件中导入
+// ...and in the consuming module, import both
 import MyComponent, { someFunction } from './MyComponent.js';
 ```
 
-### Refs属性不能传递
+### Refs属性不能贯穿传递
 
-一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是包裹组件。
-
-如果你碰到了这样的问题，最理想的处理方案就是搞清楚如何避免使用 `ref`。有时候，没有看过React示例的新用户在某种场景下使用prop属性要好过使用ref。
+一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是被包裹的组件。
 
 现在我们提供一个名为 `React.forwardRef` 的 API 来解决这一问题（在 React 16.3 版本中）。[在 refs 传递章节中了解详情](/docs/forwarding-refs.html)。
