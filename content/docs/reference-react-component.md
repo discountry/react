@@ -253,15 +253,17 @@ The methods in this section correspond to uncommon use cases. They're handy once
 shouldComponentUpdate(nextProps, nextState)
 ```
 
-使用`shouldComponentUpdate()`以让React知道当前状态或属性的改变是否不影响组件的输出。默认行为是在每一次状态的改变重渲，在大部分情况下你应该依赖于默认行为。
+使用`shouldComponentUpdate()`以让React知道是否组件的输出不受当前状态或属性影响。默认行为是在每一次状态的改变重新渲染，在大部分情况下你应该依赖于默认行为。
 
-当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法并不会在初始化渲染或当使用`forceUpdate()`时被调用。
+当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法在初始化渲染或当使用`forceUpdate()`时并不会被调用。
 
-当他们状态改变时，返回`false` 并不能阻止子组件重渲。
+这个方法的存在是作为一种**[性能优化](/docs/optimizing-performance.html)。** 不要依赖它去阻止一次渲染，因为这会导致臭虫。**考虑使用内建的 [`PureComponent`](/docs/react-api.html#reactpurecomponent)** 代替手写`shouldComponentUpdate()`。`PureComponent` 对属性和状态执行浅比较，因而降低你略过必要更新的机会。
 
-当前，若`shouldComponentUpdate()`返回`false`，而后[`UNSAFE_componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
+若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。注意，返回`false`不能阻止子组件当*他们的*状态改变时重新渲染。
 
-在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
+我们不推荐在`shouldComponentUpdate()`中做深相等检测，或者使用`JSON.stringify()`。这是非常无效率的会伤害性能。
+
+当前，如果`shouldComponentUpdate()`返回`false`，那么[`UNSAFE_componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
 
 * * *
 
@@ -292,24 +294,13 @@ static getDerivedStateFromProps(nextProps, prevState)
 
 * * *
 
-### Error boundaries
+### 错误边界
 
-[Error boundaries](/docs/error-boundaries.html) are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+[错误边界](/docs/error-boundaries.html)是React组件，捕捉JavaScript错误，在他们的子组件树中任意地方，记录这些错误，并且显示一个退路UI而不是让组件树崩溃。错误边界捕捉错误，在渲染期间、在生命周期方法中，和在构造函数中，它们之下的整棵树的。
 
-A class component becomes an error boundary if it defines either (or both) of the lifecycle methods `static getDerivedStateFromError()` or `componentDidCatch()`. Updating state from these lifecycles lets you capture an unhandled JavaScript error in the below tree and display a fallback UI.
+如果一个类组件定义了生命周期方法`static getDerivedStateFromError()`或`componentDidCatch()`的任何一个或两个都，将成为一个错误边界。从这些生命周期中更新状态让你捕捉一个未处理的JavaScript错误，在之下的树中，并显示退路UI。
 
-Only use error boundaries for recovering from unexpected exceptions; **don't try to use them for control flow.**
-
-For more details, see [*Error Handling in React 16*](/blog/2017/07/26/error-handling-in-react-16.html).
-
-> Note
-> 
-> Error boundaries only catch errors in the components **below** them in the tree. An error boundary can’t catch an error within itself.
-
-
-错误边界是React组件，并不是损坏的组件树。错误边界捕捉发生在子组件树中任意地方的JavaScript错误，打印错误日志，并且显示回退的用户界面。错误边界捕捉渲染期间、在生命周期方法中和在它们之下整棵树的构造函数中的错误。
-
-如果定义了这一生命周期方法，一个类组件将成为一个错误边界。在错误边界中调用`setState()`让你捕捉当前树之下未处理的JavaScript错误，并显示回退的用户界面。只使用错误边界来恢复异常，而不要尝试将它们用于控制流。
+只使用错误边界来恢复未期待的异常，而**不要尝试将它们用于控制流。**
 
 详情请见[*React 16中的错误处理*](/blog/2017/07/26/error-handling-in-react-16.html)。
 
@@ -320,6 +311,7 @@ For more details, see [*Error Handling in React 16*](/blog/2017/07/26/error-hand
 * * *
 
 ### `static getDerivedStateFromError()`
+
 ```javascript
 static getDerivedStateFromError(error)
 ```
@@ -362,6 +354,52 @@ For those use cases, use `componentDidCatch()` instead.
 ```javascript
 componentDidCatch(error, info)
 ```
+
+This lifecycle is invoked after an error has been thrown by a descendant component.
+It receives two parameters:
+
+1. `error` - The error that was thrown.
+2. `info` - An object with a `componentStack` key containing [information about which component threw the error](/docs/error-boundaries.html#component-stack-traces).
+
+`componentDidCatch()` is called during the "commit" phase, so side-effects are permitted.
+It should be used for things like logging errors:
+
+```js{12-19}
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    // Example "componentStack":
+    //   in ComponentThatThrows (created by App)
+    //   in ErrorBoundary (created by App)
+    //   in div (created by App)
+    //   in App
+    logComponentStackToMyService(info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+
+    return this.props.children; 
+  }
+}
+```
+
+> Note
+> 
+> In the event of an error, you can render a fallback UI with `componentDidCatch()` by calling `setState`, but this will be deprecated in a future release.
+> Use `static getDerivedStateFromError()` to handle fallback rendering instead.
 
 * * *
 
@@ -430,7 +468,7 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 * * *
 
-## Other APIs
+## 其他API
 
 Unlike the lifecycle methods above (which React calls for you), the methods below are the methods *you* can call from your components.
 
@@ -442,8 +480,7 @@ There are just two of them: `setState()` and `forceUpdate()`.
 setState(updater, [callback])
 ```
 
-`setState()`将需要处理的变化塞入（译者注：setState源码中将一个需要改变的变化存放到组件的state对象中，采用队列处理）组件的state对象中，
-并告诉该组件及其子组件需要用更新的状态来重新渲染。这是用于响应事件处理和服务端响应的更新用户界面的主要方式。
+`setState()`将需要处理的变化塞入（译者注：setState源码中将一个需要改变的变化存放到组件的state对象中，采用队列处理）组件的state对象中，并告诉该组件及其子组件需要用更新的状态来重新渲染。这是用于响应事件处理和服务端响应的更新用户界面的主要方式。
 
 将`setState()`认为是一次*请求*而不是一次立即执行更新组件的命令。为了更为可观的性能，React可能会推迟它，稍后会一次性更新这些组件。React不会保证在setState之后，能够立刻拿到改变的结果。
 
@@ -500,7 +537,11 @@ this.setState((prevState) => {
 });
 ```
 
-更多细节，查看[State & 生命周期指南](/docs/state-and-lifecycle.html)。
+更多细节，查看：
+
+* [State and Lifecycle guide](/docs/state-and-lifecycle.html)
+* [In depth: When and why are `setState()` calls batched?](https://stackoverflow.com/a/48610973/458193)
+* [In depth: Why isn't `this.state` updated immediately?](https://github.com/facebook/react/issues/11527#issuecomment-360199710)
 
 * * *
 
@@ -515,6 +556,7 @@ component.forceUpdate(callback)
 调用`forceUpdate()`将会导致组件的 `render()`方法被调用，并忽略`shouldComponentUpdate()`。这将会触发每一个子组件的生命周期方法，涵盖，每个子组件的`shouldComponentUpdate()` 方法。若当标签改变，React仅会更新DOM。
 
 通常你应该尝试避免所有`forceUpdate()` 的用法并仅在`render()`函数里从`this.props`和`this.state`读取数据。
+
 * * *
 
 ## 类属性
@@ -552,6 +594,8 @@ CustomButton.defaultProps = {
 * * *
 
 ### `displayName`
+
+The `displayName` string is used in debugging messages. Usually, you don't need to set it explicitly because it's inferred from the name of the function or class that defines the component. You might want to set it explicitly if you want to display a different name for debugging purposes or when you create a higher-order component, see [Wrap the Display Name for Easy Debugging](/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging) for details.
 
 `displayName`被用在调试信息中。JSX会自动设置该值；查看[深入JSX](/docs/jsx-in-depth.html)。
 
