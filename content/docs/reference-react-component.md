@@ -15,49 +15,63 @@ redirect_from:
   - "tips/use-react-with-other-libraries.html"
 ---
 
-[组件](/docs/components-and-props.html) 能够让你将UI分割成独立的、可重用的部分，并对每一部分单独考量。[`React`](/docs/react-api.html)提供了`React.Component` 。
+本页面包含详细的React组件类定义的API引用。假定你熟悉基本React概念，such as [Components and Props](/docs/components-and-props.html), as well as [State and Lifecycle](/docs/state-and-lifecycle.html). If you're not, read them first.
 
 ## 概览
 
-`React.Component`是一个抽象基础类，因此直接引用`React.Component`几乎没意义。相反，你通常会继承自它，并至少定义一个[`render()`](#render)方法。
+定义React组件可以以类或者函数的方式。定义为类的组件目前提供更多特征，这一页将详细描述这些特征。为定义一个React组件类，你需要继承`React.Component`：
 
-通常你定义一个React组件相当于一个纯[JavaScript类](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes)：
-
-```javascript
-class Greeting extends React.Component {
+```js
+class Welcome extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}</h1>;
   }
 }
 ```
 
-若你仍未使用 ES6，你可以使用 [`create-react-class`](/docs/react-api.html#createclass)模块。查看 [Using React without ES6](/docs/react-without-es6.html) 了解更多。
+在`React.Component`子类中，你*必须*定义的唯一方法被叫做[`render()`](#render)。在本页面描述的所有其他方法都是可选的。
+
+**我们强烈反对你自己创建组件的基类。** In React components, [代码重用主要通过组合而非继承达成](/docs/composition-vs-inheritance.html).
+
+>注意：
+>
+>React doesn't force you to use the ES6 class syntax. If you prefer to avoid it, you may use the `create-react-class` module or a similar custom abstraction instead. Take a look at [Using React without ES6](/docs/react-without-es6.html) to learn more.
 
 ### 组件生命周期
 
-每一个组件都有几个你可以重写以让代码在处理环节的特定时期运行的“生命周期方法”。方法中带有前缀 **`will`** 的在特定环节之前被调用，而带有前缀 **`did`** 的方法则会在特定环节之后被调用。
+每一个组件都有几个“生命周期方法”，你可以重写(override)他们，以在进程中的特定时期运行代码。**You can use [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/) as a cheat sheet.** In the list below, commonly used lifecycle methods are marked as **bold**. The rest of them exist for relatively rare use cases.
 
 #### 装配
 
-这些方法会在组件实例被创建和插入DOM中时被调用：
+这些方法会按照下列顺序，在组件实例被创建并插入DOM中时被调用：
 
-- [`constructor()`](#constructor)
+- [**`constructor()`**](#constructor)
 - [`static getDerivedStateFromProps()`](#static-getderivedstatefromprops)
-- [`componentWillMount()` / `UNSAFE_componentWillMount()`](#unsafe_componentwillmount)
-- [`render()`](#render)
-- [`componentDidMount()`](#componentdidmount)
+- [**`render()`**](#render)
+- [**`componentDidMount()`**](#componentdidmount)
+
+>Note:
+>
+>这些代码是遗留的，你应该 [避免他们](/blog/2018/03/27/update-on-async-rendering.html) 被用在新代码中：
+>
+>- [`UNSAFE_componentWillMount()`](#unsafe_componentwillmount)
 
 #### 更新
 
-属性或状态的改变会触发一次更新。当一个组件在被重渲时，这些方法将会被调用：
+一次更新是由改变属性或状态引起的。当一个组件在被重新渲染时，这些方法将按照下列顺序被调用：
 
-- [`componentWillReceiveProps()` / `UNSAFE_componentWillReceiveProps()`](#unsafe_componentwillreceiveprops)
 - [`static getDerivedStateFromProps()`](#static-getderivedstatefromprops)
 - [`shouldComponentUpdate()`](#shouldcomponentupdate)
-- [`componentWillUpdate()` / `UNSAFE_componentWillUpdate()`](#unsafe_componentwillupdate)
-- [`render()`](#render)
+- [**`render()`**](#render)
 - [`getSnapshotBeforeUpdate()`](#getsnapshotbeforeupdate)
-- [`componentDidUpdate()`](#componentdidupdate)
+- [**`componentDidUpdate()`**](#componentdidupdate)
+
+>Note:
+>
+>These methods are considered legacy and you should [avoid them](/blog/2018/03/27/update-on-async-rendering.html) in new code:
+>
+>- [`UNSAFE_componentWillUpdate()`](#unsafe_componentwillupdate)
+>- [`UNSAFE_componentWillReceiveProps()`](#unsafe_componentwillreceiveprops)
 
 #### 卸载
 
@@ -67,8 +81,9 @@ class Greeting extends React.Component {
 
 #### 错误处理
 
-在渲染过程中发生错误时会被调用：
+当发生错误时，这些方法会被调用。错误发生在渲染过程中、在一个生命周期方法中、或在任何一个子组件的构造函数中。
 
+- [`static getDerivedStateFromError()`](#static-getderivedstatefromerror)
 - [`componentDidCatch()`](#componentdidcatch)
 
 ### 其他API
@@ -92,47 +107,35 @@ class Greeting extends React.Component {
 
 ## 参考
 
+### 被普遍使用的生命周期方法
+
+The methods in this section cover the vast majority of use cases you'll encounter creating React components. **For a visual reference, check out [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).**
+
 ### `render()`
 
 ```javascript
 render()
 ```
 
-`render()`方法是必须的。
+`render()`方法是类组件唯一必须的方法。
 
 当被调用时，其应该检查`this.props` 和 `this.state`并返回以下类型中的一个:
 
-- **React元素。** 通常是由 JSX 创建。该元素可能是一个原生DOM组件的表示，如`<div />`，或者是一个你定义的合成组件。
-- **字符串和数字。** 这些将被渲染为 DOM 中的 text node。
-- **Portals。** 由 [`ReactDOM.createPortal`](/docs/portals.html) 创建。
-- `null`。 什么都不渲染。
-- **布尔值。** 什么都不渲染。（通常存在于 `return test && <Child />`写法，其中 `test` 是布尔值。）
+- **React元素** 通常是由 [JSX](/docs/introducing-jsx.html) 创建。例如，`<div />` 和 `<MyComponent />` 是 React 元素，指示 React 渲染一个 DOM 节点，或是另一个用户定义的组件，各自分别地。 
+- **数组和fragments** 让你从渲染中返回多个元素。See the documentation on [fragments](/docs/fragments.html) for more details.
+- **Portals**. 让你渲染孩子们到一个不同的DOM子树。See the documentation on [portals](/docs/portals.html) for more details.
+- **字符串和数字。** 这些将被渲染为 DOM 中的文本节点。
+- **布尔或`null`** 什么都不渲染。（通常存在于 `return test && <Child />`模式，其中 `test` 是布尔值。）
 
-当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。
+~~当返回`null` 或 `false`时，`ReactDOM.findDOMNode(this)` 将返回 `null`。~~
 
-`render()`函数应该纯净，意味着其不应该改变组件的状态，其每次调用都应返回相同的结果，同时不直接和浏览器交互。若需要和浏览器交互，将任务放在`componentDidMount()`阶段或其他的生命周期方法。保持`render()` 方法纯净使得组件更容易思考。
+`render()`函数应该是纯的，意味着不应该改变组件的状态，其每次调用都应返回相同的结果，同时它不会直接和浏览器交互。
+
+若需要和浏览器交互，将任务放在`componentDidMount()`中或其他的生命周期方法中。保持`render()` 方法纯净使得组件更容易理解。
 
 > 注意
 >
 > 若 [`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`render()`函数将不会被调用。
-
-#### Fragments
-
-你还可以通过使用一个数组让`render()`返回多个元素：
-
-```javascript
-render() {
-  return [
-    <li key="A">First item</li>,
-    <li key="B">Second item</li>,
-    <li key="C">Third item</li>,
-  ];
-}
-```
-
-> 注意
->
-> 不要忘了给元素[添加key](/docs/lists-and-keys.html#keys)来避免key warning。
 
 * * *
 
