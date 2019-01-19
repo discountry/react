@@ -124,7 +124,7 @@ render()
 - **React元素** 通常是由 [JSX](/docs/introducing-jsx.html) 创建。例如，`<div />` 和 `<MyComponent />` 是 React 元素，指示 React 渲染一个 DOM 节点，或是另一个用户定义的组件，各自分别地。 
 - **数组和fragments** 让你从渲染中返回多个元素。See the documentation on [fragments](/docs/fragments.html) for more details.
 - **Portals**. 让你渲染孩子们到一个不同的DOM子树。See the documentation on [portals](/docs/portals.html) for more details.
-- **字符串和数字。** 这些将被渲染为 DOM 中的文本节点。
+- **字符串和数字** 这些将被渲染为 DOM 中的文本节点。
 - **布尔或`null`** 什么都不渲染。（通常存在于 `return test && <Child />`模式，其中 `test` 是布尔值。）
 
 `render()`函数应该是纯的，意味着不应该改变组件的状态，其每次调用都应返回相同的结果，同时它不会直接和浏览器交互。
@@ -147,22 +147,91 @@ constructor(props)
 
 React组件的构造函数将会在装配之前被调用。当为一个`React.Component`子类定义构造函数时，你应该在任何其他的表达式之前调用`super(props)`。否则，`this.props`在构造函数中将是未定义，这会导致臭虫。
 
-可以基于属性来初始化状态。这样有效地“分离（forks）”属性并根据初始属性设置状态。这有一个有效的`React.Component`子类构造函数的例子：
+典型地, 在 React 中构造函数只用于两个目的：
+
+* 初始化 [局部状态](/docs/state-and-lifecycle.html) by assigning an object to `this.state`.
+* 绑定 [事件处理器](/docs/handling-events.html) methods to an instance.
+
+在 `constructor()`中，你 **不能调用 `setState()`** 。正确做法是，如果你的组件需要使用局部状态， 直接在构造函数中 **将初始状态赋值给`this.state`**：
 
 ```js
 constructor(props) {
   super(props);
-  this.state = {
-    color: props.initialColor
-  };
+  // Don't call this.setState() here!
+  this.state = { counter: 0 };
+  this.handleClick = this.handleClick.bind(this);
 }
 ```
 
-当心这种模式，因为状态将不会随着属性的更新而更新。保证属性和状态同步，你通常想要[状态提升](/docs/lifting-state-up.html)。
+构造函数是你唯一可以直接赋值`this.state`的地方。在其他所有方法中，你需要使用`this.setState()`来代替。
 
-若你通过使用它们为状态“分离”属性，你可能也想要实现[`UNSAFE_componentWillReceiveProps(nextProps)`](#componentwillreceiveprops)以保持最新的状态。但状态提升通常来说更容易以及更少的异常。
+避免引入任何副作用或者是订阅到构造函数中。对于这些用例，使用`componentDidMount()`来代替。
+
+>Note
+>
+>**避免拷贝属性(props)到状态！This is a common mistake:**
+>
+>```js
+>constructor(props) {
+>  super(props);
+>  // Don't do this!
+>  this.state = { color: props.color };
+>}
+>```
+>
+>这里的问题是，一是不必要的(你可以直接使用 `this.props.color` 来代替)，二是创造臭虫 (更新属性 `color` 不会反应到状态中)。
+>
+>**Only use this pattern if you intentionally want to ignore prop updates.** In that case, it makes sense to rename the prop to be called `initialColor` or `defaultColor`. You can then force a component to "reset" its internal state by [changing its `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) when necessary.
+>
+>Read our [blog post on avoiding derived state](/blog/2018/06/07/you-probably-dont-need-derived-state.html) to learn about what to do if you think you need some state to depend on the props.
 
 * * *
+
+### `componentDidMount()`
+
+```javascript
+componentDidMount()
+```
+
+`componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
+
+这一方法是一个发起任何订阅的好地方。如果你这么做了，别忘了在`componentWillUnmount()`退订。
+
+在这个方法中调用`setState()`将会触发一次额外的渲染，但是它将在浏览器刷新屏幕之前发生。这保证了即使`render()`将会调用两次，但用户不会看到中间状态。谨慎使用这一模式，因为它常导致性能问题。然而，它对于像模态框和工具提示框这样的例子是必须的。这时，在渲染依赖DOM节点的尺寸或者位置的视图前，你需要先测量这些节点。
+
+* * *
+* 
+### `componentDidUpdate()`
+
+```javascript
+componentDidUpdate(prevProps, prevState)
+```
+
+`componentDidUpdate()`会在更新发生后立即被调用。该方法并不会在初始化渲染时调用。
+
+当组件被更新时，使用该方法是操作DOM的一次机会。这也是一个适合发送请求的地方，要是你对比了当前属性和之前属性（例如，如果属性没有改变那么请求也就没必要了）。
+
+> 注意
+>
+> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentDidUpdate()`将不会被调用。
+
+* * *
+
+### `componentWillUnmount()`
+
+```javascript
+componentWillUnmount()
+```
+
+`componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
+
+* * *
+
+### Rarely Used Lifecycle Methods
+
+The methods in this section correspond to uncommon use cases. They're handy once in a while, but most of your components probably don't need any of them. **You can see most of the methods below on [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/) if you click the "Show less common lifecycles" checkbox at the top of it.**
+
+
 
 ### `static getDerivedStateFromProps()`
 
@@ -196,19 +265,7 @@ UNSAFE_componentWillMount()
 
 * * *
 
-### `componentDidMount()`
 
-```javascript
-componentDidMount()
-```
-
-`componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
-
-这一方法是一个发起任何订阅的好地方。如果你这么做了，别忘了在`componentWillUnmount()`退订。
-
-在这个方法中调用`setState()`将会触发一次额外的渲染，但是它将在浏览器刷新屏幕之前发生。这保证了即使`render()`将会调用两次，但用户不会看到中间状态。谨慎使用这一模式，因为它常导致性能问题。然而，它对于像模态框和工具提示框这样的例子是必须的。这时，在渲染依赖DOM节点的尺寸或者位置的视图前，你需要先测量这些节点。
-
-* * *
 
 ### `UNSAFE_componentWillReceiveProps()`
 
@@ -283,31 +340,6 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 * * *
 
-### `componentDidUpdate()`
-
-```javascript
-componentDidUpdate(prevProps, prevState)
-```
-
-`componentDidUpdate()`会在更新发生后立即被调用。该方法并不会在初始化渲染时调用。
-
-当组件被更新时，使用该方法是操作DOM的一次机会。这也是一个适合发送请求的地方，要是你对比了当前属性和之前属性（例如，如果属性没有改变那么请求也就没必要了）。
-
-> 注意
->
-> 若[`shouldComponentUpdate()`](#shouldcomponentupdate)返回false，`componentDidUpdate()`将不会被调用。
-
-* * *
-
-### `componentWillUnmount()`
-
-```javascript
-componentWillUnmount()
-```
-
-`componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
-
-* * *
 
 ### `componentDidCatch()`
 
