@@ -181,9 +181,9 @@ constructor(props) {
 >
 >这里的问题是，一是不必要的(你可以直接使用 `this.props.color` 来代替)，二是创造臭虫 (更新属性 `color` 不会反应到状态中)。
 >
->**Only use this pattern if you intentionally want to ignore prop updates.** In that case, it makes sense to rename the prop to be called `initialColor` or `defaultColor`. You can then force a component to "reset" its internal state by [changing its `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) when necessary.
+>**此模式仅用于你故意希望忽略属性更新 。** 在此情况下， 比较合理的是重命名属性被叫作 `initialColor` 或是 `defaultColor`。然后你可以暴力地使组件“重置”它的初始状态 。通过 [改变它的键 `key`](/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key) 当必要时。
 >
->Read our [blog post on avoiding derived state](/blog/2018/06/07/you-probably-dont-need-derived-state.html) to learn about what to do if you think you need some state to depend on the props.
+>Read our [blog post on avoiding derived state](/blog/2018/06/07/you-probably-dont-need-derived-state.html) to learn about what to do if you think you need 一些依赖属性的状态。
 
 * * *
 
@@ -193,23 +193,36 @@ constructor(props) {
 componentDidMount()
 ```
 
-`componentDidMount()`在组件被装配后立即调用。初始化使得DOM节点应该进行到这里。若你需要从远端加载数据，这是一个适合实现网络请求的地方。在该方法里设置状态将会触发重渲。
+`componentDidMount()`紧跟在组件装配后（被插入树中）调用。必须的DOM节点初始化应该放到这里。若你需要从远端加载数据，这是一个适合实例化网络请求的好地方。
 
-这一方法是一个发起任何订阅的好地方。如果你这么做了，别忘了在`componentWillUnmount()`退订。
+这个方法是建立任何订阅的一个好地方。如果你那么做了，别忘了在`componentWillUnmount()`取消订阅。
 
-在这个方法中调用`setState()`将会触发一次额外的渲染，但是它将在浏览器刷新屏幕之前发生。这保证了即使`render()`将会调用两次，但用户不会看到中间状态。谨慎使用这一模式，因为它常导致性能问题。然而，它对于像模态框和工具提示框这样的例子是必须的。这时，在渲染依赖DOM节点的尺寸或者位置的视图前，你需要先测量这些节点。
+在`componentDidMount()`中，你 **可以立即调用`setState()`**。将会触发一次额外的渲染，但是它将在浏览器刷新屏幕之前发生。这保证了在此情况下即使`render()`将会调用两次，用户也不会看到中间状态。谨慎使用这一模式，因为它常导致性能问题。在大多数情况下，你可以 在`constructor()`中使用赋值初始状态来代替。然而，有些情况下必须这样，比如像模态框和工具提示框。这时，你需要先测量这些DOM节点，才能渲染依赖尺寸或者位置的某些东西。
 
 * * *
-* 
+
 ### `componentDidUpdate()`
 
 ```javascript
-componentDidUpdate(prevProps, prevState)
+componentDidUpdate(prevProps, prevState, snapshot)
 ```
 
-`componentDidUpdate()`会在更新发生后立即被调用。该方法并不会在初始化渲染时调用。
+`componentDidUpdate()`紧跟在更新发生后调用。对于初次的渲染，该方法并不会调用。
 
-当组件被更新时，使用该方法是操作DOM的一次机会。这也是一个适合发送请求的地方，要是你对比了当前属性和之前属性（例如，如果属性没有改变那么请求也就没必要了）。
+当组件被更新之后，使用此方法作为操作DOM的一次机会。这也是一个适合发送请求的地方，只要你对比了当前属性和前一次属性（例如，如果属性没有改变那么请求也就没必要了）。
+
+```js
+componentDidUpdate(prevProps) {
+  // Typical usage (don't forget to compare props):
+  if (this.props.userID !== prevProps.userID) {
+    this.fetchData(this.props.userID);
+  }
+}
+```
+
+在`componentDidUpdate()`中，你 **可以立即调用`setState()`**。 但是要注意 **必须把它包裹在一个条件中** 就像前面的例子中那样。否则你将引发一个无限循环。也会引发额外的重新渲染，此时对于用户不可见，会影响组件的性能。如果你想“如实镜像”一些状态到上面来的属性中，考虑直接使用属性来代替。Read more about [why copying props into state causes bugs](/blog/2018/06/07/you-probably-dont-need-derived-state.html).
+
+如果你的组件实现了 `getSnapshotBeforeUpdate()` 生命周期 (很罕见)，它的返回值将当作一个第三方快照参数被传递到 `componentDidUpdate()`。否则这个参数将是未定义undefined。
 
 > 注意
 >
@@ -223,15 +236,34 @@ componentDidUpdate(prevProps, prevState)
 componentWillUnmount()
 ```
 
-`componentWillUnmount()`在组件被卸载和销毁之前立刻调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的DOM元素。
+`componentWillUnmount()`就在组件被卸载和销毁之前调用。可以在该方法里处理任何必要的清理工作，例如解绑定时器，取消网络请求，清理任何在`componentDidMount`环节创建的订阅。
+
+你 **不应该调用 `setState()`** 在 `componentWillUnmount()` 中，因为组件将永远不会被重新渲染了。一旦一个组件实例被卸载，它将永远不会再次装载。
 
 * * *
 
-### Rarely Used Lifecycle Methods
+### 很少使用的生命周期方法
 
 The methods in this section correspond to uncommon use cases. They're handy once in a while, but most of your components probably don't need any of them. **You can see most of the methods below on [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/) if you click the "Show less common lifecycles" checkbox at the top of it.**
 
 
+### `shouldComponentUpdate()`
+
+```javascript
+shouldComponentUpdate(nextProps, nextState)
+```
+
+使用`shouldComponentUpdate()`以让React知道当前状态或属性的改变是否不影响组件的输出。默认行为是在每一次状态的改变重渲，在大部分情况下你应该依赖于默认行为。
+
+当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法并不会在初始化渲染或当使用`forceUpdate()`时被调用。
+
+当他们状态改变时，返回`false` 并不能阻止子组件重渲。
+
+当前，若`shouldComponentUpdate()`返回`false`，而后[`UNSAFE_componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
+
+在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
+
+* * *
 
 ### `static getDerivedStateFromProps()`
 
@@ -246,6 +278,97 @@ static getDerivedStateFromProps(nextProps, prevState)
 调用`this.setState()` 通常不会触发 `getDerivedStateFromProps()`。
 
 * * *
+
+### `getSnapshotBeforeUpdate()`
+
+`getSnapshotBeforeUpdate()`在最新的渲染输出提交给DOM前将会立即调用。它让你的组件能在当前的值可能要改变前获得它们。这一生命周期返回的任何值将会
+作为参数被传递给`componentDidUpdate()`。
+
+例如：
+
+`embed:react-component-reference/get-snapshot-before-update.js`
+
+在上面的例子中，为了支持异步渲染，在`getSnapshotBeforeUpdate` 中读取`scrollHeight`而不是`componentWillUpdate`，这点很重要。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将是滞后的。
+
+* * *
+
+### Error boundaries
+
+[Error boundaries](/docs/error-boundaries.html) are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+
+A class component becomes an error boundary if it defines either (or both) of the lifecycle methods `static getDerivedStateFromError()` or `componentDidCatch()`. Updating state from these lifecycles lets you capture an unhandled JavaScript error in the below tree and display a fallback UI.
+
+Only use error boundaries for recovering from unexpected exceptions; **don't try to use them for control flow.**
+
+For more details, see [*Error Handling in React 16*](/blog/2017/07/26/error-handling-in-react-16.html).
+
+> Note
+> 
+> Error boundaries only catch errors in the components **below** them in the tree. An error boundary can’t catch an error within itself.
+
+
+错误边界是React组件，并不是损坏的组件树。错误边界捕捉发生在子组件树中任意地方的JavaScript错误，打印错误日志，并且显示回退的用户界面。错误边界捕捉渲染期间、在生命周期方法中和在它们之下整棵树的构造函数中的错误。
+
+如果定义了这一生命周期方法，一个类组件将成为一个错误边界。在错误边界中调用`setState()`让你捕捉当前树之下未处理的JavaScript错误，并显示回退的用户界面。只使用错误边界来恢复异常，而不要尝试将它们用于控制流。
+
+详情请见[*React 16中的错误处理*](/blog/2017/07/26/error-handling-in-react-16.html)。
+
+> 注意
+> 
+> 错误边界只捕捉树中发生在它们**之下**组件里的错误。一个错误边界并不能捕捉它自己内部的错误。
+
+* * *
+
+### `static getDerivedStateFromError()`
+```javascript
+static getDerivedStateFromError(error)
+```
+
+This lifecycle is invoked after an error has been thrown by a descendant component.
+It receives the error that was thrown as a parameter and should return a value to update state.
+
+```js{7-10,13-16}
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <h1>Something went wrong.</h1>;
+    }
+
+    return this.props.children; 
+  }
+}
+```
+
+> Note
+>
+> `getDerivedStateFromError()` is called during the "render" phase, so side-effects are not permitted.
+For those use cases, use `componentDidCatch()` instead.
+
+* * *
+
+### `componentDidCatch()`
+
+```javascript
+componentDidCatch(error, info)
+```
+
+* * *
+
+### Legacy Lifecycle Methods
+
+The lifecycle methods below are marked as "legacy". They still work, but we don't recommend using them in the new code. You can learn more about migrating away from legacy lifecycle methods in [this blog post](/blog/2018/03/27/update-on-async-rendering.html).
+
 
 ### `UNSAFE_componentWillMount()`
 
@@ -264,8 +387,6 @@ UNSAFE_componentWillMount()
 > 这一生命周期之前叫做`componentWillMount`。这一名字在17版前都有效。可以使用[`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles)来自动更新你的组件。
 
 * * *
-
-
 
 ### `UNSAFE_componentWillReceiveProps()`
 
@@ -289,24 +410,6 @@ UNSAFE_componentWillReceiveProps(nextProps)
 
 * * *
 
-### `shouldComponentUpdate()`
-
-```javascript
-shouldComponentUpdate(nextProps, nextState)
-```
-
-使用`shouldComponentUpdate()`以让React知道当前状态或属性的改变是否不影响组件的输出。默认行为是在每一次状态的改变重渲，在大部分情况下你应该依赖于默认行为。
-
-当接收到新属性或状态时，`shouldComponentUpdate()` 在渲染前被调用。默认为`true`。该方法并不会在初始化渲染或当使用`forceUpdate()`时被调用。
-
-当他们状态改变时，返回`false` 并不能阻止子组件重渲。
-
-当前，若`shouldComponentUpdate()`返回`false`，而后[`UNSAFE_componentWillUpdate()`](#componentwillupdate)，[`render()`](#render)， 和 [`componentDidUpdate()`](#componentdidupdate)将不会被调用。注意，在未来React可能会将`shouldComponentUpdate()`作为一个线索而不是一个严格指令，返回`false`可能仍然使得组件重渲。
-
-在观察后，若你判定一个具体的组件很慢，你可能需要调整其从[`React.PureComponent`](/docs/react-api.html#react.purecomponent)继承，其实现了带有浅属性和状态比较的`shouldComponentUpdate()`。若你确信想要手写，你可能需要用`this.props`和`nextProps`以及`this.state` 和 `nextState`比较，并返回`false`以告诉React更新可以被忽略。
-
-* * *
-
 ### `UNSAFE_componentWillUpdate()`
 
 ```javascript
@@ -327,37 +430,11 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 * * *
 
-### `getSnapshotBeforeUpdate()`
+## Other APIs
 
-`getSnapshotBeforeUpdate()`在最新的渲染输出提交给DOM前将会立即调用。它让你的组件能在当前的值可能要改变前获得它们。这一生命周期返回的任何值将会
-作为参数被传递给`componentDidUpdate()`。
+Unlike the lifecycle methods above (which React calls for you), the methods below are the methods *you* can call from your components.
 
-例如：
-
-`embed:react-component-reference/get-snapshot-before-update.js`
-
-在上面的例子中，为了支持异步渲染，在`getSnapshotBeforeUpdate` 中读取`scrollHeight`而不是`componentWillUpdate`，这点很重要。由于异步渲染，在“渲染”时期（如`componentWillUpdate`和`render`）和“提交”时期（如`getSnapshotBeforeUpdate`和`componentDidUpdate`）间可能会存在延迟。如果一个用户在这期间做了像改变浏览器尺寸的事，从`componentWillUpdate`中读出的`scrollHeight`值将是滞后的。
-
-* * *
-
-
-### `componentDidCatch()`
-
-```javascript
-componentDidCatch(error, info)
-```
-
-错误边界是React组件，并不是损坏的组件树。错误边界捕捉发生在子组件树中任意地方的JavaScript错误，打印错误日志，并且显示回退的用户界面。错误边界捕捉渲染期间、在生命周期方法中和在它们之下整棵树的构造函数中的错误。
-
-如果定义了这一生命周期方法，一个类组件将成为一个错误边界。在错误边界中调用`setState()`让你捕捉当前树之下未处理的JavaScript错误，并显示回退的用户界面。只使用错误边界来恢复异常，而不要尝试将它们用于控制流。
-
-详情请见[*React 16中的错误处理*](/blog/2017/07/26/error-handling-in-react-16.html)。
-
-> 注意
-> 
-> 错误边界只捕捉树中发生在它们**之下**组件里的错误。一个错误边界并不能捕捉它自己内部的错误。
-
-* * *
+There are just two of them: `setState()` and `forceUpdate()`.
 
 ### `setState()`
 
