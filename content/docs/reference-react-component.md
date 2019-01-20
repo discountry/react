@@ -33,7 +33,7 @@ class Welcome extends React.Component {
 
 **我们强烈反对你自己创建组件的基类。** In React components, [代码重用主要通过组合而非继承达成](/docs/composition-vs-inheritance.html).
 
->注意：
+> 注意：
 >
 >React doesn't force you to use the ES6 class syntax. If you prefer to avoid it, you may use the `create-react-class` module or a similar custom abstraction instead. Take a look at [Using React without ES6](/docs/react-without-es6.html) to learn more.
 
@@ -296,17 +296,17 @@ static getDerivedStateFromProps(nextProps, prevState)
 
 ### 错误边界
 
-[错误边界](/docs/error-boundaries.html)是React组件，捕捉JavaScript错误，在他们的子组件树中任意地方，记录这些错误，并且显示一个退路UI而不是让组件树崩溃。错误边界捕捉错误，在渲染期间、在生命周期方法中，和在构造函数中，它们之下的整棵树的。
+[错误边界](/docs/error-boundaries.html)是一种React组件，能够捕捉在他们的子组件树中任意地方的JavaScript错误，记录这些错误，并且显示一个退路UI，而不是让组件树崩溃。错误边界捕捉的错误，位于其之下的整棵树中的在渲染期间、在生命周期方法中、和在构造函数中。
 
-如果一个类组件定义了生命周期方法`static getDerivedStateFromError()`或`componentDidCatch()`的任何一个或两个都，将成为一个错误边界。从这些生命周期中更新状态让你捕捉一个未处理的JavaScript错误，在之下的树中，并显示退路UI。
+如果一个类组件定义了生命周期方法`static getDerivedStateFromError()`或`componentDidCatch()`的任何一个或两个，将变成一个错误边界。从这些生命周期中更新状态让你能捕捉到在其之下的树中、未处理的JavaScript错误，并显示退路UI。
 
-只使用错误边界来恢复未期待的异常，而**不要尝试将它们用于控制流。**
+只使用错误边界来恢复意外的异常；**不要尝试将它们用于控制流。**
 
 详情请见[*React 16中的错误处理*](/blog/2017/07/26/error-handling-in-react-16.html)。
 
 > 注意
 > 
-> 错误边界只捕捉树中发生在它们**之下**组件里的错误。一个错误边界并不能捕捉它自己内部的错误。
+> 错误边界捕捉的错误只能是在树中**低于**它们的组件里。一个错误边界并不能捕捉它自己内部的错误。
 
 * * *
 
@@ -316,8 +316,9 @@ static getDerivedStateFromProps(nextProps, prevState)
 static getDerivedStateFromError(error)
 ```
 
-This lifecycle is invoked after an error has been thrown by a descendant component.
-It receives the error that was thrown as a parameter and should return a value to update state.
+这个生命周期被调用是在某个后代组件已经抛出一个错误之后。
+
+它的一个参数接收被抛出的错误，并应该返回一个值去更新状态。
 
 ```js{7-10,13-16}
 class ErrorBoundary extends React.Component {
@@ -342,10 +343,10 @@ class ErrorBoundary extends React.Component {
 }
 ```
 
-> Note
+> 注意
 >
-> `getDerivedStateFromError()` is called during the "render" phase, so side-effects are not permitted.
-For those use cases, use `componentDidCatch()` instead.
+> `getDerivedStateFromError()` 被调用是在 "渲染" 阶段，所以不允许副作用。
+对于这些用例，使用`componentDidCatch()` 来代替。
 
 * * *
 
@@ -355,14 +356,16 @@ For those use cases, use `componentDidCatch()` instead.
 componentDidCatch(error, info)
 ```
 
-This lifecycle is invoked after an error has been thrown by a descendant component.
-It receives two parameters:
+这个生命周期被调用是在某个后代组件已经抛出一个错误之后。
 
-1. `error` - The error that was thrown.
-2. `info` - An object with a `componentStack` key containing [information about which component threw the error](/docs/error-boundaries.html#component-stack-traces).
+它收到两个参数：
 
-`componentDidCatch()` is called during the "commit" phase, so side-effects are permitted.
-It should be used for things like logging errors:
+1. `error`——被扔出的错误。
+2. `info`——一个对象，带有一个`componentStack`键，详见[information about which component threw the error](/docs/error-boundaries.html#component-stack-traces)。
+
+`componentDidCatch()`被调用是在"提交"期间阶段，所以允许副作用。
+
+它应该用于的事情比如记录错误等：
 
 ```js{12-19}
 class ErrorBoundary extends React.Component {
@@ -396,7 +399,7 @@ class ErrorBoundary extends React.Component {
 }
 ```
 
-> Note
+> 注意
 > 
 > In the event of an error, you can render a fallback UI with `componentDidCatch()` by calling `setState`, but this will be deprecated in a future release.
 > Use `static getDerivedStateFromError()` to handle fallback rendering instead.
@@ -432,7 +435,7 @@ UNSAFE_componentWillMount()
 UNSAFE_componentWillReceiveProps(nextProps)
 ```
 
->注意
+> 注意
 >
 > 推荐你使用[`getDerivedStateFromProps`](#static-getderivedstatefromprops)生命周期而不是`UNSAFE_componentWillReceiveProps`。[关于此建议在此了解详情。](/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes)
 
@@ -442,7 +445,7 @@ UNSAFE_componentWillReceiveProps(nextProps)
 
 在 [装配](#mounting)期间，React并不会调用带有初始属性的`UNSAFE_componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`UNSAFE_componentWillReceiveProps`。
 
->注意
+> 注意
 >
 > 这一生命周期之前叫做`componentWillReceiveProps`。这一名字在17版前都有效。可以使用[`rename-unsafe-lifecycles` codemod](https://github.com/reactjs/react-codemod#rename-unsafe-lifecycles)来自动更新你的组件。
 
@@ -470,9 +473,9 @@ UNSAFE_componentWillUpdate(nextProps, nextState)
 
 ## 其他API
 
-Unlike the lifecycle methods above (which React calls for you), the methods below are the methods *you* can call from your components.
+不同于上面的生命周期方法 (React 替你调用它)，下面的方法是*你*从你的组件中调用的方法。
 
-There are just two of them: `setState()` and `forceUpdate()`.
+只有两个方法：`setState()` 和 `forceUpdate()`。
 
 ### `setState()`
 
@@ -480,31 +483,33 @@ There are just two of them: `setState()` and `forceUpdate()`.
 setState(updater, [callback])
 ```
 
-`setState()`将需要处理的变化塞入（译者注：setState源码中将一个需要改变的变化存放到组件的state对象中，采用队列处理）组件的state对象中，并告诉该组件及其子组件需要用更新的状态来重新渲染。这是用于响应事件处理和服务端响应的更新用户界面的主要方式。
+`setState()`将对组件状态的改变排队，并告诉该组件及其子组件需要用已经更新的状态来重新渲染。这个方法主要是用来更新用户界面以响应事件处理和服务器响应。
 
-将`setState()`认为是一次*请求*而不是一次立即执行更新组件的命令。为了更为可观的性能，React可能会推迟它，稍后会一次性更新这些组件。React不会保证在setState之后，能够立刻拿到改变的结果。
+>（译者注：setState源码中将一个需要改变的变化存放到组件的state对象中，采用队列处理）
 
-`setState()`不是立刻更新组件。其可能是批处理或推迟更新。这使得在调用`setState()`后立刻读取`this.state`的一个潜在陷阱。代替地，使用`componentDidUpdate`或一个`setState`回调（`setState(updater, callback)`），当中的每个方法都会保证在更新被应用之后触发。若你需要基于之前的状态来设置状态，阅读下面关于`updater`参数的介绍。
+将`setState()`认为是一次*请求*而不是一次立即执行的命令来更新组件。为了更为可观的性能，React可能会推迟它，稍后会一次性更新这些组件。React不能保证状态改变被应用是立刻地。
 
-除非`shouldComponentUpdate()` 返回`false`，否则`setState()`永远都会导致重渲。若使用可变对象同时条件渲染逻辑无法在`shouldComponentUpdate()`中实现，仅当新状态不同于之前状态时调用`setState()`，将避免不必要的重渲。
+`setState()`不总是立刻更新组件。其可能是批处理或推迟更新。这使得在调用`setState()`后立刻读取`this.state`变成一个潜在陷阱。代替地，使用`componentDidUpdate`或一个`setState`回调（`setState(updater, callback)`），当中的每个方法都会保证在更新被应用之后触发。若你需要基于前一个状态来设置状态，阅读下面关于`updater`参数的介绍。
 
-第一个函数是带签名的`updater`函数：
+`setState()`永远都会导致重渲，除非`shouldComponentUpdate()` 返回`false`。如果使用了可变对象，并且在`shouldComponentUpdate()`中没有实现渲染条件逻辑，那么只有当新状态不同于前一个状态时才调用`setState()`，将会避免不必要的重渲。
+
+第一个参数是一个`updater`函数，签名为：
 
 ```javascript
-(prevState, props) => stateChange
+(state, props) => stateChange
 ```
 
-`prevState`是之前状态的引用。其不应该被直接改变。代替地，改变应该通过构建一个来自于`prevState` 和 `props`输入的新对象来表示。例如，假设我们想通过`props.step`在状态中增加一个值：
+`state`是一个引用。引用了当改变正在被应用时的组件状态。它不应该被直接改变。代替地，应该构建一个来自于`state` 和 `props`输入的新对象来表示改变。例如，假设我们想通过`props.step`在状态中增量值：
 
 ```javascript
-this.setState((prevState, props) => {
-  return {counter: prevState.counter + props.step};
+this.setState((state, props) => {
+  return {counter: state.counter + props.step};
 });
 ```
 
-updater函数接收到的`prevState` 和 `props`保证都是最新的。updater的输出是和`prevState`的浅合并。
+updater函数接收到的`state` 和 `props`保证都是最新的。updater的输出被浅合并到`state`中。
 
-`setState()`的第二个参数是一个可选地回调函数，其将会在`setState`执行完成同时组件被重渲之后执行。通常，对于这类逻辑，我们推荐使用`componentDidUpdate`。
+`setState()`的第二个参数是一个可选的回调函数，其将会在`setState`执行完成同时组件被重渲之后执行。通常，对于这类逻辑，我们推荐使用`componentDidUpdate`。
 
 你可以选择性地传递一个对象作为 `setState()`的第一个参数而不是一个函数：
 
