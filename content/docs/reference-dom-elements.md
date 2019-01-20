@@ -22,17 +22,17 @@ React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览
 
 在React和Html之间有许多属性的行为是不一样的：
 
-### checked属性
+### checked
 
-`<input>`标签type属性值为`checkbox`或`radio`时，支持`checked`属性。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次加载时是否选中状态。
+`checked`属性被类型为`checkbox`或`radio`的`<input>`组件支持。你可以用它来设定是否组件是被选中的。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次装载时是否选中状态。
 
-### 类名属性
+### className
 
-在React中，使用`className`属性指定一个CSS类。这个特性适用于所有的常规DOM节点和SVG元素，比如`<div>`，`<a>`和其它的元素。
+使用`className`属性指定一个CSS类。这个特性适用于所有的常规DOM节点和SVG元素，比如`<div>`，`<a>`和其它的元素。
 
-如果你在React中使用Web组件（这是一种不常见的使用方式），请使用`class`属性。
+如果你在React中使用Web组件（这是一种不常见的使用方式），请使用`class`属性来代替。
 
-### dangerouslySetInnerHTML函数
+### dangerouslySetInnerHTML
 
 `dangerouslySetInnerHTML`是React提供的替换浏览器DOM中的`innerHTML`接口的一个函数。一般而言，使用JS代码设置HTML文档的内容是危险的，因为这样很容易把你的用户信息暴露给[跨站脚本](https://en.wikipedia.org/wiki/Cross-site_scripting)攻击.所以，你虽然可以直接在React中设置html的内容，但你要使用 `dangerouslySetInnerHTML` 并向该函数传递一个含有`__html`键的对象，用来提醒你自己这样做很危险。例如：
 
@@ -48,19 +48,23 @@ function MyComponent() {
 
 ### htmlFor
 
-因为在javascript中`for`是一个保留字，所以React元素使用 `htmlFor`代替。
+因为`for`是在javascript中的一个保留字，React元素使用 `htmlFor`代替。
 
-### onChange函数
+### onChange
 
-`onChange`事件处理函数的表现正如你所期望的：无论form表单何时发生变化，这个事件都会被触发。我们特意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的表现和这个名字不相称，而且React真实依靠这个事件实现了对用户输入的实时响应处理。
+`onChange`事件的行为正如你所期望的：无论一个表单字段何时发生变化，这个事件都会被触发。我们特意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的行为和名字不相称，React依靠这个事件实时处理用户输入。
 
 ### selected
 
-The `selected` attribute is supported by `<option>` components. You can use it to set whether the component is selected. This is useful for building controlled components.`<option>`组件支持`selected`属性。你可以使用该属性设定组件是否选中的状态。这对构建受控组件很有用。
+`selected`属性被`<option>`组件支持。你可以使用该属性设定组件是否被选择。这对构建受控组件很有用。
 
-### style属性
+### style
 
- `style`属性接受一个键为小驼峰命名法命名的javascript对象作为值，而不是像css字符串。这和DOM中style属性接受javascript对象对象key的命名方式保持一致性，更高效而且能够防止跨站脚本（XSS）的安全漏洞。例如：
+>Note
+>
+>Some examples in the documentation use `style` for convenience, but **using the `style` attribute as the primary means of styling elements is generally not recommended.** In most cases, [`className`](#classname) should be used to reference classes defined in an external CSS stylesheet. `style` is most often used in React applications to add dynamically-computed styles at render time. See also [FAQ: Styling and CSS](/docs/faq-styling.html).
+
+`style`属性接受一个JavaScript对象，其属性用小驼峰命名法命名，而不是接受CSS字符串。这和DOM中`style` JavaScript 属性是一致性的，是更高效的，而且能够防止XSS的安全漏洞。例如：
 
 ```js
 const divStyle = {
@@ -73,7 +77,7 @@ function HelloWorldComponent() {
 }
 ```
 
-要注意，样式属性不会自动补齐前缀的。为了支持旧的浏览器，你需要手动支持相关的样式特性：
+注意样式不会自动补齐前缀。为了支持旧的浏览器，你需要手动提供相关的样式属性：
 
 ```js
 const divStyle = {
@@ -86,7 +90,23 @@ function ComponentWithTransition() {
 }
 ```
 
-样式key使用小驼峰命名法是为了和JS访问DOM特性对对象的处理保持一致性（例如 `node.style.backgroundImage`）。浏览器后缀[除了`ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/)以外，都应该以大写字母开头。这就是为什么`WebkitTransition`有一个大写字母`W`。
+样式key使用小驼峰命名法是为了从JS中访问DOM节点的属性保持一致性（例如 `node.style.backgroundImage`）。供应商前缀[除了`ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/)，都应该以大写字母开头。这就是为什么`WebkitTransition`有一个大写字母`W`。
+
+React will automatically append a "px" suffix to certain numeric inline style properties. If you want to use units other than "px", specify the value as a string with the desired unit. For example:
+
+```js
+// Result style: '10px'
+<div style={{ height: 10 }}>
+  Hello World!
+</div>
+
+// Result style: '10%'
+<div style={{ height: '10%' }}>
+  Hello World!
+</div>
+```
+
+Not all style properties are converted to pixel strings though. Certain ones remain unitless (eg `zoom`, `order`, `flex`). A complete list of unitless properties can be seen [here](https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59).
 
 ### suppressContentEditableWarning
 
