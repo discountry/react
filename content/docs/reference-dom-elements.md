@@ -14,13 +14,13 @@ redirect_from:
   - "tips/dangerously-set-inner-html.html"
 ---
 
-React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览器的兼容性。借此机会，我们清理了浏览器DOM实现中一些不一致的问题。
+React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览器的兼容性。借此机会，我们清理了浏览器DOM实现中一些粗糙的棱角。
 
-在React中，所有的DOM特性和属性（包括事件处理函数）都是小驼峰命名法命名。比如说，与HTML中的`tabindex`属性对应的React实现命名则是`tabIndex`。`aria-*`和`data-*`属性是例外的，一律使用小写字母命名。
+在React中，所有的DOM特性和属性（包括事件处理函数）都应该是小驼峰命名法命名。比如说，与HTML中的`tabindex`属性对应的React的属性是`tabIndex`。`aria-*`和`data-*`属性是例外的，一律使用小写字母命名。For example, you can keep `aria-label` as `aria-label`.
 
-## React和HTML DOM属性的区别
+## 属性的区别
 
-有许多的属性在React和Html之间行为是不一样的：
+在React和Html之间有许多属性的行为是不一样的：
 
 ### checked属性
 
