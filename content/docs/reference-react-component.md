@@ -31,7 +31,7 @@ class Welcome extends React.Component {
 
 在`React.Component`子类中，你*必须*定义的唯一方法被叫做[`render()`](#render)。在本页面描述的所有其他方法都是可选的。
 
-**我们强烈反对你自己创建组件的基类。** In React components, [代码重用主要通过组合而非继承达成](/docs/composition-vs-inheritance.html).
+**我们强烈反对你自己创建组件的基类。** In React components, [代码重用主要通过组合而非继承达成](/docs/composition-vs-inheritance.html)。
 
 > 注意：
 >
@@ -41,7 +41,7 @@ class Welcome extends React.Component {
 
 每一个组件都有几个“生命周期方法”，你可以重写(override)他们，以在进程中的特定时期运行代码。**You can use [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/) as a cheat sheet.** In the list below, commonly used lifecycle methods are marked as **bold**. The rest of them exist for relatively rare use cases.
 
-#### 装配
+#### 装载
 
 这些方法会按照下列顺序，在组件实例被创建并插入DOM中时被调用：
 
@@ -68,7 +68,7 @@ class Welcome extends React.Component {
 
 >Note:
 >
->These methods are considered legacy and you should [avoid them](/blog/2018/03/27/update-on-async-rendering.html) in new code:
+>这些代码是遗留的， and you should [avoid them](/blog/2018/03/27/update-on-async-rendering.html) in new code:
 >
 >- [`UNSAFE_componentWillUpdate()`](#unsafe_componentwillupdate)
 >- [`UNSAFE_componentWillReceiveProps()`](#unsafe_componentwillreceiveprops)
@@ -81,7 +81,7 @@ class Welcome extends React.Component {
 
 #### 错误处理
 
-当发生错误时，这些方法会被调用。错误发生在渲染过程中、在一个生命周期方法中、或在任何一个子组件的构造函数中。
+当任何一个子组件在渲染过程中、在一个生命周期方法中、或在构造函数中发生错误时，这些方法会被调用。
 
 - [`static getDerivedStateFromError()`](#static-getderivedstatefromerror)
 - [`componentDidCatch()`](#componentdidcatch)
@@ -107,7 +107,7 @@ class Welcome extends React.Component {
 
 ## 参考
 
-### 被普遍使用的生命周期方法
+### 普遍被使用的生命周期方法
 
 The methods in this section cover the vast majority of use cases you'll encounter creating React components. **For a visual reference, check out [this lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/).**
 
@@ -119,13 +119,13 @@ render()
 
 `render()`方法是类组件唯一必须的方法。
 
-当被调用时，其应该检查`this.props` 和 `this.state`并返回以下类型中的一个:
+当被调用时，其应该检查`this.props` 和 `this.state`并返回以下类型之一：
 
-- **React元素** 通常是由 [JSX](/docs/introducing-jsx.html) 创建。例如，`<div />` 和 `<MyComponent />` 是 React 元素，指示 React 渲染一个 DOM 节点，或是另一个用户定义的组件，各自分别地。 
-- **数组和fragments** 让你从渲染中返回多个元素。See the documentation on [fragments](/docs/fragments.html) for more details.
-- **Portals**. 让你渲染孩子们到一个不同的DOM子树。See the documentation on [portals](/docs/portals.html) for more details.
-- **字符串和数字** 这些将被渲染为 DOM 中的文本节点。
-- **布尔或`null`** 什么都不渲染。（通常存在于 `return test && <Child />`模式，其中 `test` 是布尔值。）
+- **React元素。**通常是由 [JSX](/docs/introducing-jsx.html) 创建。例如，`<div />` 和 `<MyComponent />` 是 React 元素，指示 React 渲染一个 DOM 节点，或是另一个用户定义的组件，各自分别地。 
+- **数组和fragments。**让你从渲染中返回多个元素。See the documentation on [fragments](/docs/fragments.html) for more details.
+- **Portals。**让你渲染孩子们到一个不同的DOM子树。See the documentation on [portals](/docs/portals.html) for more details.
+- **字符串和数字。**这些将被渲染为 DOM 中的文本节点。
+- **布尔或`null`。**什么都不渲染。（通常存在于 `return test && <Child />`模式，其中 `test` 是布尔值。）
 
 `render()`函数应该是纯的，意味着不应该改变组件的状态，其每次调用都应返回相同的结果，同时它不会直接和浏览器交互。
 
@@ -145,14 +145,14 @@ constructor(props)
 
 **如果你不初始化状态，也不绑定方法，那么你就不需要为React组件实现构造函数。**
 
-React组件的构造函数将会在其装配之前被调用。当为一个`React.Component`子类定义构造函数时，你应该在任何其他的表达式之前调用`super(props)`。否则，`this.props`在构造函数中将是未定义的，这会导致臭虫。
+React组件的构造函数将会在其装载之前被调用。当为一个`React.Component`子类定义构造函数时，你应该在任何其他的表达式之前调用`super(props)`。否则，`this.props`在构造函数中将是未定义的，这会导致臭虫。
 
 典型地, 在 React 中构造函数只用于两个目的：
 
 * 初始化[局部状态](/docs/state-and-lifecycle.html)，通过赋值一个对象到`this.state`。
 * 绑定[事件处理器](/docs/handling-events.html)方法到一个实例。
 
-在 `constructor()`中，你 **不能调用 `setState()`** 。正确做法是，如果你的组件需要使用局部状态， 直接在构造函数中 **将初始状态赋值给`this.state`**：
+在 `constructor()`中，你**不能调用 `setState()`** 。正确做法是，如果你的组件需要使用局部状态， 直接在构造函数中**将初始状态赋值给`this.state`**：
 
 ```js
 constructor(props) {
@@ -193,7 +193,7 @@ constructor(props) {
 componentDidMount()
 ```
 
-`componentDidMount()`紧跟在组件装配后（被插入树中）调用。要求的DOM节点初始化应该放到这里。若你需要从远端加载数据，这是一个适合实例化网络请求的好地方。
+`componentDidMount()`紧跟在组件装载后（被插入树中）调用。要求的DOM节点初始化应该放到这里。若你需要从远端加载数据，这是一个适合实例化网络请求的好地方。
 
 这个方法是建立任何订阅的一个好地方。如果你那么做了，别忘了在`componentWillUnmount()`取消订阅。
 
@@ -417,7 +417,7 @@ The lifecycle methods below are marked as "legacy". They still work, but we don'
 UNSAFE_componentWillMount()
 ```
 
-`UNSAFE_componentWillMount()`在装配发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重新渲染。
+`UNSAFE_componentWillMount()`在装载发生前被立刻调用。其在`render()`之前被调用，因此在这方法里同步地设置状态将不会触发重新渲染。
 
 避免在该方法中引入任何的副作用或订阅。对于这些使用场景，我们推荐使用`constructor()`来替代。
 
@@ -439,11 +439,11 @@ UNSAFE_componentWillReceiveProps(nextProps)
 >
 > 推荐你使用[`getDerivedStateFromProps`](#static-getderivedstatefromprops)生命周期而不是`UNSAFE_componentWillReceiveProps`。[关于此建议在此了解详情。](/blog/2018/03/29/react-v-16-3.html#component-lifecycle-changes)
 
-`UNSAFE_componentWillReceiveProps()`在装配了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
+`UNSAFE_componentWillReceiveProps()`在装载了的组件接收到新属性前调用。若你需要更新状态响应属性改变（例如，重置它），你可能需对比`this.props`和`nextProps`并在该方法中使用`this.setState()`处理状态改变。
 
 注意即使属性未有任何改变，React可能也会调用该方法，因此若你想要处理改变，请确保比较当前和之后的值。这可能会发生在当父组件引起你的组件重新渲染。
 
-在 [装配](#mounting)期间，React并不会调用带有初始属性的`UNSAFE_componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`UNSAFE_componentWillReceiveProps`。
+在 [装载](#mounting)期间，React并不会调用带有初始属性的`UNSAFE_componentWillReceiveProps`方法。其仅会调用该方法如果某些组件的属性可能更新。调用`this.setState`通常不会触发`UNSAFE_componentWillReceiveProps`。
 
 > 注意
 >
