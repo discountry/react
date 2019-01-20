@@ -18,13 +18,13 @@ React实现了一套与浏览器无关的DOM系统，兼顾了性能和跨浏览
 
 在React中，所有的DOM特性和属性（包括事件处理函数）都应该是小驼峰命名法命名。比如说，与HTML中的`tabindex`属性对应的React的属性是`tabIndex`。`aria-*`和`data-*`属性是例外的，一律使用小写字母命名。For example, you can keep `aria-label` as `aria-label`.
 
-## 属性的区别
+## 属性的不同
 
-在React和Html之间有许多属性的行为是不一样的：
+在React和Html之间有许多属性的行为是不同的：
 
 ### checked
 
-`checked`属性被类型为`checkbox`或`radio`的`<input>`组件支持。你可以用它来设定是否组件是被选中的。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次装载时是否选中状态。
+`checked`属性受类型为`checkbox`或`radio`的`<input>`组件的支持。你可以用它来设定是否组件是被选中的。这对于构建受控组件很有用。与之相对`defaultChecked`这是非受控组件的属性，用来设定对应组件首次装载时是否选中状态。
 
 ### className
 
@@ -52,7 +52,7 @@ function MyComponent() {
 
 ### onChange
 
-`onChange`事件的行为正如你所期望的：无论一个表单字段何时发生变化，这个事件都会被触发。我们特意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的行为和名字不相称，React依靠这个事件实时处理用户输入。
+`onChange`事件的行为正如你所期望的：无论一个表单字段何时发生变化，这个事件都会被触发。我们故意不使用浏览器已有的默认行为，因为`onChange`在浏览器中的行为和名字不相称，React依靠这个事件实时处理用户输入。
 
 ### selected
 
@@ -62,7 +62,7 @@ function MyComponent() {
 
 >Note
 >
->Some examples in the documentation use `style` for convenience, but **using the `style` attribute as the primary means of styling elements is generally not recommended.** In most cases, [`className`](#classname) should be used to reference classes defined in an external CSS stylesheet. `style` is most often used in React applications to add dynamically-computed styles at render time. See also [FAQ: Styling and CSS](/docs/faq-styling.html).
+>Some examples in the documentation use `style` for convenience, but **使用`style` 属性作为样式化元素的主要手段一般是不推荐的。**In most cases, [`className`](#classname) should be used to reference classes defined in an external CSS stylesheet. `style` is most often used in React applications to add dynamically-computed styles at render time. See also [FAQ: Styling and CSS](/docs/faq-styling.html).
 
 `style`属性接受一个JavaScript对象，其属性用小驼峰命名法命名，而不是接受CSS字符串。这和DOM中`style` JavaScript 属性是一致性的，是更高效的，而且能够防止XSS的安全漏洞。例如：
 
@@ -92,7 +92,7 @@ function ComponentWithTransition() {
 
 样式key使用小驼峰命名法是为了从JS中访问DOM节点的属性保持一致性（例如 `node.style.backgroundImage`）。供应商前缀[除了`ms`](http://www.andismith.com/blog/2012/02/modernizr-prefixed/)，都应该以大写字母开头。这就是为什么`WebkitTransition`有一个大写字母`W`。
 
-React will automatically append a "px" suffix to certain numeric inline style properties. If you want to use units other than "px", specify the value as a string with the desired unit. For example:
+React将自动添加一个"px"后缀到某些数字内联样式属性。如果你希望使用不同于"px"的其他单位，指定值为带渴望单位的字符串。例如：
 
 ```js
 // Result style: '10px'
@@ -106,7 +106,7 @@ React will automatically append a "px" suffix to certain numeric inline style pr
 </div>
 ```
 
-Not all style properties are converted to pixel strings though. Certain ones remain unitless (eg `zoom`, `order`, `flex`). A complete list of unitless properties can be seen [here](https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59).
+不是所有样式属性被转化为像素字符串，尽管如此。某些个保持无单位(例如 `zoom`, `order`, `flex`)。A complete list of 无单位属性 can be seen [here](https://github.com/facebook/react/blob/4131af3e4bf52f3a003537ec95a1655147c81270/src/renderers/dom/shared/CSSProperty.js#L15-L59).
 
 ### suppressContentEditableWarning
 
@@ -114,46 +114,41 @@ Not all style properties are converted to pixel strings though. Certain ones rem
 
 ### value
 
-`<input>` 和 `<textarea>` 组件都支持`value`属性。你可以使用该属性设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次加载时的值。
+`value`属性受到`<input>` 和 `<textarea>` 组件的支持。你可以使用它设置组件的值。这对构建受控组件非常有用。`defaultValue`属性对应的是非受控组件的属性，用来设置组件第一次装载时的值。
 
 ## 所有受支持的HTML属性
 
-React支持以下所有的属性，同时也支持所有的`data-*` 和 `aria-*`属性：
+As of React 16, 任何标准的[或自定义的](/blog/2017/09/08/dom-attributes-in-react-16.html) DOM属性都被充分支持。
 
-```
-accept acceptCharset accessKey action allowFullScreen allowTransparency alt
-async autoComplete autoFocus autoPlay capture cellPadding cellSpacing challenge
-charSet checked cite classID className colSpan cols content contentEditable
-contextMenu controls coords crossOrigin data dateTime default defer dir
-disabled download draggable encType form formAction formEncType formMethod
-formNoValidate formTarget frameBorder headers height hidden high href hrefLang
-htmlFor httpEquiv icon id inputMode integrity is keyParams keyType kind label
-lang list loop low manifest marginHeight marginWidth max maxLength media
-mediaGroup method min minLength multiple muted name noValidate nonce open
-optimum pattern placeholder poster preload profile radioGroup readOnly rel
-required reversed role rowSpan rows sandbox scope scoped scrolling seamless
-selected shape size sizes span spellCheck src srcDoc srcLang srcSet start step
-style summary tabIndex target title type useMap value width wmode wrap
+React 总是提供一个以 JavaScript为中心的API给DOM。因为React组件对于自定义和DOM相关的属性都经常采用。React使用小驼峰约定，正如DOM API：
+
+```js
+<div tabIndex="-1" />      // Just like node.tabIndex DOM API
+<div className="Button" /> // Just like node.className DOM API
+<input readOnly={true} />  // Just like node.readOnly DOM API
 ```
 
-React也支持以下这些RDFa属性（有几个RDFa属性和HTML属性重叠，所以不包含在以下列表中）：
+这些属性的工作类似于对应的HTML属性，除了上述文档的特例。
+
+Some of the DOM attributes supported by React include:
 
 ```
-about datatype inlist prefix property resource typeof vocab
+accept acceptCharset accessKey action allowFullScreen alt async autoComplete
+autoFocus autoPlay capture cellPadding cellSpacing challenge charSet checked
+cite classID className colSpan cols content contentEditable contextMenu controls
+controlsList coords crossOrigin data dateTime default defer dir disabled
+download draggable encType form formAction formEncType formMethod formNoValidate
+formTarget frameBorder headers height hidden high href hrefLang htmlFor
+httpEquiv icon id inputMode integrity is keyParams keyType kind label lang list
+loop low manifest marginHeight marginWidth max maxLength media mediaGroup method
+min minLength multiple muted name noValidate nonce open optimum pattern
+placeholder poster preload profile radioGroup readOnly rel required reversed
+role rowSpan rows sandbox scope scoped scrolling seamless selected shape size
+sizes span spellCheck src srcDoc srcLang srcSet start step style summary
+tabIndex target title type useMap value width wmode wrap
 ```
 
-而且，React也支持下列非标准属性：
-
-- `autoCapitalize autoCorrect` for Mobile Safari.
-- `color` for `<link rel="mask-icon" />` in Safari.
-- `itemProp itemScope itemType itemRef itemID` for [HTML5 microdata](http://schema.org/docs/gs.html).
-- `security` for older versions of Internet Explorer.
-- `unselectable` for Internet Explorer.
-- `results autoSave` for WebKit/Blink input fields of type `search`.
-
-## 所有受支持的SVG属性
-
-React支持以下的SVG属性：
+Similarly, all SVG attributes are fully supported:
 
 ```
 accentHeight accumulate additive alignmentBaseline allowReorder alphabetic
@@ -190,5 +185,7 @@ vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing
 writingMode x x1 x2 xChannelSelector xHeight xlinkActuate xlinkArcrole
 xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlns xmlnsXlink xmlBase
 xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan
-
 ```
+
+You may also use custom attributes as long as they're fully lowercase.
+
