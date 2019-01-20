@@ -13,12 +13,14 @@ npm搭配ES6标准，你可以用`import ReactDOM from 'react-dom'`。如果是n
 `react-dom`这个软件包提供了针对DOM的方法，可以在你应用的顶级域中调用，也可以在有需要的情况下用作跳出React模型的出口。你的大部分组件都不应该需要使用这个包。
 
 - [`render()`](#render)
+- [`hydrate()`](#hydrate)
 - [`unmountComponentAtNode()`](#unmountcomponentatnode)
 - [`findDOMNode()`](#finddomnode)
+- [`createPortal()`](#createportal)
 
-### 浏览器兼容
+### 浏览器支持
 
-React兼容所有常用的浏览器，包括IE9及以上的版本。
+React支持所有常用的浏览器，包括IE9及以上的版本，although [some polyfills are required](/docs/javascript-environment-requirements.html) for older browsers such as IE 9 and IE 10.
 
 > 注意
 >
