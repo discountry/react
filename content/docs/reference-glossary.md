@@ -49,13 +49,13 @@ ReactDOM.render(
 
 ## 元素 [Elements](/docs/rendering-elements.html)
 
-React元素是React应用程序的最小单位。初学者很可能把元素的定义和定义内涵更广的“组件”给搞混了。元素用来描述界面上的任何东西。 React 元素都是immutable不可变的。
+React元素是React应用程序的构建块。有人可能分不清元素和更广泛被知道“组件”的概念。元素用来描述你希望在屏幕上看到什么。 React元素是不可变的。
 
 ```js
 const element = <h1>Hello, world</h1>;
 ```
 
-通常不直接使用元素，而是从组件返回。
+通常不直接使用元素，而是从组件中返回。
 
 ## 组件 [Components](/docs/components-and-props.html)
 
