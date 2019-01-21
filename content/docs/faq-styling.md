@@ -27,6 +27,7 @@ render() {
   return <span className={className}>Menu</span>
 }
 ```
+
 > 提示
 > 
 > 如果你经常发现自己在写类似的代码，[classnames](https://www.npmjs.com/package/classnames) 包可以简化它。
