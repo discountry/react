@@ -6,7 +6,7 @@ permalink: docs/higher-order-components.html
 
 高阶组件（HOC）是react中的高级技术，用来重用组件逻辑。但高阶组件本身并不是React API。它只是一种模式，这种模式是由react自身的组合性质必然产生的。
 
-具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件**
+具体而言，**高阶组件就是一个函数，且该函数接受一个组件作为参数，并返回一个新的组件。**
 
 ```js
 const EnhancedComponent = higherOrderComponent(WrappedComponent);
@@ -100,15 +100,15 @@ class BlogPost extends React.Component {
 }
 ```
 
-`CommentList` 和 `BlogPost` 组件并不相同————他们调用了 `DataSource` 的不同方法，并且他们渲染的输出也不相同。但是，他们的大部分实现是一样的：
+`CommentList` 和 `BlogPost` 组件并不相同——他们调用 `DataSource` 的方法不同，并且他们渲染的输出也不相同。但是，他们有很多实现是相同的：
 
 - 挂载组件时， 向 `DataSource` 添加一个改变监听器。
-- 在监听器内， 每当数据源发生改变，调用`setState`。
+- 在监听器内， 每当数据源发生改变时，调用`setState`。
 - 卸载组件时， 移除改变监听器。
 
-设想一下，在一个大型的应用中，这种从 `DataSource` 订阅数据并调用 `setState` 的模式将会一次又一次的发生。我们就可以抽象出一个模式，该模式允许我们在一个地方定义逻辑并且许多组件都能共享，这就是高阶组件的精华所在。
+设想一下，在一个大型的应用中，这种从`DataSource`订阅数据并调用`setState`的模式将会一次又一次的发生。我们希望一个抽象允许我们定义这种逻辑，在单个地方，并且许多组件都可以共享它，这就是高阶组件的杰出所在。
 
-我们写一个函数，该函数能够创建类似 `CommonList` 和 `BlogPost` 从 `DataSource` 数据源订阅数据的组件 。该函数接受一个子组件作为其中的一个参数，并从数据源订阅数据作为props属性传入子组件。我们把这个函数取个名字 `withSubscription`：
+我们可以写一个创建组件的函数，创建的组件类似`CommonList`和`BlogPost`一样订阅到`DataSource`。该函数接受它的参数之一作为一个子组件，子组件又接受订阅的数据作为一个属性(prop)。让我们称这个函数为`withSubscription`：
 
 ```js
 const CommentListWithSubscription = withSubscription(
@@ -122,16 +122,16 @@ const BlogPostWithSubscription = withSubscription(
 );
 ```
 
-第一个参数是包裹组件（wrapped component），第二个参数会从 `DataSource`和当前props属性中检索应用需要的数据。
+第一个参数是被包裹的组件，第二个参数检索所需要的数据，从给定的`DataSource`和当前props属性中。
 
 > 译者注：根据代码示例，这里应该是高阶组件的props属性
 
-当 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 渲染时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` 属性，该 `data`属性的数据包含了从 `DataSource` 检索的最新数据：
+当渲染 `CommentListWithSubscription` 和 `BlogPostWithSubscription` 时, 会向`CommentList` 和 `BlogPost` 传递一个 `data` 属性，该 `data`属性带有从 `DataSource` 检索的最新数据：
 
 ```js{31}
-// 函数接受一个组件参数……
+// This function takes a component...
 function withSubscription(WrappedComponent, selectData) {
-  // ……返回另一个新组件……
+  // ...and returns another component...
   return class extends React.Component {
     constructor(props) {
       super(props);
@@ -142,7 +142,7 @@ function withSubscription(WrappedComponent, selectData) {
     }
 
     componentDidMount() {
-      // ……注意订阅数据……
+      // ... that takes care of the subscription...
       DataSource.addChangeListener(this.handleChange);
     }
 
@@ -157,25 +157,25 @@ function withSubscription(WrappedComponent, selectData) {
     }
 
     render() {
-      // ……使用最新的数据渲染组件
-      // 注意此处将已有的props属性传递给原组件
+      // ... and renders the wrapped component with the fresh data!
+      // Notice that we pass through any additional props
       return <WrappedComponent data={this.state.data} {...this.props} />;
     }
   };
 }
 ```
 
-注意，高阶组件既不会修改输入组件，也不会使用继承复制它的行为。相反，高阶组件是将原组件通过 *包裹（wrapping）* 在容器组件里面的方式来 *组合（composes）*。高阶组件就是一个没有副作用的纯函数。
+注意，高阶组件既不会修改输入组件，也不会使用继承拷贝它的行为。而是，高阶组件 *组合（composes）* 原始组件，通过用一个容器组件 *包裹着（wrapping）* 原始组件。高阶组件就是一个没有副作用的纯函数。
 
-就是这样！包裹组件接收容器的所有props属性以及一个新的 `data`属性，并用 `data` 属性渲染输出内容。高阶组件并不关心数据是如何以及为什么被使用，而包裹组件也不关心数据来自何处。
+就是这样！被包裹的组件接收容器的所有props属性以及一个新属性`data`用于渲染输出。高阶组件并不关心数据使用的方式和原因，而被包裹的组件也不关心数据来自何处。
 
-因为 `withSubscription` 就是一个普通函数，你可以按需添加可多可少的参数。例如，你或许会想使 `data` 属性的名字是可配置的，进一步使高阶组件和包裹组件隔离开。或者你想要接收一个参数用于配置 `shouldComponentUpdate` 函数，或配置数据源。这些都可以的，因为高阶组件充分地控制新组件定义的方式。
+因为 `withSubscription` 就是一个普通函数，你可以按需添加可多可少的参数。例如，你或许会想使 `data` 属性的名字是可配置的，以进一步从被包裹的组件隔离高阶组件。或者你想要接收一个参数用于配置 `shouldComponentUpdate`，或配置数据源。所有的这些都是可以的，因为高阶组件充分地控制新组件定义的方式。
 
-和普通组件一样，`withSubscription` 和包裹组件之间的关联是完全基于 props 属性的。这使组件更换高阶组件变得轻松，只要他们提供相同的 props 属性给包裹组件即可。这可以用于你改变获取数据的库时，举例来说。
+和普通组件一样，`withSubscription` 和被包裹的组件之间的合约是完全基于props属性的。这使得易于替换一个高阶组件到另一个，只要他们提供相同的props属性给被包裹的组件即可。这可以用于你改变获取数据的库时，举例来说。
 
 ## 不要改变原始组件，使用组合
 
-抵制诱惑，不要修改一个组件的原型（或以其它方式修改组件），在高阶组件内部。
+抵制诱惑，不要在高阶组件内修改一个组件的原型（或以其它方式修改组件）。
 
 ```js
 function logProps(InputComponent) {
@@ -192,11 +192,11 @@ function logProps(InputComponent) {
 const EnhancedComponent = logProps(InputComponent);
 ```
 
-上面的示例有一些问题。首先就是，输入组件不能够脱离增强型组件（enhanced component）被重用。更关键的一点是，如果你用另一个高阶组件来转变 `EnhancedComponent` ，同样的也去改变 `componentWillReceiveProps` 函数时，第一个高阶组件的功能就会被覆盖。这样的高阶组件对没有生命周期方法的函数式组件也是无效的。
+上面的示例有一些问题。首先就是，输入组件不能独立于增强型组件（enhanced component）被重用。更致命的是，如果你在`EnhancedComponent`上应用另一个高阶组件，同样也去改变`componentWillReceiveProps`，第一个高阶组件的功能就会被覆盖。这样的高阶组件对没有生命周期方法的函数式组件也是无效的。
 
-更改型高阶组件（mutating HOCs）泄露了组件的抽象性 —— 使用者必须知道他们的实现方式，才能避免与其它高阶组件的冲突。
+修改高阶组件泄露了组件的抽象性——使用者必须知道他们的实现方式，才能避免与其它高阶组件的冲突。
 
-不应该修改原组件，高阶组件应该使用组合技术，将输入组件包裹到容器组件中：
+与修改组件相反，高阶组件应该使用组合技术，将输入组件包裹到一个容器组件中：
 
 ```js
 function logProps(WrappedComponent) {
@@ -206,34 +206,34 @@ function logProps(WrappedComponent) {
       console.log('Next props: ', nextProps);
     }
     render() {
-      // 用容器组件组合包裹组件且不修改包裹组件，这才是正确的打开方式。
+      // 用容器包裹输入组件，不要修改它，漂亮！
       return <WrappedComponent {...this.props} />;
     }
   }
 }
 ```
 
-这个组合型高阶组件（译者注：即上面示例高阶组件）和那个更改型高阶组件实现了同样的功能，但组合型高阶组件却避免了发生冲突的可能。组合型高阶组件对类组件和函数式组件适用性同样好。而且，因为它是一个纯函数，它和其它高阶组件，甚至它自身也是可组合的。
+这个高阶组件和那个更改型版本有着同样的功能，但却避免了潜在的冲突。它对类组件和函数式组件适用性同样好。而且，因为它是纯函数，它是可组合的，可以和其它高阶组件，甚至和它自身组合。
 
-你可能发现了高阶组件和 **容器组件**的相似之处。容器组件是专注于在高层次和低层次关注点之间进行责任划分的策略的一部分。容器组件会处理诸如数据订阅和状态管理等事情，并传递props属性给组件。组件处理渲染UI等事情。高阶组件使用容器组件作为实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
+你可能发现了高阶组件和**容器组件**模式的相似之处。容器组件是专注于在高层和低层关注之间进行责任分离的策略的一部分。容器管理的事情诸如订阅和状态，传递props属性给某些组件。这些组件处理渲染UI等事情。高阶组件使用容器作为他们实现的一部分。你也可以认为高阶组件就是参数化的容器组件定义。
 
-## 约定：将不相关的props属性传递给包裹组件
+## 约定：贯穿传递不相关props属性给被包裹的组件
 
-高阶组件给组件添加新特性。他们不应该大幅修改原组件的接口（译者注：应该就是props属性）。预期，从高阶组件返回的组件应该与原包裹的组件具有类似的接口。
+高阶组件添加了一些特性到一个组件，他们不应该大幅修改它的合约。被期待的是，从高阶组件返回的那个组件与被包裹的组件具有类似的接口。
 
-高阶组件应该传递与它要实现的功能点无关的props属性。大多数高阶组件都包含一个如下的render函数：
+高阶组件应该贯穿传递与它专门关注无关的props属性。大多数高阶组件都包含类似如下的渲染方法：
 
 ```js
 render() {
-  // 过滤掉与高阶函数功能相关的props属性，
-  // 不再传递
+  // 过滤掉专用于这个阶组件的props属性，
+  // 不应该被贯穿传递
   const { extraProp, ...passThroughProps } = this.props;
 
-  // 向包裹组件注入props属性，一般都是高阶组件的state状态
-  // 或实例方法
+  // 向被包裹的组件注入props属性，这些一般都是状态值或
+  // 实例方法
   const injectedProp = someStateOrInstanceMethod;
 
-  // 向包裹组件传递props属性
+  // 向被包裹的组件传递props属性
   return (
     <WrappedComponent
       injectedProp={injectedProp}
@@ -243,42 +243,42 @@ render() {
 }
 ```
 
-这种约定能够确保高阶组件最大程度的灵活性和可重用性。
+这个约定帮助确保高阶组件最大程度的灵活性和可重用性。
 
-## 约定：最大化使用组合
+## 约定：最大化的组合性
 
-并不是所有的高阶组件看起来都是一样的。有时，它们仅仅接收一个参数，即包裹组件：
+并不是所有的高阶组件看起来都是一样的。有时，它们仅接收单独一个参数，即被包裹的组件：
 
 ```js
 const NavbarWithRouter = withRouter(Navbar);
 ```
 
-一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，可配置对象用于指定组件的数据依赖关系：
+一般而言，高阶组件会接收额外的参数。在下面这个来自Relay的示例中，一个`config`对象用于指定组件的数据依赖：
 
 ```js
 const CommentWithRelay = Relay.createContainer(Comment, config);
 ```
 
-大部分常见高阶组件的函数签名如下所示：
+高阶组件最常见签名如下所示：
 
 ```js
 // React Redux's `connect`
 const ConnectedComment = connect(commentSelector, commentActions)(Comment);
 ```
 
-*这是什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
+*什么？！* 如果你把它剥开，你就很容易看明白到底是怎么回事了。
 
 ```js
 // connect是一个返回函数的函数（译者注：就是个高阶函数）
 const enhance = connect(commentListSelector, commentListActions);
-// 返回的函数就是一个高阶组件，该高阶组件返回一个与Redux store
-// 关联起来的新组件
+// 返回的函数就是一个高阶组件，该高阶组件返回一个组件被连接
+// 到Redux store
 const ConnectedComment = enhance(CommentList);
 ```
 
 换句话说，`connect` 是一个返回高阶组件的高阶函数！
 
-这种形式有点让人迷惑，有点多余，但是它有一个有用的属性。那就是，类似 `connect` 函数返回的单参数的高阶组件有着这样的签名格式， `Component => Component`.输入和输出类型相同的函数是很容易组合在一起。
+这种形式有点让人迷惑，有点多余，但是它有一个有用的性质。那就是，单独一个参数的高阶组件，类似 `connect` 函数返回的，签名是`Component => Component`。输入和输出类型相同的函数确实是很容易组合在一起。
 
 <!-- 对以下代码的个人理解：第一段代码对初始组件进行了两次包装；第二段代码就是函数的柯里化 -->
 
@@ -286,26 +286,25 @@ const ConnectedComment = enhance(CommentList);
 // 不要这样做……
 const EnhancedComponent = withRouter(connect(commentSelector)(WrappedComponent))
 
-// ……你可以使用一个功能组合工具
+// ……你可以使用一个函数组合工具
 // compose(f, g, h) 和 (...args) => f(g(h(...args)))是一样的
 const enhance = compose(
-  // 这些都是单参数的高阶组件
+  // 这些都是单独一个参数的高阶组件
   withRouter,
   connect(commentSelector)
 )
 const EnhancedComponent = enhance(WrappedComponent)
 ```
 
-
-（`connect`函数产生的高阶组件和其它增强型高阶组件具有同样的被用作装饰器的能力。）
+（这个同样的性质也允许`connect`函数和其它增强型高阶组件被用作装饰器，这是一个试验JavaScript建议。）
 
 包括lodash（比如说[`lodash.flowRight`](https://lodash.com/docs/#flowRight)）, [`Redux`](http://redux.js.org/docs/api/compose.html) 和 [`Ramda`](http://ramdajs.com/docs/#compose)在内的许多第三方库都提供了类似`compose`功能的函数。
 
 ## 约定：包装显示名字以便于调试
 
-高阶组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个好的名字，确保能够识别出它是由高阶组件创建的新组件还是普通的组件。
+高阶组件创建的容器组件在[`React Developer Tools`](https://github.com/facebook/react-devtools)中的表现和其它的普通组件是一样的。为了便于调试，可以选择一个显示名字，传达它是一个高阶组件的结果。
 
-最常用的技术就是将包裹组件的名字包装在显示名字中。所以，如果你的高阶组件名字是 `withSubscription`，且包裹组件的显示名字是 `CommentList`，那么就是用 `WithSubscription(CommentList)`这样的显示名字：
+最常用的技术是包裹显示名字给被包裹的组件。所以，如果你的高阶组件名字是 `withSubscription`，且被包裹的组件的显示名字是 `CommentList`，那么就是用 `WithSubscription(CommentList)`这样的显示名字：
 
 ```js
 function withSubscription(WrappedComponent) {
@@ -319,38 +318,37 @@ function getDisplayName(WrappedComponent) {
 }
 ```
 
+## 告诫
 
-## 注意事项
+如果你是React新手，你要知道高阶组件自身也有一些不是太明显的告诫。
 
-如果你是React新手，你要知道高阶组件自身也有一些不是太明显的使用注意事项。
+### 不要在render方法内使用高阶组件
 
-### 不要在render函数中使用高阶组件
+React的差分算法（称为协调）使用组件标识确定是否更新现有的子树或扔掉它并重新挂载一个新的。如果`render`方法返回的组件和前一次渲染返回的组件是完全相同的(`===`)，React就递归地更新子树，这是通过差分它和新的那个完成。如果它们不相等，前一个子树被完全卸载掉。
 
-React使用的差异算法（称为协调）使用组件标识确定是否更新现有的子对象树或丢掉现有的子树并重新挂载。如果render函数返回的组件和之前render函数返回的组件是相同的，React就递归地比较新子对象树和旧的子对象树的差异，并更新旧的子对象树。如果它们不相等，就会完全卸载掉旧的子对象树。
-
-一般而言，你不需要考虑这些细节东西。但是它对高阶函数的使用有影响，那就是你不能在组件的render函数中调用高阶函数：
+一般而言，你不需要考虑差分算法的原理。但是它和高阶函数有关。因为它意味着你不能在组件的`render`方法之内应用高阶函数到组件：
 
 ```js
 render() {
-  // 每一次render函数调用都会创建一个新的EnhancedComponent实例
+  // 每一次渲染，都会创建一个新的EnhancedComponent版本
   // EnhancedComponent1 !== EnhancedComponent2
   const EnhancedComponent = enhance(MyComponent);
-  // 每一次都会使子对象树完全被卸载或移除
+  // 那引起每一次都会使子对象树完全被卸载/重新加载
   return <EnhancedComponent />;
 }
 ```
 
-这里产生的问题不仅仅是性能问题 —— 还有，重新加载一个组件会引起原有组件的所有状态和子组件丢失。
+这里产生的问题不仅仅是性能问题——还有，重新加载一个组件会引起原有组件的状态和它的所有子组件丢失。
 
-相反，在组件定义外使用高阶组件，可以使新组件只出现一次定义。在渲染的整个过程中，保证都是同一个组件。无论在任何情况下，这都是最好的使用方式。
+相反，应用高阶组件在组件定义的外面，可以使结果组件只创建一次。那么，它的标识将都是一致的遍及多次渲染。这通常是你想要的，无论如何。
 
-在很少的情况下，你可能需要动态的调用高阶组件。那么你就可以在组件的构造函数或生命周期函数中调用。
+在很少的情况下，你可能需要动态的应用高阶组件。你也可以在组件的生命周期方法或构造函数中操作。
 
 ### 必须将静态方法做拷贝
 
-有时，给组件定义静态方法是十分有用的。例如，Relay的容器就开放了一个静态方法 `getFragment`便于组合GraphQL的代码片段。
+有时，在React组件上定义静态方法是十分有用的。例如，Relay容器就暴露一个静态方法`getFragment`便于组合GraphQL的代码片段。
 
-当使用高阶组件包装组件，原始组件被容器组件包裹，也就意味着新组件会丢失原始组件的所有静态方法。
+当你应用一个高阶组件到一个组件时，尽管，原始组件被包裹于一个容器组件内，也就意味着新组件会没有原始组件的任何静态方法。
 
 ```js
 // 定义静态方法
@@ -362,7 +360,7 @@ const EnhancedComponent = enhance(WrappedComponent);
 typeof EnhancedComponent.staticMethod === 'undefined' // true
 ```
 
-解决这个问题的方法就是，将原始组件的所有静态方法全部拷贝给新组件：
+为解决这个问题，在返回之前，将原始组件的方法拷贝给容器：
 
 ```js
 function enhance(WrappedComponent) {
@@ -387,21 +385,19 @@ function enhance(WrappedComponent) {
 另外一个可能的解决方案就是分别导出组件自身的静态方法。
 
 ```js
-// 替代……
+// Instead of...
 MyComponent.someFunction = someFunction;
 export default MyComponent;
 
-// ……分别导出……
+// ...export the method separately...
 export { someFunction };
 
-// ……在要使用的组件中导入
+// ...and in the consuming module, import both
 import MyComponent, { someFunction } from './MyComponent.js';
 ```
 
-### Refs属性不能传递
+### Refs属性不能贯穿传递
 
-一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是包裹组件。
-
-如果你碰到了这样的问题，最理想的处理方案就是搞清楚如何避免使用 `ref`。有时候，没有看过React示例的新用户在某种场景下使用prop属性要好过使用ref。
+一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是被包裹的组件。
 
 现在我们提供一个名为 `React.forwardRef` 的 API 来解决这一问题（在 React 16.3 版本中）。[在 refs 传递章节中了解详情](/docs/forwarding-refs.html)。
