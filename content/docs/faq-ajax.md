@@ -8,9 +8,9 @@ category: FAQ
 
 ### 怎样发送 AJAX 请求?
 
-你可以在 React 中使用任何你喜欢的 AJAX 库，例如很受欢迎的 [Axios](https://github.com/axios/axios)，[jQuery AJAX](https://api.jquery.com/jQuery.ajax/) 和浏览器内置的 [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。
+任何你喜欢的 AJAX 库都可以与React一起使用。例如一些流行的库 [Axios](https://github.com/axios/axios)，[jQuery AJAX](https://api.jquery.com/jQuery.ajax/) 和浏览器内置的 [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。
 
-### 我应该在组件的哪个生命周期发送 AJAX 请求?
+### 我应该在组件的哪个生命周期调用AJAX?
 
 你应该在 [`componentDidMount`](/docs/react-component.html#mounting) 生命周期方法内发送 AJAX 请求数据。这样你才能够在请求的数据到达时使用 `setState` 更新你的组件。
 
