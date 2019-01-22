@@ -8,11 +8,11 @@ category: FAQ
 
 ### setState 做了什么？
 
-`setState()` 用于安排一个组件的 `state` 对象的一次更新。当状态改变时，组件通过重新渲染来响应。
+`setState()` 用于安排一个组件的 `state` 对象的一次更新的时间表。当状态改变时，组件通过重新渲染来响应。
 
 ### state 和 props 之间有什么区别？
 
-[`props`](/docs/components-and-props.html) （简称“属性”）和 [`state`](/docs/state-and-lifecycle.html) 都是在改变时会触发一次重新渲染的 JavaScript 对象。虽然两者都具有影响渲染输出的信息，但它们在一个重要方面是不同的： `props` 传递到组件（类似于函数参数），而 `state` 是在组件内管理的（类似于函数中声明的变量）。
+属性[`props`](/docs/components-and-props.html) （是“properties”的缩写）和 [`state`](/docs/state-and-lifecycle.html) 都是在改变时会触发一次重新渲染的 JavaScript 对象。虽然两者都具有影响渲染输出的信息，但它们在一个重要方面是不同的： `props` 传递到组件（类似于函数参数），而 `state` 是在组件内管理的（类似于函数中声明的变量）。
 
 这里有一些很好的资源，用以进一步了解何时使用 `props` vs `state` ：
 
