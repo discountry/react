@@ -1,6 +1,6 @@
 ---
 id: faq-functions
-title: Passing Functions to Components
+title: 传递函数给组件
 permalink: docs/faq-functions.html
 layout: docs
 category: FAQ
