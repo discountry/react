@@ -6,20 +6,20 @@ layout: docs
 category: FAQ
 ---
 
-### 如何将事件处理程序（比如onClick）传递给组件？
-可以将事件处理程序和其他函数作为props传递给子组件：
+### 如何将事件处理器（比如onClick）传递给组件？
+可以将事件处理器和其他函数作为props传递给子组件：
 
 ```jsx
 <button onClick={this.handleClick}>
 ```
 
-如果需要在事件处理程序中访问父组件，同样需要把该函数绑定到组件实例（参见下文）。
+如果需要在事件处理器中访问父组件，还需要把该函数绑定到组件实例（参见下文）。
 
-### 如何将函数绑定到组件实例？
+### 如何绑定一个函数到一个组件实例？
 
-有以下几种方式可以确保函数可以访问`this.props`和`this.state`这样的属性，取决于使用的语法和构建步骤。
+有以下几种方式可以确保函数可以访问组件属性，比如像`this.props`和`this.state`，取决于使用的语法和构建步骤。
 
-#### 在Constructor中绑定（ES2015）
+#### 在构造函数中绑定（ES2015）
 
 ```jsx
 class Foo extends Component {
@@ -48,7 +48,7 @@ class Foo extends Component {
   }
 }
 ```
-#### 在Render中使用bind绑定
+#### 在Render中的绑定
 
 ```jsx
 class Foo extends Component {
@@ -62,9 +62,9 @@ class Foo extends Component {
 ```
 >**注意：**
 >
->在render方法中使用`Function.prototype.bind`会在每次组件渲染时创建一个新的函数，可能会影响性能（参见下文）
+>在render方法中使用`Function.prototype.bind`会在每次组件渲染时创建一个新的函数，可能会影响性能（参见下文）。
 
-#### 在Render中使用箭头函数
+#### 在Render中的箭头函数
 
 ```jsx
 class Foo extends Component {
@@ -79,7 +79,7 @@ class Foo extends Component {
 
 >**注意：**
 >
->在render方法中使用箭头函数也会在每次组件渲染时创建一个新的函数，可能会影响性能（参见下文）
+>在render方法中使用箭头函数也会在每次组件渲染时创建一个新的函数，可能会影响性能（参见下文）。
 
 ### 可以在render方法中使用箭头函数吗？
 
@@ -88,7 +88,7 @@ class Foo extends Component {
 但是如果遇到了性能问题，一定要进行优化！
 
 ### 为什么绑定是必要的？
-在JavaScript中，以下两种写法是不一样的：
+在JavaScript中，以下两种写法是**不**等价的：
 
 ```js
 obj.method();
@@ -100,13 +100,13 @@ method();
 ```
 `bind`方法确保了第二种写法与第一种写法相同。
 
-在React中，通常需要绑定传递给其他组件的方法。例如，要将`this.handleClick`传递给`<button onClick={this.handleClick}>`，所以需要bind函数。但是，没有必要绑定`render`方法或生命周期函数：因为并没有将它们传递给其他的组件。
+使用React，通常只需要绑定*传递*给其他组件的方法。例如，`<button onClick={this.handleClick}>`是在传递`this.handleClick`，所以需要绑定它。但是，没有必要绑定`render`方法或生命周期方法：我们并没有将它们传递给其他的组件。
 
 [This post by Yehuda Katz](http://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/)详细解释了什么是绑定，和函数在JavaScript中怎么起作用。
 
-### 为什么每次组件渲染时函数都会被调用？
+### 为什么我的函数每次组件渲染时都会被调用？
 
-确保每次将函数传递给组件时没有调用它：
+确保你_没有调用函数_，在你传递函数给组件时：
 
 ```jsx
 render() {
@@ -115,7 +115,7 @@ render() {
 }
 ```
 
-而是仅仅传递了函数本身（不加括号）：
+正确做法是，*传递函数本身*（不带括号）：
 
 ```jsx
 render() {
@@ -124,15 +124,15 @@ render() {
 }
 ```
 
-### 怎样为事件处理程序或回调函数传递参数？
+### 如何传递参数给事件处理器或回调？
 
-可以使用箭头函数包裹事件处理程序，并传递参数：
+可以使用箭头函数包裹事件处理器，并传递参数：
 
 ```jsx
 <button onClick={() => this.handleClick(id)} />
 ```
 
-以上代码和调用`.bind`是相同的：
+以上代码和调用`.bind`是等价的：
 
 ```jsx
 <button onClick={this.handleClick.bind(this, id)} />
@@ -174,7 +174,7 @@ class Alphabet extends React.Component {
 
 #### 示例：通过data-属性传递参数
 
-同样的，也可以使用DOM API来存储事件处理程序需要的数据。如果需要优化大量元素或使用依赖于`React.PureComponent`相等性检查的渲染树，请考虑使用此方法。
+同样的，也可以使用DOM API来存储事件处理器需要的数据。如果需要优化大量元素或使用依赖于`React.PureComponent`相等性检查的渲染树，请考虑使用此方法。
 
 ```jsx
 const A = 65 // ASCII character code
@@ -212,22 +212,23 @@ class Alphabet extends React.Component {
 }
 ```
 
-### 怎样避免函数被调用太快或者太多次？
+### 怎样阻止函数被调用太快或者太多次？
 
-例如想要防止`onClick`或者`onScroll`这样的事件处理程序的回调被触发的太快，那么可以限制执行回调的速度，可以通过以下几种方式做到这点：
+如果你有一个`onClick`或者`onScroll`这样的事件处理器，想要阻止回调被触发的太快，那么可以限制执行回调的速度，可以通过以下几种方式做到这点：
 
-- **throttling**: 基于时间的频率来进行更改 (例如 [`_.throttle`](https://lodash.com/docs#throttle))
-- **debouncing**: 一段时间的不活动之后进行更改 (例如  [`_.debounce`](https://lodash.com/docs#debounce))
-- **`requestAnimationFrame`**:基于[`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)来进行更改 (例如 [`raf-schd`](https://github.com/alexreardon/raf-schd))
+- **节流**：基于时间的频率来进行抽样更改 (例如 [`_.throttle`](https://lodash.com/docs#throttle))
+- **防抖**：一段时间的不活动之后发布更改 (例如  [`_.debounce`](https://lodash.com/docs#debounce))
+- **`requestAnimationFrame`节流**:基于[`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)的抽样更改 (例如 [`raf-schd`](https://github.com/alexreardon/raf-schd))
 
 可以看这个比较`throttle`和`debounce`的[可视化页面](http://demo.nimius.net/debounce_throttle/)
 
 > 注意：
 >
-> `_.debounce` , `_.throttle`和`raf-schd` 都提供了一个 `cancel`方法来取消延迟回调。 所以需要调用`componentWillUnmount`，或者对代码进行检查来保证在延迟函数有效期间内组件始终挂载。
+> `_.debounce` , `_.throttle`和`raf-schd` 都提供了一个 `cancel`方法来取消延迟回调。 所以要么调用`componentWillUnmount`，否则需要对代码进行检查来保证在延迟函数有效期间内组件始终挂载。
 
-#### Throttle（节流）
-节流是阻止函数在给定时间内被多次调用。下面这个例子会阻止“click”事件每秒钟的多次调用。
+#### 节流
+
+节流阻止函数在给定时间窗口内被调不能超过一次。下面这个例子会节流“click”事件处理器每秒钟的只能调用一次。
 
 ```jsx
 import throttle from 'lodash.throttle';
@@ -253,8 +254,9 @@ class LoadMoreButton extends React.Component {
 }
 ```
 
-#### Debounce（防抖）
-防抖确保函数上次执行后的一段时间内，不会再次执行。当必须进行一些昂贵的计算来响应快速派发的事件时（比如鼠标滚动或键盘事件时），防抖是非常有用的。下面这个例子以250ms的延迟来改变文本输入。
+#### 防抖
+
+防抖确保函数不会在上一次被调用之后一定量的时间内被执行。当必须进行一些昂贵的计算来响应快速派发的事件时（比如鼠标滚动或键盘事件时），防抖是非常有用的。下面这个例子以250ms的延迟来改变文本输入。
 
 ```jsx
 import debounce from 'lodash.debounce';
