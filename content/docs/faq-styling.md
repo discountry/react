@@ -1,6 +1,6 @@
 ---
 id: faq-styling
-title: Styling and CSS
+title: 样式化和 CSS
 permalink: docs/faq-styling.html
 layout: docs
 category: FAQ
@@ -28,7 +28,9 @@ render() {
 }
 ```
 
-如果你经常发现自己在写类似的代码，[classnames](https://www.npmjs.com/package/classnames) 包可以简化它。
+> 提示
+> 
+> 如果你经常发现自己在写类似的代码，[classnames](https://www.npmjs.com/package/classnames) 包可以简化它。
 
 ### 可以使用行内样式吗？
 
