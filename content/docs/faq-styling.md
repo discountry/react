@@ -1,6 +1,6 @@
 ---
 id: faq-styling
-title: 样式化和CSS
+title: 样式化和 CSS
 permalink: docs/faq-styling.html
 layout: docs
 category: FAQ
