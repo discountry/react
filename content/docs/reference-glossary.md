@@ -45,21 +45,21 @@ ReactDOM.render(
   <h1 className="hello">My name is {name}!</h1>,
   document.getElementById('root')
 );
-```  
+```
 
 ## 元素 [Elements](/docs/rendering-elements.html)
 
-React元素是React应用程序的最小单位。初学者很可能把元素的定义和定义内涵更广的“组件”给搞混了。元素用来描述界面上的任何东西。 React 元素都是immutable不可变的。
+React元素是React应用程序的构建块。有人可能分不清元素和更广泛被知道“组件”的概念。元素用来描述你希望在屏幕上看到什么。 React元素是不可变的。
 
 ```js
 const element = <h1>Hello, world</h1>;
 ```
 
-通常不直接使用元素，而是从组件返回。
+通常不直接使用元素，而是从组件中返回它。
 
 ## 组件 [Components](/docs/components-and-props.html)
 
-React组件是小的，可复用的代码片段，它返回一个React元素用于渲染页面。 定义一个组件最简单的方式是使用JavaScript函数，它返回一个React元素：
+React组件是小的，可复用的代码片段，它返回一个React元素用于渲染页面。 React组件的最简单版本是一个普通JavaScript函数，它返回一个React元素：
 
 ```js
 function Welcome(props) {
@@ -67,7 +67,7 @@ function Welcome(props) {
 }
 ```
 
-你也可以使用 ES6 class 来定义一个组件:
+你也可以使用 ES6 类来定义一个组件:
 
 ```js
 class Welcome extends React.Component {
@@ -77,11 +77,11 @@ class Welcome extends React.Component {
 }
 ```
 
-组件可以按照功能分解成不同的部件，并在其他组件中使用。组件可以返回其他组件，数组，字符串或数字。当你的UI中有一部分重复使用了好几次（比如，Button、Panel、Avatar），或者其自身就足够复杂（比如，App、FeedStory、Comment），类似这些都是抽象成一个可复用组件的绝佳选择，这也是一个比较好的做法。 组件名称应始终以大写字母开头 (`<Wrapper/>` **而不是** `<wrapper/>`)。参见 [这里](/docs/components-and-props.html#rendering-a-component)获取更多有关渲染组件的信息。
+组件可以分解到不同的功能块中，并在其他组件中使用。组件可以返回其他组件，数组，字符串或数字。一个好的拇指规则是，如果你的UI中有一部分使用了好几次（Button、Panel、Avatar），或者其自身就足够复杂（App、FeedStory、Comment），类似这些都是可复用组件的绝佳选择。组件名称应始终首字母大写 (`<Wrapper/>` **而不是** `<wrapper/>`)。参见 [这里](/docs/components-and-props.html#rendering-a-component)获取更多有关渲染组件的信息。
 
 ### [`props`](/docs/components-and-props.html)
 
-`props`是React组件的输入内容。 它们是从父组件传递给子组件的数据。
+`props`是React组件的输入。 它们是从父组件向下传递给子组件的数据。
 
 请记住，`props` 是只读的。 不应该以任何方式修改它们：
 
@@ -90,7 +90,7 @@ class Welcome extends React.Component {
 props.number = 42;
 ```
 
-如果你需要修改某些值以响应用户输入或网络响应，请使用`state`。
+如果你需要修改某些值以响应用户输入或网络响应，请使用`state`来代替。
 
 ### `props.children`
 
@@ -100,7 +100,7 @@ props.number = 42;
 <Welcome>Hello world!</Welcome>
 ```
 
-在`Welcome`组件中的`props.children`中可以获取字符串`Hello world！`：
+字符串`Hello world！`，在`Welcome`组件中可以从`props.children`中获取：
 
 ```js
 function Welcome(props) {
@@ -120,31 +120,33 @@ class Welcome extends React.Component {
 
 ### 状态 [`state`](/docs/state-and-lifecycle.html#adding-local-state-to-a-class)
 
-当某个组件与其关联的某些数据随时间而改变时，组件中需要使用`state`。例如，`Checkbox`组件中的状态需要转变为`isChecked`，或者`NewsFeed` 组件可能希望追踪其状态中的`fetchedPosts`。
+当一个组件与其关联的某些数据随时间而改变时，需要使用`state`。例如，`Checkbox`组件的可能需要`isChecked`在它的状态中，或者`NewsFeed` 组件可能希望追踪`fetchedPosts`在它的状态中。
 
-`state`和`props`之间最重要的区别是`props`是从父组件传递的，而`state`是由组件本身管理的。组件不能改变其`props`，但可以改变`state`。 通过使用`this.setState()`。 只有定义为类的组件才可以具有状态。
+`state`和`props`之间最重要的区别是`props`是从父组件传递的，而`state`是由组件本身管理的。组件不能改变自己的`props`，但可以改变自己的`state`。 要改变状态，组件必须调用`this.setState()`。 只有定义为类的组件才可以具有状态。
 
-对于每一个特定的变化数据，应该只有一个“拥有”它的状态的组件。不要尝试同步两个不同组件的状态。状态分享通过[状态提升](/docs/lifting-state-up.html)至最近的父组件来完成，并通过`props`传递给他们。
+对于特定的每一个变化的数据，应该只有一个组件“拥有”它在状态中。不要尝试同步两个不同组件的状态。代替，[状态提升](/docs/lifting-state-up.html)至它们最近的共享的祖先，然后作为`props`向下传递状态给他们两个。
 
-## 生命周期函数 [Lifecycle Methods](/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
+## 生命周期方法 [Lifecycle Methods](/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
 
-生命周期函数是在组件的不同阶段可执行自定义功能的钩子。当组件被创建并插入到DOM中时，可用函数([mounting](/docs/react-component.html#mounting))，组件更新，以及从DOM卸载或移除组件时可以使用对应的生命周期函数。
+生命周期方法是在组件的不同阶段来执行的自定义功能。当组件被创建并插入到DOM中时，生命周期方法可用在以下的时候：([装载](/docs/react-component.html#mounting))时，组件更新时，以及从DOM卸载或移除组件时。
 
  ## 受控 & 非受控组件 [Controlled](/docs/forms.html#controlled-components) vs. [Uncontrolled Components](/docs/uncontrolled-components.html)
 
 React有两种不同的方法来处理表单输入。
 
-值由React控制的输入表单元素称为*受控组件*。当用户将数据输入到受控组件中时，会触发状态改变的事件处理程序，并且你的代码将决定输入是否有效（使用更新的值重新渲染）。如果你不重新渲染，那么表单元素将保持不变。
+输入表单元素，它的值由React控制的称为*受控组件*。当用户将数据输入到受控组件中时，会触发一个改变事件处理器，并且你的代码将决定输入是否有效（使用更新的值重新渲染）。如果你不重新渲染，那么表单元素将保持不变。
 
 *非受控制组件*的表单元素在React之外工作。当用户将数据输入到表单域（输入框，下拉菜单等）时，不需要React做任何事情，更新的数据就会被呈现出来。这也意味着你不能强迫表单域都有一个确定的值。
 
 在大多数情况下，你应该使用受控组件。
 
-## 键值 [Keys](/docs/lists-and-keys.html) 
+## 键 [Keys](/docs/lists-and-keys.html) 
 
-“键值”是创建元素数组时需要包含的特殊字符串属性。键值可以帮助React识别哪些元素被更改，添加或删除。因此你应当给数组中的每一个元素赋予一个确定的标识。
+一个“键”是一个特殊的字符串属性，当创建元素的数组时，你需要包括键。键可以帮助React识别哪些项目被更改，添加或删除。键应该放到数组内部的元素中，以使得元素有一个稳定的标识。
 
-确定的标识键值对于重新渲染很重要，这样React才可以确定何时添加，删除或重新排序元素。不要把类似由`Math.random()`生成的值赋给键值。在理想情况下，键值应该对应于来自数据的唯一且稳定的标识符，例如`post.id`。
+Keys only need to be unique among sibling elements in the same array. They don't need to be unique across the whole application or even a single component.
+
+不要把类似由`Math.random()`生成的值赋给键值。键有一个跨重新渲染的“稳定的标识”是很重要的，这样React才可以确定何时添加，删除或重新排序项目。在理想情况下，键值应该对应于来自于你的数据的唯一且稳定的标识符，例如`post.id`。
 
 ## [Refs](/docs/refs-and-the-dom.html)
 
@@ -154,10 +156,10 @@ React支持一个可以附加到任何组件的特殊属性`ref`。`ref`属性�
 
 ## 事件 [Events](/docs/handling-events.html) 
 
-React元素的事件处理和DOM元素的很相似。但是有一点语法上的不同:
+React元素的事件处理有一些语法上的不同：
 
-* React事件绑定属性的命名采用驼峰式写法，而不是小写。
-* 如果采用 JSX 的语法你需要传入一个函数作为事件处理函数，而不是一个字符串(DOM元素的写法)
+* React事件处理器采用小驼峰命名法，而不是小写。
+* 用JSX你需要传入一个函数作为事件处理器，而不是一个字符串。
 
 ## 协调 [Reconciliation](/docs/reconciliation.html)
 
