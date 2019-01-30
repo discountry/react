@@ -1,6 +1,6 @@
 ---
 id: faq-ajax
-title: AJAX和API
+title: AJAX 和 API
 permalink: docs/faq-ajax.html
 layout: docs
 category: FAQ
@@ -10,11 +10,11 @@ category: FAQ
 
 任何你喜欢的 AJAX 库都可以与React一起使用。例如一些流行的库 [Axios](https://github.com/axios/axios)，[jQuery AJAX](https://api.jquery.com/jQuery.ajax/) 和浏览器内置的 [window.fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)。
 
-### 我应该在组件的哪个生命周期调用AJAX?
+### 我应该在组件的哪个生命周期调用 AJAX?
 
 你用AJAX调用填充数据应该是在 [`componentDidMount`](/docs/react-component.html#mounting) 生命周期方法内。这样你才能在收到数据时使用 `setState` 更新组件。
 
-### 示例: 使用AJAX的结果设置局部状态
+### 示例: 使用 AJAX 的结果设置局部状态
 
 下方的组件展示了如何在 `componentDidMount` 方法内使用 AJAX 请求来填充组件的局部状态。
 
