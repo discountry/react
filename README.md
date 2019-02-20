@@ -4,7 +4,7 @@
 
 > This is not the official react repository. We've been working on translating the official react docs in Chinese. Because of the modification of original docs markdown files, this branch can not be merged to the [reactjs/reactjs.org](https://github.com/reactjs/reactjs.org) .
 
-React 官方中文文档将基于此项目内容继续维护，请贡献者移步 [https://github.com/reactjs/cn.reactjs.org](https://github.com/reactjs/cn.reactjs.org) 参与翻译工作。
+React 官方中文文档将基于此项目内容继续维护，请贡献者移步 [https://github.com/reactjs/zh-hans.reactjs.org](https://github.com/reactjs/zh-hans.reactjs.org) 参与翻译工作。
 
 ## 临时说明
 
