@@ -398,6 +398,6 @@ import MyComponent, { someFunction } from './MyComponent.js';
 
 ### Refs属性不能贯穿传递
 
-一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref应用，那么ref指向的是最外层容器组件实例的，而不是被包裹的组件。
+一般来说，高阶组件可以传递所有的props属性给包裹的组件，但是不能传递refs引用。因为并不是像`key`一样，refs是一个伪属性，React对它进行了特殊处理。如果你向一个由高阶组件创建的组件的元素添加ref引用，那么ref指向的是最外层容器组件实例的，而不是被包裹的组件。
 
 现在我们提供一个名为 `React.forwardRef` 的 API 来解决这一问题（在 React 16.3 版本中）。[在 refs 传递章节中了解详情](/docs/forwarding-refs.html)。
