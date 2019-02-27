@@ -58,11 +58,11 @@ redirect_from:
 4. 在 `src/` 文件夹下新建一个名为 `index.css` 的文件并拷贝 [这里的 CSS 代码](https://codepen.io/gaearon/pen/oWWQNa?editors=0100) 到文件中。
 5. 在 `src/` 文件夹下新建一个名为 `index.js` 的文件并拷贝 [这里的 JS 代码](https://codepen.io/gaearon/pen/oWWQNa?editors=0010) 到文件中, 并在此文件的最开头加上下面几行代码：
 
-    ```js
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    import './index.css';
-    ```
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+```
 
 接下来通过命令行在你的项目目录下运行 `npm start` 命令并在浏览器中打开 `http://localhost:3000` 你就能够看到空的井字棋棋盘了。
 
