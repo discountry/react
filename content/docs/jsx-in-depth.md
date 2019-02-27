@@ -267,7 +267,7 @@ const App = () => {
 
 In the example above, the `kind` prop is safely consumed and *is not* passed on to the `<button>` element in the DOM. All other props are passed via the `...other`object making this component really flexible. You can see that it passes an `onClick` and `children` props.
 
-展开属性非常有用。但是他们也容易传递不必要的属性给组件，而组件并不需要这些多余属性。或者传递无效的HTML熟悉给DOM。我们建议你谨慎使用此语法。
+展开属性非常有用。但是他们也容易传递不必要的属性给组件，而组件并不需要这些多余属性。或者传递无效的HTML属性给DOM。我们建议你谨慎使用此语法。
 
 ## JSX中的子代
 
