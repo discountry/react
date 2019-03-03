@@ -118,7 +118,7 @@ return React.createElement('div', {className: 'shopping-list'},
 
 如果你对这个比较感兴趣，可以在 [API 参考](/docs/react-api.html#createelement) 查阅对 `createElement()` 方法更详细的介绍。但在我们接下来的教程中，并不会直接使用这个方法，而是继续使用 JSX.
 
-在 JSX 中你可以任意使用 JavaScript 表达式，只需要用一个大括号把表达式括起来。每一个 React 元素事实上都一个 JavaScript 对象，你可以在你的应用中把它当保存在变量中或者作为参数传递。
+在 JSX 中你可以任意使用 JavaScript 表达式，只需要用一个大括号把表达式括起来。每一个 React 元素事实上都是一个 JavaScript 对象，你可以在你的应用中把它当保存在变量中或者作为参数传递。
 
 我们定义的 `ShoppingList` 组件只会渲染一些内置的 DOM 组件（`<div>`等），但是使用自定义的 React 组件也很简单，通过 `<ShoppingList />` 这样的标签你就可以在 React 当中调用整个 `ShoppingList` 组件。每个组件都是独立包装好的，这样也就方便你像搭积木一样组合各种组件来构建复杂的UI界面。
 
