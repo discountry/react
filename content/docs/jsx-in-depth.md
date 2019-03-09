@@ -245,7 +245,7 @@ function App2() {
 }
 ```
 
-You can also pick specific props that your component will consume while passing all other props using the spread operator.
+你也可以选取特定属性对象来被组件使用，同时使用“展开(spread)”操作符将其他属性传递下去。
 
 ```jsx
 const Button = props => {
@@ -265,7 +265,7 @@ const App = () => {
 };
 ```
 
-In the example above, the `kind` prop is safely consumed and *is not* passed on to the `<button>` element in the DOM. All other props are passed via the `...other`object making this component really flexible. You can see that it passes an `onClick` and `children` props.
+在上述例子中，`kind` 属性被安全地使用，不会传递到DOM中的 `<button>` 元素。其他的属性通过 `...other` 传递，使得组件变得非常灵活。你可以观察到 `onClick` and `children ` 属性都被传递了下去。
 
 展开属性非常有用。但是他们也容易传递不必要的属性给组件，而组件并不需要这些多余属性。或者传递无效的HTML属性给DOM。我们建议你谨慎使用此语法。
 
