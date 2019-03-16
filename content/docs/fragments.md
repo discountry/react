@@ -74,10 +74,10 @@ class Columns extends React.Component {
 class Columns extends React.Component {
   render() {
     return (
-      <>
+      <React.Fragment>
         <td>Hello</td>
         <td>World</td>
-      </>
+      </React.Fragment>
     );
   }
 }
@@ -96,24 +96,26 @@ class Columns extends React.Component {
 
 你可以像使用其它元素那样使用 `<></>`。
 
-### 清晰的形式
+### 简短语法
 
-另一种使用片段的方式是使用 `React.Fragment` 组件，`React.Fragment` 组件可以在 React 对象上使用。
-这可能是必要的，如果你的工具还不支持 JSX 片段。
-注意在 React 中， `<></>` 是 `<React.Fragment/>` 的语法糖。
+你还可以使用一种新的，更短的语法来声明`React.Fragment`组件。 它看起来像空标签：
 
 ```jsx{4,7}
 class Columns extends React.Component {
   render() {
     return (
-      <React.Fragment>
+      <>
         <td>Hello</td>
         <td>World</td>
-      </React.Fragment>
+      </>
     );
   }
 }
 ```
+
+您可以像使用任何其他元素一样使用<> </>，除了它不支持keys或属性。
+
+请注意，许多工具尚不支持它，因此您可能希望显式写入<React.Fragment>，直到工具都支持。
 
 ### 带 key 的 Fragments
 
