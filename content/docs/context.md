@@ -119,7 +119,7 @@ React 组件允许 Consumers 订阅 context 的改变。
 
 `embed:context/multiple-contexts.js`
 
-如果两个或者多个上下文的值经常被一起使用，也许你需要考虑你自己渲染属性的组件提供给它们。
+如果两个或者多个上下文的值经常被一起使用，你可能需要考虑创建一个可以同时提供这些值的 render prop 组件
 
 ### 在生命周期方法中访问 Context
 
