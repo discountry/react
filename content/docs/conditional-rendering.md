@@ -120,7 +120,8 @@ ReactDOM.render(
 声明变量并使用 `if` 语句是条件渲染组件的不错的方式，但有时你也想使用更简洁的语法，在 JSX 中有如下几种方法。
 
 ### 与运算符 && 
-你可以通过用花括号包裹代码[在 JSX 中嵌入任何表达式](/docs/introducing-jsx.html#在JSX中使用表达式) ，也包括 JavaScript 的逻辑与 &&，它可以方便地通过条件渲染一个元素。
+
+你可以通过使用花括号包裹代码，[在 JSX 中嵌入任何表达式](/docs/introducing-jsx.html#在JSX中使用表达式) ，包括 JavaScript 的逻辑与 && 操作符，它可以方便地实现对一个元素的条件渲染。
 
 ```js{6-10}
 function Mailbox(props) {
