@@ -1,0 +1,90 @@
+- title: Tutorial
+  items:
+    - id: before-we-start
+      title: 课前准备
+      href: /tutorial/tutorial.html#课前准备
+      forceInternal: true
+      subitems:
+        - id: what-were-building
+          title: 教程简介
+          href: /tutorial/tutorial.html#教程简介
+          forceInternal: true
+        - id: prerequisites
+          title: 前置知识
+          href: /tutorial/tutorial.html#前置知识
+          forceInternal: true
+        - id: how-to-follow-along
+          title: 如何编写代码
+          href: /tutorial/tutorial.html#如何编写代码
+          forceInternal: true
+        - id: help-im-stuck
+          title: 寻求帮助
+          href: /tutorial/tutorial.html#寻求帮助
+          forceInternal: true
+    - id: overview
+      title: 总览
+      href: /tutorial/tutorial.html#总览
+      forceInternal: true
+      subitems:
+        - id: what-is-react
+          title: React 是什么？
+          href: /tutorial/tutorial.html#react-是什么？
+          forceInternal: true
+        - id: getting-started
+          title: 开始编码
+          href: /tutorial/tutorial.html#开始编码
+          forceInternal: true
+        - id: passing-data-through-props
+          title: 通过 Props 传递数据
+          href: /tutorial/tutorial.html#通过-props-传递数据
+          forceInternal: true
+        - id: an-interactive-component
+          title: 给组件添加交互功能
+          href: /tutorial/tutorial.html#给组件添加交互功能
+          forceInternal: true
+        - id: developer-tools
+          title: 开发工具
+          href: /tutorial/tutorial.html#开发工具
+          forceInternal: true
+    - id: lifting-state-up
+      title: 状态提升
+      href: /tutorial/tutorial.html#状态提升
+      forceInternal: true
+      subitems:
+        - id: why-immutability-is-important
+          title: 不可变性
+          href: /tutorial/tutorial.html#为什么不可变性在react当中非常重要
+          forceInternal: true
+        - id: functional-components
+          title: 函数定义组件
+          href: /tutorial/tutorial.html#函数定义组件
+          forceInternal: true
+        - id: taking-turns
+          title: 轮流落子
+          href: /tutorial/tutorial.html#轮流落子
+          forceInternal: true
+        - id: declaring-a-winner
+          title: 判断赢家
+          href: /tutorial/tutorial.html#判断赢家
+          forceInternal: true
+    - id: storing-a-history
+      title: 保存历史记录
+      href: /tutorial/tutorial.html#保存历史记录
+      forceInternal: true
+      subitems:
+        - id: showing-the-moves
+          title: 展示每步历史记录链接
+          href: /tutorial/tutorial.html#展示每步历史记录链接
+          forceInternal: true
+        - id: keys
+          title: Keys
+          href: /tutorial/tutorial.html#keys
+          forceInternal: true
+        - id: implementing-time-travel
+          title: 实现时间旅行
+          href: /tutorial/tutorial.html#实现时间旅行
+          forceInternal: true
+        - id: wrapping-up
+          title: 总结
+          href: /tutorial/tutorial.html#总结
+          forceInternal: true

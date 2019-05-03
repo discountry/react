@@ -1,0 +1,42 @@
+- title: 社区资源
+  items:
+    - id: support
+      title: 帮助
+    - id: courses
+      title: 课程
+    - id: examples
+      title: 示例
+    - id: meetups
+      title: 线下交流
+    - id: conferences
+      title: 会议
+    - id: articles
+      title: 文章
+    - id: podcasts
+      title: Podcasts
+    - id: videos
+      title: 视频
+    - id: external-resources
+      title: 其他
+- title: 工具
+  items:
+    - id: debugging-tools
+      title: 调试
+    - id: component-workbenches
+      title: 组件开发
+    - id: jsx-integrations
+      title: JSX 集成
+    - id: starter-kits
+      title: 脚手架
+    - id: routing
+      title: 路由
+    - id: model-management
+      title: 模型管理
+    - id: data-fetching
+      title: 数据交互
+    - id: testing
+      title: Testing
+    - id: ui-components
+      title: UI 组件
+    - id: misc
+      title: 杂项
