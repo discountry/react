@@ -6,10 +6,12 @@ next: hooks-effect.html
 prev: hooks-overview.html
 ---
 
-*Hooks* are a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+*Hooks* is a new feature proposal that lets you use state and other React features without writing a class. They're currently in React v16.7.0-alpha and being discussed in [an open RFC](https://github.com/reactjs/rfcs/pull/68).
+
+*Hooks* 是一个新的特性（提案）用来在不书写class的情况下处理组件的状态. 已经部署在最新的React v16.7.0-alpha版本中，这里有关于它的讨论 [an open RFC](https://github.com/reactjs/rfcs/pull/68).
 
 The [previous page](/docs/hooks-intro.html) introduced Hooks with this example:
-
+下面这一页介绍了Hooks的一个示例 
 ```js{4-5}
 import { useState } from 'react';
 
@@ -29,9 +31,9 @@ function Example() {
 ```
 
 We'll start learning about Hooks by comparing this code to an equivalent class example.
-
+我们通过比较类声明组件的方式和函数声明的方式来学习Hooks.
 ## Equivalent Class Example
-
+## 这是一个等价的类声明的组件
 If you used classes in React before, this code should look familiar:
 
 ```js
@@ -57,14 +59,21 @@ class Example extends React.Component {
 ```
 
 The state starts as `{ count: 0 }`, and we increment `state.count` when the user clicks a button by calling `this.setState()`. We'll use snippets from this class throughout the page.
-
+这个状态从`{ count: 0 }`开始，然后在用户点击按钮的时候通过`this.setState()`增加 `state.count`，我们将在这一整页中使用这个代码段。
 >Note
 >
 >You might be wondering why we're using a counter here instead of a more realistic example. This is to help us focus on the API while we're still making our first steps with Hooks.
 
+>注意
+>
+>你可能疑惑为什么我们要使用counter而不是一个更实际的例子，因为我们现在的目的是集中讨论使用钩子的第一步，它的API
+
 ## Hooks and Function Components
 
 As a reminder, function components in React look like this:
+## Hooks和函数式组件
+
+提醒一下，React函数组件是这个样子
 
 ```js
 const Example = (props) => {
@@ -73,7 +82,7 @@ const Example = (props) => {
 }
 ```
 
-or this:
+或者:
 
 ```js
 function Example(props) {
@@ -85,11 +94,15 @@ function Example(props) {
 You might have previously known these as "stateless components". We're now introducing the ability to use React state from these, so we prefer the name "function components".
 
 Hooks **don't** work inside classes. But you can use them instead of writing classes.
+你可能之前使用过无状态组件，而现在要讨论的是在这里使用React的state，所以更适合叫“函数式组件”.
 
+Hooks 在class声明中**无法使用**，但是你可以使用它来代替类声明
 ## What's a Hook?
 
 Our new example starts by importing the `useState` Hook from React:
+## 什么是Hook
 
+我们的例子是通过从React中导入一个 `useState` 钩子来开始的。
 ```js{1}
 import { useState } from 'react';
 
@@ -100,16 +113,23 @@ function Example() {
 
 **What is a Hook?** A Hook is a special function that lets you "hook into" React features. For example, `useState` is a Hook that lets you add React state to function components. We'll learn other Hooks later.
 
+**什么是钩子函数？**钩子函数是一个简单的函数，它允许你 “钩入” （hook into）React的特性，例如，`useState`是一个允许你在函数式组件中使用React的状态特性的钩子
 **When would I use a Hook?** If you write a function component and realize you need to add some state to it, previously you had to convert it to a class. Now you can use a Hook inside the existing function component. We're going to do that right now!
-
+**我该在什么时候使用钩子函数？**如果你编写了一个函数式组件，并且意识到你需要在上面添加一些必要的状态的时候使用它，当然，你必须从类声明中转变过来，现在你可以在已经存在的函数式组件中使用钩子函数(Hook)，我们现在就开始。
 >Note:
 >
 >There are some special rules about where you can and can't use Hooks within a component. We'll learn them in [Rules of Hooks](/docs/hooks-rules.html).
 
+>注意:
+>
+>有一些特殊的规则，你在组件的某些地方不可以使用钩子函数[Rules of Hooks](/docs/hooks-rules.html).
 ## Declaring a State Variable
 
 In a class, we initialize the `count` state to `0` by setting `this.state` to `{ count: 0 }` in the constructor:
 
+## 声明一个状态变量
+
+在类中的构造函数里面，我们通过设置`this.state`为`{count:0}`,从而初始化`count`状态为`0`
 ```js{4-6}
 class Example extends React.Component {
   constructor(props) {
@@ -121,6 +141,8 @@ class Example extends React.Component {
 ```
 
 In a function component, we have no `this`, so we can't assign or read `this.state`. Instead, we call the `useState` Hook directly inside our component:
+
+在一个函数式组件中，我们没有`this`，所以不用赋值或者读取`this.state`,与之相对应的，我们直接在组件中调用`useState`这个钩子函数
 
 ```js{4,5}
 import { useState } from 'react';
