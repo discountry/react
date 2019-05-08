@@ -1,0 +1,5 @@
+{
+  "main.css": "styles.css",
+  "main.js": "render-page.js",
+  "main.js.map": "render-page.js.map"
+}

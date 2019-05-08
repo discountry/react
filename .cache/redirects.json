@@ -1,0 +1,542 @@
+[
+  {
+    "fromPath": "/index.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/"
+  },
+  {
+    "fromPath": "/support.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/community/support.html"
+  },
+  {
+    "fromPath": "/docs/videos.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/community/videos.html"
+  },
+  {
+    "fromPath": "/docs/reusable-components.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/reusable-components-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/transferring-props.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/transferring-props-it-IT.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/transferring-props-ja-JP.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/transferring-props-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/transferring-props-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/tips/props-in-getInitialState-as-anti-pattern.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/tips/communicate-between-components.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/components-and-props.html"
+  },
+  {
+    "fromPath": "/docs/multiple-components.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/composition-vs-inheritance.html"
+  },
+  {
+    "fromPath": "/tips/false-in-jsx.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/conditional-rendering.html"
+  },
+  {
+    "fromPath": "/docs/add-react-to-a-new-app.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/create-a-new-react-app.html"
+  },
+  {
+    "fromPath": "/docs/",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/index.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/getting-started-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/getting-started-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/installation.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/download.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/downloads.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/try-react.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/tooling-integration.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/package-management.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/language-tooling.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/environments.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/getting-started.html"
+  },
+  {
+    "fromPath": "/docs/events-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/handling-events.html"
+  },
+  {
+    "fromPath": "/docs/displaying-data.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/rendering-elements.html"
+  },
+  {
+    "fromPath": "/docs/react-api.html#typechecking-with-proptypes",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/typechecking-with-proptypes.html"
+  },
+  {
+    "fromPath": "/docs/webcomponents.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/web-components.html"
+  },
+  {
+    "fromPath": "/docs/conferences.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/community/conferences.html"
+  },
+  {
+    "fromPath": "/docs/animation-ja-JP.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/animation.html"
+  },
+  {
+    "fromPath": "/docs/animation-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/animation.html"
+  },
+  {
+    "fromPath": "/docs/animation-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/animation.html"
+  },
+  {
+    "fromPath": "/tips/controlled-input-null-value.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/forms.html"
+  },
+  {
+    "fromPath": "/docs/forms-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/forms.html"
+  },
+  {
+    "fromPath": "/contributing/how-to-contribute.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/how-to-contribute.html"
+  },
+  {
+    "fromPath": "/tips/introduction.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/how-to-contribute.html"
+  },
+  {
+    "fromPath": "/docs/jsx-spread.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/docs/jsx-gotchas.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/tips/if-else-in-JSX.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/tips/self-closing-tag.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/tips/maximum-number-of-jsx-root-nodes.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/tips/children-props-type.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/docs/jsx-in-depth-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/docs/jsx-in-depth-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/jsx-in-depth.html"
+  },
+  {
+    "fromPath": "/docs/flux-overview.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/lifting-state-up.html"
+  },
+  {
+    "fromPath": "/docs/flux-todo-list.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/lifting-state-up.html"
+  },
+  {
+    "fromPath": "/docs/tags-and-attributes.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/docs/dom-differences.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/docs/special-non-dom-attributes.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/docs/class-name-manipulation.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/tips/inline-styles.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/tips/style-props-value-px.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/tips/dangerously-set-inner-html.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/dom-elements.html"
+  },
+  {
+    "fromPath": "/docs/reference.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/clone-with-props.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/top-level-api.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/top-level-api-ja-JP.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/top-level-api-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/top-level-api-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-api.html"
+  },
+  {
+    "fromPath": "/docs/working-with-the-browser.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/docs/more-about-refs.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/docs/more-about-refs-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/docs/more-about-refs-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/tips/expose-component-functions.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/tips/children-undefined.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/refs-and-the-dom.html"
+  },
+  {
+    "fromPath": "/docs/interactivity-and-dynamic-uis.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/state-and-lifecycle.html"
+  },
+  {
+    "fromPath": "/blog/2013/11/05/thinking-in-react.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/thinking-in-react.html"
+  },
+  {
+    "fromPath": "/docs/thinking-in-react-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/thinking-in-react.html"
+  },
+  {
+    "fromPath": "/blog/2014/10/14/introducting-react-elements.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/blog/2014/10/14/introducing-react-elements.html"
+  },
+  {
+    "fromPath": "/contributing/design-principles.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/design-principles.html"
+  },
+  {
+    "fromPath": "/docs/advanced-performance.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/optimizing-performance.html"
+  },
+  {
+    "fromPath": "/contributing/codebase-overview.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/codebase-overview.html"
+  },
+  {
+    "fromPath": "/docs/component-api.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/docs/component-specs.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/docs/component-specs-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/docs/component-specs-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/tips/UNSAFE_componentWillReceiveProps-not-triggered-after-mounting.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/tips/dom-event-listeners.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/tips/initial-ajax.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/tips/use-react-with-other-libraries.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/react-component.html"
+  },
+  {
+    "fromPath": "/contributing/implementation-notes.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/docs/implementation-notes.html"
+  },
+  {
+    "fromPath": "/docs/tutorial.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/tutorial/tutorial.html"
+  },
+  {
+    "fromPath": "/docs/why-react.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/tutorial/tutorial.html"
+  },
+  {
+    "fromPath": "/docs/tutorial-ja-JP.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/tutorial/tutorial.html"
+  },
+  {
+    "fromPath": "/docs/tutorial-ko-KR.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/tutorial/tutorial.html"
+  },
+  {
+    "fromPath": "/docs/tutorial-zh-CN.html",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/tutorial/tutorial.html"
+  },
+  {
+    "fromPath": "/blog/",
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/blog/2018/12/19/react-v-16-7.html"
+  }
+]
