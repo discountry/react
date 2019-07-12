@@ -209,7 +209,7 @@ In a class, we need to call `this.setState()` to update the `count` state:
 ```
 
 In a function, we already have `setCount` and `count` as variables so we don't need `this`:
-在函数中，我们已经有了`setCount`和`count`作为变量，所以我们需要`this`
+在函数中，我们已经有了`setCount`和`count`作为变量，所以我们不需要`this`
 ```js{1}
   <button onClick={() => setCount(count + 1)}>
     Click me
