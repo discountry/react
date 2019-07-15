@@ -7,7 +7,7 @@ author: [gaearon, bvaughn]
 
 尽管这些改变帮助我们将 React 变得更好，但他们并不会直接影响大多数 React 用户。然而，我们希望能够在博客中将其记录下来以能够帮助到其他库的作者来解决类似问题。我们的贡献者可能也会发现这些记录非常有用。
 
-## 通过 Prettier 格式化代码
+## 通过 Prettier 格式化代码 {#formatting-code-with-prettier}
 
 React 是第一个[完全拥抱](https://github.com/facebook/react/pull/9101)[Prettier](https://prettier.io/)的大型软件库之一，通过其来自动格式化代码。我们当前的 Prettier 配置组成：
 
@@ -16,11 +16,11 @@ React 是第一个[完全拥抱](https://github.com/facebook/react/pull/9101)[Pr
 
 一部分团队成员也已经将其设置为[编译器集成](https://prettier.io/docs/en/editors.html)。我们对 Prettier 的体验非常棒，我们也推荐给其他任何写 JavaScript 的团队。
 
-## 重组成单一仓库
+## 重组成单一仓库 {#restructuring-the-monorepo}
 
 自从 React 被分解成包，其已经成为了的[独立库（monorepo）](https://danluu.com/monorepo/)：一系列的包被放在一个单独的库下。这使得其更容易进行调整和共用工具，但我们的目录结构嵌套过深以致于难以理解。哪个文件归属于哪个包并不是很清晰。自 React 16 发布之后，我们决定完全重新调整仓库结构。这就是我们的成果。
 
-### 迁移到 Yarn
+### 迁移到 Yarn {#migrating-to-yarn-workspaces}
 
 Yarn 包管理工具在几个月前[引入了一种称为工作间（Workspaces）的特性](https://yarnpkg.com/blog/2017/08/02/introducing-workspaces/)。这一特性能够让你告诉 Yarn 你的独立库的包在文件目录的什么位置。每一次你运行 `yarn`，除了安装你的依赖它还会设置从你项目的 `node_modules` 指向你的包的资源文件的符号链接（symlink）。
 
@@ -32,7 +32,7 @@ Yarn 包管理工具在几个月前[引入了一种称为工作间（Workspaces�
 
 并不是所有包都要发布到 npm 上。例如，我们保留一些很小的工具函数并可以安全地复制到一个[称为 `shared` 的伪包](https://github.com/facebook/react/tree/cc52e06b490e0dc2482b345aa5d0d65fae931095/packages/shared)。我们的打包器被配置成[仅会将声明在 `package.json` 的 `dependencies` 中的项目作为第三方库](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/build.js#L326-L329)，因此其可以很顺利地将 `shared` 的代码打包到 `react` 和 `react-dom` 中而不会在构建版本中留下任何对 `shared/` 的引用。因此你也可以使用 Yarn 工作间即使你不打算发布实际的 npm 包！
 
-### 移除自定义模块系统
+### 移除自定义模块系统 {#removing-the-custom-module-system}
 
 过去，我们使用了一个称为 "Haste" 的非标准模块系统，其能够让我们通过唯一的 `@providesModule` 从其他文件引用在其他任何地方的任何文件。其完全避免了类似 `../../../../` 相对路径过深的引用问题并且对于生产代码来说很棒。然而，这使得在包之间很难理解其依赖关系。我们也不得不重新调整这一黑科技使其能和不同的工具一同运行。
 
@@ -55,7 +55,7 @@ Yarn 包管理工具在几个月前[引入了一种称为工作间（Workspaces�
 
 实践中，我们仍然会有[一些跨包间的“内部”引入](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/packages/react-dom/src/client/ReactDOMFiberComponent.js#L10-L11)。其打破了这一原则，但很明确，我们计划逐渐摆脱这一方式。
 
-## 编译成扁平化的包
+## 编译成扁平化的包 {#compiling-flat-bundles}
 
 历史上，React 被分成两种不同的形式：作为一个单文件构建版本以让你能够在浏览器中通过一个 `<script>` 标签引用，和作为 CommonJS 模块的集合以让你能够通过类似 webpack 或 Browserify 来进行打包。
 
@@ -89,7 +89,7 @@ if (process.env.NODE_ENV === 'production') {
 
 注意这和我们之前使用的单文件的浏览器构建策略实质上是非常相似的（现在仅是重新规划到 [`umd` 目录](https://unpkg.com/react@16/umd/)下，[通用模块定义（Universal Module Definition）](https://www.davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/)的缩写）。现在我们也对 CommonJS 构建采用同样的策略。
 
-### 迁移至 Rollup
+### 迁移至 Rollup {#migrating-to-rollup}
 
 仅仅是将 CommonJS 模块编译成单文件包并不能解决之前的所有问题。而真正标志性的胜利是将我们的打包系统从 Browserify 到 [Rollup](https://rollupjs.org/)[迁移](https://github.com/facebook/react/pull/9327)。
 
@@ -99,7 +99,7 @@ Rollup 目前还不支持一些对于应用构建来说非常重要的特性，�
 
 你可以在[这里](https://github.com/facebook/react/blob/8ec146c38ee4f4c84b6ecf59f52de3371224e8bd/scripts/rollup/build.js#L336-L362)找到我们的 Rollup 构建配置，和[当前我们在用的一系列插件](https://github.com/facebook/react/blob/8ec146c38ee4f4c84b6ecf59f52de3371224e8bd/scripts/rollup/build.js#L196-L273)。
 
-### 迁移至 Google Closure Compiler
+### 迁移至 Google Closure Compiler {#migrating-to-google-closure-compiler}
 
 在迁移至扁平化包之后，我们开始在 [JavaScript 版本的 Google Closure Compiler](https://github.com/google/closure-compiler-js) 下使用它的“简单”模式。根据我们的经验，即使先进的压缩技术不可用，其仍然能够明显优于 Uglify，由于其能够更好的消除无用代码和在适当的时候内联函数。
 
@@ -107,7 +107,7 @@ Rollup 目前还不支持一些对于应用构建来说非常重要的特性，�
 
 当前，所有 React 的产品包 [通过在 Google Closure Compiler 简单模式下运行](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/build.js#L235-L248)，同时我们也期望能够在未来支持更先进的优化方案。
 
-### 防止若无用代码被擦除
+### 防止若无用代码被擦除 {#protecting-against-weak-dead-code-elimination}
 
 当我们在 React 上使用一个有效的[无用代码擦除](https://en.wikipedia.org/wiki/Dead_code_elimination)方案时，我们无法对 React 用户使用的工具做许多的假设。
 
@@ -129,7 +129,7 @@ if ("production" !== "production") {
 
 然而，若打包器被误配置，你可能意外地将开发版本的代码发布到生产环境中。我们无法阻止这一问题，但当发生时，我们可以设置一些步骤减少一些常见的用例。
 
-#### 防止过晚环境检查
+#### 防止过晚环境检查 {#protecting-against-late-envification}
 
 如之前提到，我们的入口现在看起来像这样：
 
@@ -161,7 +161,7 @@ if (process.env.NODE_ENV !== "production") {
 
 额外的 [IIFE](https://en.wikipedia.org/wiki/Immediately-invoked_function_expression) 包裹是有必要的，因为在 JavaScript 中 `if` 语句内部的一些声明（如函数）无法被替换。
 
-#### 检测错误的无用代码擦除
+#### 检测错误的无用代码擦除 {#detecting-misconfigured-dead-code-elimination}
 
 即使[环境变更](https://twitter.com/iamakulov/status/941336777188696066)，许多流行的打包器目前仍无法强制用户指定是开发模式或生产模式。在这样的情况，`process.env.NODE_ENV` 通常由运行时的 polyfill 设置，但无用代码擦除检测并不会有效。
 
@@ -179,11 +179,11 @@ if (process.env.NODE_ENV !== "production") {
 
 我们意识到这方法有些脆弱。`toString()` 方法并不可靠并且可能在未来有些浏览器上会改变它的行为。这就是为什么我们将这些逻辑放到 React DevTool 里而不是 React 里。如果在之后出现了问题，这允许我们能移除它。我们也会发出警告仅当我们*发现*特别的字符串而不是我们*没*发现它。这一方式，如果 `toString()` 的输出变得不可测，或被重写，这一警告也不会触发。
 
-## 尽早捕获错误
+## 尽早捕获错误 {#catching-mistakes-early}
 
 我们想要尽早地捕获错误。然而，即使扩展我们的测试覆盖率，我们偶尔还是会犯错误。今年我们在我们的构建和测试环节做了些调整以使其更难出错。
 
-### 迁移至 ES 模块
+### 迁移至 ES 模块 {#migrating-to-es-modules}
 
 通过 CommonsJS 的 `require()` 和 `module.exports`，其很容易引入一个实际上并不存在的函数，且直到你调用才会意识到。然而，若你输入错了一个引入的方法名称，类似 Rollup 这样原生支持 [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) 和 [`export`](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export) 语法的工具将会构建失败。在 React 16 发布后，我们将整个 React 的源码调整成为了 ES 模块语法。
 
@@ -191,13 +191,13 @@ if (process.env.NODE_ENV !== "production") {
 
 目前，仅决定将源代码转换成 ES 模块，但不包括测试代码。我们使用类似 `jest.resetModules()` 这样强有力的工具并想要在测试中当模块初始化时能有更紧密的控制力。为了在测试中使用 ES 模块，我们支持了 [Babel CommonJS transform](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/jest/preprocessor.js#L28-L29) 插件，但仅针对测试环境。
 
-### 在生产模式下运行测试
+### 在生产模式下运行测试 {#running-tests-in-production-mode}
 
 过去，我们在开发环境下运行所有测试。这让我们对 React 所产生的警告信息进行测试，并且貌似有一种普通的意义。然而，即使我们尝试在开发环境和生产环境上保持代码路径最小化的差异，但我们仍然会意外地在仅针对生产环境的代码上出现未被测试覆盖的错误，并且会产生一个 issues 在 Facebook 的 React 仓库上。x
 
 为了解决这一问题，我们在CI（持续集成）上增减了运行所有 pull request 的 [`yarn test-prod`](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/package.json#L110) 的新命令，[在生产环境下执行所有的测试用例](https://github.com/facebook/react/pull/11616)。我们将所有测试里任何有关警告信息的测试断言都包裹在开发模式的条件分支下，因此在两种环境下，他们仍然可以检测其预期行为。由于我们自定义了一个 通过[错误代码](/blog/2016/07/11/introducing-reacts-error-code-system.html)来替换生产环境的错误信息的 Babel 转换插件，我们也加入了一个[逆向转换](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/jest/setupTests.js#L91-L126)作为生产环境测试运行的一部分。
 
-### 在测试环境下使用公共 API
+### 在测试环境下使用公共 API  {#using-public-api-in-tests}
 
 当我们[重写 React reconciler](https://code.facebook.com/posts/1716776591680069/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)，我们意识到了对公共 API 而不是针对对内部模块编写测试的重要性。若针对公共 API 编写测试，其从用户视角来看什么需要被测试是非常清晰的，即使你完全从零开始重新实现，你也可以运行它。
 
@@ -205,7 +205,7 @@ if (process.env.NODE_ENV !== "production") {
 
 我们想要给[每一位贡献过的伙伴](https://github.com/facebook/react/issues?q=is%3Apr+11299+is%3Aclosed)献上我们深深地感谢。
 
-### 对编译后的包运行测试
+### 对编译后的包运行测试 {#running-tests-on-compiled-bundles}
 
 这也是对公共 API 编写测试的额外收益：现在我们可以[对编译后的包运行测试](https://github.com/facebook/react/pull/11633)。
 
@@ -221,17 +221,17 @@ if (process.env.NODE_ENV !== "production") {
 
 目前，在 2,650 个 React 测试中有超过 93% 的测试是针对编译后的包。
 
-### 格式化编译后的包
+### 格式化编译后的包  {#linting-compiled-bundles}
 
 除了格式化我们的源代码，我们在编译后的包上运行了更多一系列的格式化规则检查（实际上，[仅有两个](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/validate/eslintrc.cjs.js#L26-L27)）。这在底层工具上给了我们额外的保护防止引入异常并[确保](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/validate/eslintrc.cjs.js#L22)包没有使用更老的浏览器不支持的任何语言特性。
 
-### 模拟包发布
+### 模拟包发布 {#simulating-package-publishing}
 
 甚至在构建后的包上运行测试也无法避免引入破坏的更新。例如，我们在我们的 `package.json` 文件中使用 `files` 字段来指向应该被发布到 npm 上的关于具体的文件夹和文件的白名单。然而，其很容易增加一个新的入口指向一个包但是忘记将其添加到白名单内。甚至包的测试已经通过，但在发布之后其入口则会丢失。
 
 为了避免类似的情况，现在，在构建之后我们[通过运行 `npm pack` 和 快速解压](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/packaging.js#L129-L134)来模拟 npm 发布。类似 `npm publish`，这一命令过滤了任何不在 `files` 白名单内的任何东西。通过这一方式，若我们忘记添加一个入口到列表中，其将会在构建文件夹中缺失，而依赖于它的包测试将会失败。
 
-### 创建手动测试文件
+### 创建手动测试文件 {#creating-manual-test-fixtures}
 
 我们的单元测试仅在 Node 环境下运行，但不在浏览器环境下。这是有意而为之，因为在我们的经验中基于浏览器的测试工具非常奇怪，并且无法捕获许多问题。
 
@@ -255,7 +255,7 @@ if (process.env.NODE_ENV !== "production") {
 
 运行测试文件仍然有大量的工作，我们考虑将其中一部分自动化。测试应用仍然是非常宝贵的，甚至是对 React 目前存在的行为和所有的边界条件以及浏览器 bug 的一个文档。使我们有信心在不破坏重要的用例的条件下对逻辑进行重大的调整。我们考虑的另外一个调整是增加一个 Github 机器人构建 并对每一次涉及相关文件的提交自动地部署测试文件，因此每个人都可以进行浏览器测试。
 
-### 预防死循环
+### 预防死循环 {#preventing-infinite-loops}
 
 React 16 代码包含了大量的 `while` 循环。它们让我们避免发生在早期 React 版本的可怕的过深的调用栈路径，但使得 React 开发变得非常难。每次退出条件出现错误时我们的测试将会被挂起，并花费一些时间来找出哪个循环引发了这一问题。
 
@@ -263,11 +263,11 @@ React 16 代码包含了大量的 `while` 循环。它们让我们避免发生�
 
 这一方式有一个缺陷。若一个错误从 Babel 插件中产生并忽略函数调用栈，测试将会通过即使是死循环。这真的、真的非常糟糕。为解决这一问题，我们在抛出错误之前[设置了一个全局区域](https://github.com/facebook/react/blob/d906de7f602df810c38aa622c83023228b047db6/scripts/jest/setupTests.js#L42-L56)。而后，在每次测试运行之后，如果全局区域已经被设置了我们将重新爆出错误。这一方式下任何死循环将会造成测试失败，无论错误是否是由 Babel 插件引起。
 
-## 自定义构建
+## 自定义构建 {#customizing-the-build}
 
 在引入新的构建流程后，仍然有一些东西我们必须进行微调。其花费了我们一些时间来处理，但我们对于我们所能找到的解决方案表示满意。
 
-### 消除无用代码
+### 消除无用代码 {#dead-code-elimination}
 
 Rollup 和 Google Closure Compiler 的结合已经能够让我们在生产包中仅将开发的代码剥离。我们在构建期间将 `__DEV__` 字符串[替换](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/build.js#L223-L226)为一个布尔类型的常量，Rollup 和 Google Closure Compiler 都能够将 `if (false) {}` 的代码分支以及一些更复杂的模式给移除。然而，仍然存在一个非常讨厌的情况：
 
@@ -285,7 +285,7 @@ if (__DEV__) {
 
 当我们进行某些优化，我们需要确保其不会在之后引入 bug。要是某人引入了一个新的仅在开发模式下可用的额外的库，并且未意识也到需要添加到 `pureExternalModules` 里？Rollup 在这样的情况会打印出一个警告，但我们[决定让整个构建环节都失效](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/build.js#L395-L412)。这强制人们每次增加一个仅在开发模式下可用的包就需要直接地声明[而无论其是否具有副作用](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/scripts/rollup/modules.js#L10-L22) 。
 
-### Fork 模块
+### Fork 模块 {#forking-modules}
 
 在某些情况，不同的包需要包含些稍微不同的代码。例如，React Native 有不同的错误处理机制，即展示一个红框而不是打印一条信息到控制台。然而，通过模块调用将差异串联起来非常地不方便。
 
@@ -330,7 +330,7 @@ type Check<_X, Y: _X, X: Y = _X> = null;
 
 概括一下这一章，注意如果你在 npm 上来使用 React 则无法指定你自己的 fork 模块。这是有意的，因为这些文件中没有公开的 API，而且它们并没有被 [semver](https://semver.org/) 所覆盖。然而，如果你不介意不稳定性和差异性风险，我们欢迎你从 master 分支上来构建 React 甚至是 fork 它。我们希望这篇文章对于记录从单个 JavaScript 库角度出发定位于不同的环境能提供帮助。
 
-### 追踪包尺寸
+### 追踪包尺寸 {#tracking-bundle-size}
 
 作为构建的最后一步，我们现在[记录所有构建包的构建大小](https://github.com/facebook/react/blob/d906de7f602df810c38aa622c83023228b047db6/scripts/rollup/build.js#L264-L272)并将它们写入到一个[类似这样](https://github.com/facebook/react/blob/d906de7f602df810c38aa622c83023228b047db6/scripts/rollup/results.json)的文件里。当运行 `yarn build`，其会打印一个结果的表格：
 
@@ -344,17 +344,17 @@ type Check<_X, Y: _X, X: Y = _X> = null;
 
 我们对这一策略并不完全满意，因为 JSON 文件通常会在更大的分支中造成合并冲突。当前并不是强制进行更新，因此其可能会过时。之后，我们考虑将其集成到自动化中，在每次的提交中都会带有文件大小的变化。
 
-## 简化发布换件
+## 简化发布换件 {#simplifying-the-release-process}
 
 我们经常喜欢向开源社区发布更新。不幸的是，旧的流程在处理发布时非常的慢且通常会耗费一整天。在对这一流程做了些改变后，我们现在能够在一个小时内完成整个发布。这就是我们所做的调整。
 
-### 分支策略
+### 分支策略 {#branching-strategy}
 
 由于我们的分支策略，在旧的发布流程中消耗了大多数的时间。`master` 分支被认为不可靠的且通常会包含一些破坏性的更新。发布通常从一个稳定分支完成，且更新需要在发布前手动低将其挑选到这一分支中去。我们有[工具来帮助自动化](https://github.com/facebook/react/pull/7330)其中一些流程，但使用仍然[相当复杂](https://github.com/facebook/react/blob/b5a2a1349d6e804d534f673612357c0be7e1d701/scripts/release-manager/Readme.md)。
 
 随 16 版本，我们现在从 `master` 分支上进行发布。实验特性和一些破坏性更新也被允许，但必须隐藏在[特性标记](https://github.com/facebook/react/blob/cc52e06b490e0dc2482b345aa5d0d65fae931095/packages/shared/ReactFeatureFlags.js)之后，所以他们能够在构建环节被移除。新的扁平化包和无用代码擦除使得我们不用担心将任何不想公开的代码泄露到开源版本中。
 
-### 自动化脚本
+### 自动化脚本 {#automated-scripts}
 
 将变更迁入到稳定的 `master` 后，我们创建了一个新的 [发布流程清单](https://github.com/facebook/react/issues/10620)。尽管比之前的环节更简单，这仍然包含了大量的步骤且遗忘了一个可能会导致一次异常的发布。
 
@@ -372,13 +372,13 @@ _构建_ 环节做了大量的工作 - 验证许可，运行测试和检查 CI �
 
 （你可能在之前的截图中注意到了 `--dry` 标记。该标记允许我们运行一次端到端的发布，而不会实际发布到 NPM。这对于处理发布脚本自身时非常有用。）
 
-## 总结
+## 总结 {#in-conclusion}
 
 这篇博客是否激励你让你在你自己的项目中尝试一些想法？我们确实希望如此。若你有其他关于如何构建 React，测试，或贡献工作流的提升，请在[我们的问题追踪器]上让我们知道(https://github.com/facebook/react/issues)。
 
 你可以通过[构建基础设施标签](https://github.com/facebook/react/labels/Component%3A%20Build%20Infrastructure) 找到相关问题。这些通常是第一次贡献的好机会！
 
-## 感谢
+## 感谢 {#acknowledgements}
 
 我们想要感谢：
 

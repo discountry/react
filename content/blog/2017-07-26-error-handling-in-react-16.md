@@ -1,25 +1,25 @@
 ---
-title: "Error Handling in React 16"
+title: "Error Handle in React 16"
 author: [gaearon]
 ---
 
-As React 16 release is getting closer, we would like to announce a few changes to how React handles JavaScript errors inside components. These changes are included in React 16 beta versions, and will be a part of React 16.
+随着React 16发布在即，我们打算介绍一些在组件内部React如何处理JavaScript错误。这些改变包含在React 16的beta版本中，并将成为React 16的一部分。
 
-**By the way, [we just released the first beta of React 16 for you to try!](https://github.com/facebook/react/issues/10294)**
+**顺便一提，[你可以尝试我们刚发布了React 16的第一个测试版本！](https://github.com/facebook/react/issues/10294)**
 
-## Behavior in React 15 and Earlier
+## React 15及之前的行为 {#behavior-in-react-15-and-earlier}
 
-In the past, JavaScript errors inside components used to corrupt React’s internal state and cause it to [emit](https://github.com/facebook/react/issues/4026) [cryptic](https://github.com/facebook/react/issues/6895) [errors](https://github.com/facebook/react/issues/8579) on next renders. These errors were always caused by an earlier error in the application code, but React did not provide a way to handle them gracefully in components, and could not recover from them.
+过去，组件内部的JavaScript异常曾经常阻断了React内部状态并导致其在下一次渲染时[触发了隐藏的错误](https://github.com/facebook/react/issues/6895)。这些错误常常是由应用程序代码中的早期错误所引起的，但React并未提供一种在组件里优雅处理的方式，也不会从异常中回复。
 
-## Introducing Error Boundaries
+## 错误边界介绍 {#introducing-error-boundaries}
 
-A JavaScript error in a part of the UI shouldn’t break the whole app. To solve this problem for React users, React 16 introduces a new concept of an “error boundary”.
+UI部分的JavaScript异常不应阻断整个应用。为了为React用户解决这一问题，React 16引入了“错误边界（error boundary”）”这一新概念。
 
-Error boundaries are React components that **catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI** instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.
+错误边界作为React组件，用以**捕获在子组件树种任何地方的JavaScript异常，打印这些错误，并展示备用UI**而非让组件树崩溃。错误边界会捕获渲染期间，在生命周期方法中以及在其整个树的构造函数中的异常。
 
-A class component becomes an error boundary if it defines a new lifecycle method called `componentDidCatch(error, info)`:
+若定义一个称为`componentDidCatch(error, info)`的新生命周期方法，则类组件将成为错误边界：
 
-```js{7-12,15-18}
+```javascript
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -43,55 +43,57 @@ class ErrorBoundary extends React.Component {
 }
 ```
 
-Then you can use it as a regular component:
+而后可作为一个正常组件进行使用：
 
-```js
+```javascript
 <ErrorBoundary>
   <MyWidget />
 </ErrorBoundary>
 ```
 
-The `componentDidCatch()` method works like a JavaScript `catch {}` block, but for components. Only class components can be error boundaries. In practice, most of the time you’ll want to declare an error boundary component once and use it throughout your application.
+`componentDidCatch()`方法的作用类似于JavaScript的`catch {}`，但仅针对组件。仅有类组件可以成为错误边界。实际上，大多数时间你会想仅声明一次错误边界组件并在整个应用中使用。
+ 
+注意，**错误边界仅可以捕获树中后代的组件错误**。一个错误边界无法捕获其自身的错误。若错误边界尝试渲染错误信息失败，则该错误会传递至上方最接近的错误边界。而这也类似JavaScript中的`catch {}`块的工作方式。
 
-Note that **error boundaries only catch errors in the components below them in the tree**. An error boundary can’t catch an error within itself. If an error boundary fails trying to render the error message, the error will propagate to the closest error boundary above it. This, too, is similar to how `catch {}` block works in JavaScript.
+## Live Demo {#live-demo}
 
-## Live Demo
+查看[在React 16测试版](https://github.com/facebook/react/issues/10294)中[关于如何声明和使用错误边界的例子](https://codepen.io/gaearon/pen/wqvxGa?editors=0010)。
 
-Check out [this example of declaring and using an error boundary](https://codepen.io/gaearon/pen/wqvxGa?editors=0010) with [React 16 beta](https://github.com/facebook/react/issues/10294).
+## 放置错误边界 {#where-to-place-error-boundaries}
 
-## Where to Place Error Boundaries
+错误边界的粒度完全取决于你。你可能将其包装在顶层路由组件中并为用户展示“内部异常（Something went wrong）”的信息，类似于服务端框架处理崩溃。你可能也会在错误边界包装一些内部组件用以保护不会让应用的余下部分不会崩溃。
 
-The granularity of error boundaries is up to you. You may wrap top-level route components to display a “Something went wrong” message to the user, just like server-side frameworks often handle crashes. You may also wrap individual widgets in an error boundary to protect them from crashing the rest of the application.
+## 未捕获错误的新行为 {#new-behavior-for-uncaught-errors}
 
-## New Behavior for Uncaught Errors
+这一改变有一个重要的意义。**作为React 16中不是由错误边界引起的错误将会使得整个React组件树被卸载。**
 
-This change has an important implication. **As of React 16, errors that were not caught by any error boundary will result in unmounting of the whole React component tree.**
+我们曾争论这一决定，但在我们的经验中，将损坏的UI留在那里要比完全移除它要糟糕得多。例如，在类似Messenger这样的产品中留下可见的损坏的UI可能会导致一些人将信息发送给错误的人。类似地，对于支付应用来说显示错误的金额要比什么都不显示糟糕得多。
 
-We debated this decision, but in our experience it is worse to leave corrupted UI in place than to completely remove it. For example, in a product like Messenger leaving the broken UI visible could lead to somebody sending a message to the wrong person. Similarly, it is worse for a payments app to display a wrong amount than to render nothing.
 
-This change means that as you migrate to React 16, you will likely uncover existing crashes in your application that have been unnoticed before. Adding error boundaries lets you provide better user experience when something goes wrong.
+这一改变意味着随着迁移至React 16，你们将会发现之前未留意过的应用程序存在的崩溃。增加错误边界能够让你在发生异常时提供更好的用户体验。
 
-For example, Facebook Messenger wraps content of the sidebar, the info panel, the conversation log, and the message input into separate error boundaries. If some component in one of these UI areas crashes, the rest of them remain interactive.
+例如，Facebook Messenger将边栏，信息面板，会话日志以及消息输入的内容包装到单独的错误边界中。若其中某一个组件的UI崩溃了，其余的仍能正常交互。
 
-We also encourage you to use JS error reporting services (or build your own) so that you can learn about unhandled exceptions as they happen in production, and fix them.
+我们也鼓励你使用JS错误报告服务（或自己构建）以让你能够了解在产品中产生的未处理的异常，并修复它们。
 
-## Component Stack Traces
+## 组件栈追踪 {#component-stack-traces}
 
-React 16 prints all errors that occurred during rendering to the console in development, even if the application accidentally swallows them. In addition to the error message and the JavaScript stack, it also provides component stack traces. Now you can see where exactly in the component tree the failure has happened:
+React 16会打印所有在开发环节中发生在渲染过程的错误到控制台，即使应用程序意外地将他们吞了。除了错误信息和JavaScript堆栈，其还提供了组件栈追踪。闲杂你可以在组件树中精确地查看错误产生的地方：
 
-<img src="../img/blog/error-boundaries-stack-trace.png" alt="Component stack traces in error message" style="width: 100%;">
+<img src="/react/img/blog/error-boundaries-stack-trace.png" alt="Component stack traces in error message" />
 
-You can also see the filenames and line numbers in the component stack trace. This works by default in [Create React App](https://github.com/facebookincubator/create-react-app) projects:
+你也可以在组件堆栈中查看文件名和行数。这一功能在[Create React App 项目](https://github.com/facebookincubator/create-react-app)中默认开启：
 
-<img src="../img/blog/error-boundaries-stack-trace-line-numbers.png" alt="Component stack traces with line numbers in error message" style="width: 100%;">
+<img
+src="/react/img/blog/error-boundaries-stack-trace-line-numbers.png" alt="Component stack traces with line numbers in error message" />
 
-If you don’t use Create React App, you can add [this plugin](https://www.npmjs.com/package/babel-plugin-transform-react-jsx-source) manually to your Babel configuration. Note that it’s intended only for development and **must be disabled in production**.
+若你不使用Create React App，你可以手动添加[该插件](https://www.npmjs.com/package/babel-plugin-transform-react-jsx-source) 到你的Babel配置中。注意其仅能在开发环境中使用并**禁止在生产环境中使用。**
 
-## Why Not Use `try` / `catch`?
+## 为何不使用`try` / `catch`？{#why-not-use-try--catch}
 
-`try` / `catch` is great but it only works for imperative code:
+`try` / `catch` 很好但其仅适用于命令式的代码：
 
-```js
+```javascript
 try {
   showButton();
 } catch (error) {
@@ -99,16 +101,16 @@ try {
 }
 ```
 
-However, React components are declarative and specify *what* should be rendered:
+然而，React组件是声明式的，并指定了什么应该被渲染：
 
-```js
+```javascript
 <Button />
 ```
 
-Error boundaries preserve the declarative nature of React, and behave as you would expect. For example, even if an error occurs in a `componentDidUpdate` hook caused by a `setState` somewhere deep in the tree, it will still correctly propagate to the closest error boundary.
+错误边界保留了React声明式的特性，同时其行为和你期望的一直。例如，即使一个在`componentDidUpdate`周期由组件树内部底层的`setState`导致的错误，其仍能够正确地传递到最近的错误边界。
 
-## Naming Changes from React 15
+## 自React 15开始的命名变更 {#naming-changes-from-react-15}
 
-React 15 included a very limited support for error boundaries under a different method name: `unstable_handleError`. This method no longer works, and you will need to change it to `componentDidCatch` in your code starting from the first 16 beta release.
+React 15 在不同的方法名下为错误边界包含了一个非常有限的支持：`unstable_handleError`。该方法不再生效，同时自React 16第一个测试版本发布开始，你需要在你的代码中将其修改为`componentDidCatch`。
 
-For this change, we’ve provided [a codemod](https://github.com/reactjs/react-codemod#error-boundaries) to automatically migrate your code.
+为应对这一改变，我们已提供了[一份 codemod](https://github.com/reactjs/react-codemod#error-boundaries)以用于自动地迁移你的代码。

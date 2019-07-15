@@ -24,7 +24,7 @@ author: [gaearon]
 <div mycustomattribute="something" />
 ```
 
-## 为何要改变？
+## 为何要改变？ {#why-are-we-changing-this}
 
 React 为 DOM 提供了以 JavaScript 为核心的 API。由于 React 组件总是带有自定义以及 DOM 相关的 props，其使得 React 使用小驼峰命名会更易理解，类似于 DOM 的 API：
 
@@ -63,14 +63,14 @@ title: 'title',
 
 换句话说，你在 React 中使用 DOM 组件的方式并没有改变，但现在你有了新方式。
 
-## 应该在属性中存储数据？
+## 应该在属性中存储数据？{#should-i-keep-data-in-custom-attributes}
 
 不。我们不鼓励奖数据存放在 DOM 属性中。即使你不得不，使用 `data-`
 可能会是更好的方式，但大多数情况下数据应被保存在 React 组件状态或额外存储。
 
 然而，若你需要使用非标准化的或是新的 DOM 属性那新特性将会十分方便，或若你需要与依赖这些新特性的第三方库进行整合。
 
-## Data 和 ARIA 属性
+## Data 和 ARIA 属性 {#data-and-aria-attributes}
 
 和之前一样，React 能够让你随意地传递 `data-` 和 `aria-`：
 
@@ -83,7 +83,7 @@ title: 'title',
 
 [可访问性](/react/docs/accessibility.html) 非常重要，因此即使 React 16 能够传递任何属性，其仍然会在开发模式下验证 `aria-` props 是否正确命名，就像之前 React 15 一样。
 
-## 迁移路径
+## 迁移路径 {#migration-path}
 
 自一年多前的 [React 15.2.0](https://github.com/facebook/react/releases/tag/v15.2.0) 发布，我们已将[关于未知属性的一个警告](/react/warnings/unknown-prop.html) 包含在内。大量的第三方库也已进行代码升级。若你的应用在 React 15.2.0 或更高版本中并未产生警告，那么这一改变并不需要修改你应用中的代码。
 
@@ -97,7 +97,7 @@ title: 'title',
 
 为避免这些问题，在升级到 React 16 之前，我们建议你修复你在 React 15中看到的这些警告。
 
-## 变更细节
+## 变更细节 {#changes-in-detail}
 
 我们已做了一些其他调整已让行为能够更加可预测并能致力于让你不犯错。我们无法预期这些改变可能会破坏实际应用。
 
@@ -168,11 +168,11 @@ title: 'title',
 
 随这一测试版的发布，我们也为所有已知元素[创建一个自动生成的表单](https://github.com/facebook/react/blob/master/fixtures/attribute-behavior/AttributeTableSnapshot.md)以追踪潜在的问题。
 
-## 试一试
+## 试一试 {#try-it}
 
 你可以在 [CodePen](https://codepen.io/gaearon/pen/gxNVdP?editors=0010) 尝试这些变更。其使用 React 16 RC 版本，你也可以 [在你的项目中帮助我们测试 RC](https://github.com/facebook/react/issues/10294)。
 
-## 感谢
+## 感谢 {#thanks}
 
 这一努力大部分由一位 [Nathan Hunzaker](https://github.com/nhunzaker) 所推动， [其是一位高产的 React 外部贡献者](https://github.com/facebook/react/pulls?q=is%3Apr+author%3Anhunzaker+is%3Aclosed)。
 
@@ -183,6 +183,6 @@ title: 'title',
 
 我们也想要感谢 [Brandon Dail](https://github.com/aweary) 和 [Jason Quense](https://github.com/jquense) 在这一年中无私地帮助维护 React 项目。
 
-## 未来计划
+## 未来计划 {#future-work}
 
 我们还未调整 [自定义元素](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Custom_Elements) 如何在 React 16 中工作，但关于设置属性而非特性已经有了一些[讨论](https://github.com/facebook/react/issues/7249)，我们可能在 React 17 中在回过头来看看。若你愿意提供帮助，随时都可以来提。

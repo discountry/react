@@ -11,7 +11,7 @@ author: [gaearon]
 
 新创建的项目会自动获得这些新的功能改进。
 
-### webpack 2
+### webpack 2 {#webpack-2}
 
 >*这个功能开发者是[@Timer](https://github.com/Timer) 在 [#1291](https://github.com/facebookincubator/create-react-app/pull/1291).*
 
@@ -27,7 +27,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 未来，随着 ES6 模块相关生态系统的成熟，webpack 2 还提供了 [tree shaking](https://webpack.js.org/guides/tree-shaking/) 特性，可以通过去除冗余代码，优化打包后脚本的尺寸。
 
-### Runtime Error Overlay
+### Runtime Error Overlay {#error-overlay}
 
 >*开发这个功能的是 [@Timer](https://github.com/Timer) 和 [@nicinabox](https://github.com/nicinabox) 在 [#1101](https://github.com/facebookincubator/create-react-app/pull/1101), [@bvaughn](https://github.com/bvaughn) 在 [#2201](https://github.com/facebookincubator/create-react-app/pull/2201).*
 
@@ -43,7 +43,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 未来 Creat React App 还准备支持更多错误捕获。比如在React 16 版本发布之后，Creat React App 计划支持 React 组件调用栈的展示。
 
-### 默认支持渐进式web应用
+### 默认支持渐进式 web 应用 {#progressive-web-apps-by-default}
 
 >*这个功能的贡献者是 [@jeffposnick](https://github.com/jeffposnick) 在 [#1728](https://github.com/facebookincubator/create-react-app/pull/1728).*
 
@@ -56,7 +56,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 在未来的几周我们会为这个主题增加 [更多文档](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app)。希望大家在答疑区畅所欲言，[积极提问](https://github.com/facebookincubator/create-react-app/issues/new) 。
 
 
-### Jest 20
+### Jest 20 {#jest-20}
 
 >*这个功能的贡献者是 [@rogeliog](https://github.com/rogeliog) 在 [#1614](https://github.com/facebookincubator/create-react-app/pull/1614) 和 [@gaearon](https://github.com/gaearon) 在 [#2171](https://github.com/facebookincubator/create-react-app/pull/2171).*
    
@@ -68,7 +68,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 现在 Create React App 只需要做少量 Jest 的配置就可以生成覆盖率报告了。
 
-### 动态import()代码分割
+### 动态 import() 代码分割 {#code-splitting-with-dynamic-import}
 
 >*这个功能的贡献者是 [@Timer](https://github.com/Timer) 在 [#1538](https://github.com/facebookincubator/create-react-app/pull/1538) 和 [@tharakawj](https://github.com/tharakawj) 在 [#1801](https://github.com/facebookincubator/create-react-app/pull/1801).*
    
@@ -78,7 +78,7 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 ![Creating chunks with dynamic import](../img/blog/cra-dynamic-import.gif)
 
-### 更好的控制台输出
+### 更好的控制台输出 {#better-console-output}
 
 >*本功能开发者是 [@gaearon](https://github.com/gaearon) 于 [#2120](https://github.com/facebookincubator/create-react-app/pull/2120)， [#2125](https://github.com/facebookincubator/create-react-app/pull/2125)， 和 [#2161](https://github.com/facebookincubator/create-react-app/pull/2161)。*
 
@@ -90,13 +90,13 @@ webpack 2 最引人注目的新特性就是其对 ES6 模块 的支持，可以�
 
 当代码错误报告出来了，我们将不再展示警告信息以便你集中注意力到更严重的问题上。错误和警告信息在生产环境下的展示也被优化了，而且构建错误的弹出字体跟浏览器字体匹配度更高了。
 
-### 别急... 还有干货！
+### 别急... 还有干货！ {#but-wait-theres-more}
 
 虽然讲了很多，但是这个版本中还有许多未能介绍的新特性，比如 [environment-specific and local `.env` files](https://github.com/facebookincubator/create-react-app/pull/1344)，[a lint rule against confusingly named globals](https://github.com/facebookincubator/create-react-app/pull/2130)，[support for multiple proxies in development](https://github.com/facebookincubator/create-react-app/pull/1790)， [a customizable browser launch script](https://github.com/facebookincubator/create-react-app/pull/1590)以及许多 bug 修复。
 
 更多信息请参阅升级文档 [v1.0.0 发布详情](https://github.com/facebookincubator/create-react-app/releases/tag/v1.0.0)。
 
-### 致谢
+### 致谢 {#acknowledgements}
 
 这个发布版本是 React 社区的许多成员共同奋斗几个月的成果。我们旨在同时提升开发者的开发体验和用户的使用体验，因为我们坚信，这二者是互相补充携手并进的。
 

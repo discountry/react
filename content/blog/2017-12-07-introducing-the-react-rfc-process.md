@@ -15,13 +15,13 @@ author: [acdlite]
 
 当 RFC 被同意在 React 中实现时则会被采纳。关于这一流程更为全面的描述可以查看该仓库的 [README](https://github.com/reactjs/rfcs/blob/master/README.md)。具体细节可能会在之后有所改善。
 
-## 谁能提交 RFC？
+## 谁能提交 RFC？ {#who-can-submit-rfcs}
 
 任何人！没有必须要求了解 React 的内部机制，也不期望你自己来实现这个提案。
 
 和我们其他的仓库一样，我们会在接受你的 PR 前要求你完成[贡献者许可协议（Contributor License Agreement）](https://github.com/reactjs/rfcs#contributor-license-agreement-cla)。
 
-## 什么类型的改变应作为 RFC 提交?
+## 什么类型的改变应作为 RFC 提交?{#what-types-of-changes-should-be-submitted-as-rfcs}
 
 通常来讲，在实现前任何额外的评审或设计对于 RFC 来说都是不错的选择。根据过往经验，这意味着任何增加、改变，或移除一个 React API 类型的提案都可以。
 
@@ -33,7 +33,7 @@ author: [acdlite]
 - **官网及文档**：[reactjs/reactjs.org](https://github.com/reactjs/reactjs.org)
 - **需要在实现前进行额外评审的想法**：[reactjs/rfcs](https://github.com/reactjs/rfcs)
 
-## 关于新 API 的 RFC
+## 关于新 API 的 RFC {#rfc-for-a-new-context-api}
 
 结合我们刚发布的 RFC 流程，我们已经提交了一份[关于新版本背景的提案](https://github.com/reactjs/rfcs/pull/2)。该提案已受到了许多来自社区的有价值的反馈，我们已将这些意见采纳到新设计的 API 中。
 
