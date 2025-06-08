@@ -1,4 +1,4 @@
-# React 中文文档翻译计划 ![CircleCI](https://circleci.com/gh/discountry/react.svg?&style=shield&circle-token=4fc9b6b97cb8d5d19ad88cdd40ba8d5f1ccdd2b0)
+# React 中文文档翻译计划
 
 ## Notice
 
@@ -43,3 +43,7 @@ React@16 的新版文档网站使用了 [Gatsby](https://github.com/gatsbyjs/gat
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>
 
 文档翻译采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a> 进行许可。著作权归译者本人所有，禁止商用。
+
+## Devops
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com)
